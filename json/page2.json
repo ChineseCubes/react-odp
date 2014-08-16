@@ -1,0 +1,75 @@
+{
+  "@attributes": {
+    "name": "page2",
+    "style-name": "dp1",
+    "master-page-name": "Default",
+    "presentation-page-layout-name": "AL1T19"
+  },
+  "frame": [{
+    "@attributes": {
+      "style-name": "pr1",
+      "text-style-name": "P3",
+      "layer": "layout",
+      "width": "25.199cm",
+      "height": "3.506cm",
+      "x": "1.4cm",
+      "y": "17.093cm",
+      "class": "title"
+    },
+    "text-box": {
+      "p": {
+        "span": "\u4ed6\u9ede\u4e86\u53c8\u51b0\u53c8\u751c\u7684\u51b0\u6dc7\u6dcb\u3002"
+      }
+    }
+  }, {
+    "@attributes": {
+      "style-name": "gr1",
+      "text-style-name": "P2",
+      "layer": "layout",
+      "width": "11.752cm",
+      "height": "11.591cm",
+      "x": "8.132cm",
+      "y": "3.724cm"
+    },
+    "image": {
+      "@attributes": {
+        "href": "Pictures\/10000000000001FD000001F6B021CFF9.png",
+        "type": "simple",
+        "show": "embed",
+        "actuate": "onLoad"
+      },
+      "p": {}
+    }
+  }],
+  "notes": {
+    "@attributes": {
+      "style-name": "dp2"
+    },
+    "page-thumbnail": {
+      "@attributes": {
+        "style-name": "gr2",
+        "layer": "layout",
+        "width": "14.848cm",
+        "height": "11.136cm",
+        "x": "3.075cm",
+        "y": "2.257cm",
+        "page-number": "2",
+        "class": "page"
+      }
+    },
+    "frame": {
+      "@attributes": {
+        "style-name": "pr2",
+        "layer": "layout",
+        "width": "16.799cm",
+        "height": "13.364cm",
+        "x": "2.1cm",
+        "y": "14.107cm",
+        "class": "notes"
+      },
+      "text-box": {
+        "p": "He ordered an icy and sweet ice cream."
+      }
+    }
+  }
+}

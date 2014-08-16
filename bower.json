@@ -1,0 +1,22 @@
+{
+  "name": "react-odp",
+  "version": "0.0.1",
+  "authors": [
+    "caasi Huang <caasi@chinesecubes.com>"
+  ],
+  "license": "MIT",
+  "main": "main.ls",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "jquery": "~2.1.1",
+    "react": "~0.11.1"
+  },
+  "overrides": {}
+}
