@@ -38,11 +38,14 @@ gulp.task \js:vendor <[bower]> ->
 
 gulp.task \js:app ->
   gulp.src [
-    "#{path.src}/ls/CUBEBooks/utils.ls"
-    "#{path.src}/ls/CUBEBooks/components.ls"
-    "#{path.src}/ls/main.ls"
+    "#{path.src}/ls/ODP/utils.ls"
+    "#{path.src}/ls/ODP/components.ls"
   ]
-    .pipe gulp-concat 'main.ls'
+    .pipe gulp-concat 'react-odp.ls'
+    .pipe livescript!
+    .pipe gulp.dest "#{path.build}/js"
+    .pipe connect.reload!
+  gulp.src "#{path.src}/ls/main.ls"
     .pipe livescript!
     .pipe gulp.dest "#{path.build}/js"
     .pipe connect.reload!
@@ -56,7 +59,7 @@ gulp.task \css:vendor <[bower]> ->
 gulp.task \css:app ->
   gulp.src [
     "#{path.src}/stylus/reset.styl"
-    "#{path.src}/stylus/cubebooks.styl"
+    "#{path.src}/stylus/react-odp.styl"
     "#{path.src}/stylus/main.styl"
   ]
     .pipe gulp-concat 'style.styl'

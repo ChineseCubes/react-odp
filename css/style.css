@@ -99,16 +99,20 @@ body,
   position: relative;
   background: #16161d;
 }
-.cubebooks.page {
+.react-odp-viewer {
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
   margin: auto;
+}
+.element {
+  position: absolute;
+}
+.element.page {
   background: #0f0;
 }
-.cubebooks .frame {
-  position: absolute;
+.element.frame {
   background: #00f;
 }

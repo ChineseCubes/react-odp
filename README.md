@@ -1,6 +1,8 @@
-# CUBEBooks
+# react-odp
 
-## Usage
+A naive ODP viewer in React.
+
+## Develop
 
 ```bash
 npm install
