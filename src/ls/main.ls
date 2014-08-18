@@ -7,8 +7,7 @@ data['@attributes'] <<< do
 data = page: data
 
 config =
-  # right click a slide -> Slide -> Page Setup
-  # FIXME: should get these informations from JSON
+  # FIXME: office:automatic-styles > style:page-layout
   page-setup:
     ratio:  4 / 3
     x:      0cm
@@ -41,7 +40,11 @@ tree = ODP.map data, ->
   v.height = "#{v.height}%"
   v
 
-console.log tree
+# test dpcm in current browser
+dots = React.renderComponent do
+  ODP.DotsDetector unit: \cm
+  $ \#detector .get!0
+console.log JSON.stringify dots.state
 
 viewer = React.renderComponent do
   ODP.Viewer do

@@ -1,6 +1,6 @@
 (function(){
   $.getJSON('./json/page1.json', function(data){
-    var config, tree, viewer, resize;
+    var config, tree, dots, viewer, resize;
     import$(data['@attributes'], {
       x: 0,
       y: 0,
@@ -44,7 +44,10 @@
       v.height = v.height + "%";
       return v;
     });
-    console.log(tree);
+    dots = React.renderComponent(ODP.DotsDetector({
+      unit: 'cm'
+    }), $('#detector').get()[0]);
+    console.log(JSON.stringify(dots.state));
     viewer = React.renderComponent(ODP.Viewer({
       value: {
         x: 0,

@@ -1,7 +1,40 @@
+{div} = React.DOM
 {isArray, isString, isPlainObject} = _
 slice = Array.prototype.slice
 
+DotsDetector = React.createClass do
+  displayName: 'UnitDetector'
+  pxFromStyle: ->
+    result = /(\d+\.?\d*)px/exec it
+    [,px] = result if result
+    +px
+  # not now
+  #mixins: [PureRenderMixin]
+  getDefaultProps: ->
+    unit: \in
+  getInitialState: ->
+    x: 96
+    y: 96
+  ##
+  # get dots per inch and dots per cm by using window.getComputedStyle
+  # the results in different browsers are not the same
+  componentDidMount: !->
+    style = getComputedStyle @refs.unit.getDOMNode!
+    @state
+      ..x = @pxFromStyle style.width
+      ..y = @pxFromStyle style.height
+  render: ->
+    div do
+      ref: \unit
+      style: do
+        position: \absolute
+        left:     '-100%'
+        top:      '-100%'
+        width:    "1#{@props.unit}"
+        height:   "1#{@props.unit}"
+
 utils =
+  DotsDetector: DotsDetector
   numberFromCM: ->
     throw new Error "#it is not end with \'cm\'" if \cm isnt it.slice -2
     +it.slice 0, -2

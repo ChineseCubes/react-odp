@@ -1,8 +1,51 @@
 (function(){
-  var isArray, isString, isPlainObject, slice, utils, ref$, div, NullMixin, toUpperCamel, ODPElementMixin, defaultComponents, ODP, this$ = this;
+  var div, isArray, isString, isPlainObject, slice, DotsDetector, utils, ref$, NullMixin, toUpperCamel, ODPElementMixin, defaultComponents, ODP, this$ = this;
+  div = React.DOM.div;
   isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject;
   slice = Array.prototype.slice;
+  DotsDetector = React.createClass({
+    displayName: 'UnitDetector',
+    pxFromStyle: function(it){
+      var result, px;
+      result = /(\d+\.?\d*)px/.exec(it);
+      if (result) {
+        px = result[1];
+      }
+      return +px;
+    },
+    getDefaultProps: function(){
+      return {
+        unit: 'in'
+      };
+    },
+    getInitialState: function(){
+      return {
+        x: 96,
+        y: 96
+      };
+    },
+    componentDidMount: function(){
+      var style, x$;
+      style = getComputedStyle(this.refs.unit.getDOMNode());
+      x$ = this.state;
+      x$.x = this.pxFromStyle(style.width);
+      x$.y = this.pxFromStyle(style.height);
+    },
+    render: function(){
+      return div({
+        ref: 'unit',
+        style: {
+          position: 'absolute',
+          left: '-100%',
+          top: '-100%',
+          width: "1" + this.props.unit,
+          height: "1" + this.props.unit
+        }
+      });
+    }
+  });
   utils = {
+    DotsDetector: DotsDetector,
     numberFromCM: function(it){
       if ('cm' !== it.slice(-2)) {
         throw new Error(it + " is not end with 'cm'");
