@@ -99,7 +99,7 @@ body,
   position: relative;
   background: #16161d;
 }
-.react-odp-viewer {
+.presentation {
   position: absolute;
   left: 0;
   top: 0;
@@ -107,12 +107,12 @@ body,
   bottom: 0;
   margin: auto;
 }
-.element {
+.draw {
   position: absolute;
 }
-.element.page {
+.draw.page {
   background: #0f0;
 }
-.element.frame {
+.draw.frame {
   background: #00f;
 }

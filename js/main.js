@@ -1,9 +1,9 @@
 (function(){
   $.getJSON('./json/page1.json', function(data){
-    var config, tree, dots, viewer, resize;
+    var config, dots, dpcm, tree, viewer, resize;
     import$(data['@attributes'], {
-      x: 0,
-      y: 0,
+      x: '0',
+      y: '0',
       width: '28cm',
       height: '21cm'
     });
@@ -19,65 +19,36 @@
         height: 21
       }
     };
-    tree = ODP.map(data, function(it){
-      var cm, v;
-      cm = ODP.numberFromCM;
-      v = it['@attributes'];
-      if (!v) {
-        return {};
-      }
-      if (v.x) {
-        v.x = 100 * cm(v.x) / config.pageSetup.width;
-      }
-      if (v.y) {
-        v.y = 100 * cm(v.y) / config.pageSetup.height;
-      }
-      if (v.width) {
-        v.width = 100 * cm(v.width) / config.pageSetup.width;
-      }
-      if (v.height) {
-        v.height = 100 * cm(v.height) / config.pageSetup.height;
-      }
-      v.x = v.x + "%";
-      v.y = v.y + "%";
-      v.width = v.width + "%";
-      v.height = v.height + "%";
-      return v;
-    });
     dots = React.renderComponent(ODP.DotsDetector({
       unit: 'cm'
     }), $('#detector').get()[0]);
-    console.log(JSON.stringify(dots.state));
-    viewer = React.renderComponent(ODP.Viewer({
+    dpcm = dots.state.x;
+    console.log("dpcm: " + dpcm);
+    tree = ODP.map(data, function(it){
+      return it['@attributes'] || [];
+    });
+    viewer = React.renderComponent(ODP.Presentation({
       value: {
-        x: 0,
-        y: 0,
-        width: 100,
-        height: 100
+        x: '0',
+        y: '0',
+        width: '28cm',
+        height: '21cm'
       },
       children: tree
     }), $('#wrap').get()[0]);
     (resize = function(){
-      var ratio, width, height, v, x$, y$;
+      var ratio, pxWidth, pxHeight, width, height, s;
       ratio = config.pageSetup.ratio;
+      pxWidth = config.pageSetup.width * dpcm;
+      pxHeight = config.pageSetup.height * dpcm;
       width = $(window).width();
       height = $(window).height();
-      v = viewer.props.value;
-      if (width / ratio < height) {
-        x$ = v;
-        x$.width = width;
-        x$.height = width / ratio;
-        return viewer.setProps({
-          value: v
-        });
-      } else {
-        y$ = v;
-        y$.width = height * ratio;
-        y$.height = height;
-        return viewer.setProps({
-          value: v
-        });
-      }
+      s = width / ratio < height
+        ? width / pxWidth
+        : height / pxHeight;
+      return viewer.setProps({
+        scale: s
+      });
     })();
     return $(window).resize(resize);
   });

@@ -1,7 +1,7 @@
 data <- $.getJSON './json/page1.json'
 data['@attributes'] <<< do
-  x: 0
-  y: 0
+  x:      \0
+  y:      \0
   width:  \28cm
   height: \21cm
 data = page: data
@@ -15,61 +15,35 @@ config =
     width:  28cm
     height: 21cm
 
-#ODP.each data, !(value, name, parents) ->
-#  if name is 'page-thumbnail' and parents[*-1] is 'notes'
-#    cm = CUBEBooks.numberFromCM x
-#    {x, y, width, height} = value['@attributes']
-#    config.page-setup =
-#      x:      cm x
-#      y:      cm y
-#      width:  cm width
-#      height: cm height
-
-tree = ODP.map data, ->
-  cm = ODP.numberFromCM
-  v = it['@attributes']
-  return {} if not v
-  # ugly 0rz
-  v.x      = 100 * cm(v.x)      / config.page-setup.width  if v.x
-  v.y      = 100 * cm(v.y)      / config.page-setup.height if v.y
-  v.width  = 100 * cm(v.width)  / config.page-setup.width  if v.width
-  v.height = 100 * cm(v.height) / config.page-setup.height if v.height
-  v.x      = "#{v.x}%"
-  v.y      = "#{v.y}%"
-  v.width  = "#{v.width}%"
-  v.height = "#{v.height}%"
-  v
-
 # test dpcm in current browser
 dots = React.renderComponent do
   ODP.DotsDetector unit: \cm
   $ \#detector .get!0
-console.log JSON.stringify dots.state
+dpcm = dots.state.x
+console.log "dpcm: #dpcm"
+
+tree = ODP.map data, -> it['@attributes'] or []
 
 viewer = React.renderComponent do
-  ODP.Viewer do
+  ODP.Presentation do
     value:
-      x:      0
-      y:      0
-      width:  100
-      height: 100
+      x:      \0
+      y:      \0
+      width:  \28cm
+      height: \21cm
     children: tree
   $ \#wrap .get!0
 
 do resize = ->
-  ratio = config.page-setup.ratio
+  ratio     = config.page-setup.ratio
+  px-width  = config.page-setup.width  * dpcm
+  px-height = config.page-setup.height * dpcm
   width  = $(window).width!
   height = $(window).height!
-  v = viewer.props.value
-  if width / ratio < height
-    v
-      ..width  = width
-      ..height = width / ratio
-    viewer.setProps value: v
+  s = if width / ratio < height
+    width / px-width
   else
-    v
-      ..width  = height * ratio
-      ..height = height
-    viewer.setProps value: v
+    height / px-height
+  viewer.setProps scale: s
 $ window .resize resize
 

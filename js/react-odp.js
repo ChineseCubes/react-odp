@@ -1,5 +1,5 @@
 (function(){
-  var div, isArray, isString, isPlainObject, slice, DotsDetector, utils, ref$, NullMixin, toUpperCamel, ODPElementMixin, defaultComponents, ODP, this$ = this;
+  var div, isArray, isString, isPlainObject, slice, DotsDetector, utils, ref$, isNumber, NullMixin, DrawMixin, defaultComponents, this$ = this;
   div = React.DOM.div;
   isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject;
   slice = Array.prototype.slice;
@@ -37,8 +37,7 @@
         ref: 'unit',
         style: {
           position: 'absolute',
-          left: '-100%',
-          top: '-100%',
+          display: 'none',
           width: this.props.scale + "" + this.props.unit,
           height: this.props.scale + "" + this.props.unit
         }
@@ -124,19 +123,37 @@
     ? ref$
     : this.ODP = {}, utils);
   div = React.DOM.div;
+  isNumber = _.isNumber;
   NullMixin = {
     render: function(){
       return div();
     }
   };
-  toUpperCamel = function(it){
-    return it.split('-').map(function(it){
-      return it.slice(0, 1).toUpperCase() + "" + it.slice(1);
-    }).join('');
-  };
-  ODPElementMixin = {
+  DrawMixin = {
+    toHyphen: function(){},
+    toUpperCamel: function(it){
+      return it.split('-').map(function(it){
+        return it.slice(0, 1).toUpperCase() + "" + it.slice(1);
+      }).join('');
+    },
+    scaleStyle: function(it){
+      var r;
+      switch (false) {
+      case !!it:
+        return it;
+      case !isNumber(it):
+        return it * this.props.scale;
+      case !/\d*\.?\d+%$/.test(it):
+        return it;
+      case !(r = /(\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/.exec(it)):
+        return +r[1] * this.props.scale + "" + (r[2] || '');
+      default:
+        throw new Error("style \"" + it + "\" should be a length");
+      }
+    },
     getDefaultProps: function(){
       return {
+        scale: 1.0,
         value: {},
         children: []
       };
@@ -150,20 +167,21 @@
       children = res$;
       v = this.props.value;
       return div({
-        className: "element " + (this.state.name || 'unknown'),
+        className: "draw " + (this.state.name || 'unknown'),
         style: {
-          left: v.x,
-          top: v.y,
-          width: v.width,
-          height: v.height
+          left: this.scaleStyle(v.x) || 'auto',
+          top: this.scaleStyle(v.y) || 'auto',
+          width: this.scaleStyle(v.width) || 'auto',
+          height: this.scaleStyle(v.height) || 'auto'
         }
       }, children);
       function fn$(i, child){
         var comp;
-        comp = defaultComponents[toUpperCamel(child.name)];
+        comp = defaultComponents[this.toUpperCamel(child.name)];
         if (comp) {
           return comp({
             key: i,
+            scale: this.props.scale,
             value: child.value,
             children: child.children
           });
@@ -176,7 +194,7 @@
   defaultComponents = {
     Page: React.createClass({
       displayName: 'ReactODP.Page',
-      mixins: [ODPElementMixin],
+      mixins: [DrawMixin],
       getInitialState: function(){
         return {
           name: 'page'
@@ -185,28 +203,26 @@
     }),
     Frame: React.createClass({
       displayName: 'ReactODP.Frame',
-      mixins: [ODPElementMixin],
+      mixins: [DrawMixin],
       getInitialState: function(){
         return {
           name: 'frame'
         };
       }
-    })
-  };
-  ODP = {
-    Viewer: React.createClass({
-      displayName: 'ReactODP.Viewer',
-      mixins: [ODPElementMixin],
+    }),
+    Presentation: React.createClass({
+      displayName: 'ReactODP.Presentation',
+      mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          name: 'react-odp-viewer'
+          name: 'presentation'
         };
       }
     })
   };
   import$((ref$ = this.ODP) != null
     ? ref$
-    : this.ODP = {}, ODP);
+    : this.ODP = {}, defaultComponents);
   function import$(obj, src){
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];
