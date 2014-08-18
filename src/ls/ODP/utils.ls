@@ -5,7 +5,7 @@ slice = Array.prototype.slice
 DotsDetector = React.createClass do
   displayName: 'UnitDetector'
   pxFromStyle: ->
-    result = /(\d+\.?\d*)px/exec it
+    result = /(\d*\.?\d+)px/exec it
     [,px] = result if result
     +px
   # not now
@@ -35,9 +35,20 @@ DotsDetector = React.createClass do
 
 utils =
   DotsDetector: DotsDetector
-  numberFromCM: ->
-    throw new Error "#it is not end with \'cm\'" if \cm isnt it.slice -2
-    +it.slice 0, -2
+  getPageJSON: !(path, done) ->
+    [,dir] = /(.*\/)?.*\.json/exec(path) or [,'']
+    data <- $.getJSON path
+    data['@attributes'] <<< do
+      x:      \0
+      y:      \0
+      width:  \28cm
+      height: \21cm
+    data = page: data
+    tree = utils.map data, ->
+      r = it['@attributes'] or []
+      r.href = "#dir#{r.href}" if r.href
+      r
+    done tree
   each: !(book-json, onNode, parents = []) ~>
     old-parents = slice.call parents
     for k, v of book-json

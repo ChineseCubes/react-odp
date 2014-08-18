@@ -1,32 +1,21 @@
 (function(){
-  $.getJSON('./json/page1.json', function(data){
-    var config, dots, dpcm, tree, viewer, resize;
-    import$(data['@attributes'], {
-      x: '0',
-      y: '0',
-      width: '28cm',
-      height: '21cm'
-    });
-    data = {
-      page: data
-    };
-    config = {
-      pageSetup: {
-        ratio: 4 / 3,
-        x: 0,
-        y: 0,
-        width: 28,
-        height: 21
-      }
-    };
-    dots = React.renderComponent(ODP.DotsDetector({
-      unit: 'cm'
-    }), $('#detector').get()[0]);
-    dpcm = dots.state.x;
-    console.log("dpcm: " + dpcm);
-    tree = ODP.map(data, function(it){
-      return it['@attributes'] || [];
-    });
+  var config, dots, dpcm;
+  config = {
+    pageSetup: {
+      ratio: 4 / 3,
+      x: 0,
+      y: 0,
+      width: 28,
+      height: 21
+    }
+  };
+  dots = React.renderComponent(ODP.DotsDetector({
+    unit: 'cm'
+  }), $('#detector').get()[0]);
+  dpcm = dots.state.x;
+  console.log("dpcm: " + dpcm);
+  ODP.getPageJSON('./json/page1.json', function(data){
+    var viewer, resize;
     viewer = React.renderComponent(ODP.Presentation({
       value: {
         x: '0',
@@ -34,7 +23,7 @@
         width: '28cm',
         height: '21cm'
       },
-      children: tree
+      children: data
     }), $('#wrap').get()[0]);
     (resize = function(){
       var ratio, pxWidth, pxHeight, width, height, s;
@@ -52,9 +41,4 @@
     })();
     return $(window).resize(resize);
   });
-  function import$(obj, src){
-    var own = {}.hasOwnProperty;
-    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
-    return obj;
-  }
 }).call(this);

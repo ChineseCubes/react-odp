@@ -7,7 +7,7 @@
     displayName: 'UnitDetector',
     pxFromStyle: function(it){
       var result, px;
-      result = /(\d+\.?\d*)px/.exec(it);
+      result = /(\d*\.?\d+)px/.exec(it);
       if (result) {
         px = result[1];
       }
@@ -46,11 +46,30 @@
   });
   utils = {
     DotsDetector: DotsDetector,
-    numberFromCM: function(it){
-      if ('cm' !== it.slice(-2)) {
-        throw new Error(it + " is not end with 'cm'");
-      }
-      return +it.slice(0, -2);
+    getPageJSON: function(path, done){
+      var ref$, dir;
+      ref$ = /(.*\/)?.*\.json/.exec(path) || [void 8, ''], dir = ref$[1];
+      $.getJSON(path, function(data){
+        var tree;
+        import$(data['@attributes'], {
+          x: '0',
+          y: '0',
+          width: '28cm',
+          height: '21cm'
+        });
+        data = {
+          page: data
+        };
+        tree = utils.map(data, function(it){
+          var r;
+          r = it['@attributes'] || [];
+          if (r.href) {
+            r.href = dir + "" + r.href;
+          }
+          return r;
+        });
+        return done(tree);
+      });
     },
     each: function(bookJson, onNode, parents){
       var oldParents, k, v, idx, obj;

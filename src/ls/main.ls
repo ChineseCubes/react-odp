@@ -1,11 +1,3 @@
-data <- $.getJSON './json/page1.json'
-data['@attributes'] <<< do
-  x:      \0
-  y:      \0
-  width:  \28cm
-  height: \21cm
-data = page: data
-
 config =
   # FIXME: office:automatic-styles > style:page-layout
   page-setup:
@@ -22,8 +14,7 @@ dots = React.renderComponent do
 dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
-tree = ODP.map data, -> it['@attributes'] or []
-
+data <- ODP.getPageJSON './json/page1.json'
 viewer = React.renderComponent do
   ODP.Presentation do
     value:
@@ -31,9 +22,8 @@ viewer = React.renderComponent do
       y:      \0
       width:  \28cm
       height: \21cm
-    children: tree
+    children: data
   $ \#wrap .get!0
-
 do resize = ->
   ratio     = config.page-setup.ratio
   px-width  = config.page-setup.width  * dpcm
