@@ -15,7 +15,8 @@
     },
     getDefaultProps: function(){
       return {
-        unit: 'in'
+        unit: 'in',
+        scale: 1024
       };
     },
     getInitialState: function(){
@@ -28,8 +29,8 @@
       var style, x$;
       style = getComputedStyle(this.refs.unit.getDOMNode());
       x$ = this.state;
-      x$.x = this.pxFromStyle(style.width);
-      x$.y = this.pxFromStyle(style.height);
+      x$.x = this.pxFromStyle(style.width) / this.props.scale;
+      x$.y = this.pxFromStyle(style.height) / this.props.scale;
     },
     render: function(){
       return div({
@@ -38,8 +39,8 @@
           position: 'absolute',
           left: '-100%',
           top: '-100%',
-          width: "1" + this.props.unit,
-          height: "1" + this.props.unit
+          width: this.props.scale + "" + this.props.unit,
+          height: this.props.scale + "" + this.props.unit
         }
       });
     }

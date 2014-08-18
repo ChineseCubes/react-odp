@@ -11,7 +11,8 @@ DotsDetector = React.createClass do
   # not now
   #mixins: [PureRenderMixin]
   getDefaultProps: ->
-    unit: \in
+    unit:  \in
+    scale: 1024
   getInitialState: ->
     x: 96
     y: 96
@@ -21,8 +22,8 @@ DotsDetector = React.createClass do
   componentDidMount: !->
     style = getComputedStyle @refs.unit.getDOMNode!
     @state
-      ..x = @pxFromStyle style.width
-      ..y = @pxFromStyle style.height
+      ..x = @pxFromStyle(style.width)  / @props.scale
+      ..y = @pxFromStyle(style.height) / @props.scale
   render: ->
     div do
       ref: \unit
@@ -30,8 +31,8 @@ DotsDetector = React.createClass do
         position: \absolute
         left:     '-100%'
         top:      '-100%'
-        width:    "1#{@props.unit}"
-        height:   "1#{@props.unit}"
+        width:    "#{@props.scale}#{@props.unit}"
+        height:   "#{@props.scale}#{@props.unit}"
 
 utils =
   DotsDetector: DotsDetector
