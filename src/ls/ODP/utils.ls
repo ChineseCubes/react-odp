@@ -29,8 +29,7 @@ DotsDetector = React.createClass do
       ref: \unit
       style: do
         position: \absolute
-        left:     '-100%'
-        top:      '-100%'
+        display:  \none
         width:    "#{@props.scale}#{@props.unit}"
         height:   "#{@props.scale}#{@props.unit}"
 
