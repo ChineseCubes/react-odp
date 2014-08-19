@@ -21,14 +21,19 @@ html, body, #wrap
     //  background transparent
     &.image
       background-size cover
-      width:  100% !important
-      height: 100% !important
-      content: ''
+      width  100% !important
+      height 100% !important
+      content ''
     &.text-box
-      width:  100% !important
-      height: 100% !important
+      width  100% !important
+      height 100% !important
     &.p, &.span
       position static
     &.p
-      height: 100% !important
-      text-align: center
+      display table
+      width  100% !important
+      height 100% !important
+    &.span
+      text-align center
+      display table-cell
+      vertical-align bottom

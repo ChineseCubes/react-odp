@@ -14,7 +14,7 @@
   }), $('#detector').get()[0]);
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
-  ODP.getPageJSON('./json/page1.json', function(data){
+  ODP.getPageJSON('./json/page3.json', function(data){
     var viewer, resize;
     viewer = React.renderComponent(ODP.Presentation({
       name: 'presentation',
