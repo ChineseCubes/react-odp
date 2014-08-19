@@ -47,10 +47,8 @@
   utils = {
     DotsDetector: DotsDetector,
     getPageJSON: function(path, done){
-      var ref$, dir;
-      ref$ = /(.*\/)?.*\.json/.exec(path) || [void 8, ''], dir = ref$[1];
       $.getJSON(path, function(data){
-        var tree;
+        var frameCount, ref$, dir, file, tree;
         import$(data['@attributes'], {
           x: '0',
           y: '0',
@@ -60,13 +58,23 @@
         data = {
           page: data
         };
-        tree = utils.map(data, function(it){
-          var r;
-          r = it['@attributes'] || [];
-          if (r.href) {
-            r.href = dir + "" + r.href;
+        frameCount = 0;
+        ref$ = /(.*\/)?(.*)\.json/.exec(path) || [void 8, '', ''], dir = ref$[1], file = ref$[2];
+        tree = utils.map(data, function(value, key, parents){
+          var attrs;
+          attrs = value['@attributes'] || [];
+          switch (file) {
+          case 'page1':
+            switch (key) {
+            case 'frame':
+              console.log(frameCount, attrs);
+              frameCount += 1;
+            }
           }
-          return r;
+          if (attrs.href) {
+            attrs.href = dir + "" + attrs.href;
+          }
+          return attrs;
         });
         return done(tree);
       });

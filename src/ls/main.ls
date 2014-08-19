@@ -14,9 +14,9 @@ dots = React.renderComponent do
 dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
-#data <- ODP.getPageJSON './json/page1.json'
+data <- ODP.getPageJSON './json/page1.json'
 #data <- ODP.getPageJSON './json/page2.json'
-data <- ODP.getPageJSON './json/page3.json'
+#data <- ODP.getPageJSON './json/page3.json'
 viewer = React.renderComponent do
   ODP.Presentation do
     name:   \presentation

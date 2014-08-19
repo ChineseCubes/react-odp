@@ -36,7 +36,6 @@ DotsDetector = React.createClass do
 utils =
   DotsDetector: DotsDetector
   getPageJSON: !(path, done) ->
-    [,dir] = /(.*\/)?.*\.json/exec(path) or [,'']
     data <- $.getJSON path
     data['@attributes'] <<< do
       x:      \0
@@ -44,10 +43,21 @@ utils =
       width:  \28cm
       height: \21cm
     data = page: data
-    tree = utils.map data, ->
-      r = it['@attributes'] or []
-      r.href = "#dir#{r.href}" if r.href
-      r
+    frame-count = 0
+    [, dir, file] = /(.*\/)?(.*)\.json/exec(path) or [, '', '']
+    tree = utils.map data, (value, key, parents)->
+      attrs = value['@attributes'] or []
+      # append fake data for page1
+      switch file
+      | 'page1'
+        switch key
+        | 'frame'
+          console.log frame-count, attrs
+          # TODO: should hard code style P1, pr1 and Default-title here first
+          frame-count += 1
+      # fix relative pathes
+      attrs.href = "#dir#{attrs.href}" if attrs.href
+      attrs
     done tree
   each: !(book-json, onNode, parents = []) ~>
     old-parents = slice.call parents
