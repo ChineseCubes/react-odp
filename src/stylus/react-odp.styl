@@ -16,7 +16,19 @@ html, body, #wrap
   .draw
     position absolute
     &.page
-      background #0F0
-    &.frame
-      background #00F
-
+      background white
+    //&.frame
+    //  background transparent
+    &.image
+      background-size cover
+      width:  100% !important
+      height: 100% !important
+      content: ''
+    &.text-box
+      width:  100% !important
+      height: 100% !important
+    &.p, &.span
+      position static
+    &.p
+      height: 100% !important
+      text-align: center

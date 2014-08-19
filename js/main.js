@@ -17,6 +17,7 @@
   ODP.getPageJSON('./json/page1.json', function(data){
     var viewer, resize;
     viewer = React.renderComponent(ODP.Presentation({
+      name: 'presentation',
       value: {
         x: '0',
         y: '0',

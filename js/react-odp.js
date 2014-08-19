@@ -112,6 +112,11 @@
         case k !== "@attributes":
           break;
         case !isString(v):
+          nodes.push({
+            name: k,
+            value: {},
+            text: v
+          });
           break;
         case !isPlainObject(v):
           nodes.push({
@@ -155,6 +160,11 @@
         return it.slice(0, 1).toUpperCase() + "" + it.slice(1);
       }).join('');
     },
+    toLowerCamel: function(it){
+      it = this.toUpperCamel(it);
+      it[0] = it[0].toLowerCase();
+      return it;
+    },
     scaleStyle: function(it){
       var r;
       switch (false) {
@@ -172,38 +182,52 @@
     },
     getDefaultProps: function(){
       return {
+        classNames: ['draw'],
         scale: 1.0,
         value: {},
         children: []
       };
     },
     render: function(){
-      var children, res$, i$, v;
+      var v, ts, children, res$, i$, classNames, props;
+      v = this.props.value;
+      ts = v['text-style-name'];
       res$ = [];
       for (i$ in this.props.children) {
         res$.push((fn$.call(this, i$, this.props.children[i$])));
       }
       children = res$;
-      v = this.props.value;
-      return div({
-        className: "draw " + (this.state.name || 'unknown'),
+      classNames = this.props.classNames.concat(this.props.name || 'unknown', v['style-name'], ts);
+      props = {
+        className: classNames.join(' '),
         style: {
           left: this.scaleStyle(v.x) || 'auto',
           top: this.scaleStyle(v.y) || 'auto',
           width: this.scaleStyle(v.width) || 'auto',
-          height: this.scaleStyle(v.height) || 'auto'
+          height: this.scaleStyle(v.height) || 'auto',
+          fontSize: this.scaleStyle('44pt')
         }
-      }, children);
+      };
+      if (v.href) {
+        props.style.backgroundImage = "url(" + v.href + ")";
+      }
+      return React.DOM[this.state.tagName](props, this.props.text, children);
       function fn$(i, child){
-        var comp;
+        var comp, props;
         comp = defaultComponents[this.toUpperCamel(child.name)];
+        if (ts) {
+          child.value['text-style-name'] = ts;
+        }
+        props = {
+          key: i,
+          scale: this.props.scale,
+          name: child.name,
+          value: child.value,
+          text: child.text,
+          children: child.children
+        };
         if (comp) {
-          return comp({
-            key: i,
-            scale: this.props.scale,
-            value: child.value,
-            children: child.children
-          });
+          return comp(props);
         } else {
           return null;
         }
@@ -216,7 +240,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          name: 'page'
+          tagName: 'div'
         };
       }
     }),
@@ -225,7 +249,43 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          name: 'frame'
+          tagName: 'div'
+        };
+      }
+    }),
+    TextBox: React.createClass({
+      displayName: 'ReactODP.TextBox',
+      mixins: [DrawMixin],
+      getInitialState: function(){
+        return {
+          tagName: 'div'
+        };
+      }
+    }),
+    Image: React.createClass({
+      displayName: 'ReactODP.Image',
+      mixins: [DrawMixin],
+      getInitialState: function(){
+        return {
+          tagName: 'img'
+        };
+      }
+    }),
+    P: React.createClass({
+      displayName: 'ReactODP.P',
+      mixins: [DrawMixin],
+      getInitialState: function(){
+        return {
+          tagName: 'p'
+        };
+      }
+    }),
+    Span: React.createClass({
+      displayName: 'ReactODP.P',
+      mixins: [DrawMixin],
+      getInitialState: function(){
+        return {
+          tagName: 'span'
         };
       }
     }),
@@ -234,7 +294,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          name: 'presentation'
+          tagName: 'div'
         };
       }
     })

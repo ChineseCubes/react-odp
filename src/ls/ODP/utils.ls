@@ -73,8 +73,13 @@ utils =
       parents.push k
       switch
       | k is "@attributes" => # do nothing
-      | isString v         => # do nothing
+      | isString v         =>
+        nodes.push do
+          name:  k
+          value: {}
+          text:  v
       | isPlainObject v
+        #console.log k, JSON.stringify v
         nodes.push do
           name:     k
           value:    onNode v, k, slice.call old-parents

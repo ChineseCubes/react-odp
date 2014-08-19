@@ -111,8 +111,25 @@ body,
   position: absolute;
 }
 .draw.page {
-  background: #0f0;
+  background: #fff;
 }
-.draw.frame {
-  background: #00f;
+.draw.image {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  width: 100% !important;
+  height: 100% !important;
+  content: '';
+}
+.draw.text-box {
+  width: 100% !important;
+  height: 100% !important;
+}
+.draw.p,
+.draw.span {
+  position: static;
+}
+.draw.p {
+  height: 100% !important;
+  text-align: center;
 }
