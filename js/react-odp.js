@@ -69,11 +69,24 @@
       value: '3.506cm'
     }
   });
-  x$.pr2 = Object.create(styles.DefaultNotes, {});
+  x$.pr2 = Object.create(styles.DefaultNotes, {
+    minHeight: {
+      value: '13.364cm'
+    }
+  });
+  x$.pr3 = Object.create(styles.DefaultTitle, {
+    textareaVerticalAlign: {
+      value: 'bottom'
+    },
+    minHeight: {
+      value: '3.506cm'
+    }
+  });
   x$.gr1 = {
     verticalAlign: 'middle',
     opacity: 1.0
   };
+  x$.gr2 = {};
   x$.P1 = {
     textAlign: 'start',
     fontFamily: 'Noto Sans T Chinese'
@@ -81,14 +94,56 @@
   x$.P2 = {
     textAlign: 'center'
   };
+  x$.P3 = {
+    fontFamily: 'Noto Sans T Chinese'
+  };
+  x$.P4 = {
+    fontSize: '20pt'
+  };
+  x$.P5 = {
+    fontFamily: 'cwTeX Q KaiZH'
+  };
+  x$.P6 = {
+    marginTop: '0cm',
+    marginBottom: '0cm',
+    lineHeight: '150%',
+    fontSize: '30pt'
+  };
+  x$.P7 = {
+    marginTop: '0cm',
+    marginBottom: '0cm',
+    lineHeight: '150%',
+    fontFamily: 'Noto Sans T Chinese',
+    fontSize: '30pt'
+  };
+  x$.P8 = {
+    lineHeight: '150%',
+    fontSize: '24pt'
+  };
+  x$.P9 = {
+    lineHeight: '150%',
+    fontFamily: 'Noto Sans T Chinese',
+    fontSize: '24pt'
+  };
   x$.T1 = {
     fontFamily: 'Noto Sans T Chinese'
+  };
+  x$.T2 = {
+    fontFamily: 'cwTeX Q KaiZH'
+  };
+  x$.T3 = {
+    fontFamily: 'Noto Sans T Chinese',
+    fontSize: '30pt'
+  };
+  x$.T4 = {
+    fontFamily: 'Noto Sans T Chinese',
+    fontSize: '24pt'
   };
   utils = {
     DotsDetector: DotsDetector,
     getPageJSON: function(path, done){
       $.getJSON(path, function(data){
-        var frameCount, spanCount, ref$, dir, file, tree;
+        var frameCount, spanCount, pCount, ref$, dir, file, tree;
         import$(data['@attributes'], {
           x: '0',
           y: '0',
@@ -100,9 +155,10 @@
         };
         frameCount = 0;
         spanCount = 0;
+        pCount = 0;
         ref$ = /(.*\/)?(.*)\.json/.exec(path) || [void 8, '', ''], dir = ref$[1], file = ref$[2];
         tree = utils.map(data, function(value, key, parents){
-          var attrs, x$, y$;
+          var attrs, x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, z10$, z11$, z12$, z13$, z14$, z15$, z16$, z17$, z18$, z19$;
           attrs = value['@attributes'] || {};
           switch (file) {
           case 'page1':
@@ -130,6 +186,234 @@
                 attrs.style = styles.T1;
               }
               spanCount += 1;
+            }
+            break;
+          case 'page2':
+            switch (key) {
+            case 'frame':
+              switch (frameCount) {
+              case 0:
+                z$ = attrs;
+                z$.style = styles.pr1;
+                z$.textStyle = styles.P3;
+                break;
+              case 1:
+                z1$ = attrs;
+                z1$.style = styles.gr1;
+                z1$.textStyle = styles.P2;
+                break;
+              case 2:
+                attrs.style = styles.pr2;
+              }
+              frameCount += 1;
+              break;
+            case 'span':
+              switch (spanCount) {
+              case 0:
+                attrs.style = styles.T1;
+              }
+              spanCount += 1;
+            }
+            break;
+          case 'page3':
+            switch (key) {
+            case 'frame':
+              switch (frameCount) {
+              case 0:
+                z2$ = attrs;
+                z2$.style = styles.gr1;
+                z2$.textStyle = styles.P2;
+                break;
+              case 1:
+                z3$ = attrs;
+                z3$.style = styles.pr3;
+                z3$.textStyle = styles.P3;
+                break;
+              case 2:
+                z4$ = attrs;
+                z4$.style = styles.pr2;
+                z4$.textStyle = styles.P4;
+              }
+              frameCount += 1;
+              break;
+            case 'span':
+              switch (spanCount) {
+              case 0:
+                attrs.style = styles.T1;
+              }
+              spanCount += 1;
+            }
+            break;
+          case 'page4':
+            switch (key) {
+            case 'frame':
+              switch (frameCount) {
+              case 0:
+                z5$ = attrs;
+                z5$.style = styles.pr1;
+                z5$.textStyle = styles.P5;
+                break;
+              case 1:
+                z6$ = attrs;
+                z6$.style = styles.gr1;
+                z6$.textStyle = styles.P2;
+                break;
+              case 2:
+                z7$ = attrs;
+                z7$.style = styles.pr2;
+                z7$.textStyle = styles.P4;
+              }
+              frameCount += 1;
+              break;
+            case 'span':
+              switch (spanCount) {
+              case 0:
+                attrs.style = styles.T2;
+              }
+              spanCount += 1;
+              break;
+            case 'p':
+              switch (pCount) {
+              case 0:
+                attrs.style = styles.P5;
+                break;
+              case 2:
+                attrs.style = styles.P4;
+              }
+              pCount += 1;
+            }
+            break;
+          case 'page5':
+            switch (key) {
+            case 'frame':
+              switch (frameCount) {
+              case 0:
+                z8$ = attrs;
+                z8$.style = styles.pr1;
+                z8$.textStyle = styles.P7;
+                break;
+              case 1:
+                z9$ = attrs;
+                z9$.style = styles.gr1;
+                z9$.textStyle = styles.P2;
+                break;
+              case 2:
+                z10$ = attrs;
+                z10$.style = styles.pr2;
+                z10$.textStyle = styles.P4;
+              }
+              frameCount += 1;
+              break;
+            case 'span':
+              attrs.style = styles.T3;
+              break;
+            case 'p':
+              switch (pCount) {
+              case 0:
+                attrs.style = styles.P6;
+                break;
+              case 2:
+                attrs.style = styles.P4;
+              }
+            }
+            break;
+          case 'page6':
+            switch (key) {
+            case 'frame':
+              switch (frameCount) {
+              case 0:
+                z11$ = attrs;
+                z11$.style = styles.pr1;
+                z11$.textStyle = styles.P3;
+                break;
+              case 1:
+                z12$ = attrs;
+                z12$.style = styles.gr1;
+                z12$.textStyle = styles.P2;
+                break;
+              case 2:
+                z13$ = attrs;
+                z13$.style = styles.pr2;
+                z13$.textStyle = styles.P4;
+              }
+              frameCount += 1;
+              break;
+            case 'span':
+              switch (spanCount) {
+              case 0:
+                attrs.style = styles.T1;
+              }
+              spanCount += 1;
+              break;
+            case 'p':
+              switch (pCount) {
+              case 2:
+                attrs.style = styles.P4;
+              }
+            }
+            break;
+          case 'page7':
+            switch (key) {
+            case 'frame':
+              switch (frameCount) {
+              case 0:
+                z14$ = attrs;
+                z14$.style = styles.gr1;
+                z14$.textStyle = styles.P2;
+                break;
+              case 1:
+                z15$ = attrs;
+                z15$.style = styles.pr1;
+                z15$.textStyle = styles.P9;
+                break;
+              case 2:
+                z16$ = attrs;
+                z16$.style = styles.pr2;
+                z16$.textStyle = styles.P4;
+              }
+              frameCount += 1;
+              break;
+            case 'span':
+              attrs.style = styles.T4;
+              break;
+            case 'p':
+              switch (pCount) {
+              case 1:
+                attrs.style = styles.P8;
+              }
+              pCount += 1;
+            }
+            break;
+          case 'page8':
+            switch (key) {
+            case 'frame':
+              switch (frameCount) {
+              case 0:
+                z17$ = attrs;
+                z17$.style = styles.pr1;
+                z17$.textStyle = styles.P9;
+                break;
+              case 1:
+                z18$ = attrs;
+                z18$.style = styles.gr1;
+                z18$.textStyle = styles.P2;
+                break;
+              case 2:
+                z19$ = attrs;
+                z19$.style = styles.pr2;
+                z19$.textStyle = styles.P4;
+              }
+              frameCount += 1;
+              break;
+            case 'span':
+              attrs.style = styles.T4;
+              break;
+            case 'p':
+              switch (pCount) {
+              case 0:
+                attrs.style = styles.P8;
+              }
+              pCount += 1;
             }
           }
           if (attrs.href) {
