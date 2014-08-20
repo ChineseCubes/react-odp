@@ -314,6 +314,9 @@
                 break;
               case 2:
                 attrs.style = styles.P4;
+                break;
+              case 3:
+                attrs.style = styles.P4;
               }
             }
             break;
@@ -556,8 +559,7 @@
         left: this.props.x || 'auto',
         top: this.props.y || 'auto',
         width: this.props.width || 'auto',
-        height: this.props.height || 'auto',
-        fontSize: this.props.fontSize || '44pt'
+        height: this.props.height || 'auto'
       });
       style = mapValues(style, this.scaleStyle);
       if (this.props.href) {

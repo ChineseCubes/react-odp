@@ -37,7 +37,6 @@ DrawMixin =
       top:         @props.y         or \auto
       width:       @props.width     or \auto
       height:      @props.height    or \auto
-      font-size:   @props.font-size or \44pt
     style = mapValues style, @scaleStyle
     style <<< background-image: "url(#{@props.href})" if @props.href
     props =

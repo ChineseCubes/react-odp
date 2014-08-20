@@ -246,6 +246,8 @@ utils =
             attrs.style = styles.P6
           | 2
             attrs.style = styles.P4
+          | 3
+            attrs.style = styles.P4
       | 'page6'
         switch key
         | 'frame'
