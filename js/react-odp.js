@@ -160,7 +160,9 @@
           for (idx in v) {
             obj = v[idx];
             onNode(obj, k, slice.call(oldParents));
-            utils.each(obj, onNode, parents);
+            if (!isString(obj)) {
+              utils.each(obj, onNode, parents);
+            }
           }
           break;
         default:
@@ -183,7 +185,6 @@
         case !isString(v):
           nodes.push({
             tagName: k,
-            attrs: {},
             text: v
           });
           break;
@@ -197,11 +198,16 @@
         case !isArray(v):
           for (idx in v) {
             obj = v[idx];
-            nodes.push({
-              tagName: k,
-              attrs: onNode(obj, k, slice.call(oldParents)),
-              children: utils.map(obj, onNode, parents)
-            });
+            nodes.push(isString(obj)
+              ? {
+                tagName: 'span',
+                text: obj
+              }
+              : {
+                tagName: k,
+                attrs: onNode(obj, k, slice.call(oldParents)),
+                children: utils.map(obj, onNode, parents)
+              });
           }
           break;
         default:
@@ -351,11 +357,20 @@
       }
     }),
     Span: React.createClass({
-      displayName: 'ReactODP.P',
+      displayName: 'ReactODP.Span',
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
           htmlTag: 'span'
+        };
+      }
+    }),
+    LineBreak: React.createClass({
+      displayName: 'ReactODP.LineBreak',
+      mixins: [DrawMixin],
+      getInitialState: function(){
+        return {
+          htmlTga: 'br'
         };
       }
     }),

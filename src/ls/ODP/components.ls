@@ -93,10 +93,15 @@ default-components =
     getInitialState: ->
       html-tag: \p
   Span: React.createClass do
-    displayName: \ReactODP.P
+    displayName: \ReactODP.Span
     mixins: [DrawMixin]
     getInitialState: ->
       html-tag: \span
+  LineBreak: React.createClass do
+    displayName: \ReactODP.LineBreak
+    mixins: [DrawMixin]
+    getInitialState: ->
+      html-tga: \br
   Presentation: React.createClass do
     displayName: \ReactODP.Presentation
     mixins: [DrawMixin]

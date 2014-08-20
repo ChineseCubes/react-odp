@@ -123,7 +123,7 @@ utils =
       | isArray v
         for idx, obj of v
           onNode obj, k, slice.call old-parents
-          utils.each obj, onNode, parents
+          utils.each obj, onNode, parents if not isString obj
       | otherwise
         throw new Error 'ill formated JSON'
       parents.pop!
@@ -137,7 +137,6 @@ utils =
       | isString v         =>
         nodes.push do
           tag-name:  k
-          attrs:     {}
           text:      v
       | isPlainObject v
         #console.log k, JSON.stringify v
@@ -147,7 +146,10 @@ utils =
           children: utils.map v, onNode, parents
       | isArray v
         for idx, obj of v
-          nodes.push do
+          nodes.push if isString obj
+            tag-name: \span
+            text:     obj
+          else
             tag-name: k
             attrs:    onNode obj, k, slice.call old-parents
             children: utils.map obj, onNode, parents
