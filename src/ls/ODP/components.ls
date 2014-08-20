@@ -1,4 +1,5 @@
 {isNumber, mapValues} = _
+{span} = React.DOM
 
 NullMixin =
   render: -> div!
@@ -56,20 +57,32 @@ DrawMixin =
           scale:    @props.scale
           children: child.children
         props <<< child.attrs
+        ##
         # deal with (.*-)?vertical-align
         # FIXME: does not work in FireFox
+        ##
+        # pass down the style to the text-box
         if style.textarea-vertical-align and child.tag-name is \text-box
           (props.style ?= {}) <<< do
-            display:                 \table
             textarea-vertical-align: style.textarea-vertical-align
-        if @props.tag-name is 'text-box' and style.display is \table
+        # change children into inline-blocks
+        if @props.tag-name is \text-box and style.textarea-vertical-align
           (props.style ?= {}) <<< do
-            display:        \table-cell
+            display:        \inline-block
             vertical-align: style.textarea-vertical-align
         comp props
+    # then add an invisible element to fill the height
+    if @props.tag-name is \text-box and style.textarea-vertical-align
+      children.unshift span do
+        key: \-1
+        style:
+          display:        \inline-block
+          height:         \100%
+          vertical-align: style.textarea-vertical-align
+    if @props.text
+      children.unshift @props.text
     React.DOM[@state.html-tag or @state.default-html-tag] do
       props
-      @props.text
       children
 
 default-components =

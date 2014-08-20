@@ -58,16 +58,20 @@ styles
     styles.DefaultTitle
     min-height:
       value: '3.506cm'
+      enumerable: true
   ..pr2 = Object.create do
     styles.DefaultNotes
     min-height:
       value: '13.364cm'
+      enumerable: true
   ..pr3 = Object.create do
     styles.DefaultTitle
     textarea-vertical-align:
       value: 'bottom'
+      enumerable: true
     min-height:
       value: '3.506cm'
+      enumerable: true
   ..gr1 = # skip the parent style 'Object with no fill and no line'
     vertical-align: 'middle'
     opacity:        1.0

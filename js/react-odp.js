@@ -1,5 +1,5 @@
 (function(){
-  var div, isArray, isString, isPlainObject, omit, pick, slice, DotsDetector, styles, x$, utils, ref$, isNumber, mapValues, NullMixin, DrawMixin, defaultComponents, this$ = this;
+  var div, isArray, isString, isPlainObject, omit, pick, slice, DotsDetector, styles, x$, utils, ref$, isNumber, mapValues, span, NullMixin, DrawMixin, defaultComponents, this$ = this;
   div = React.DOM.div;
   isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject, omit = _.omit, pick = _.pick;
   slice = Array.prototype.slice;
@@ -66,20 +66,24 @@
   };
   x$.pr1 = Object.create(styles.DefaultTitle, {
     minHeight: {
-      value: '3.506cm'
+      value: '3.506cm',
+      enumerable: true
     }
   });
   x$.pr2 = Object.create(styles.DefaultNotes, {
     minHeight: {
-      value: '13.364cm'
+      value: '13.364cm',
+      enumerable: true
     }
   });
   x$.pr3 = Object.create(styles.DefaultTitle, {
     textareaVerticalAlign: {
-      value: 'bottom'
+      value: 'bottom',
+      enumerable: true
     },
     minHeight: {
-      value: '3.506cm'
+      value: '3.506cm',
+      enumerable: true
     }
   });
   x$.gr1 = {
@@ -508,6 +512,7 @@
     ? ref$
     : this.ODP = {}, utils);
   isNumber = _.isNumber, mapValues = _.mapValues;
+  span = React.DOM.span;
   NullMixin = {
     render: function(){
       return div();
@@ -575,7 +580,20 @@
         res$.push((fn$.call(this, i$, this.props.children[i$])));
       }
       children = res$;
-      return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, this.props.text, children);
+      if (this.props.tagName === 'text-box' && style.textareaVerticalAlign) {
+        children.unshift(span({
+          key: '-1',
+          style: {
+            display: 'inline-block',
+            height: '100%',
+            verticalAlign: style.textareaVerticalAlign
+          }
+        }));
+      }
+      if (this.props.text) {
+        children.unshift(this.props.text);
+      }
+      return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, children);
       function fn$(i, child){
         var comp, props, ref$;
         if (child.text) {
@@ -595,15 +613,14 @@
             import$((ref$ = props.style) != null
               ? ref$
               : props.style = {}, {
-              display: 'table',
               textareaVerticalAlign: style.textareaVerticalAlign
             });
           }
-          if (this.props.tagName === 'text-box' && style.display === 'table') {
+          if (this.props.tagName === 'text-box' && style.textareaVerticalAlign) {
             import$((ref$ = props.style) != null
               ? ref$
               : props.style = {}, {
-              display: 'table-cell',
+              display: 'inline-block',
               verticalAlign: style.textareaVerticalAlign
             });
           }
