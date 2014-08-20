@@ -14,17 +14,28 @@ dots = React.renderComponent do
 dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
-data <- ODP.getPageJSON './json/page1.json'
-#data <- ODP.getPageJSON './json/page2.json'
-#data <- ODP.getPageJSON './json/page3.json'
+# FIXME: should be CUBEBooks.getPages
+getPages = (done) ->
+  pages = []
+  counter = 0
+  got-one = (data, i) ->
+    data.0.attrs.y = "#{i * 21.5}cm" # hack hack
+    pages.push data.0
+    counter += 1
+    if counter is 8
+      done do
+        tag-name: \presentation
+        x:        \0
+        y:        \0
+        width:    \28cm
+        height:   \21cm
+        children: pages
+  for let i from 1 to 8
+    ODP.getPageJSON "./json/page#i.json", -> got-one it, i - 1
+
+data <- getPages
 viewer = React.renderComponent do
-  ODP.Presentation do
-    tag-name: \presentation
-    x:        \0
-    y:        \0
-    width:    \28cm
-    height:   \21cm
-    children: data
+  ODP.Presentation data
   $ \#wrap .get!0
 do resize = ->
   ratio     = config.page-setup.ratio

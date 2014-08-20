@@ -95,9 +95,11 @@ body,
   width: 100%;
   height: 100%;
 }
+body {
+  background: #16161d;
+}
 #wrap {
   position: relative;
-  background: #16161d;
 }
 .presentation {
   position: absolute;
