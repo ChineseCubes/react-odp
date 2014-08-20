@@ -129,13 +129,3 @@ body,
 .draw.span {
   position: static;
 }
-.draw.p {
-  display: table;
-  width: 100% !important;
-  height: 100% !important;
-}
-.draw.span {
-  text-align: center;
-  display: table-cell;
-  vertical-align: bottom;
-}

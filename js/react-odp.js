@@ -1,5 +1,5 @@
 (function(){
-  var div, isArray, isString, isPlainObject, slice, DotsDetector, styles, x$, utils, ref$, isNumber, NullMixin, DrawMixin, defaultComponents, this$ = this;
+  var div, isArray, isString, isPlainObject, slice, DotsDetector, styles, x$, utils, ref$, isNumber, mapValues, NullMixin, DrawMixin, defaultComponents, this$ = this;
   div = React.DOM.div;
   isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject;
   slice = Array.prototype.slice;
@@ -47,6 +47,7 @@
   styles = {};
   x$ = styles;
   x$.DefaultTitle = {
+    textareaVerticalAlign: 'middle',
     lineHeight: '150%',
     textAlign: 'center',
     fontFamily: 'Noto Sans T Chinese, Heiti TC, Arial Unicode MS',
@@ -74,7 +75,7 @@
     opacity: 1.0
   };
   x$.P1 = {
-    textAlign: 'left',
+    textAlign: 'start',
     fontFamily: 'Noto Sans T Chinese'
   };
   x$.P2 = {
@@ -214,7 +215,7 @@
   import$((ref$ = this.ODP) != null
     ? ref$
     : this.ODP = {}, utils);
-  isNumber = _.isNumber;
+  isNumber = _.isNumber, mapValues = _.mapValues;
   NullMixin = {
     render: function(){
       return div();
@@ -235,8 +236,6 @@
     scaleStyle: function(it){
       var r;
       switch (false) {
-      case !!it:
-        return it;
       case !isNumber(it):
         return it * this.props.scale;
       case !/\d*\.?\d+%$/.test(it):
@@ -244,7 +243,7 @@
       case !(r = /(\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/.exec(it)):
         return +r[1] * this.props.scale + "" + (r[2] || '');
       default:
-        throw new Error("style \"" + it + "\" should be a length");
+        return it;
       }
     },
     getDefaultProps: function(){
@@ -260,40 +259,37 @@
       };
     },
     render: function(){
-      var children, res$, i$, classNames, style, ref$, props;
-      console.log(JSON.stringify(this.props, null, 2));
-      res$ = [];
-      for (i$ in this.props.children) {
-        res$.push((fn$.call(this, i$, this.props.children[i$])));
-      }
-      children = res$;
+      var classNames, style, props, children, res$, i$;
       classNames = this.props.classNames.concat(this.props.tagName || 'unknown');
-      style = {
-        left: this.scaleStyle(this.props.x) || 'auto',
-        top: this.scaleStyle(this.props.y) || 'auto',
-        width: this.scaleStyle(this.props.width) || 'auto',
-        height: this.scaleStyle(this.props.height) || 'auto',
-        fontSize: this.scaleStyle(this.props.fontSize || '44pt'),
-        fontFamily: (ref$ = this.props.style) != null ? ref$.fontFamily : void 8
-      };
-      if (this.props.style) {
-        import$(style, this.props.style);
-      }
+      importAll$(style = {}, this.props.style);
+      import$(style, {
+        left: this.props.x || 'auto',
+        top: this.props.y || 'auto',
+        width: this.props.width || 'auto',
+        height: this.props.height || 'auto',
+        fontSize: this.props.fontSize || '44pt'
+      });
+      style = mapValues(style, this.scaleStyle);
       if (this.props.href) {
         style.backgroundImage = "url(" + this.props.href + ")";
+      }
+      if (style.verticalAlign && style.display !== 'table-cell') {
+        style.display = 'table';
       }
       props = {
         className: classNames.join(' '),
         style: style
       };
+      res$ = [];
+      for (i$ in this.props.children) {
+        res$.push((fn$.call(this, i$, this.props.children[i$])));
+      }
+      children = res$;
       return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, this.props.text, children);
       function fn$(i, child){
-        var comp, props;
+        var comp, props, ref$;
         comp = defaultComponents[this.toUpperCamel(child.tagName)];
         if (comp) {
-          if (this.props.textStyle) {
-            child.attrs.textStyle = this.props.textStyle;
-          }
           props = {
             key: i,
             tagName: child.tagName,
@@ -302,6 +298,22 @@
             children: child.children
           };
           import$(props, child.attrs);
+          if (style.textareaVerticalAlign && child.tagName === 'text-box') {
+            import$((ref$ = props.style) != null
+              ? ref$
+              : props.style = {}, {
+              verticalAlign: style.textareaVerticalAlign
+            });
+          }
+          if (style.verticalAlign && style.display !== 'table-cell') {
+            console.log(child.tagName);
+            import$((ref$ = props.style) != null
+              ? ref$
+              : props.style = {}, {
+              display: 'table-cell',
+              verticalAlign: style.verticalAlign
+            });
+          }
           return comp(props);
         }
       }
@@ -358,6 +370,10 @@
   function import$(obj, src){
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+    return obj;
+  }
+  function importAll$(obj, src){
+    for (var key in src) obj[key] = src[key];
     return obj;
   }
 }).call(this);

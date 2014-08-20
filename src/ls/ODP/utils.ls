@@ -36,6 +36,8 @@ DotsDetector = React.createClass do
 styles = {}
 styles
   ..DefaultTitle =
+    # graphic properties, WTF?
+    textarea-vertical-align: 'middle'
     # paragraph properties
     line-height:  '150%'
     text-align:   'center'
@@ -60,7 +62,7 @@ styles
     vertical-align: 'middle'
     opacity:        1.0
   ..P1 =
-    text-align:   'left'
+    text-align:   'start'
     font-family:  'Noto Sans T Chinese'
   ..P2 =
     text-align:   'center'
