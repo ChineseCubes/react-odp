@@ -40,8 +40,6 @@ DrawMixin =
       font-size:   @props.font-size or \44pt
     style = mapValues style, @scaleStyle
     style <<< background-image: "url(#{@props.href})" if @props.href
-    if style.vertical-align and style.display isnt 'table-cell'
-      style.display = 'table'
     props =
       className: classNames.join ' '
       style: style
@@ -58,14 +56,14 @@ DrawMixin =
           children: child.children
         props <<< child.attrs
         # deal with (.*-)?vertical-align
-        if style.textarea-vertical-align and child.tag-name is 'text-box'
+        if style.textarea-vertical-align and child.tag-name is \text-box
           (props.style ?= {}) <<< do
+            display:                 \table
+            textarea-vertical-align: style.textarea-vertical-align
+        if @props.tag-name is 'text-box' and style.display is \table
+          (props.style ?= {}) <<< do
+            display:        \table-cell
             vertical-align: style.textarea-vertical-align
-        if style.vertical-align and style.display isnt 'table-cell'
-          console.log child.tag-name
-          (props.style ?= {}) <<< do
-            display:        'table-cell'
-            vertical-align: style.vertical-align
         comp props
     React.DOM[@state.html-tag or @state.default-html-tag] do
       props
@@ -101,7 +99,7 @@ default-components =
     displayName: \ReactODP.LineBreak
     mixins: [DrawMixin]
     getInitialState: ->
-      html-tga: \br
+      html-tag: \br
   Presentation: React.createClass do
     displayName: \ReactODP.Presentation
     mixins: [DrawMixin]

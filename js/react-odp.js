@@ -563,9 +563,6 @@
       if (this.props.href) {
         style.backgroundImage = "url(" + this.props.href + ")";
       }
-      if (style.verticalAlign && style.display !== 'table-cell') {
-        style.display = 'table';
-      }
       props = {
         className: classNames.join(' '),
         style: style
@@ -592,16 +589,16 @@
             import$((ref$ = props.style) != null
               ? ref$
               : props.style = {}, {
-              verticalAlign: style.textareaVerticalAlign
+              display: 'table',
+              textareaVerticalAlign: style.textareaVerticalAlign
             });
           }
-          if (style.verticalAlign && style.display !== 'table-cell') {
-            console.log(child.tagName);
+          if (this.props.tagName === 'text-box' && style.display === 'table') {
             import$((ref$ = props.style) != null
               ? ref$
               : props.style = {}, {
               display: 'table-cell',
-              verticalAlign: style.verticalAlign
+              verticalAlign: style.textareaVerticalAlign
             });
           }
           return comp(props);
@@ -654,7 +651,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          htmlTga: 'br'
+          htmlTag: 'br'
         };
       }
     }),
