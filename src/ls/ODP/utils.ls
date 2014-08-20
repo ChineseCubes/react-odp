@@ -33,6 +33,40 @@ DotsDetector = React.createClass do
         width:    "#{@props.scale}#{@props.unit}"
         height:   "#{@props.scale}#{@props.unit}"
 
+styles = {}
+styles
+  ..DefaultTitle =
+    # paragraph properties
+    line-height:  '150%'
+    text-align:   'center'
+    # text properties
+    font-family:  'Noto Sans T Chinese, Heiti TC, Arial Unicode MS'
+    font-size:    '44pt'
+    font-weight:  'normal'
+    text-shadow:  'none'
+  ..DefaultNotes =
+    margin-left:  '0.6cm'
+    margin-right: '0cm'
+    text-indent:  '-0.6cm'
+    font-family:  'Liberation Sans, Heiti TC, Arial Unicode MS'
+    font-size:    '20pt'
+    font-weight:  'normal'
+    text-shadow:  'none'
+  ..pr1 = Object.create styles.DefaultTitle, do
+    min-height:
+      value: '3.506cm'
+  ..pr2 = Object.create styles.DefaultNotes, {}
+  ..gr1 = # skip the parent style 'Object with no fill and no line'
+    vertical-align: 'middle'
+    opacity:        1.0
+  ..P1 =
+    text-align:   'left'
+    font-family:  'Noto Sans T Chinese'
+  ..P2 =
+    text-align:   'center'
+  ..T1 =
+    font-family:  'Noto Sans T Chinese'
+
 utils =
   DotsDetector: DotsDetector
   getPageJSON: !(path, done) ->
@@ -44,17 +78,32 @@ utils =
       height: \21cm
     data = page: data
     frame-count = 0
+    span-count = 0
     [, dir, file] = /(.*\/)?(.*)\.json/exec(path) or [, '', '']
     tree = utils.map data, (value, key, parents)->
-      attrs = value['@attributes'] or []
-      # append fake data for page1
+      attrs = value['@attributes'] or {}
+      # append fake data to page1
       switch file
       | 'page1'
         switch key
         | 'frame'
-          console.log frame-count, attrs
-          # TODO: should hard code style P1, pr1 and Default-title here first
+          switch frame-count
+          | 0
+            attrs
+              ..style = styles.pr1
+              ..text-style = styles.P1
+          | 1
+            attrs
+              ..style = styles.gr1
+              ..text-style = styles.P2
+          | 2
+            attrs.style = styles.pr2
           frame-count += 1
+        | 'span'
+          switch span-count
+          | 0
+            attrs.style = styles.T1
+          span-count += 1
       # fix relative pathes
       attrs.href = "#dir#{attrs.href}" if attrs.href
       attrs

@@ -30,29 +30,28 @@ DrawMixin =
     children: []
   render: ->
     v = @props.value
-    ts = v['text-style-name']
     children = for let i, child of @props.children
       comp = default-components[@toUpperCamel child.name]
-      child.value <<< 'text-style-name': ts if ts
+      # passing the text-style down
+      child.value <<< text-style: v.text-style if v.text-style
       props =
         key: i
-        scale:     @props.scale
-        name:      child.name
-        value:     child.value
-        text:      child.text
-        children:  child.children
+        scale:    @props.scale
+        name:     child.name
+        value:    child.value
+        text:     child.text
+        children: child.children
       if comp then comp props else null
-    classNames =
-      @props.classNames.concat (@props.name or \unknown), v['style-name'], ts
+    classNames = @props.classNames.concat (@props.name or \unknown)
     props =
       className: classNames.join ' '
       style:
-        left:       @scaleStyle v.x      or \auto
-        top:        @scaleStyle v.y      or \auto
-        width:      @scaleStyle v.width  or \auto
-        height:     @scaleStyle v.height or \auto
-        fontSize:   @scaleStyle \44pt
-    props.style <<< backgroundImage: "url(#{v.href})" if v.href
+        left:      @scaleStyle v.x      or \auto
+        top:       @scaleStyle v.y      or \auto
+        width:     @scaleStyle v.width  or \auto
+        height:    @scaleStyle v.height or \auto
+        font-size:  @scaleStyle \44pt
+    props.style <<< background-image: "url(#{v.href})" if v.href
     React.DOM[@state.tagName] props, @props.text, children
 
 default-components =

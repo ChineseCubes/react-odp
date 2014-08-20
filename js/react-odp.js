@@ -1,5 +1,5 @@
 (function(){
-  var div, isArray, isString, isPlainObject, slice, DotsDetector, utils, ref$, isNumber, NullMixin, DrawMixin, defaultComponents, this$ = this;
+  var div, isArray, isString, isPlainObject, slice, DotsDetector, styles, x$, utils, ref$, isNumber, NullMixin, DrawMixin, defaultComponents, this$ = this;
   div = React.DOM.div;
   isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject;
   slice = Array.prototype.slice;
@@ -44,11 +44,50 @@
       });
     }
   });
+  styles = {};
+  x$ = styles;
+  x$.DefaultTitle = {
+    lineHeight: '150%',
+    textAlign: 'center',
+    fontFamily: 'Noto Sans T Chinese, Heiti TC, Arial Unicode MS',
+    fontSize: '44pt',
+    fontWeight: 'normal',
+    textShadow: 'none'
+  };
+  x$.DefaultNotes = {
+    marginLeft: '0.6cm',
+    marginRight: '0cm',
+    textIndent: '-0.6cm',
+    fontFamily: 'Liberation Sans, Heiti TC, Arial Unicode MS',
+    fontSize: '20pt',
+    fontWeight: 'normal',
+    textShadow: 'none'
+  };
+  x$.pr1 = Object.create(styles.DefaultTitle, {
+    minHeight: {
+      value: '3.506cm'
+    }
+  });
+  x$.pr2 = Object.create(styles.DefaultNotes, {});
+  x$.gr1 = {
+    verticalAlign: 'middle',
+    opacity: 1.0
+  };
+  x$.P1 = {
+    textAlign: 'left',
+    fontFamily: 'Noto Sans T Chinese'
+  };
+  x$.P2 = {
+    textAlign: 'center'
+  };
+  x$.T1 = {
+    fontFamily: 'Noto Sans T Chinese'
+  };
   utils = {
     DotsDetector: DotsDetector,
     getPageJSON: function(path, done){
       $.getJSON(path, function(data){
-        var frameCount, ref$, dir, file, tree;
+        var frameCount, spanCount, ref$, dir, file, tree;
         import$(data['@attributes'], {
           x: '0',
           y: '0',
@@ -59,16 +98,37 @@
           page: data
         };
         frameCount = 0;
+        spanCount = 0;
         ref$ = /(.*\/)?(.*)\.json/.exec(path) || [void 8, '', ''], dir = ref$[1], file = ref$[2];
         tree = utils.map(data, function(value, key, parents){
-          var attrs;
-          attrs = value['@attributes'] || [];
+          var attrs, x$, y$;
+          attrs = value['@attributes'] || {};
           switch (file) {
           case 'page1':
             switch (key) {
             case 'frame':
-              console.log(frameCount, attrs);
+              switch (frameCount) {
+              case 0:
+                x$ = attrs;
+                x$.style = styles.pr1;
+                x$.textStyle = styles.P1;
+                break;
+              case 1:
+                y$ = attrs;
+                y$.style = styles.gr1;
+                y$.textStyle = styles.P2;
+                break;
+              case 2:
+                attrs.style = styles.pr2;
+              }
               frameCount += 1;
+              break;
+            case 'span':
+              switch (spanCount) {
+              case 0:
+                attrs.style = styles.T1;
+              }
+              spanCount += 1;
             }
           }
           if (attrs.href) {
@@ -197,15 +257,14 @@
       };
     },
     render: function(){
-      var v, ts, children, res$, i$, classNames, props;
+      var v, children, res$, i$, classNames, props;
       v = this.props.value;
-      ts = v['text-style-name'];
       res$ = [];
       for (i$ in this.props.children) {
         res$.push((fn$.call(this, i$, this.props.children[i$])));
       }
       children = res$;
-      classNames = this.props.classNames.concat(this.props.name || 'unknown', v['style-name'], ts);
+      classNames = this.props.classNames.concat(this.props.name || 'unknown');
       props = {
         className: classNames.join(' '),
         style: {
@@ -223,8 +282,8 @@
       function fn$(i, child){
         var comp, props;
         comp = defaultComponents[this.toUpperCamel(child.name)];
-        if (ts) {
-          child.value['text-style-name'] = ts;
+        if (v.textStyle) {
+          child.value.textStyle = v.textStyle;
         }
         props = {
           key: i,
