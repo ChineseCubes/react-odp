@@ -525,17 +525,19 @@
       it[0] = it[0].toLowerCase();
       return it;
     },
-    scaleStyle: function(it){
+    scaleStyle: function(value, key){
       var r;
       switch (false) {
-      case !isNumber(it):
-        return it * this.props.scale;
-      case !/\d*\.?\d+%$/.test(it):
-        return it;
-      case !(r = /(\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/.exec(it)):
+      case !in$(key, ['opacity']):
+        return value;
+      case !isNumber(value):
+        return value * this.props.scale;
+      case !/\d*\.?\d+%$/.test(value):
+        return value;
+      case !(r = /(\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/.exec(value)):
         return +r[1] * this.props.scale + "" + (r[2] || '');
       default:
-        return it;
+        return value;
       }
     },
     getDefaultProps: function(){
@@ -671,6 +673,11 @@
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];
     return obj;
+  }
+  function in$(x, xs){
+    var i = -1, l = xs.length >>> 0;
+    while (++i < l) if (x === xs[i]) return true;
+    return false;
   }
   function importAll$(obj, src){
     for (var key in src) obj[key] = src[key];
