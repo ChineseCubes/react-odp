@@ -214,7 +214,6 @@
   import$((ref$ = this.ODP) != null
     ? ref$
     : this.ODP = {}, utils);
-  div = React.DOM.div;
   isNumber = _.isNumber;
   NullMixin = {
     render: function(){
@@ -255,29 +254,39 @@
         children: []
       };
     },
+    getInitialState: function(){
+      return {
+        defaultHtmlTag: 'div'
+      };
+    },
     render: function(){
-      var children, res$, i$, classNames, props, ref$;
+      var children, res$, i$, classNames, style, ref$, props;
+      console.log(JSON.stringify(this.props, null, 2));
       res$ = [];
       for (i$ in this.props.children) {
         res$.push((fn$.call(this, i$, this.props.children[i$])));
       }
       children = res$;
       classNames = this.props.classNames.concat(this.props.tagName || 'unknown');
+      style = {
+        left: this.scaleStyle(this.props.x) || 'auto',
+        top: this.scaleStyle(this.props.y) || 'auto',
+        width: this.scaleStyle(this.props.width) || 'auto',
+        height: this.scaleStyle(this.props.height) || 'auto',
+        fontSize: this.scaleStyle(this.props.fontSize || '44pt'),
+        fontFamily: (ref$ = this.props.style) != null ? ref$.fontFamily : void 8
+      };
+      if (this.props.style) {
+        import$(style, this.props.style);
+      }
+      if (this.props.href) {
+        style.backgroundImage = "url(" + this.props.href + ")";
+      }
       props = {
         className: classNames.join(' '),
-        style: {
-          left: this.scaleStyle(this.props.x) || 'auto',
-          top: this.scaleStyle(this.props.y) || 'auto',
-          width: this.scaleStyle(this.props.width) || 'auto',
-          height: this.scaleStyle(this.props.height) || 'auto',
-          fontSize: this.scaleStyle(this.props.fontSize) || '44pt',
-          fontFamily: (ref$ = this.props.style) != null ? ref$.fontFamily : void 8
-        }
+        style: style
       };
-      if (this.props.href) {
-        props.style.backgroundImage = "url(" + this.props.href + ")";
-      }
-      return React.DOM[this.state.tag](props, this.props.text, children);
+      return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, this.props.text, children);
       function fn$(i, child){
         var comp, props;
         comp = defaultComponents[this.toUpperCamel(child.tagName)];
@@ -301,37 +310,22 @@
   defaultComponents = {
     Page: React.createClass({
       displayName: 'ReactODP.Page',
-      mixins: [DrawMixin],
-      getInitialState: function(){
-        return {
-          tag: 'div'
-        };
-      }
+      mixins: [DrawMixin]
     }),
     Frame: React.createClass({
       displayName: 'ReactODP.Frame',
-      mixins: [DrawMixin],
-      getInitialState: function(){
-        return {
-          tag: 'div'
-        };
-      }
+      mixins: [DrawMixin]
     }),
     TextBox: React.createClass({
       displayName: 'ReactODP.TextBox',
-      mixins: [DrawMixin],
-      getInitialState: function(){
-        return {
-          tag: 'div'
-        };
-      }
+      mixins: [DrawMixin]
     }),
     Image: React.createClass({
       displayName: 'ReactODP.Image',
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          tag: 'img'
+          htmlTag: 'img'
         };
       }
     }),
@@ -340,7 +334,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          tag: 'p'
+          htmlTag: 'p'
         };
       }
     }),
@@ -349,18 +343,13 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          tag: 'span'
+          htmlTag: 'span'
         };
       }
     }),
     Presentation: React.createClass({
       displayName: 'ReactODP.Presentation',
-      mixins: [DrawMixin],
-      getInitialState: function(){
-        return {
-          tag: 'div'
-        };
-      }
+      mixins: [DrawMixin]
     })
   };
   import$((ref$ = this.ODP) != null

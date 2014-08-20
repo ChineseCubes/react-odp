@@ -1,4 +1,3 @@
-{div}      = React.DOM
 {isNumber} = _
 
 NullMixin =
@@ -27,7 +26,10 @@ DrawMixin =
     classNames: <[draw]>
     scale:    1.0
     children: []
+  getInitialState: ->
+    default-html-tag: \div
   render: ->
+    console.log JSON.stringify @props, null, 2
     children = for let i, child of @props.children
       comp = default-components[@toUpperCamel child.tag-name]
       if comp
@@ -42,54 +44,52 @@ DrawMixin =
         props <<< child.attrs
         comp props
     classNames = @props.classNames.concat (@props.tag-name or \unknown)
+    style =
+      left:        @scaleStyle @props.x         or \auto
+      top:         @scaleStyle @props.y         or \auto
+      width:       @scaleStyle @props.width     or \auto
+      height:      @scaleStyle @props.height    or \auto
+      font-size:   @scaleStyle (@props.font-size or \44pt)
+      font-family: @props.style?font-family
+    style <<< @props.style if @props.style
+    #style <<< @props.text-style if @props.style
+    style <<< background-image: "url(#{@props.href})" if @props.href
     props =
       className: classNames.join ' '
-      style:
-        left:        @scaleStyle @props.x         or \auto
-        top:         @scaleStyle @props.y         or \auto
-        width:       @scaleStyle @props.width     or \auto
-        height:      @scaleStyle @props.height    or \auto
-        font-size:   @scaleStyle @props.font-size or \44pt
-        font-family: @props.style?font-family
-    props.style <<< background-image: "url(#{@props.href})" if @props.href
-    React.DOM[@state.tag] props, @props.text, children
+      style: style
+    React.DOM[@state.html-tag or @state.default-html-tag] do
+      props
+      @props.text
+      children
 
 default-components =
   Page: React.createClass do
     displayName: \ReactODP.Page
     mixins: [DrawMixin]
-    getInitialState: ->
-      tag: \div
   Frame: React.createClass do
     displayName: \ReactODP.Frame
     mixins: [DrawMixin]
-    getInitialState: ->
-      tag: \div
   TextBox: React.createClass do
     displayName: \ReactODP.TextBox
     mixins: [DrawMixin]
-    getInitialState: ->
-      tag: \div
   Image: React.createClass do
     displayName: \ReactODP.Image
     mixins: [DrawMixin]
     getInitialState: ->
-      tag: \img
+      html-tag: \img
   P: React.createClass do
     displayName: \ReactODP.P
     mixins: [DrawMixin]
     getInitialState: ->
-      tag: \p
+      html-tag: \p
   Span: React.createClass do
     displayName: \ReactODP.P
     mixins: [DrawMixin]
     getInitialState: ->
-      tag: \span
+      html-tag: \span
   Presentation: React.createClass do
     displayName: \ReactODP.Presentation
     mixins: [DrawMixin]
-    getInitialState: ->
-      tag: \div
 
 (this.ODP ?= {}) <<< default-components
 
