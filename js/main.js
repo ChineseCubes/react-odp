@@ -17,13 +17,11 @@
   ODP.getPageJSON('./json/page1.json', function(data){
     var viewer, resize;
     viewer = React.renderComponent(ODP.Presentation({
-      name: 'presentation',
-      value: {
-        x: '0',
-        y: '0',
-        width: '28cm',
-        height: '21cm'
-      },
+      tagName: 'presentation',
+      x: '0',
+      y: '0',
+      width: '28cm',
+      height: '21cm',
       children: data
     }), $('#wrap').get()[0]);
     (resize = function(){

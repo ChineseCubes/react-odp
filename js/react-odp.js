@@ -181,15 +181,15 @@
           break;
         case !isString(v):
           nodes.push({
-            name: k,
-            value: {},
+            tagName: k,
+            attrs: {},
             text: v
           });
           break;
         case !isPlainObject(v):
           nodes.push({
-            name: k,
-            value: onNode(v, k, slice.call(oldParents)),
+            tagName: k,
+            attrs: onNode(v, k, slice.call(oldParents)),
             children: utils.map(v, onNode, parents)
           });
           break;
@@ -197,8 +197,8 @@
           for (idx in v) {
             obj = v[idx];
             nodes.push({
-              name: k,
-              value: onNode(obj, k, slice.call(oldParents)),
+              tagName: k,
+              attrs: onNode(obj, k, slice.call(oldParents)),
               children: utils.map(obj, onNode, parents)
             });
           }
@@ -252,51 +252,48 @@
       return {
         classNames: ['draw'],
         scale: 1.0,
-        value: {},
         children: []
       };
     },
     render: function(){
-      var v, children, res$, i$, classNames, props;
-      v = this.props.value;
+      var children, res$, i$, classNames, props, ref$;
       res$ = [];
       for (i$ in this.props.children) {
         res$.push((fn$.call(this, i$, this.props.children[i$])));
       }
       children = res$;
-      classNames = this.props.classNames.concat(this.props.name || 'unknown');
+      classNames = this.props.classNames.concat(this.props.tagName || 'unknown');
       props = {
         className: classNames.join(' '),
         style: {
-          left: this.scaleStyle(v.x) || 'auto',
-          top: this.scaleStyle(v.y) || 'auto',
-          width: this.scaleStyle(v.width) || 'auto',
-          height: this.scaleStyle(v.height) || 'auto',
-          fontSize: this.scaleStyle('44pt')
+          left: this.scaleStyle(this.props.x) || 'auto',
+          top: this.scaleStyle(this.props.y) || 'auto',
+          width: this.scaleStyle(this.props.width) || 'auto',
+          height: this.scaleStyle(this.props.height) || 'auto',
+          fontSize: this.scaleStyle(this.props.fontSize) || '44pt',
+          fontFamily: (ref$ = this.props.style) != null ? ref$.fontFamily : void 8
         }
       };
-      if (v.href) {
-        props.style.backgroundImage = "url(" + v.href + ")";
+      if (this.props.href) {
+        props.style.backgroundImage = "url(" + this.props.href + ")";
       }
-      return React.DOM[this.state.tagName](props, this.props.text, children);
+      return React.DOM[this.state.tag](props, this.props.text, children);
       function fn$(i, child){
         var comp, props;
-        comp = defaultComponents[this.toUpperCamel(child.name)];
-        if (v.textStyle) {
-          child.value.textStyle = v.textStyle;
-        }
-        props = {
-          key: i,
-          scale: this.props.scale,
-          name: child.name,
-          value: child.value,
-          text: child.text,
-          children: child.children
-        };
+        comp = defaultComponents[this.toUpperCamel(child.tagName)];
         if (comp) {
+          if (this.props.textStyle) {
+            child.attrs.textStyle = this.props.textStyle;
+          }
+          props = {
+            key: i,
+            tagName: child.tagName,
+            text: child.text,
+            scale: this.props.scale,
+            children: child.children
+          };
+          import$(props, child.attrs);
           return comp(props);
-        } else {
-          return null;
         }
       }
     }
@@ -307,7 +304,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          tagName: 'div'
+          tag: 'div'
         };
       }
     }),
@@ -316,7 +313,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          tagName: 'div'
+          tag: 'div'
         };
       }
     }),
@@ -325,7 +322,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          tagName: 'div'
+          tag: 'div'
         };
       }
     }),
@@ -334,7 +331,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          tagName: 'img'
+          tag: 'img'
         };
       }
     }),
@@ -343,7 +340,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          tagName: 'p'
+          tag: 'p'
         };
       }
     }),
@@ -352,7 +349,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          tagName: 'span'
+          tag: 'span'
         };
       }
     }),
@@ -361,7 +358,7 @@
       mixins: [DrawMixin],
       getInitialState: function(){
         return {
-          tagName: 'div'
+          tag: 'div'
         };
       }
     })

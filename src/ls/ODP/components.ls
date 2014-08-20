@@ -26,70 +26,70 @@ DrawMixin =
   getDefaultProps: ->
     classNames: <[draw]>
     scale:    1.0
-    value:    {}
     children: []
   render: ->
-    v = @props.value
     children = for let i, child of @props.children
-      comp = default-components[@toUpperCamel child.name]
-      # passing the text-style down
-      child.value <<< text-style: v.text-style if v.text-style
-      props =
-        key: i
-        scale:    @props.scale
-        name:     child.name
-        value:    child.value
-        text:     child.text
-        children: child.children
-      if comp then comp props else null
-    classNames = @props.classNames.concat (@props.name or \unknown)
+      comp = default-components[@toUpperCamel child.tag-name]
+      if comp
+        # passing the text-style down
+        child.attrs <<< text-style: @props.text-style if @props.text-style
+        props =
+          key:      i
+          tag-name: child.tag-name
+          text:     child.text
+          scale:    @props.scale
+          children: child.children
+        props <<< child.attrs
+        comp props
+    classNames = @props.classNames.concat (@props.tag-name or \unknown)
     props =
       className: classNames.join ' '
       style:
-        left:      @scaleStyle v.x      or \auto
-        top:       @scaleStyle v.y      or \auto
-        width:     @scaleStyle v.width  or \auto
-        height:    @scaleStyle v.height or \auto
-        font-size:  @scaleStyle \44pt
-    props.style <<< background-image: "url(#{v.href})" if v.href
-    React.DOM[@state.tagName] props, @props.text, children
+        left:        @scaleStyle @props.x         or \auto
+        top:         @scaleStyle @props.y         or \auto
+        width:       @scaleStyle @props.width     or \auto
+        height:      @scaleStyle @props.height    or \auto
+        font-size:   @scaleStyle @props.font-size or \44pt
+        font-family: @props.style?font-family
+    props.style <<< background-image: "url(#{@props.href})" if @props.href
+    React.DOM[@state.tag] props, @props.text, children
 
 default-components =
   Page: React.createClass do
     displayName: \ReactODP.Page
     mixins: [DrawMixin]
     getInitialState: ->
-      tagName: \div
+      tag: \div
   Frame: React.createClass do
     displayName: \ReactODP.Frame
     mixins: [DrawMixin]
     getInitialState: ->
-      tagName: \div
+      tag: \div
   TextBox: React.createClass do
     displayName: \ReactODP.TextBox
     mixins: [DrawMixin]
     getInitialState: ->
-      tagName: \div
+      tag: \div
   Image: React.createClass do
     displayName: \ReactODP.Image
     mixins: [DrawMixin]
     getInitialState: ->
-      tagName: \img
+      tag: \img
   P: React.createClass do
     displayName: \ReactODP.P
     mixins: [DrawMixin]
     getInitialState: ->
-      tagName: \p
+      tag: \p
   Span: React.createClass do
     displayName: \ReactODP.P
     mixins: [DrawMixin]
     getInitialState: ->
-      tagName: \span
+      tag: \span
   Presentation: React.createClass do
     displayName: \ReactODP.Presentation
     mixins: [DrawMixin]
     getInitialState: ->
-      tagName: \div
+      tag: \div
 
 (this.ODP ?= {}) <<< default-components
 

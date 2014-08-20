@@ -134,20 +134,20 @@ utils =
       | k is "@attributes" => # do nothing
       | isString v         =>
         nodes.push do
-          name:  k
-          value: {}
-          text:  v
+          tag-name:  k
+          attrs:     {}
+          text:      v
       | isPlainObject v
         #console.log k, JSON.stringify v
         nodes.push do
-          name:     k
-          value:    onNode v, k, slice.call old-parents
+          tag-name: k
+          attrs:    onNode v, k, slice.call old-parents
           children: utils.map v, onNode, parents
       | isArray v
         for idx, obj of v
           nodes.push do
-            name:     k
-            value:    onNode obj, k, slice.call old-parents
+            tag-name: k
+            attrs:    onNode obj, k, slice.call old-parents
             children: utils.map obj, onNode, parents
       | otherwise
         throw new Error 'ill formated JSON'
