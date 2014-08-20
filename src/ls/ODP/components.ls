@@ -45,6 +45,7 @@ DrawMixin =
     ##
     # prepare children
     children = for let i, child of @props.children
+      return child.text if child.text
       comp = default-components[@toUpperCamel child.tag-name]
       if comp
         props =
@@ -55,6 +56,7 @@ DrawMixin =
           children: child.children
         props <<< child.attrs
         # deal with (.*-)?vertical-align
+        # FIXME: does not work in FireFox
         if style.textarea-vertical-align and child.tag-name is \text-box
           (props.style ?= {}) <<< do
             display:                 \table
@@ -94,6 +96,8 @@ default-components =
     mixins: [DrawMixin]
     getInitialState: ->
       html-tag: \span
+  # FIXME: does not work in FireFox when the element are not at the same level
+  # of other elements
   LineBreak: React.createClass do
     displayName: \ReactODP.LineBreak
     mixins: [DrawMixin]

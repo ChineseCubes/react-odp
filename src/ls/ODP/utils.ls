@@ -1,5 +1,5 @@
 {div} = React.DOM
-{isArray, isString, isPlainObject} = _
+{isArray, isString, isPlainObject, omit, pick} = _
 slice = Array.prototype.slice
 
 DotsDetector = React.createClass do
@@ -363,8 +363,7 @@ utils =
       | isArray v
         for idx, obj of v
           nodes.push if isString obj
-            tag-name: \span
-            text:     obj
+            text: obj
           else
             tag-name: k
             attrs:    onNode obj, k, slice.call old-parents

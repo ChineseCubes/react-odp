@@ -1,7 +1,7 @@
 (function(){
-  var div, isArray, isString, isPlainObject, slice, DotsDetector, styles, x$, utils, ref$, isNumber, mapValues, NullMixin, DrawMixin, defaultComponents, this$ = this;
+  var div, isArray, isString, isPlainObject, omit, pick, slice, DotsDetector, styles, x$, utils, ref$, isNumber, mapValues, NullMixin, DrawMixin, defaultComponents, this$ = this;
   div = React.DOM.div;
-  isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject;
+  isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject, omit = _.omit, pick = _.pick;
   slice = Array.prototype.slice;
   DotsDetector = React.createClass({
     displayName: 'UnitDetector',
@@ -487,7 +487,6 @@
             obj = v[idx];
             nodes.push(isString(obj)
               ? {
-                tagName: 'span',
                 text: obj
               }
               : {
@@ -577,6 +576,9 @@
       return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, this.props.text, children);
       function fn$(i, child){
         var comp, props, ref$;
+        if (child.text) {
+          return child.text;
+        }
         comp = defaultComponents[this.toUpperCamel(child.tagName)];
         if (comp) {
           props = {
