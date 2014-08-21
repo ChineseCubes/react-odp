@@ -6,15 +6,13 @@ NullMixin =
 
 DrawMixin =
   toHyphen: ->
-  toUpperCamel: -> # maybe its not a good idea
+  lowerCamelFromHyphenated: ->
     it
       .split '-'
-      .map -> "#{it.slice(0, 1).toUpperCase!}#{it.slice(1)}"
+      .map (v, i) ->
+        | i is 0  => v
+        | otherwise =>"#{v.slice(0, 1)toUpperCase!}#{v.slice(1)}"
       .join ''
-  toLowerCamel: ->
-    it = @toUpperCamel it
-    it.0 = it.0.toLowerCase!
-    it
   scaleStyle: (value, key) -> # without changing the unit
     | key in <[opacity]>      => value
     | isNumber value          => value * @props.scale
@@ -23,6 +21,7 @@ DrawMixin =
       "#{+r.1 * @props.scale}#{r.2 or ''}"
     | otherwise               => value
   getDefaultProps: ->
+    components: {}
     classNames: <[draw]>
     scale:    1.0
     children: []
@@ -48,14 +47,17 @@ DrawMixin =
     # prepare children
     children = for let i, child of @props.children
       return child.text if child.text
-      comp = default-components[@toUpperCamel child.tag-name]
+      console.log @props.components
+      (comps = ^^default-components) <<< @props.components
+      comp = comps[@lowerCamelFromHyphenated child.tag-name]
       if comp
         props =
-          key:      i
-          tag-name: child.tag-name
-          text:     child.text
-          scale:    @props.scale
-          children: child.children
+          key:        i
+          tag-name:   child.tag-name
+          text:       child.text
+          scale:      @props.scale
+          children:   child.children
+          components: @props.components
         props <<< child.attrs
         ##
         # deal with (.*-)?vertical-align
@@ -83,38 +85,43 @@ DrawMixin =
       children
 
 default-components =
-  Page: React.createClass do
+  page: React.createClass do
     displayName: \ReactODP.Page
     mixins: [DrawMixin]
-  Frame: React.createClass do
+  frame: React.createClass do
     displayName: \ReactODP.Frame
     mixins: [DrawMixin]
-  TextBox: React.createClass do
+  text-box: React.createClass do
     displayName: \ReactODP.TextBox
     mixins: [DrawMixin]
-  Image: React.createClass do
+  image: React.createClass do
     displayName: \ReactODP.Image
     mixins: [DrawMixin]
-  P: React.createClass do
+  p: React.createClass do
     displayName: \ReactODP.P
     mixins: [DrawMixin]
     getInitialState: ->
       html-tag: \p
-  Span: React.createClass do
+  span: React.createClass do
     displayName: \ReactODP.Span
     mixins: [DrawMixin]
     getInitialState: ->
       html-tag: \span
   # FIXME: does not work in FireFox when the element are not at the same level
   # of other elements
-  LineBreak: React.createClass do
+  line-break: React.createClass do
     displayName: \ReactODP.LineBreak
     mixins: [DrawMixin]
     getInitialState: ->
       html-tag: \br
-  Presentation: React.createClass do
+  presentation: React.createClass do
     displayName: \ReactODP.Presentation
     mixins: [DrawMixin]
 
-(this.ODP ?= {}) <<< default-components
+(this.ODP ?= {}) <<< do
+  DrawMixin: DrawMixin
+  renderComponent: (data, element) ->
+    React.renderComponent do
+      default-components.presentation data
+      element
 

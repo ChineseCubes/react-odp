@@ -33,9 +33,21 @@ getPages = (done) ->
     CUBEBooks.getPageJSON "./json/page#i.json", -> got-one it, i - 1
 
 data <- getPages
-viewer = React.renderComponent do
-  ODP.Presentation data
-  $ \#wrap .get!0
+viewer = ODP.renderComponent data, $(\#wrap)get!0
+/**
+ * custom components
+ **
+viewer.setProps do
+  components:
+    p: React.createClass do
+      displayName: \CustomP
+      render: ->
+        React.DOM.div do
+          style:
+            width:      100
+            height:     100
+            background: \red
+ */
 do resize = ->
   ratio     = config.page-setup.ratio
   px-width  = config.page-setup.width  * dpcm

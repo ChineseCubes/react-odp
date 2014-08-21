@@ -9,15 +9,15 @@
   };
   DrawMixin = {
     toHyphen: function(){},
-    toUpperCamel: function(it){
-      return it.split('-').map(function(it){
-        return it.slice(0, 1).toUpperCase() + "" + it.slice(1);
+    lowerCamelFromHyphenated: function(it){
+      return it.split('-').map(function(v, i){
+        switch (false) {
+        case i !== 0:
+          return v;
+        default:
+          return v.slice(0, 1).toUpperCase() + "" + v.slice(1);
+        }
       }).join('');
-    },
-    toLowerCamel: function(it){
-      it = this.toUpperCamel(it);
-      it[0] = it[0].toLowerCase();
-      return it;
     },
     scaleStyle: function(value, key){
       var r;
@@ -36,6 +36,7 @@
     },
     getDefaultProps: function(){
       return {
+        components: {},
         classNames: ['draw'],
         scale: 1.0,
         children: []
@@ -84,18 +85,21 @@
       }
       return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, children);
       function fn$(i, child){
-        var comp, props, ref$;
+        var comps, comp, props, ref$;
         if (child.text) {
           return child.text;
         }
-        comp = defaultComponents[this.toUpperCamel(child.tagName)];
+        console.log(this.props.components);
+        import$(comps = clone$(defaultComponents), this.props.components);
+        comp = comps[this.lowerCamelFromHyphenated(child.tagName)];
         if (comp) {
           props = {
             key: i,
             tagName: child.tagName,
             text: child.text,
             scale: this.props.scale,
-            children: child.children
+            children: child.children,
+            components: this.props.components
           };
           import$(props, child.attrs);
           if (style.textareaVerticalAlign) {
@@ -116,23 +120,23 @@
     }
   };
   defaultComponents = {
-    Page: React.createClass({
+    page: React.createClass({
       displayName: 'ReactODP.Page',
       mixins: [DrawMixin]
     }),
-    Frame: React.createClass({
+    frame: React.createClass({
       displayName: 'ReactODP.Frame',
       mixins: [DrawMixin]
     }),
-    TextBox: React.createClass({
+    textBox: React.createClass({
       displayName: 'ReactODP.TextBox',
       mixins: [DrawMixin]
     }),
-    Image: React.createClass({
+    image: React.createClass({
       displayName: 'ReactODP.Image',
       mixins: [DrawMixin]
     }),
-    P: React.createClass({
+    p: React.createClass({
       displayName: 'ReactODP.P',
       mixins: [DrawMixin],
       getInitialState: function(){
@@ -141,7 +145,7 @@
         };
       }
     }),
-    Span: React.createClass({
+    span: React.createClass({
       displayName: 'ReactODP.Span',
       mixins: [DrawMixin],
       getInitialState: function(){
@@ -150,7 +154,7 @@
         };
       }
     }),
-    LineBreak: React.createClass({
+    lineBreak: React.createClass({
       displayName: 'ReactODP.LineBreak',
       mixins: [DrawMixin],
       getInitialState: function(){
@@ -159,14 +163,19 @@
         };
       }
     }),
-    Presentation: React.createClass({
+    presentation: React.createClass({
       displayName: 'ReactODP.Presentation',
       mixins: [DrawMixin]
     })
   };
   import$((ref$ = this.ODP) != null
     ? ref$
-    : this.ODP = {}, defaultComponents);
+    : this.ODP = {}, {
+    DrawMixin: DrawMixin,
+    renderComponent: function(data, element){
+      return React.renderComponent(defaultComponents.presentation(data), element);
+    }
+  });
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;
     while (++i < l) if (x === xs[i]) return true;
@@ -180,5 +189,9 @@
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];
     return obj;
+  }
+  function clone$(it){
+    function fun(){} fun.prototype = it;
+    return new fun;
   }
 }).call(this);
