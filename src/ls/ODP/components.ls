@@ -67,7 +67,6 @@ DrawMixin =
           else
             display:        \inline-block
             vertical-align: style.textarea-vertical-align
-          console.log props.style, @props.tag-name
         comp props
     # then add an invisible element to fill the height
     if @props.tag-name isnt \frame and style.textarea-vertical-align

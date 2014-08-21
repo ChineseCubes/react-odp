@@ -38,10 +38,20 @@ gulp.task \js:vendor <[bower]> ->
 
 gulp.task \js:app ->
   gulp.src [
-    "#{path.src}/ls/ODP/utils.ls"
     "#{path.src}/ls/ODP/components.ls"
   ]
     .pipe gulp-concat 'react-odp.ls'
+    .pipe livescript!
+    .pipe gulp.dest "#{path.build}/js"
+    .pipe connect.reload!
+  gulp.src [
+    "#{path.src}/ls/CUBEBooks/utils.ls"
+  ]
+    .pipe gulp-concat 'cubebooks.ls'
+    .pipe livescript!
+    .pipe gulp.dest "#{path.build}/js"
+    .pipe connect.reload!
+  gulp.src "#{path.src}/ls/react-dots-detector.ls"
     .pipe livescript!
     .pipe gulp.dest "#{path.build}/js"
     .pipe connect.reload!

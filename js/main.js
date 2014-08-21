@@ -9,7 +9,7 @@
       height: 21
     }
   };
-  dots = React.renderComponent(ODP.DotsDetector({
+  dots = React.renderComponent(DotsDetector({
     unit: 'cm'
   }), $('#detector').get()[0]);
   dpcm = dots.state.x;
@@ -38,7 +38,7 @@
     }
     return results$;
     function fn$(i){
-      return ODP.getPageJSON("./json/page" + i + ".json", function(it){
+      return CUBEBooks.getPageJSON("./json/page" + i + ".json", function(it){
         return gotOne(it, i - 1);
       });
     }

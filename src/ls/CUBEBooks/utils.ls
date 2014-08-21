@@ -1,37 +1,5 @@
-{div} = React.DOM
 {isArray, isString, isPlainObject, cloneDeep} = _
 slice = Array.prototype.slice
-
-DotsDetector = React.createClass do
-  displayName: 'UnitDetector'
-  pxFromStyle: ->
-    result = /(\d*\.?\d+)px/exec it
-    [,px] = result if result
-    +px
-  # not now
-  #mixins: [PureRenderMixin]
-  getDefaultProps: ->
-    unit:  \in
-    scale: 1024
-  getInitialState: ->
-    x: 96
-    y: 96
-  ##
-  # get dots per inch and dots per cm by using window.getComputedStyle
-  # the results in different browsers are not the same
-  componentDidMount: !->
-    style = getComputedStyle @refs.unit.getDOMNode!
-    @state
-      ..x = @pxFromStyle(style.width)  / @props.scale
-      ..y = @pxFromStyle(style.height) / @props.scale
-  render: ->
-    div do
-      ref: \unit
-      style: do
-        position: \absolute
-        display:  \none
-        width:    "#{@props.scale}#{@props.unit}"
-        height:   "#{@props.scale}#{@props.unit}"
 
 (styles = {})
   ..DefaultTitle =
@@ -155,7 +123,6 @@ master-page =
           span: 'activity'
 
 utils =
-  DotsDetector: DotsDetector
   getPageJSON: !(path, done) ->
     data <- $.getJSON path
     data.frame = cloneDeep(master-page.frame).concat data.frame
@@ -166,25 +133,6 @@ utils =
         ..style = styles[attrs['style-name']]
         ..text-style = styles[attrs['text-style-name']]
         ..href = "#dir#{attrs.href}" if attrs.href
-      console.log attrs
-      attrs
-  each: !(book-json, onNode, parents = []) ~>
-    old-parents = slice.call parents
-    for k, v of book-json
-      parents.push k
-      switch
-      | k is "@attributes" => # do nothing
-      | isString v         => # do nothing
-      | isPlainObject v
-        onNode v, k, slice.call old-parents
-        utils.each v, onNode, parents
-      | isArray v
-        for idx, obj of v
-          onNode obj, k, slice.call old-parents
-          utils.each obj, onNode, parents if not isString obj
-      | otherwise
-        throw new Error 'ill formated JSON'
-      parents.pop!
   map:   (book-json, onNode, parents = []) ~>
     nodes = []
     old-parents = slice.call parents
@@ -197,7 +145,6 @@ utils =
           tag-name:  k
           text:      v
       | isPlainObject v
-        #console.log k, JSON.stringify v
         nodes.push do
           tag-name: k
           attrs:    onNode v, k, slice.call old-parents
@@ -215,5 +162,5 @@ utils =
       parents.pop!
     nodes
 
-(this.ODP ?= {}) <<< utils
+(this.CUBEBooks ?= {}) <<< utils
 

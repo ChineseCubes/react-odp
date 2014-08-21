@@ -9,12 +9,11 @@ config =
 
 # test dpcm in current browser
 dots = React.renderComponent do
-  ODP.DotsDetector unit: \cm
+  DotsDetector unit: \cm
   $ \#detector .get!0
 dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
-# FIXME: should be CUBEBooks.getPages
 getPages = (done) ->
   pages = []
   counter = 0
@@ -31,7 +30,7 @@ getPages = (done) ->
         height:   \21cm
         children: pages
   for let i from 1 to 8
-    ODP.getPageJSON "./json/page#i.json", -> got-one it, i - 1
+    CUBEBooks.getPageJSON "./json/page#i.json", -> got-one it, i - 1
 
 data <- getPages
 viewer = React.renderComponent do
