@@ -1,4 +1,4 @@
-{isArray, isString, isPlainObject, cloneDeep} = _
+{isArray, isString, cloneDeep} = _
 slice = Array.prototype.slice
 
 (styles = {})
@@ -128,39 +128,25 @@ utils =
     data.frame = cloneDeep(master-page.frame).concat data.frame
     data['@attributes'] <<< x: \0 y: \0 width: \28cm height: \21cm
     [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
-    done utils.map page: data, ->
-      (attrs = it['@attributes'] or {})
+    done utils.transform data, \page, (attrs = {}) ->
+      attrs
         ..style = styles[attrs['style-name']]
         ..text-style = styles[attrs['text-style-name']]
         ..href = "#dir#{attrs.href}" if attrs.href
-  map:   (book-json, onNode, parents = []) ~>
-    nodes = []
-    old-parents = slice.call parents
-    for k, v of book-json
-      parents.push k
-      switch
-      | k is "@attributes" => # do nothing
-      | isString v         =>
-        nodes.push do
-          tag-name:  k
-          text:      v
-      | isPlainObject v
-        nodes.push do
-          tag-name: k
-          attrs:    onNode v, k, slice.call old-parents
-          children: utils.map v, onNode, parents
-      | isArray v
-        for idx, obj of v
-          nodes.push if isString obj
-            text: obj
-          else
-            tag-name: k
-            attrs:    onNode obj, k, slice.call old-parents
-            children: utils.map obj, onNode, parents
-      | otherwise
-        throw new Error 'ill formated JSON'
-      parents.pop!
-    nodes
+  transform: (node, key, onNode = null, parents = []) ~>
+    | isString node => tag-name: key, text: node
+    | otherwise
+      children = []
+      for let idx, obj of node
+        switch
+        | idx is '@attributes' => # nothing
+        | otherwise
+          array = if isArray obj then obj else [obj]
+          children .= concat do
+            for k, v of array => utils.transform v, idx, onNode, parents.concat [key]
+      tag-name: key
+      attrs:    onNode node['@attributes'], key, parents
+      children: children
 
 (this.CUBEBooks ?= {}) <<< utils
 

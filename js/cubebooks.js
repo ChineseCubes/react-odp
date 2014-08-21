@@ -1,6 +1,6 @@
 (function(){
-  var isArray, isString, isPlainObject, cloneDeep, slice, x$, styles, masterPage, utils, ref$, this$ = this;
-  isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject, cloneDeep = _.cloneDeep;
+  var isArray, isString, cloneDeep, slice, x$, styles, masterPage, utils, ref$, this$ = this;
+  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep;
   slice = Array.prototype.slice;
   x$ = styles = {};
   x$.DefaultTitle = {
@@ -167,11 +167,10 @@
         ref$.width = '28cm';
         ref$.height = '21cm';
         ref$ = /(.*\/)?(.*)\.json/.exec(path) || [void 8, ''], dir = ref$[1];
-        return done(utils.map({
-          page: data
-        }, function(it){
-          var x$, attrs;
-          x$ = attrs = it['@attributes'] || {};
+        return done(utils.transform(data, 'page', function(attrs){
+          var x$;
+          attrs == null && (attrs = {});
+          x$ = attrs;
           x$.style = styles[attrs['style-name']];
           x$.textStyle = styles[attrs['text-style-name']];
           if (attrs.href) {
@@ -181,50 +180,46 @@
         }));
       });
     },
-    map: function(bookJson, onNode, parents){
-      var nodes, oldParents, k, v, idx, obj;
+    transform: function(node, key, onNode, parents){
+      var children, i$;
+      onNode == null && (onNode = null);
       parents == null && (parents = []);
-      nodes = [];
-      oldParents = slice.call(parents);
-      for (k in bookJson) {
-        v = bookJson[k];
-        parents.push(k);
+      switch (false) {
+      case !isString(node):
+        return {
+          tagName: key,
+          text: node
+        };
+      default:
+        children = [];
+        for (i$ in node) {
+          (fn$.call(this$, i$, node[i$]));
+        }
+        return {
+          tagName: key,
+          attrs: onNode(node['@attributes'], key, parents),
+          children: children
+        };
+      }
+      function fn$(idx, obj){
+        var array, k, v;
         switch (false) {
-        case k !== "@attributes":
-          break;
-        case !isString(v):
-          nodes.push({
-            tagName: k,
-            text: v
-          });
-          break;
-        case !isPlainObject(v):
-          nodes.push({
-            tagName: k,
-            attrs: onNode(v, k, slice.call(oldParents)),
-            children: utils.map(v, onNode, parents)
-          });
-          break;
-        case !isArray(v):
-          for (idx in v) {
-            obj = v[idx];
-            nodes.push(isString(obj)
-              ? {
-                text: obj
-              }
-              : {
-                tagName: k,
-                attrs: onNode(obj, k, slice.call(oldParents)),
-                children: utils.map(obj, onNode, parents)
-              });
-          }
+        case idx !== '@attributes':
           break;
         default:
-          throw new Error('ill formated JSON');
+          array = isArray(obj)
+            ? obj
+            : [obj];
+          children = children.concat((function(){
+            var ref$, results$ = [];
+            for (k in ref$ = array) {
+              v = ref$[k];
+              results$.push(utils.transform(v, idx, onNode, parents.concat([key])));
+            }
+            return results$;
+          }()));
         }
-        parents.pop();
       }
-      return nodes;
     }
   };
   import$((ref$ = this.CUBEBooks) != null
