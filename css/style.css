@@ -131,6 +131,9 @@ body {
 .draw.span {
   position: static;
 }
+.draw.p span {
+  white-space: nowrap;
+}
 .draw.line-break {
   position: static;
 }
