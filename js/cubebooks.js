@@ -109,7 +109,9 @@
     textareaVerticalAlign: 'middle'
   };
   x$.MP4 = {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'Noto Sans T Chinese',
+    fontSize: '18pt'
   };
   masterPage = {
     frame: [
@@ -127,7 +129,7 @@
             href: 'Pictures/100002010000002800000022F506C368.png'
           },
           p: {
-            '@attibutes': {
+            '@attributes': {
               'style-name': 'MP4'
             },
             span: 'home'
@@ -147,7 +149,7 @@
             href: 'Pictures/1000020100000022000000223520C9AB.png'
           },
           p: {
-            '@attibutes': {
+            '@attributes': {
               'style-name': 'MP4'
             },
             span: 'activity'

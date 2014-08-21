@@ -65,25 +65,25 @@ slice = Array.prototype.slice
     margin-top:    '0cm'
     margin-bottom: '0cm'
     line-height:   '150%'
-    font-family:  'Noto Sans T Chinese'
+    font-family:   'Noto Sans T Chinese'
     font-size:     '30pt'
   ..P8 =
-    line-height:   '150%'
-    font-size:     '24pt'
+    line-height:  '150%'
+    font-size:    '24pt'
   ..P9 =
-    line-height:   '150%'
+    line-height:  '150%'
     font-family:  'Noto Sans T Chinese'
-    font-size:     '24pt'
+    font-size:    '24pt'
   ..T1 =
     font-family:  'Noto Sans T Chinese'
   ..T2 =
     font-family:  'cwTeX Q KaiZH'
   ..T3 =
     font-family:  'Noto Sans T Chinese'
-    font-size:     '30pt'
+    font-size:    '30pt'
   ..T4 =
     font-family:  'Noto Sans T Chinese'
-    font-size:     '24pt'
+    font-size:    '24pt'
   ..Mgr3 = # skip the parent style 'Object with no fill and no line'
     textarea-vertical-align: 'middle'
     #luminance: '-9%' #!?
@@ -91,6 +91,8 @@ slice = Array.prototype.slice
     textarea-vertical-align: 'middle'
   ..MP4 =
     text-align:   'center'
+    font-family:  'Noto Sans T Chinese'
+    font-size:    '18pt'
 master-page =
   frame:
     * '@attributes':
@@ -104,7 +106,7 @@ master-page =
         '@attributes':
           href: 'Pictures/100002010000002800000022F506C368.png'
         p:
-          '@attibutes':
+          '@attributes':
             'style-name': \MP4
           span: 'home'
     * '@attributes':
@@ -118,7 +120,7 @@ master-page =
         '@attributes':
           href: 'Pictures/1000020100000022000000223520C9AB.png'
         p:
-          '@attibutes':
+          '@attributes':
             'style-name': \MP4
           span: 'activity'
 
