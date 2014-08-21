@@ -1,7 +1,7 @@
 (function(){
-  var div, isArray, isString, isPlainObject, slice, DotsDetector, x$, styles, utils, ref$, isNumber, mapValues, span, NullMixin, DrawMixin, defaultComponents, this$ = this;
+  var div, isArray, isString, isPlainObject, cloneDeep, slice, DotsDetector, x$, styles, masterPage, utils, ref$, isNumber, mapValues, span, NullMixin, DrawMixin, defaultComponents, this$ = this;
   div = React.DOM.div;
-  isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject;
+  isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject, cloneDeep = _.cloneDeep;
   slice = Array.prototype.slice;
   DotsDetector = React.createClass({
     displayName: 'UnitDetector',
@@ -144,11 +144,66 @@
     fontFamily: 'Noto Sans T Chinese',
     fontSize: '24pt'
   };
+  x$.Mgr3 = {
+    textareaVerticalAlign: 'middle'
+  };
+  x$.Mgr4 = {
+    textareaVerticalAlign: 'middle'
+  };
+  x$.MP4 = {
+    textAlign: 'center'
+  };
+  masterPage = {
+    frame: [
+      {
+        '@attributes': {
+          'style-name': 'Mgr3',
+          'text-style-name': 'MP4',
+          x: '0.19cm',
+          y: '0.22cm',
+          width: '1.41cm',
+          height: '1.198cm'
+        },
+        image: {
+          '@attributes': {
+            href: 'Pictures/100002010000002800000022F506C368.png'
+          },
+          p: {
+            '@attibutes': {
+              'style-name': 'MP4'
+            },
+            span: 'home'
+          }
+        }
+      }, {
+        '@attributes': {
+          'style-name': 'Mgr4',
+          'text-style-name': 'MP4',
+          x: '26.4cm',
+          y: '0.4cm',
+          width: '1.198cm',
+          height: '1.198cm'
+        },
+        image: {
+          '@attributes': {
+            href: 'Pictures/1000020100000022000000223520C9AB.png'
+          },
+          p: {
+            '@attibutes': {
+              'style-name': 'MP4'
+            },
+            span: 'activity'
+          }
+        }
+      }
+    ]
+  };
   utils = {
     DotsDetector: DotsDetector,
     getPageJSON: function(path, done){
       $.getJSON(path, function(data){
         var ref$, dir;
+        data.frame = cloneDeep(masterPage.frame).concat(data.frame);
         ref$ = data['@attributes'];
         ref$.x = '0';
         ref$.y = '0';
@@ -165,7 +220,8 @@
           if (attrs.href) {
             x$.href = dir + "" + attrs.href;
           }
-          return x$;
+          console.log(attrs);
+          return attrs;
         }));
       });
     },
@@ -318,7 +374,7 @@
         res$.push((fn$.call(this, i$, this.props.children[i$])));
       }
       children = res$;
-      if (this.props.tagName === 'text-box' && style.textareaVerticalAlign) {
+      if (this.props.tagName !== 'frame' && style.textareaVerticalAlign) {
         children.unshift(span({
           key: '-1',
           style: {
@@ -347,20 +403,18 @@
             children: child.children
           };
           import$(props, child.attrs);
-          if (style.textareaVerticalAlign && child.tagName === 'text-box') {
+          if (style.textareaVerticalAlign) {
             import$((ref$ = props.style) != null
               ? ref$
-              : props.style = {}, {
-              textareaVerticalAlign: style.textareaVerticalAlign
-            });
-          }
-          if (this.props.tagName === 'text-box' && style.textareaVerticalAlign) {
-            import$((ref$ = props.style) != null
-              ? ref$
-              : props.style = {}, {
-              display: 'inline-block',
-              verticalAlign: style.textareaVerticalAlign
-            });
+              : props.style = {}, this.props.tagName === 'frame'
+              ? {
+                textareaVerticalAlign: style.textareaVerticalAlign
+              }
+              : {
+                display: 'inline-block',
+                verticalAlign: style.textareaVerticalAlign
+              });
+            console.log(props.style, this.props.tagName);
           }
           return comp(props);
         }
@@ -382,12 +436,7 @@
     }),
     Image: React.createClass({
       displayName: 'ReactODP.Image',
-      mixins: [DrawMixin],
-      getInitialState: function(){
-        return {
-          htmlTag: 'img'
-        };
-      }
+      mixins: [DrawMixin]
     }),
     P: React.createClass({
       displayName: 'ReactODP.P',

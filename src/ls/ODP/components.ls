@@ -59,20 +59,18 @@ DrawMixin =
         props <<< child.attrs
         ##
         # deal with (.*-)?vertical-align
-        # FIXME: does not work in FireFox
-        ##
-        # pass down the style to the text-box
-        if style.textarea-vertical-align and child.tag-name is \text-box
-          (props.style ?= {}) <<< do
+        if style.textarea-vertical-align
+          # pass the style one level down
+          (props.style ?= {}) <<< if @props.tag-name is \frame
             textarea-vertical-align: style.textarea-vertical-align
-        # change children into inline-blocks
-        if @props.tag-name is \text-box and style.textarea-vertical-align
-          (props.style ?= {}) <<< do
+          # change children into inline-blocks
+          else
             display:        \inline-block
             vertical-align: style.textarea-vertical-align
+          console.log props.style, @props.tag-name
         comp props
     # then add an invisible element to fill the height
-    if @props.tag-name is \text-box and style.textarea-vertical-align
+    if @props.tag-name isnt \frame and style.textarea-vertical-align
       children.unshift span do
         key: \-1
         style:
@@ -98,8 +96,6 @@ default-components =
   Image: React.createClass do
     displayName: \ReactODP.Image
     mixins: [DrawMixin]
-    getInitialState: ->
-      html-tag: \img
   P: React.createClass do
     displayName: \ReactODP.P
     mixins: [DrawMixin]

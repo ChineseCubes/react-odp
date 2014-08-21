@@ -1,5 +1,5 @@
 {div} = React.DOM
-{isArray, isString, isPlainObject} = _
+{isArray, isString, isPlainObject, cloneDeep} = _
 slice = Array.prototype.slice
 
 DotsDetector = React.createClass do
@@ -116,11 +116,49 @@ DotsDetector = React.createClass do
   ..T4 =
     font-family:  'Noto Sans T Chinese'
     font-size:     '24pt'
+  ..Mgr3 = # skip the parent style 'Object with no fill and no line'
+    textarea-vertical-align: 'middle'
+    #luminance: '-9%' #!?
+  ..Mgr4 = # skip the parent style 'Object with no fill and no line'
+    textarea-vertical-align: 'middle'
+  ..MP4 =
+    text-align:   'center'
+master-page =
+  frame:
+    * '@attributes':
+        'style-name': \Mgr3
+        'text-style-name': \MP4
+        x:      \0.19cm
+        y:      \0.22cm
+        width:  \1.41cm
+        height: \1.198cm
+      image:
+        '@attributes':
+          href: 'Pictures/100002010000002800000022F506C368.png'
+        p:
+          '@attibutes':
+            'style-name': \MP4
+          span: 'home'
+    * '@attributes':
+        'style-name': \Mgr4
+        'text-style-name': \MP4
+        x:      \26.4cm
+        y:      \0.4cm
+        width:  \1.198cm
+        height: \1.198cm
+      image:
+        '@attributes':
+          href: 'Pictures/1000020100000022000000223520C9AB.png'
+        p:
+          '@attibutes':
+            'style-name': \MP4
+          span: 'activity'
 
 utils =
   DotsDetector: DotsDetector
   getPageJSON: !(path, done) ->
     data <- $.getJSON path
+    data.frame = cloneDeep(master-page.frame).concat data.frame
     data['@attributes'] <<< x: \0 y: \0 width: \28cm height: \21cm
     [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
     done utils.map page: data, ->
@@ -128,6 +166,8 @@ utils =
         ..style = styles[attrs['style-name']]
         ..text-style = styles[attrs['text-style-name']]
         ..href = "#dir#{attrs.href}" if attrs.href
+      console.log attrs
+      attrs
   each: !(book-json, onNode, parents = []) ~>
     old-parents = slice.call parents
     for k, v of book-json
