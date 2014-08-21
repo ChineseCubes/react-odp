@@ -131,6 +131,9 @@ body {
 .draw.span {
   position: static;
 }
+.draw.line-break {
+  position: static;
+}
 .frame > .image span {
   height: 0 !important;
 }
