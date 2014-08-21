@@ -1,7 +1,7 @@
 (function(){
-  var div, isArray, isString, isPlainObject, omit, pick, slice, DotsDetector, styles, x$, utils, ref$, isNumber, mapValues, span, NullMixin, DrawMixin, defaultComponents, this$ = this;
+  var div, isArray, isString, isPlainObject, slice, DotsDetector, x$, styles, utils, ref$, isNumber, mapValues, span, NullMixin, DrawMixin, defaultComponents, this$ = this;
   div = React.DOM.div;
-  isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject, omit = _.omit, pick = _.pick;
+  isArray = _.isArray, isString = _.isString, isPlainObject = _.isPlainObject;
   slice = Array.prototype.slice;
   DotsDetector = React.createClass({
     displayName: 'UnitDetector',
@@ -44,8 +44,7 @@
       });
     }
   });
-  styles = {};
-  x$ = styles;
+  x$ = styles = {};
   x$.DefaultTitle = {
     textareaVerticalAlign: 'middle',
     lineHeight: '150%',
@@ -64,6 +63,8 @@
     fontWeight: 'normal',
     textShadow: 'none'
   };
+  x$.dp1 = {};
+  x$.dp2 = {};
   x$.pr1 = Object.create(styles.DefaultTitle, {
     minHeight: {
       value: '3.506cm',

@@ -1,5 +1,5 @@
 {div} = React.DOM
-{isArray, isString, isPlainObject, omit, pick} = _
+{isArray, isString, isPlainObject} = _
 slice = Array.prototype.slice
 
 DotsDetector = React.createClass do
@@ -33,8 +33,7 @@ DotsDetector = React.createClass do
         width:    "#{@props.scale}#{@props.unit}"
         height:   "#{@props.scale}#{@props.unit}"
 
-styles = {}
-styles
+(styles = {})
   ..DefaultTitle =
     # graphic properties, WTF?
     textarea-vertical-align: 'middle'
@@ -54,6 +53,8 @@ styles
     font-size:    '20pt'
     font-weight:  'normal'
     text-shadow:  'none'
+  ..dp1 = {}
+  ..dp2 = {}
   ..pr1 = Object.create do
     styles.DefaultTitle
     min-height:
