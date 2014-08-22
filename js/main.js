@@ -38,7 +38,7 @@
     }
     return results$;
     function fn$(i){
-      return CUBEBooks.getPageJSON("./json/page" + i + ".json", function(it){
+      return CUBEBooks.getPageJSON$("./json-v2/page" + i + ".json", function(it){
         return gotOne(it, i - 1);
       });
     }

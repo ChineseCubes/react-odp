@@ -89,7 +89,6 @@
         if (child.text) {
           return child.text;
         }
-        console.log(this.props.components);
         import$(comps = clone$(defaultComponents), this.props.components);
         comp = comps[this.lowerCamelFromHyphenated(child.tagName)];
         if (comp) {

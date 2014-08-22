@@ -47,7 +47,6 @@ DrawMixin =
     # prepare children
     children = for let i, child of @props.children
       return child.text if child.text
-      console.log @props.components
       (comps = ^^default-components) <<< @props.components
       comp = comps[@lowerCamelFromHyphenated child.tag-name]
       if comp

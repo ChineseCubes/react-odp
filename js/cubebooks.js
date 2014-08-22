@@ -1,5 +1,5 @@
 (function(){
-  var isArray, isString, cloneDeep, slice, x$, styles, masterPage, utils, ref$, this$ = this;
+  var isArray, isString, cloneDeep, slice, x$, styles, masterPage, utils, ref$;
   isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep;
   slice = Array.prototype.slice;
   x$ = styles = {};
@@ -159,6 +159,66 @@
     ]
   };
   utils = {
+    getPageJSON$: function(path, done){
+      $.getJSON(path, function(data){
+        var ref$, dir;
+        ref$ = data.attrs;
+        ref$.x = '0';
+        ref$.y = '0';
+        ref$.width = '28cm';
+        ref$.height = '21cm';
+        ref$ = /(.*\/)?(.*)\.json/.exec(path) || [void 8, ''], dir = ref$[1];
+        return done(utils.transform$(data, function(attrs){
+          var newAttrs, k, v, s, namespace, name, x$;
+          attrs == null && (attrs = {});
+          console.log(attrs);
+          newAttrs = {};
+          for (k in attrs) {
+            v = attrs[k];
+            s = k.toLowerCase().split(':');
+            if (s.length === 2) {
+              namespace = s[0], name = s[1];
+            } else {
+              name = s[0];
+            }
+            newAttrs[name] = v;
+          }
+          x$ = newAttrs;
+          if (newAttrs.href) {
+            x$.href = dir + "" + newAttrs.href;
+          }
+          return x$;
+        }));
+      });
+    },
+    transform$: function(node, onNode, parents){
+      var s, namespace, name, ref$, child;
+      onNode == null && (onNode = null);
+      parents == null && (parents = []);
+      s = node.name.toLowerCase().split(':');
+      if (s.length === 2) {
+        namespace = s[0], name = s[1];
+      } else {
+        name = s[0];
+      }
+      ref$ = node.name.toLowerCase().split(':'), namespace = ref$[0], name = ref$[1];
+      return {
+        tagName: name,
+        namespace: namespace,
+        text: node.text,
+        attrs: typeof onNode === 'function' ? onNode(node.attrs, parents) : void 8,
+        children: !node.children
+          ? []
+          : (function(){
+            var i$, ref$, len$, results$ = [];
+            for (i$ = 0, len$ = (ref$ = node.children).length; i$ < len$; ++i$) {
+              child = ref$[i$];
+              results$.push(utils.transform$(child, onNode, parents.concat([node.name])));
+            }
+            return results$;
+          }())
+      };
+    },
     getPageJSON: function(path, done){
       $.getJSON(path, function(data){
         var ref$, dir;
@@ -195,11 +255,11 @@
       default:
         children = [];
         for (i$ in node) {
-          (fn$.call(this$, i$, node[i$]));
+          (fn$.call(this, i$, node[i$]));
         }
         return {
           tagName: key,
-          attrs: onNode(node['@attributes'], key, parents),
+          attrs: typeof onNode === 'function' ? onNode(node['@attributes'], key, parents) : void 8,
           children: children
         };
       }
