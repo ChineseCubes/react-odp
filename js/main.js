@@ -24,7 +24,7 @@
       counter += 1;
       if (counter === 8) {
         return done({
-          tagName: 'presentation',
+          name: 'presentation',
           x: '0',
           y: '0',
           width: '28cm',
@@ -38,7 +38,7 @@
     }
     return results$;
     function fn$(i){
-      return CUBEBooks.getPageJSON$("./json-v2/page" + i + ".json", function(it){
+      return CUBEBooks.getPageJSON("./json/page" + i + ".json", function(it){
         return gotOne(it, i - 1);
       });
     }

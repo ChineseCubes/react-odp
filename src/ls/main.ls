@@ -23,14 +23,14 @@ getPages = (done) ->
     counter += 1
     if counter is 8
       done do
-        tag-name: \presentation
+        name:     \presentation
         x:        \0
         y:        \0
         width:    \28cm
         height:   \21cm
         children: pages
   for let i from 1 to 8
-    CUBEBooks.getPageJSON$ "./json-v2/page#i.json", -> got-one it, i - 1
+    CUBEBooks.getPageJSON "./json/page#i.json", -> got-one it, i - 1
 
 data <- getPages
 viewer = ODP.renderComponent data, $(\#wrap)get!0

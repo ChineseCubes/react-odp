@@ -30,7 +30,7 @@ DrawMixin =
   render: ->
     ##
     # prepare self
-    classNames = @props.classNames.concat (@props.tag-name or \unknown)
+    classNames = @props.classNames.concat (@props.name or \unknown)
     # TODO: import, scale, append
     (style = {}) <<<< @props.style # import all
     style <<< do
@@ -46,23 +46,25 @@ DrawMixin =
     ##
     # prepare children
     children = for let i, child of @props.children
+      throw new Error 'unknow tag name' if not child.name
       return child.text if child.text
       (comps = ^^default-components) <<< @props.components
-      comp = comps[@lowerCamelFromHyphenated child.tag-name]
+      comp = comps[@lowerCamelFromHyphenated child.name]
       if comp
         props =
           key:        i
-          tag-name:   child.tag-name
-          text:       child.text
           scale:      @props.scale
-          children:   child.children
           components: @props.components
+          name:       child.name
+          text:       child.text
+          children:   child.children
+        delete child.attrs.name
         props <<< child.attrs
         ##
         # deal with (.*-)?vertical-align
         if style.textarea-vertical-align
           # pass the style one level down
-          (props.style ?= {}) <<< if @props.tag-name is \frame
+          (props.style ?= {}) <<< if @props.name is \frame
             textarea-vertical-align: style.textarea-vertical-align
           # change children into inline-blocks
           else
@@ -70,7 +72,7 @@ DrawMixin =
             vertical-align: style.textarea-vertical-align
         comp props
     # then add an invisible element to fill the height
-    if @props.tag-name isnt \frame and style.textarea-vertical-align
+    if @props.name isnt \frame and style.textarea-vertical-align
       children.unshift span do
         key: \-1
         style:

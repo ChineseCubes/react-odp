@@ -93,6 +93,52 @@ slice = Array.prototype.slice
     text-align:   'center'
     font-family:  'Noto Sans T Chinese'
     font-size:    '18pt'
+master-page$ =
+  children:
+    * name: 'frame'
+      attrs:
+        'style-name': \Mgr3
+        'text-style-name': \MP4
+        x:      \0.19cm
+        y:      \0.22cm
+        width:  \1.41cm
+        height: \1.198cm
+      children:
+        * name: 'image'
+          attrs:
+            href: 'Pictures/100002010000002800000022F506C368.png'
+          children:
+            * name: 'p'
+              attrs:
+                'style-name': \MP4
+              children:
+                * name: 'span'
+                  text: 'home'
+                ...
+            ...
+        ...
+    * name: 'frame'
+      attrs:
+        'style-name': \Mgr4
+        'text-style-name': \MP4
+        x:      \26.4cm
+        y:      \0.4cm
+        width:  \1.198cm
+        height: \1.198cm
+      children:
+        * name: 'image'
+          attrs:
+            href: 'Pictures/1000020100000022000000223520C9AB.png'
+          children:
+            * name: 'p'
+              attrs:
+                'style-name': \MP4
+              children:
+                * name: 'span'
+                  text: 'activity'
+                ...
+            ...
+        ...
 master-page =
   frame:
     * '@attributes':
@@ -125,57 +171,30 @@ master-page =
           span: 'activity'
 
 utils =
-  getPageJSON$: !(path, done) ->
-    data <- $.getJSON path
-    #data.frame = cloneDeep(master-page.frame).concat data.frame
-    data.attrs <<< x: \0 y: \0 width: \28cm height: \21cm
-    [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
-    done utils.transform$ data, (attrs = {}) ->
-      console.log attrs
-      new-attrs = {}
-      for k, v of attrs
-        s = k.toLowerCase!split ':'
-        if s.length is 2 then [namespace, name] = s else [name] = s
-        new-attrs[name] = v
-      new-attrs
-        #..style = styles[attrs['style-name']]
-        #..text-style = styles[attrs['text-style-name']]
-        ..href = "#dir#{new-attrs.href}" if new-attrs.href
-  transform$: (node, onNode = null, parents = []) ->
-    s = node.name.toLowerCase!split ':'
-    if s.length is 2 then [namespace, name] = s else [name] = s
-    [namespace, name] = node.name.toLowerCase!split ':'
-    tag-name:  name
-    namespace: namespace
-    text:      node.text
-    attrs:     onNode? node.attrs, parents
-    children: if not node.children then [] else
-      for child in node.children
-        utils.transform$ child, onNode, parents.concat [node.name]
+  splitNamespace: ->
+    r = it.toLowerCase!split(':')reverse!
+    namespace: r.1
+    name:      r.0
   getPageJSON: !(path, done) ->
     data <- $.getJSON path
-    data.frame = cloneDeep(master-page.frame).concat data.frame
-    data['@attributes'] <<< x: \0 y: \0 width: \28cm height: \21cm
+    data.children = cloneDeep(master-page$.children).concat data.children
+    data.attrs <<< x: \0 y: \0 width: \28cm height: \21cm
     [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
-    done utils.transform data, \page, (attrs = {}) ->
-      attrs
-        ..style = styles[attrs['style-name']]
-        ..text-style = styles[attrs['text-style-name']]
-        ..href = "#dir#{attrs.href}" if attrs.href
-  transform: (node, key, onNode = null, parents = []) ->
-    | isString node => tag-name: key, text: node
-    | otherwise
-      children = []
-      for let idx, obj of node
-        switch
-        | idx is '@attributes' => # nothing
-        | otherwise
-          array = if isArray obj then obj else [obj]
-          children .= concat do
-            for k, v of array => utils.transform v, idx, onNode, parents.concat [key]
-      tag-name: key
-      attrs:    onNode? node['@attributes'], key, parents
-      children: children
+    done utils.transform data, (attrs = {}) ->
+      new-attrs = {}
+      for k, v of attrs
+        new-attrs[utils.splitNamespace(k)name] = v
+      new-attrs
+        ..style = styles[new-attrs['style-name']]
+        ..text-style = styles[new-attrs['text-style-name']]
+        ..href = "#dir#{new-attrs.href}" if new-attrs.href
+  transform: (node, onNode = null, parents = []) ->
+    utils.splitNamespace(node.name) <<< do
+      text:      node.text
+      attrs:     onNode? node.attrs, parents
+      children: if not node.children then [] else
+        for child in node.children
+          utils.transform child, onNode, parents.concat [node.name]
 
 (this.CUBEBooks ?= {}) <<< utils
 

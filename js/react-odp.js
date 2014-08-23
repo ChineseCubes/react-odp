@@ -49,7 +49,7 @@
     },
     render: function(){
       var classNames, style, props, children, res$, i$;
-      classNames = this.props.classNames.concat(this.props.tagName || 'unknown');
+      classNames = this.props.classNames.concat(this.props.name || 'unknown');
       importAll$(style = {}, this.props.style);
       import$(style, {
         left: this.props.x || 'auto',
@@ -70,7 +70,7 @@
         res$.push((fn$.call(this, i$, this.props.children[i$])));
       }
       children = res$;
-      if (this.props.tagName !== 'frame' && style.textareaVerticalAlign) {
+      if (this.props.name !== 'frame' && style.textareaVerticalAlign) {
         children.unshift(span({
           key: '-1',
           style: {
@@ -86,25 +86,29 @@
       return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, children);
       function fn$(i, child){
         var comps, comp, props, ref$;
+        if (!child.name) {
+          throw new Error('unknow tag name');
+        }
         if (child.text) {
           return child.text;
         }
         import$(comps = clone$(defaultComponents), this.props.components);
-        comp = comps[this.lowerCamelFromHyphenated(child.tagName)];
+        comp = comps[this.lowerCamelFromHyphenated(child.name)];
         if (comp) {
           props = {
             key: i,
-            tagName: child.tagName,
-            text: child.text,
             scale: this.props.scale,
-            children: child.children,
-            components: this.props.components
+            components: this.props.components,
+            name: child.name,
+            text: child.text,
+            children: child.children
           };
+          delete child.attrs.name;
           import$(props, child.attrs);
           if (style.textareaVerticalAlign) {
             import$((ref$ = props.style) != null
               ? ref$
-              : props.style = {}, this.props.tagName === 'frame'
+              : props.style = {}, this.props.name === 'frame'
               ? {
                 textareaVerticalAlign: style.textareaVerticalAlign
               }
