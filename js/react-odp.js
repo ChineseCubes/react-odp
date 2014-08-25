@@ -48,7 +48,7 @@
       };
     },
     render: function(){
-      var classNames, style, props, children, res$, i$, msg;
+      var classNames, style, props, children, res$, i$, x$, this$ = this;
       classNames = this.props.classNames.concat(this.props.name || 'unknown');
       importAll$(style = {}, this.props.style);
       import$(style, {
@@ -83,11 +83,11 @@
       if (this.props.text) {
         children.unshift(this.props.text);
       }
-      if (isString(this.props.onClick)) {
-        console.log(this.props.onClick);
-        msg = this.props.onClick;
-        this.props.onClick = function(){
-          return alert(msg);
+      if (isString(this.props.onclick)) {
+        x$ = props;
+        x$.style.cursor = 'pointer';
+        x$.onClick = function(){
+          return alert(this$.props.onclick);
         };
       }
       return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, children);
@@ -111,9 +111,6 @@
             children: child.children
           };
           delete child.attrs.name;
-          if (child.name === 'image') {
-            console.log(child.attrs);
-          }
           import$(props, child.attrs);
           if (style.textareaVerticalAlign) {
             import$((ref$ = props.style) != null
