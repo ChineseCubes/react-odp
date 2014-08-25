@@ -107,15 +107,16 @@ master-page$ =
         * name: 'image'
           attrs:
             href: 'Pictures/100002010000002800000022F506C368.png'
-          children:
-            * name: 'p'
-              attrs:
-                'style-name': \MP4
-              children:
-                * name: 'span'
-                  text: 'home'
-                ...
-            ...
+            onclick: 'home'
+          #children:
+          #  * name: 'p'
+          #    attrs:
+          #      'style-name': \MP4
+          #    children:
+          #      * name: 'span'
+          #        text: 'home'
+          #      ...
+          #  ...
         ...
     * name: 'frame'
       attrs:
@@ -129,15 +130,16 @@ master-page$ =
         * name: 'image'
           attrs:
             href: 'Pictures/1000020100000022000000223520C9AB.png'
-          children:
-            * name: 'p'
-              attrs:
-                'style-name': \MP4
-              children:
-                * name: 'span'
-                  text: 'activity'
-                ...
-            ...
+            onclick: 'activity'
+          #children:
+          #  * name: 'p'
+          #    attrs:
+          #      'style-name': \MP4
+          #    children:
+          #      * name: 'span'
+          #        text: 'activity'
+          #      ...
+          #  ...
         ...
 master-page =
   frame:
@@ -177,7 +179,7 @@ utils =
     name:      r.0
   getPageJSON: !(path, done) ->
     data <- $.getJSON path
-    data.children = cloneDeep(master-page$.children).concat data.children
+    data.children = data.children.concat master-page$.children
     data.attrs <<< x: \0 y: \0 width: \28cm height: \21cm
     [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
     done utils.transform data, (attrs = {}) ->

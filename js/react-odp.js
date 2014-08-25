@@ -1,6 +1,6 @@
 (function(){
-  var isNumber, mapValues, span, NullMixin, DrawMixin, defaultComponents, ref$;
-  isNumber = _.isNumber, mapValues = _.mapValues;
+  var isString, isNumber, mapValues, span, NullMixin, DrawMixin, defaultComponents, ref$;
+  isString = _.isString, isNumber = _.isNumber, mapValues = _.mapValues;
   span = React.DOM.span;
   NullMixin = {
     render: function(){
@@ -48,7 +48,7 @@
       };
     },
     render: function(){
-      var classNames, style, props, children, res$, i$;
+      var classNames, style, props, children, res$, i$, msg;
       classNames = this.props.classNames.concat(this.props.name || 'unknown');
       importAll$(style = {}, this.props.style);
       import$(style, {
@@ -83,6 +83,13 @@
       if (this.props.text) {
         children.unshift(this.props.text);
       }
+      if (isString(this.props.onClick)) {
+        console.log(this.props.onClick);
+        msg = this.props.onClick;
+        this.props.onClick = function(){
+          return alert(msg);
+        };
+      }
       return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, children);
       function fn$(i, child){
         var comps, comp, props, ref$;
@@ -104,6 +111,9 @@
             children: child.children
           };
           delete child.attrs.name;
+          if (child.name === 'image') {
+            console.log(child.attrs);
+          }
           import$(props, child.attrs);
           if (style.textareaVerticalAlign) {
             import$((ref$ = props.style) != null

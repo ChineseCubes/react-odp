@@ -128,18 +128,9 @@
         children: [{
           name: 'image',
           attrs: {
-            href: 'Pictures/100002010000002800000022F506C368.png'
-          },
-          children: [{
-            name: 'p',
-            attrs: {
-              'style-name': 'MP4'
-            },
-            children: [{
-              name: 'span',
-              text: 'home'
-            }]
-          }]
+            href: 'Pictures/100002010000002800000022F506C368.png',
+            onclick: 'home'
+          }
         }]
       }, {
         name: 'frame',
@@ -154,18 +145,9 @@
         children: [{
           name: 'image',
           attrs: {
-            href: 'Pictures/1000020100000022000000223520C9AB.png'
-          },
-          children: [{
-            name: 'p',
-            attrs: {
-              'style-name': 'MP4'
-            },
-            children: [{
-              name: 'span',
-              text: 'activity'
-            }]
-          }]
+            href: 'Pictures/1000020100000022000000223520C9AB.png',
+            onclick: 'activity'
+          }
         }]
       }
     ]
@@ -227,7 +209,7 @@
     getPageJSON: function(path, done){
       $.getJSON(path, function(data){
         var ref$, dir;
-        data.children = cloneDeep(masterPage$.children).concat(data.children);
+        data.children = data.children.concat(masterPage$.children);
         ref$ = data.attrs;
         ref$.x = '0';
         ref$.y = '0';

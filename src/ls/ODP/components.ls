@@ -1,4 +1,4 @@
-{isNumber, mapValues} = _
+{isString, isNumber, mapValues} = _
 {span} = React.DOM
 
 NullMixin =
@@ -59,6 +59,7 @@ DrawMixin =
           text:       child.text
           children:   child.children
         delete child.attrs.name
+        console.log child.attrs if child.name is 'image'
         props <<< child.attrs
         ##
         # deal with (.*-)?vertical-align
@@ -81,6 +82,11 @@ DrawMixin =
           vertical-align: style.textarea-vertical-align
     if @props.text
       children.unshift @props.text
+    # FIXME: should not hard coded here
+    if isString @props.onClick
+      console.log @props.onClick
+      msg = @props.onClick
+      @props.onClick = -> alert msg
     React.DOM[@state.html-tag or @state.default-html-tag] do
       props
       children
