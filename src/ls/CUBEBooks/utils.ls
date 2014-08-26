@@ -180,15 +180,21 @@ utils =
   getPageJSON: !(path, done) ->
     data <- $.getJSON path
     data.children = data.children.concat master-page$.children
-    data.attrs <<< x: \0 y: \0 width: \28cm height: \21cm
+    #data.attrs <<< x: \0 y: \0 width: \28cm height: \21cm
     [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
-    done utils.transform data, (attrs = {}) ->
+    done utils.transform data, (attrs = {}, parents) ->
       new-attrs = {}
       for k, v of attrs
-        new-attrs[utils.splitNamespace(k)name] = v
+        if not /^margin.*/.test k
+          name = utils.splitNamespace(k)name
+          name = 'width'  if name is 'page-width'
+          name = 'height' if name is 'page-height'
+          new-attrs[name] = v
+      #if parents[*-1] is 'DRAW:FRAME'
+      #  console.log styles[new-attrs['style-name']], attrs, parents[* - 1]
       new-attrs
-        ..style = styles[new-attrs['style-name']]
-        ..text-style = styles[new-attrs['text-style-name']]
+        #..style = styles[new-attrs['style-name']]
+        #..text-style = styles[new-attrs['text-style-name']]
         ..href = "#dir#{new-attrs.href}" if new-attrs.href
   transform: (node, onNode = null, parents = []) ->
     utils.splitNamespace(node.name) <<< do

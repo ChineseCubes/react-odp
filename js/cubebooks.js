@@ -210,23 +210,25 @@
       $.getJSON(path, function(data){
         var ref$, dir;
         data.children = data.children.concat(masterPage$.children);
-        ref$ = data.attrs;
-        ref$.x = '0';
-        ref$.y = '0';
-        ref$.width = '28cm';
-        ref$.height = '21cm';
         ref$ = /(.*\/)?(.*)\.json/.exec(path) || [void 8, ''], dir = ref$[1];
-        return done(utils.transform(data, function(attrs){
-          var newAttrs, k, v, x$;
+        return done(utils.transform(data, function(attrs, parents){
+          var newAttrs, k, v, name, x$;
           attrs == null && (attrs = {});
           newAttrs = {};
           for (k in attrs) {
             v = attrs[k];
-            newAttrs[utils.splitNamespace(k).name] = v;
+            if (!/^margin.*/.test(k)) {
+              name = utils.splitNamespace(k).name;
+              if (name === 'page-width') {
+                name = 'width';
+              }
+              if (name === 'page-height') {
+                name = 'height';
+              }
+              newAttrs[name] = v;
+            }
           }
           x$ = newAttrs;
-          x$.style = styles[newAttrs['style-name']];
-          x$.textStyle = styles[newAttrs['text-style-name']];
           if (newAttrs.href) {
             x$.href = dir + "" + newAttrs.href;
           }
