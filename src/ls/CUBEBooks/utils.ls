@@ -182,7 +182,7 @@ utils =
     data.children = data.children.concat master-page$.children
     #data.attrs <<< x: \0 y: \0 width: \28cm height: \21cm
     [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
-    done utils.transform data, (attrs = {}, parents) ->
+    done utils.transform data, (attrs = {}, node-name) ->
       new-attrs = {}
       for k, v of attrs
         if not /^margin.*/.test k
@@ -190,8 +190,8 @@ utils =
           name = 'width'  if name is 'page-width'
           name = 'height' if name is 'page-height'
           new-attrs[name] = v
-      #if parents[*-1] is 'DRAW:FRAME'
-      #  console.log styles[new-attrs['style-name']], attrs, parents[* - 1]
+      if node-name is 'DRAW:FRAME'
+        console.log styles[new-attrs['style-name']], attrs, node-name
       new-attrs
         #..style = styles[new-attrs['style-name']]
         #..text-style = styles[new-attrs['text-style-name']]
@@ -199,7 +199,7 @@ utils =
   transform: (node, onNode = null, parents = []) ->
     utils.splitNamespace(node.name) <<< do
       text:      node.text
-      attrs:     onNode? node.attrs, parents
+      attrs:     onNode? node.attrs, node.name, parents
       children: if not node.children then [] else
         for child in node.children
           utils.transform child, onNode, parents.concat [node.name]

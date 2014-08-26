@@ -36,10 +36,12 @@
     },
     getDefaultProps: function(){
       return {
-        components: {},
         classNames: ['draw'],
         scale: 1.0,
-        children: []
+        children: [],
+        willRenderElement: function(node){
+          return null;
+        }
       };
     },
     getInitialState: function(){
@@ -92,23 +94,22 @@
       }
       return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, children);
       function fn$(i, child){
-        var comps, comp, props, ref$;
+        var comp, props, ref$;
         if (!child.name) {
           throw new Error('unknow tag name');
         }
         if (child.text) {
           return child.text;
         }
-        import$(comps = clone$(defaultComponents), this.props.components);
-        comp = comps[this.lowerCamelFromHyphenated(child.name)];
+        comp = this.props.willRenderElement(child) || defaultComponents[this.lowerCamelFromHyphenated(child.name)];
         if (comp) {
           props = {
             key: i,
             scale: this.props.scale,
-            components: this.props.components,
             name: child.name,
             text: child.text,
-            children: child.children
+            children: child.children,
+            willRenderElement: this.props.willRenderElement
           };
           delete child.attrs.name;
           import$(props, child.attrs);
@@ -181,7 +182,8 @@
   import$((ref$ = this.ODP) != null
     ? ref$
     : this.ODP = {}, {
-    DrawMixin: DrawMixin,
+    mixin: DrawMixin,
+    components: defaultComponents,
     renderComponent: function(data, element){
       return React.renderComponent(defaultComponents.presentation(data), element);
     }
@@ -199,9 +201,5 @@
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];
     return obj;
-  }
-  function clone$(it){
-    function fun(){} fun.prototype = it;
-    return new fun;
   }
 }).call(this);

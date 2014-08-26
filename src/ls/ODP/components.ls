@@ -21,10 +21,10 @@ DrawMixin =
       "#{+r.1 * @props.scale}#{r.2 or ''}"
     | otherwise               => value
   getDefaultProps: ->
-    components: {}
     classNames: <[draw]>
     scale:    1.0
     children: []
+    willRenderElement: (node) -> null
   getInitialState: ->
     default-html-tag: \div
   render: ->
@@ -48,16 +48,16 @@ DrawMixin =
     children = for let i, child of @props.children
       throw new Error 'unknow tag name' if not child.name
       return child.text if child.text
-      (comps = ^^default-components) <<< @props.components
-      comp = comps[@lowerCamelFromHyphenated child.name]
+      comp = @props.willRenderElement(child) or
+             default-components[@lowerCamelFromHyphenated child.name]
       if comp
         props =
           key:        i
           scale:      @props.scale
-          components: @props.components
           name:       child.name
           text:       child.text
           children:   child.children
+          willRenderElement: @props.willRenderElement
         delete child.attrs.name
         props <<< child.attrs
         ##
@@ -125,7 +125,8 @@ default-components =
     mixins: [DrawMixin]
 
 (this.ODP ?= {}) <<< do
-  DrawMixin: DrawMixin
+  mixin: DrawMixin
+  components: default-components
   renderComponent: (data, element) ->
     React.renderComponent do
       default-components.presentation data

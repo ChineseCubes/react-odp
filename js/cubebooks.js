@@ -211,7 +211,7 @@
         var ref$, dir;
         data.children = data.children.concat(masterPage$.children);
         ref$ = /(.*\/)?(.*)\.json/.exec(path) || [void 8, ''], dir = ref$[1];
-        return done(utils.transform(data, function(attrs, parents){
+        return done(utils.transform(data, function(attrs, nodeName){
           var newAttrs, k, v, name, x$;
           attrs == null && (attrs = {});
           newAttrs = {};
@@ -228,6 +228,9 @@
               newAttrs[name] = v;
             }
           }
+          if (nodeName === 'DRAW:FRAME') {
+            console.log(styles[newAttrs['style-name']], attrs, nodeName);
+          }
           x$ = newAttrs;
           if (newAttrs.href) {
             x$.href = dir + "" + newAttrs.href;
@@ -242,7 +245,7 @@
       parents == null && (parents = []);
       return import$(utils.splitNamespace(node.name), {
         text: node.text,
-        attrs: typeof onNode === 'function' ? onNode(node.attrs, parents) : void 8,
+        attrs: typeof onNode === 'function' ? onNode(node.attrs, node.name, parents) : void 8,
         children: !node.children
           ? []
           : (function(){

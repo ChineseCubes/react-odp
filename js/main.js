@@ -50,16 +50,17 @@
      * custom components
      **
     viewer.setProps do
-      components:
-        p: React.createClass do
-          displayName: \CustomP
-          render: ->
-            React.DOM.div do
-              style:
-                width:      100
-                height:     100
-                background: \red
-     */
+      willRenderElement: (node) ->
+        if node.name is 'p'
+          React.createClass do
+            displayName: \CustomP
+            render: ->
+              React.DOM.div do
+                style:
+                  width:      100
+                  height:     100
+                  background: \red
+    /**/
     (resize = function(){
       var ratio, pxWidth, pxHeight, width, height, s;
       ratio = config.pageSetup.ratio;
