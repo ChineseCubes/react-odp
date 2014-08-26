@@ -214,23 +214,42 @@
         return done(utils.transform(data, function(attrs, nodeName){
           var newAttrs, k, v, name, x$;
           attrs == null && (attrs = {});
-          newAttrs = {};
+          newAttrs = {
+            style: {}
+          };
           for (k in attrs) {
             v = attrs[k];
             if (!/^margin.*/.test(k)) {
               name = utils.splitNamespace(k).name;
-              if (name === 'page-width') {
-                name = 'width';
+              switch (name) {
+              case 'page-width':
+                newAttrs.width = v;
+                break;
+              case 'page-height':
+                newAttrs.height = v;
+                break;
+              case 'width':
+                newAttrs.width = v;
+                break;
+              case 'height':
+                newAttrs.height = v;
+                break;
+              case 'x':
+                newAttrs.x = v;
+                break;
+              case 'y':
+                newAttrs.y = v;
+                break;
+              case 'href':
+                newAttrs.href = v;
               }
-              if (name === 'page-height') {
-                name = 'height';
-              }
-              newAttrs[name] = v;
+              newAttrs.style[ODP.mixin.lowerCamelFromHyphenated(name)] = v;
             }
           }
           if (nodeName === 'DRAW:FRAME') {
-            console.log(styles[newAttrs['style-name']], attrs, nodeName);
+            console.log(styles[newAttrs['style-name']], newAttrs, nodeName);
           }
+          console.log(newAttrs);
           x$ = newAttrs;
           if (newAttrs.href) {
             x$.href = dir + "" + newAttrs.href;

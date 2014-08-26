@@ -183,15 +183,22 @@ utils =
     #data.attrs <<< x: \0 y: \0 width: \28cm height: \21cm
     [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
     done utils.transform data, (attrs = {}, node-name) ->
-      new-attrs = {}
+      new-attrs = style: {}
       for k, v of attrs
         if not /^margin.*/.test k
           name = utils.splitNamespace(k)name
-          name = 'width'  if name is 'page-width'
-          name = 'height' if name is 'page-height'
-          new-attrs[name] = v
+          switch name
+          | 'page-width'  => new-attrs.width  = v
+          | 'page-height' => new-attrs.height = v
+          | 'width'       => new-attrs.width  = v
+          | 'height'      => new-attrs.height = v
+          | 'x'           => new-attrs.x    = v
+          | 'y'           => new-attrs.y    = v
+          | 'href'        => new-attrs.href = v
+          new-attrs.style[ODP.mixin.lowerCamelFromHyphenated name] = v
       if node-name is 'DRAW:FRAME'
-        console.log styles[new-attrs['style-name']], attrs, node-name
+        console.log styles[new-attrs['style-name']], new-attrs, node-name
+      console.log new-attrs
       new-attrs
         #..style = styles[new-attrs['style-name']]
         #..text-style = styles[new-attrs['text-style-name']]
