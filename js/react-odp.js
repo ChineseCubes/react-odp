@@ -1,5 +1,5 @@
 (function(){
-  var isString, isNumber, filter, map, mapValues, span, camelFromHyphenated, DrawMixin, defaultComponents, ref$;
+  var isString, isNumber, filter, map, mapValues, span, camelFromHyphenated, shouldRenderChild, renderWithComponent, DrawMixin, defaultComponents, ref$;
   isString = _.isString, isNumber = _.isNumber, filter = _.filter, map = _.map, mapValues = _.mapValues;
   span = React.DOM.span;
   camelFromHyphenated = function(it){
@@ -11,6 +11,16 @@
         return v.slice(0, 1).toUpperCase() + "" + v.slice(1);
       }
     }).join('');
+  };
+  shouldRenderChild = function(props){
+    return true;
+  };
+  renderWithComponent = function(props){
+    var comp;
+    comp = defaultComponents[camelFromHyphenated(props.name)];
+    if (comp) {
+      return comp(props);
+    }
   };
   DrawMixin = {
     scaleStyle: function(value, key){
@@ -33,17 +43,10 @@
         defaultHtmlTag: 'div',
         classNames: ['draw'],
         scale: 1.0,
+        parents: [],
         children: [],
-        shouldRenderChild: function(props){
-          return true;
-        },
-        renderWithComponent: function(props){
-          var comp;
-          comp = defaultComponents[camelFromHyphenated(props.name)];
-          if (comp) {
-            return comp(props);
-          }
-        }
+        shouldRenderChild: shouldRenderChild,
+        renderWithComponent: renderWithComponent
       };
     },
     render: function(){
@@ -98,6 +101,7 @@
         props = {
           key: i,
           scale: this.props.scale,
+          parents: this.props.parents.concat([this.props.name]),
           name: child.name,
           text: child.text,
           children: child.children,
@@ -177,6 +181,8 @@
     mixin: DrawMixin,
     components: defaultComponents,
     camelFromHyphenated: camelFromHyphenated,
+    shouldRenderChild: shouldRenderChild,
+    renderWithComponent: renderWithComponent,
     renderComponent: function(data, element){
       return React.renderComponent(defaultComponents.presentation(data), element);
     }

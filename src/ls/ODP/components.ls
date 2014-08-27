@@ -8,6 +8,12 @@ camelFromHyphenated = ->
       | i is 0  => v
       | otherwise =>"#{v.slice(0, 1)toUpperCase!}#{v.slice(1)}"
     .join ''
+shouldRenderChild =
+  (props) -> true
+renderWithComponent =
+  (props) ->
+    comp = default-components[camelFromHyphenated props.name]
+    comp props if comp
 
 DrawMixin =
   scaleStyle: (value, key) -> # without changing the unit
@@ -21,13 +27,10 @@ DrawMixin =
     defaultHtmlTag: 'div'
     classNames:     <[draw]>
     scale:          1.0
+    parents:        []
     children:       []
-    shouldRenderChild:
-      (props) -> true
-    renderWithComponent:
-      (props) ->
-        comp = default-components[camelFromHyphenated props.name]
-        comp props if comp
+    shouldRenderChild:   shouldRenderChild
+    renderWithComponent: renderWithComponent
   render: ->
     style =
       left:   @props.x      or \auto
@@ -50,6 +53,7 @@ DrawMixin =
       props =
         key:        i
         scale:      @props.scale
+        parents:    @props.parents.concat [@props.name]
         name:       child.name
         text:       child.text
         children:   child.children
@@ -126,6 +130,8 @@ default-components =
   mixin: DrawMixin
   components: default-components
   camelFromHyphenated: camelFromHyphenated
+  shouldRenderChild: shouldRenderChild
+  renderWithComponent: renderWithComponent
   renderComponent: (data, element) ->
     React.renderComponent do
       default-components.presentation data

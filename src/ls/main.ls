@@ -18,9 +18,22 @@ data <- CUBEBooks.getPresentation './json-v2.1'
 viewer = ODP.renderComponent data, $(\#wrap)get!0
 /**
  * custom components
- **
+ **/
+time = 0
+requestAnimationFrame update = ->
+  time += 1/60
+  time %= 10
+  requestAnimationFrame update
 viewer.setProps do
-  shouldRenderChild: (props) -> if props.name is 'p' then false else true
+  #shouldRenderChild: (props) -> if props.name is 'p' then false else true
+  renderWithComponent: (props) ->
+    if props.name is 'span' and 'text-box' in props.parents
+      ReactVTT.IsolatedCue do
+        target: './assets/demo.vtt'
+        index: 0
+        currentTime: -> time
+    else
+      ODP.renderWithComponent props
 /**/
 
 do resize = ->

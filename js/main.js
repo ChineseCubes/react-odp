@@ -15,13 +15,32 @@
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
   CUBEBooks.getPresentation('./json-v2.1', function(data){
-    var viewer, resize;
+    var viewer, time, update, resize;
     viewer = ODP.renderComponent(data, $('#wrap').get()[0]);
     /**
      * custom components
-     **
-    viewer.setProps do
-      shouldRenderChild: (props) -> if props.name is 'p' then false else true
+     **/
+    time = 0;
+    requestAnimationFrame(update = function(){
+      time += 1 / 60;
+      time %= 10;
+      return requestAnimationFrame(update);
+    });
+    viewer.setProps({
+      renderWithComponent: function(props){
+        if (props.name === 'span' && in$('text-box', props.parents)) {
+          return ReactVTT.IsolatedCue({
+            target: './assets/demo.vtt',
+            index: 0,
+            currentTime: function(){
+              return time;
+            }
+          });
+        } else {
+          return ODP.renderWithComponent(props);
+        }
+      }
+    });
     /**/
     (resize = function(){
       var ratio, pxWidth, pxHeight, width, height, s;
@@ -39,4 +58,9 @@
     })();
     return $(window).resize(resize);
   });
+  function in$(x, xs){
+    var i = -1, l = xs.length >>> 0;
+    while (++i < l) if (x === xs[i]) return true;
+    return false;
+  }
 }).call(this);
