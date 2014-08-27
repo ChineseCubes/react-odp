@@ -272,11 +272,8 @@
               case 'href':
                 newAttrs.href = v;
               }
-              newAttrs.style[ODP.mixin.lowerCamelFromHyphenated(name)] = v;
+              newAttrs.style[ODP.camelFromHyphenated(name)] = v;
             }
-          }
-          if (in$('DRAW:FRAME', parents)) {
-            console.log(nodeName, newAttrs, styles[newAttrs.style.styleName]);
           }
           x$ = newAttrs;
           if (newAttrs.href) {
@@ -309,11 +306,6 @@
   import$((ref$ = this.CUBEBooks) != null
     ? ref$
     : this.CUBEBooks = {}, utils);
-  function in$(x, xs){
-    var i = -1, l = xs.length >>> 0;
-    while (++i < l) if (x === xs[i]) return true;
-    return false;
-  }
   function import$(obj, src){
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];

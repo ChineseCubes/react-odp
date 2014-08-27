@@ -20,16 +20,7 @@ viewer = ODP.renderComponent data, $(\#wrap)get!0
  * custom components
  **
 viewer.setProps do
-  willRenderElement: (node) ->
-    if node.name is 'p'
-      React.createClass do
-        displayName: \CustomP
-        render: ->
-          React.DOM.div do
-            style:
-              width:      100
-              height:     100
-              background: \red
+  shouldRenderChild: (props) -> if props.name is 'p' then false else true
 /**/
 
 do resize = ->

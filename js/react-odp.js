@@ -1,24 +1,18 @@
 (function(){
-  var isString, isNumber, mapValues, span, NullMixin, DrawMixin, defaultComponents, ref$;
-  isString = _.isString, isNumber = _.isNumber, mapValues = _.mapValues;
+  var isString, isNumber, filter, map, mapValues, span, camelFromHyphenated, DrawMixin, defaultComponents, ref$;
+  isString = _.isString, isNumber = _.isNumber, filter = _.filter, map = _.map, mapValues = _.mapValues;
   span = React.DOM.span;
-  NullMixin = {
-    render: function(){
-      return div();
-    }
+  camelFromHyphenated = function(it){
+    return it.split('-').map(function(v, i){
+      switch (false) {
+      case i !== 0:
+        return v;
+      default:
+        return v.slice(0, 1).toUpperCase() + "" + v.slice(1);
+      }
+    }).join('');
   };
   DrawMixin = {
-    toHyphen: function(){},
-    lowerCamelFromHyphenated: function(it){
-      return it.split('-').map(function(v, i){
-        switch (false) {
-        case i !== 0:
-          return v;
-        default:
-          return v.slice(0, 1).toUpperCase() + "" + v.slice(1);
-        }
-      }).join('');
-    },
     scaleStyle: function(value, key){
       var r;
       switch (false) {
@@ -36,42 +30,52 @@
     },
     getDefaultProps: function(){
       return {
+        defaultHtmlTag: 'div',
         classNames: ['draw'],
         scale: 1.0,
         children: [],
-        willRenderElement: function(node){
-          return null;
+        shouldRenderChild: function(props){
+          return true;
+        },
+        renderWithComponent: function(props){
+          var comp;
+          comp = defaultComponents[camelFromHyphenated(props.name)];
+          if (comp) {
+            return comp(props);
+          }
         }
       };
     },
-    getInitialState: function(){
-      return {
-        defaultHtmlTag: 'div'
-      };
-    },
     render: function(){
-      var classNames, style, props, children, res$, i$, x$, this$ = this;
-      classNames = this.props.classNames.concat(this.props.name || 'unknown');
-      importAll$(style = {}, this.props.style);
-      import$(style, {
+      var style, props, x$, childPropsList, res$, i$, children, this$ = this;
+      style = {
         left: this.props.x || 'auto',
         top: this.props.y || 'auto',
         width: this.props.width || 'auto',
         height: this.props.height || 'auto'
-      });
+      };
+      importAll$(style, this.props.style);
       style = mapValues(style, this.scaleStyle);
       if (this.props.href) {
         style.backgroundImage = "url(" + this.props.href + ")";
       }
       props = {
-        className: classNames.join(' '),
+        className: this.props.classNames.concat(this.props.name || 'unknown').join(' '),
         style: style
       };
+      if (isString(this.props.onclick)) {
+        x$ = props;
+        x$.style.cursor = 'pointer';
+        x$.onClick = function(){
+          return alert(this$.props.onclick);
+        };
+      }
       res$ = [];
       for (i$ in this.props.children) {
         res$.push((fn$.call(this, i$, this.props.children[i$])));
       }
-      children = res$;
+      childPropsList = res$;
+      children = map(filter(childPropsList, this.props.shouldRenderChild), this.props.renderWithComponent);
       if (this.props.name !== 'frame' && style.textareaVerticalAlign) {
         children.unshift(span({
           key: '-1',
@@ -85,48 +89,36 @@
       if (this.props.text) {
         children.unshift(this.props.text);
       }
-      if (isString(this.props.onclick)) {
-        x$ = props;
-        x$.style.cursor = 'pointer';
-        x$.onClick = function(){
-          return alert(this$.props.onclick);
-        };
-      }
-      return React.DOM[this.state.htmlTag || this.state.defaultHtmlTag](props, children);
+      return React.DOM[this.props.htmlTag || this.props.defaultHtmlTag](props, children);
       function fn$(i, child){
-        var comp, props, ref$;
+        var props, ref$;
         if (!child.name) {
           throw new Error('unknow tag name');
         }
-        if (child.text) {
-          return child.text;
+        props = {
+          key: i,
+          scale: this.props.scale,
+          name: child.name,
+          text: child.text,
+          children: child.children,
+          shouldRenderChild: this.props.shouldRenderChild,
+          renderWithComponent: this.props.renderWithComponent
+        };
+        delete child.attrs.name;
+        import$(props, child.attrs);
+        if (style.textareaVerticalAlign) {
+          import$((ref$ = props.style) != null
+            ? ref$
+            : props.style = {}, this.props.name === 'frame'
+            ? {
+              textareaVerticalAlign: style.textareaVerticalAlign
+            }
+            : {
+              display: 'inline-block',
+              verticalAlign: style.textareaVerticalAlign
+            });
         }
-        comp = this.props.willRenderElement(child) || defaultComponents[this.lowerCamelFromHyphenated(child.name)];
-        if (comp) {
-          props = {
-            key: i,
-            scale: this.props.scale,
-            name: child.name,
-            text: child.text,
-            children: child.children,
-            willRenderElement: this.props.willRenderElement
-          };
-          delete child.attrs.name;
-          import$(props, child.attrs);
-          if (style.textareaVerticalAlign) {
-            import$((ref$ = props.style) != null
-              ? ref$
-              : props.style = {}, this.props.name === 'frame'
-              ? {
-                textareaVerticalAlign: style.textareaVerticalAlign
-              }
-              : {
-                display: 'inline-block',
-                verticalAlign: style.textareaVerticalAlign
-              });
-          }
-          return comp(props);
-        }
+        return props;
       }
     }
   };
@@ -150,7 +142,7 @@
     p: React.createClass({
       displayName: 'ReactODP.P',
       mixins: [DrawMixin],
-      getInitialState: function(){
+      getDefaultProps: function(){
         return {
           htmlTag: 'p'
         };
@@ -159,7 +151,7 @@
     span: React.createClass({
       displayName: 'ReactODP.Span',
       mixins: [DrawMixin],
-      getInitialState: function(){
+      getDefaultProps: function(){
         return {
           htmlTag: 'span'
         };
@@ -168,7 +160,7 @@
     lineBreak: React.createClass({
       displayName: 'ReactODP.LineBreak',
       mixins: [DrawMixin],
-      getInitialState: function(){
+      getDefaultProps: function(){
         return {
           htmlTag: 'br'
         };
@@ -184,6 +176,7 @@
     : this.ODP = {}, {
     mixin: DrawMixin,
     components: defaultComponents,
+    camelFromHyphenated: camelFromHyphenated,
     renderComponent: function(data, element){
       return React.renderComponent(defaultComponents.presentation(data), element);
     }

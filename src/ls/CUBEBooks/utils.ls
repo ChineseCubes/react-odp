@@ -212,9 +212,9 @@ utils =
           | 'x'           => new-attrs.x      = v
           | 'y'           => new-attrs.y      = v
           | 'href'        => new-attrs.href   = v
-          new-attrs.style[ODP.mixin.lowerCamelFromHyphenated name] = v
-      if 'DRAW:FRAME' in parents
-        console.log node-name, new-attrs, styles[new-attrs.style.style-name]
+          new-attrs.style[ODP.camelFromHyphenated name] = v
+      #if 'DRAW:FRAME' in parents
+      #  console.log node-name, new-attrs, styles[new-attrs.style.style-name]
       new-attrs
         #..style = styles[new-attrs['style-name']]
         #..text-style = styles[new-attrs['text-style-name']]
