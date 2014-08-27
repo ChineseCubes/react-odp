@@ -177,12 +177,29 @@ utils =
     r = it.toLowerCase!split(':')reverse!
     namespace: r.1
     name:      r.0
+  getPresentation: (path, done) ->
+    pages = []
+    counter = 0
+    got-one = (data, i) ->
+      data.attrs.y = "#{i * 21.5}cm"
+      pages.push data
+      counter += 1
+      if counter is 8
+        done do
+          name:     \presentation
+          x:        \0
+          y:        \0
+          width:    \28cm
+          height:   \21cm
+          children: pages
+    for let i from 1 to 8
+      CUBEBooks.getPageJSON "#path/page#i.json", -> got-one it, i - 1
   getPageJSON: !(path, done) ->
     data <- $.getJSON path
     data.children = data.children.concat master-page$.children
     #data.attrs <<< x: \0 y: \0 width: \28cm height: \21cm
     [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
-    done utils.transform data, (attrs = {}, node-name) ->
+    done utils.transform data, (attrs = {}, node-name, parents) ->
       new-attrs = style: {}
       for k, v of attrs
         if not /^margin.*/.test k
@@ -192,13 +209,12 @@ utils =
           | 'page-height' => new-attrs.height = v
           | 'width'       => new-attrs.width  = v
           | 'height'      => new-attrs.height = v
-          | 'x'           => new-attrs.x    = v
-          | 'y'           => new-attrs.y    = v
-          | 'href'        => new-attrs.href = v
+          | 'x'           => new-attrs.x      = v
+          | 'y'           => new-attrs.y      = v
+          | 'href'        => new-attrs.href   = v
           new-attrs.style[ODP.mixin.lowerCamelFromHyphenated name] = v
-      if node-name is 'DRAW:FRAME'
-        console.log styles[new-attrs['style-name']], new-attrs, node-name
-      console.log new-attrs
+      if 'DRAW:FRAME' in parents
+        console.log node-name, new-attrs, styles[new-attrs.style.style-name]
       new-attrs
         #..style = styles[new-attrs['style-name']]
         #..text-style = styles[new-attrs['text-style-name']]

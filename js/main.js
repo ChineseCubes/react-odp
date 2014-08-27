@@ -1,5 +1,5 @@
 (function(){
-  var config, dots, dpcm, getPages;
+  var config, dots, dpcm;
   config = {
     pageSetup: {
       ratio: 4 / 3,
@@ -14,36 +14,7 @@
   }), $('#detector').get()[0]);
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
-  getPages = function(done){
-    var pages, counter, gotOne, i$, results$ = [];
-    pages = [];
-    counter = 0;
-    gotOne = function(data, i){
-      data.attrs.y = i * 21.5 + "cm";
-      pages.push(data);
-      counter += 1;
-      if (counter === 8) {
-        return done({
-          name: 'presentation',
-          x: '0',
-          y: '0',
-          width: '28cm',
-          height: '21cm',
-          children: pages
-        });
-      }
-    };
-    for (i$ = 1; i$ <= 8; ++i$) {
-      results$.push((fn$.call(this, i$)));
-    }
-    return results$;
-    function fn$(i){
-      return CUBEBooks.getPageJSON("./json-v2.1/page" + i + ".json", function(it){
-        return gotOne(it, i - 1);
-      });
-    }
-  };
-  getPages(function(data){
+  CUBEBooks.getPresentation('./json-v2.1', function(data){
     var viewer, resize;
     viewer = ODP.renderComponent(data, $('#wrap').get()[0]);
     /**

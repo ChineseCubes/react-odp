@@ -206,12 +206,41 @@
         name: r[0]
       };
     },
+    getPresentation: function(path, done){
+      var pages, counter, gotOne, i$, results$ = [];
+      pages = [];
+      counter = 0;
+      gotOne = function(data, i){
+        data.attrs.y = i * 21.5 + "cm";
+        pages.push(data);
+        counter += 1;
+        if (counter === 8) {
+          return done({
+            name: 'presentation',
+            x: '0',
+            y: '0',
+            width: '28cm',
+            height: '21cm',
+            children: pages
+          });
+        }
+      };
+      for (i$ = 1; i$ <= 8; ++i$) {
+        results$.push((fn$.call(this, i$)));
+      }
+      return results$;
+      function fn$(i){
+        return CUBEBooks.getPageJSON(path + "/page" + i + ".json", function(it){
+          return gotOne(it, i - 1);
+        });
+      }
+    },
     getPageJSON: function(path, done){
       $.getJSON(path, function(data){
         var ref$, dir;
         data.children = data.children.concat(masterPage$.children);
         ref$ = /(.*\/)?(.*)\.json/.exec(path) || [void 8, ''], dir = ref$[1];
-        return done(utils.transform(data, function(attrs, nodeName){
+        return done(utils.transform(data, function(attrs, nodeName, parents){
           var newAttrs, k, v, name, x$;
           attrs == null && (attrs = {});
           newAttrs = {
@@ -246,10 +275,9 @@
               newAttrs.style[ODP.mixin.lowerCamelFromHyphenated(name)] = v;
             }
           }
-          if (nodeName === 'DRAW:FRAME') {
-            console.log(styles[newAttrs['style-name']], newAttrs, nodeName);
+          if (in$('DRAW:FRAME', parents)) {
+            console.log(nodeName, newAttrs, styles[newAttrs.style.styleName]);
           }
-          console.log(newAttrs);
           x$ = newAttrs;
           if (newAttrs.href) {
             x$.href = dir + "" + newAttrs.href;
@@ -281,6 +309,11 @@
   import$((ref$ = this.CUBEBooks) != null
     ? ref$
     : this.CUBEBooks = {}, utils);
+  function in$(x, xs){
+    var i = -1, l = xs.length >>> 0;
+    while (++i < l) if (x === xs[i]) return true;
+    return false;
+  }
   function import$(obj, src){
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];

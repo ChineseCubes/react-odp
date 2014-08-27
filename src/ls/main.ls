@@ -14,25 +14,7 @@ dots = React.renderComponent do
 dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
-getPages = (done) ->
-  pages = []
-  counter = 0
-  got-one = (data, i) ->
-    data.attrs.y = "#{i * 21.5}cm" # hack hack
-    pages.push data
-    counter += 1
-    if counter is 8
-      done do
-        name:     \presentation
-        x:        \0
-        y:        \0
-        width:    \28cm
-        height:   \21cm
-        children: pages
-  for let i from 1 to 8
-    CUBEBooks.getPageJSON "./json-v2.1/page#i.json", -> got-one it, i - 1
-
-data <- getPages
+data <- CUBEBooks.getPresentation './json-v2.1'
 viewer = ODP.renderComponent data, $(\#wrap)get!0
 /**
  * custom components
