@@ -14,11 +14,13 @@ dots = React.renderComponent do
 dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
-data <- CUBEBooks.getPresentation './json-v2.1'
+data <- CUBEBooks.getPresentation './json'
 viewer = ODP.renderComponent data, $(\#wrap)get!0
+
+###
+# custom components
+###
 /**
- * custom components
- **/
 time = 0
 requestAnimationFrame update = ->
   time += 1/60

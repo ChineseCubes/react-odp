@@ -38,6 +38,8 @@ DrawMixin =
       width:  @props.width  or \auto
       height: @props.height or \auto
     style <<<< @props.style # import all
+    # FIXME
+    delete style.line-height
     style = mapValues style, @scaleStyle
     style <<< background-image: "url(#{@props.href})" if @props.href
     props =

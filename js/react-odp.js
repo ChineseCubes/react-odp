@@ -58,6 +58,7 @@
         height: this.props.height || 'auto'
       };
       importAll$(style, this.props.style);
+      delete style.lineHeight;
       style = mapValues(style, this.scaleStyle);
       if (this.props.href) {
         style.backgroundImage = "url(" + this.props.href + ")";
