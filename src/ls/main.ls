@@ -19,24 +19,23 @@ viewer = ODP.renderComponent data, $(\#wrap)get!0
 ###
 # custom components
 ###
-/**
+/**/
 time = 0
 requestAnimationFrame update = ->
   time += 1/60s
   time %= 18s
   requestAnimationFrame update
-data <<< do
+viewer.setProps do
   renderProps: (props) ->
-    if props.text
-      text = props.text
-      delete props.text
-      #ODP.components.span do
-      #  props
-      #  ReactVTT.IsolatedCue do
-      #    target: './json/demo.vtt'
-      #    #index: span-count++
-      #    match: text
-      #    currentTime: -> time
+    if props.data.text
+      text = props.data.text
+      delete props.data.text
+      ODP.components.span do
+        props
+        ReactVTT.IsolatedCue do
+          target: './json/demo.vtt'
+          match: text
+          currentTime: -> time
     else
       ODP.renderProps props
 /**/

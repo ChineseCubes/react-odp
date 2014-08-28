@@ -82,7 +82,9 @@ DrawMixin =
     ###
     if data.text
       children.unshift data.text
-    React.DOM[@props.htmlTag or @props.defaultHtmlTag] props, children
+    React.DOM[@props.htmlTag or @props.defaultHtmlTag] do
+      props
+      children.concat @props.children
 
 default-components =
   page: React.createClass do

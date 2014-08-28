@@ -92,7 +92,7 @@
       if (data.text) {
         children.unshift(data.text);
       }
-      return React.DOM[this.props.htmlTag || this.props.defaultHtmlTag](props, children);
+      return React.DOM[this.props.htmlTag || this.props.defaultHtmlTag](props, children.concat(this.props.children));
       function fn$(i, child){
         var props, ref$, ref1$;
         if (!child.name) {
