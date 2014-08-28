@@ -14,7 +14,7 @@
   };
   renderProps = function(props){
     var key$;
-    return typeof defaultComponents[key$ = camelFromHyphenated(props.name)] === 'function' ? defaultComponents[key$](props) : void 8;
+    return typeof defaultComponents[key$ = camelFromHyphenated(props.data.name)] === 'function' ? defaultComponents[key$](props) : void 8;
   };
   DrawMixin = {
     scaleStyle: function(value, key){
@@ -38,44 +38,48 @@
         classNames: ['draw'],
         scale: 1.0,
         parents: [],
-        children: [],
         renderProps: renderProps
       };
     },
     render: function(){
-      var style, props, x$, childPropsList, res$, i$, children, this$ = this;
+      var data, attrs, style, props, x$, childPropsList, res$, i$, children, this$ = this;
+      if (!(data = this.props.data)) {
+        return;
+      }
+      attrs = data.attrs;
       style = {
-        left: this.props.x || 'auto',
-        top: this.props.y || 'auto',
-        width: this.props.width || 'auto',
-        height: this.props.height || 'auto'
+        left: (attrs != null ? attrs.x : void 8) || 'auto',
+        top: (attrs != null ? attrs.y : void 8) || 'auto',
+        width: (attrs != null ? attrs.width : void 8) || 'auto',
+        height: (attrs != null ? attrs.height : void 8) || 'auto'
       };
-      importAll$(style, this.props.style);
+      if (attrs != null) {
+        importAll$(style, attrs.style);
+      }
       delete style.lineHeight;
       style = mapValues(style, this.scaleStyle);
-      if (this.props.href) {
-        style.backgroundImage = "url(" + this.props.href + ")";
+      if (attrs.href) {
+        style.backgroundImage = "url(" + attrs.href + ")";
       }
       props = {
-        className: this.props.classNames.concat(this.props.name || 'unknown').join(' '),
+        className: this.props.classNames.concat(data.name || 'unknown').join(' '),
         style: style
       };
-      if (isString(this.props.onclick)) {
+      if (isString(attrs.onclick)) {
         x$ = props;
         x$.style.cursor = 'pointer';
         x$.onClick = function(){
-          return alert(this$.props.onclick);
+          return alert(attrs.onclick);
         };
       }
-      console.log(this.props.children);
       res$ = [];
-      for (i$ in this.props.children) {
-        res$.push((fn$.call(this, i$, this.props.children[i$])));
+      for (i$ in data.children) {
+        res$.push((fn$.call(this, i$, data.children[i$])));
       }
       childPropsList = res$;
       children = filter(
       map(childPropsList, this.props.renderProps));
-      if (this.props.name !== 'frame' && style.textareaVerticalAlign) {
+      if (data.name !== 'frame' && style.textareaVerticalAlign) {
         children.unshift(span({
           key: '-1',
           style: {
@@ -85,32 +89,26 @@
           }
         }));
       }
-      if (this.props.text) {
-        children.unshift(this.props.text);
+      if (data.text) {
+        children.unshift(data.text);
       }
       return React.DOM[this.props.htmlTag || this.props.defaultHtmlTag](props, children);
       function fn$(i, child){
-        var props, ref$;
+        var props, ref$, ref1$;
         if (!child.name) {
           throw new Error('unknow tag name');
         }
         props = {
           key: i,
           scale: this.props.scale,
-          parents: this.props.parents.concat([this.props.name]),
-          name: child.name,
-          text: child.text,
-          children: cloneDeep(child.children),
+          parents: this.props.parents.concat([data.name]),
+          data: cloneDeep(child),
           renderProps: this.props.renderProps
         };
-        if (((ref$ = child.attrs) != null ? ref$.name : void 8) != null) {
-          delete child.attrs.name;
-        }
-        import$(props, child.attrs);
         if (style.textareaVerticalAlign) {
-          import$((ref$ = props.style) != null
-            ? ref$
-            : props.style = {}, this.props.name === 'frame'
+          import$((ref1$ = (ref$ = props.data.attrs).style) != null
+            ? ref1$
+            : ref$.style = {}, data.name === 'frame'
             ? {
               textareaVerticalAlign: style.textareaVerticalAlign
             }
@@ -180,7 +178,9 @@
     camelFromHyphenated: camelFromHyphenated,
     renderProps: renderProps,
     renderComponent: function(data, element){
-      return React.renderComponent(defaultComponents.presentation(data), element);
+      return React.renderComponent(defaultComponents.presentation({
+        data: data
+      }), element);
     }
   });
   function in$(x, xs){

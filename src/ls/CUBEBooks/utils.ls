@@ -65,10 +65,11 @@ utils =
       if counter is 8
         done do
           name:     \presentation
-          x:        \0
-          y:        \0
-          width:    \28cm
-          height:   \21cm
+          attrs:
+            x:      \0
+            y:      \0
+            width:  \28cm
+            height: \21cm
           children: pages
     for let i from 1 to 8
       CUBEBooks.getPageJSON "#path/page#i.json", -> got-one it, i - 1
@@ -82,14 +83,15 @@ utils =
         if not /^margin.*/.test k
           name = utils.splitNamespace(k)name
           switch name
-          | 'page-width'  => new-attrs.width  = v
-          | 'page-height' => new-attrs.height = v
-          | 'width'       => new-attrs.width  = v
-          | 'height'      => new-attrs.height = v
-          | 'x'           => new-attrs.x      = v
-          | 'y'           => new-attrs.y      = v
-          | 'href'        => new-attrs.href   = v
-          new-attrs.style[ODP.camelFromHyphenated name] = v
+          | 'page-width'  => new-attrs.width   = v
+          | 'page-height' => new-attrs.height  = v
+          | 'width'       => new-attrs.width   = v
+          | 'height'      => new-attrs.height  = v
+          | 'x'           => new-attrs.x       = v
+          | 'y'           => new-attrs.y       = v
+          | 'href'        => new-attrs.href    = v
+          | 'onclick'     => new-attrs.onclick = v
+          | otherwise     => new-attrs.style[ODP.camelFromHyphenated name] = v
       #if 'DRAW:FRAME' in parents
       #  console.log node-name, new-attrs, styles[new-attrs.style.style-name]
       new-attrs

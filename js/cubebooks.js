@@ -61,10 +61,12 @@
         if (counter === 8) {
           return done({
             name: 'presentation',
-            x: '0',
-            y: '0',
-            width: '28cm',
-            height: '21cm',
+            attrs: {
+              x: '0',
+              y: '0',
+              width: '28cm',
+              height: '21cm'
+            },
             children: pages
           });
         }
@@ -115,8 +117,13 @@
                 break;
               case 'href':
                 newAttrs.href = v;
+                break;
+              case 'onclick':
+                newAttrs.onclick = v;
+                break;
+              default:
+                newAttrs.style[ODP.camelFromHyphenated(name)] = v;
               }
-              newAttrs.style[ODP.camelFromHyphenated(name)] = v;
             }
           }
           x$ = newAttrs;

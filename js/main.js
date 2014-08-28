@@ -15,6 +15,8 @@
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
   CUBEBooks.getPresentation('./json', function(data){
+    var viewer, resize;
+    viewer = ODP.renderComponent(data, $('#wrap').get()[0]);
     /**
     time = 0
     requestAnimationFrame update = ->
@@ -36,8 +38,6 @@
         else
           ODP.renderProps props
     /**/
-    var viewer, resize;
-    viewer = ODP.renderComponent(data, $('#wrap').get()[0]);
     (resize = function(){
       var ratio, pxWidth, pxHeight, width, height, s;
       ratio = config.pageSetup.ratio;

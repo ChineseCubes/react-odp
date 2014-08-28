@@ -15,6 +15,7 @@ dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
 data <- CUBEBooks.getPresentation './json'
+viewer = ODP.renderComponent data, $(\#wrap)get!0
 ###
 # custom components
 ###
@@ -39,7 +40,6 @@ data <<< do
     else
       ODP.renderProps props
 /**/
-viewer = ODP.renderComponent data, $(\#wrap)get!0
 
 do resize = ->
   ratio     = config.page-setup.ratio
