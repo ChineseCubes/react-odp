@@ -1,6 +1,6 @@
 (function(){
-  var isString, isNumber, filter, map, mapValues, span, camelFromHyphenated, shouldRenderChild, renderWithComponent, DrawMixin, defaultComponents, ref$;
-  isString = _.isString, isNumber = _.isNumber, filter = _.filter, map = _.map, mapValues = _.mapValues;
+  var isString, isNumber, filter, map, mapValues, cloneDeep, span, camelFromHyphenated, renderProps, DrawMixin, defaultComponents, ref$;
+  isString = _.isString, isNumber = _.isNumber, filter = _.filter, map = _.map, mapValues = _.mapValues, cloneDeep = _.cloneDeep;
   span = React.DOM.span;
   camelFromHyphenated = function(it){
     return it.split('-').map(function(v, i){
@@ -12,15 +12,9 @@
       }
     }).join('');
   };
-  shouldRenderChild = function(props){
-    return true;
-  };
-  renderWithComponent = function(props){
-    var comp;
-    comp = defaultComponents[camelFromHyphenated(props.name)];
-    if (comp) {
-      return comp(props);
-    }
+  renderProps = function(props){
+    var key$;
+    return typeof defaultComponents[key$ = camelFromHyphenated(props.name)] === 'function' ? defaultComponents[key$](props) : void 8;
   };
   DrawMixin = {
     scaleStyle: function(value, key){
@@ -45,8 +39,7 @@
         scale: 1.0,
         parents: [],
         children: [],
-        shouldRenderChild: shouldRenderChild,
-        renderWithComponent: renderWithComponent
+        renderProps: renderProps
       };
     },
     render: function(){
@@ -74,12 +67,14 @@
           return alert(this$.props.onclick);
         };
       }
+      console.log(this.props.children);
       res$ = [];
       for (i$ in this.props.children) {
         res$.push((fn$.call(this, i$, this.props.children[i$])));
       }
       childPropsList = res$;
-      children = map(filter(childPropsList, this.props.shouldRenderChild), this.props.renderWithComponent);
+      children = filter(
+      map(childPropsList, this.props.renderProps));
       if (this.props.name !== 'frame' && style.textareaVerticalAlign) {
         children.unshift(span({
           key: '-1',
@@ -105,11 +100,12 @@
           parents: this.props.parents.concat([this.props.name]),
           name: child.name,
           text: child.text,
-          children: child.children,
-          shouldRenderChild: this.props.shouldRenderChild,
-          renderWithComponent: this.props.renderWithComponent
+          children: cloneDeep(child.children),
+          renderProps: this.props.renderProps
         };
-        delete child.attrs.name;
+        if (((ref$ = child.attrs) != null ? ref$.name : void 8) != null) {
+          delete child.attrs.name;
+        }
         import$(props, child.attrs);
         if (style.textareaVerticalAlign) {
           import$((ref$ = props.style) != null
@@ -182,8 +178,7 @@
     mixin: DrawMixin,
     components: defaultComponents,
     camelFromHyphenated: camelFromHyphenated,
-    shouldRenderChild: shouldRenderChild,
-    renderWithComponent: renderWithComponent,
+    renderProps: renderProps,
     renderComponent: function(data, element){
       return React.renderComponent(defaultComponents.presentation(data), element);
     }

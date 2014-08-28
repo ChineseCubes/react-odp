@@ -15,28 +15,31 @@ dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
 data <- CUBEBooks.getPresentation './json'
-viewer = ODP.renderComponent data, $(\#wrap)get!0
-
 ###
 # custom components
 ###
 /**
 time = 0
 requestAnimationFrame update = ->
-  time += 1/60
-  time %= 10
+  time += 1/60s
+  time %= 18s
   requestAnimationFrame update
-viewer.setProps do
-  #shouldRenderChild: (props) -> if props.name is 'p' then false else true
-  renderWithComponent: (props) ->
-    if props.name is 'span' and 'text-box' in props.parents
-      ReactVTT.IsolatedCue do
-        target: './assets/demo.vtt'
-        index: 0
-        currentTime: -> time
+data <<< do
+  renderProps: (props) ->
+    if props.text
+      text = props.text
+      delete props.text
+      #ODP.components.span do
+      #  props
+      #  ReactVTT.IsolatedCue do
+      #    target: './json/demo.vtt'
+      #    #index: span-count++
+      #    match: text
+      #    currentTime: -> time
     else
-      ODP.renderWithComponent props
+      ODP.renderProps props
 /**/
+viewer = ODP.renderComponent data, $(\#wrap)get!0
 
 do resize = ->
   ratio     = config.page-setup.ratio

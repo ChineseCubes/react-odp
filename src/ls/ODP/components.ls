@@ -1,4 +1,4 @@
-{isString, isNumber, filter, map, mapValues} = _
+{isString, isNumber, filter, map, mapValues, cloneDeep} = _
 {span} = React.DOM
 
 camelFromHyphenated = ->
@@ -8,12 +8,8 @@ camelFromHyphenated = ->
       | i is 0  => v
       | otherwise =>"#{v.slice(0, 1)toUpperCase!}#{v.slice(1)}"
     .join ''
-shouldRenderChild =
-  (props) -> true
-renderWithComponent =
-  (props) ->
-    comp = default-components[camelFromHyphenated props.name]
-    comp props if comp
+renderProps =
+  (props) -> default-components[camelFromHyphenated props.name]? props
 
 DrawMixin =
   scaleStyle: (value, key) -> # without changing the unit
@@ -29,8 +25,7 @@ DrawMixin =
     scale:          1.0
     parents:        []
     children:       []
-    shouldRenderChild:   shouldRenderChild
-    renderWithComponent: renderWithComponent
+    renderProps: renderProps
   render: ->
     style =
       left:   @props.x      or \auto
@@ -50,6 +45,7 @@ DrawMixin =
       props
         ..style.cursor = 'pointer'
         ..onClick = ~> alert @props.onclick
+    console.log @props.children
     child-props-list = for let i, child of @props.children
       throw new Error 'unknow tag name' if not child.name
       props =
@@ -58,10 +54,9 @@ DrawMixin =
         parents:    @props.parents.concat [@props.name]
         name:       child.name
         text:       child.text
-        children:   child.children
-        shouldRenderChild:   @props.shouldRenderChild
-        renderWithComponent: @props.renderWithComponent
-      delete child.attrs.name
+        children:   cloneDeep child.children
+        renderProps: @props.renderProps
+      delete child.attrs.name if child.attrs?name?
       props <<< child.attrs
       ###
       # special rules for vertical-align
@@ -77,8 +72,8 @@ DrawMixin =
       ###
       props
     children = child-props-list
-      |> filter _, @props.shouldRenderChild
-      |> map    _, @props.renderWithComponent
+      |> map _, @props.renderProps
+      |> filter
     ###
     # special rules for vertical-align
     ###
@@ -132,8 +127,7 @@ default-components =
   mixin: DrawMixin
   components: default-components
   camelFromHyphenated: camelFromHyphenated
-  shouldRenderChild: shouldRenderChild
-  renderWithComponent: renderWithComponent
+  renderProps: renderProps
   renderComponent: (data, element) ->
     React.renderComponent do
       default-components.presentation data

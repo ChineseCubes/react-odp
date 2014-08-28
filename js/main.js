@@ -15,25 +15,29 @@
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
   CUBEBooks.getPresentation('./json', function(data){
-    var viewer, resize;
-    viewer = ODP.renderComponent(data, $('#wrap').get()[0]);
     /**
     time = 0
     requestAnimationFrame update = ->
-      time += 1/60
-      time %= 10
+      time += 1/60s
+      time %= 18s
       requestAnimationFrame update
-    viewer.setProps do
-      #shouldRenderChild: (props) -> if props.name is 'p' then false else true
-      renderWithComponent: (props) ->
-        if props.name is 'span' and 'text-box' in props.parents
-          ReactVTT.IsolatedCue do
-            target: './assets/demo.vtt'
-            index: 0
-            currentTime: -> time
+    data <<< do
+      renderProps: (props) ->
+        if props.text
+          text = props.text
+          delete props.text
+          #ODP.components.span do
+          #  props
+          #  ReactVTT.IsolatedCue do
+          #    target: './json/demo.vtt'
+          #    #index: span-count++
+          #    match: text
+          #    currentTime: -> time
         else
-          ODP.renderWithComponent props
+          ODP.renderProps props
     /**/
+    var viewer, resize;
+    viewer = ODP.renderComponent(data, $('#wrap').get()[0]);
     (resize = function(){
       var ratio, pxWidth, pxHeight, width, height, s;
       ratio = config.pageSetup.ratio;
