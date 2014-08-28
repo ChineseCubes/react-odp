@@ -47,6 +47,9 @@
         return;
       }
       attrs = data.attrs;
+      if (data.name === 'frame') {
+        console.log(data);
+      }
       style = {
         left: (attrs != null ? attrs.x : void 8) || 'auto',
         top: (attrs != null ? attrs.y : void 8) || 'auto',

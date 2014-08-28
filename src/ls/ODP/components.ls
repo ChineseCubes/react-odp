@@ -28,6 +28,7 @@ DrawMixin =
   render: ->
     return if not data = @props.data
     attrs = data.attrs
+    console.log data if data.name is 'frame'
     style =
       left:   attrs?x      or \auto
       top:    attrs?y      or \auto

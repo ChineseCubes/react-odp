@@ -19,7 +19,7 @@ viewer = ODP.renderComponent data, $(\#wrap)get!0
 ###
 # custom components
 ###
-/**/
+/**
 time = 0
 requestAnimationFrame update = ->
   time += 1/60s

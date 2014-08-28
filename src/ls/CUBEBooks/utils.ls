@@ -57,12 +57,13 @@ utils =
     name:      r.0
   getPresentation: (path, done) ->
     pages = []
+    page-total = 22
     counter = 0
     got-one = (data, i) ->
       data.attrs.y = "#{i * 21.5}cm"
       pages.push data
       counter += 1
-      if counter is 8
+      if counter is page-total
         done do
           name:     \presentation
           attrs:
@@ -71,7 +72,7 @@ utils =
             width:  \28cm
             height: \21cm
           children: pages
-    for let i from 1 to 8
+    for let i from 1 to page-total
       CUBEBooks.getPageJSON "#path/page#i.json", -> got-one it, i - 1
   getPageJSON: !(path, done) ->
     data <- $.getJSON path

@@ -51,14 +51,15 @@
       };
     },
     getPresentation: function(path, done){
-      var pages, counter, gotOne, i$, results$ = [];
+      var pages, pageTotal, counter, gotOne, i$, results$ = [];
       pages = [];
+      pageTotal = 22;
       counter = 0;
       gotOne = function(data, i){
         data.attrs.y = i * 21.5 + "cm";
         pages.push(data);
         counter += 1;
-        if (counter === 8) {
+        if (counter === pageTotal) {
           return done({
             name: 'presentation',
             attrs: {
@@ -71,7 +72,7 @@
           });
         }
       };
-      for (i$ = 1; i$ <= 8; ++i$) {
+      for (i$ = 1; i$ <= pageTotal; ++i$) {
         results$.push((fn$.call(this, i$)));
       }
       return results$;
