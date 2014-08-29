@@ -1,4 +1,4 @@
-{isString, isNumber, filter, map, mapValues, cloneDeep} = _
+{isArray, isString, isNumber, filter, map, mapValues, cloneDeep} = _
 {span} = React.DOM
 
 camelFromHyphenated = ->
@@ -8,8 +8,34 @@ camelFromHyphenated = ->
       | i is 0  => v
       | otherwise =>"#{v.slice(0, 1)toUpperCase!}#{v.slice(1)}"
     .join ''
-renderProps =
-  (props) -> default-components[camelFromHyphenated props.data.name]? props
+renderProps = -> default-components[camelFromHyphenated it.data.name]? it
+doTextareaVerticalAlign = ->
+  return if not it?attrs?style?textarea-vertical-align
+  style= it.attrs.style
+  for let i, child of it.children
+    # pass the style one level down
+    (child.attrs.style ?= {}) <<< if it.name is \frame
+      textarea-vertical-align: style.textarea-vertical-align
+    # change children into inline-blocks
+    else
+      display:        \inline-block
+      vertical-align: style.textarea-vertical-align
+  it
+doVerticalAlign = ->
+  return if it?name is \frame
+  console.log it.name
+  return if not it?attrs?style?textarea-vertical-align
+  console.log it
+  style = it.attrs.style
+  it.children.unshift do
+    name: 'vertical-aligner'
+    attrs:
+      style:
+        display:        \inline-block
+        height:         \100%
+        vertical-align: style.textarea-vertical-align
+    children: []
+  it
 
 DrawMixin =
   scaleStyle: (value, key) -> # without changing the unit
@@ -25,6 +51,8 @@ DrawMixin =
     scale:          1.0
     parents:        []
     renderProps: renderProps
+  componentWillMount: ->
+    if isArray @middlewares then for f in @middlewares => f @props.data
   render: ->
     return if not data = @props.data
     attrs = data.attrs
@@ -53,35 +81,12 @@ DrawMixin =
         parents:     @props.parents.concat [data.name]
         data:        cloneDeep child
         renderProps: @props.renderProps
-      ###
-      # special rules for vertical-align
-      ###
-      if style.textarea-vertical-align
-        # pass the style one level down
-        (props.data.attrs.style ?= {}) <<< if data.name is \frame
-          textarea-vertical-align: style.textarea-vertical-align
-        # change children into inline-blocks
-        else
-          display:        \inline-block
-          vertical-align: style.textarea-vertical-align
-      ###
       props
     children = child-props-list
       |> map _, @props.renderProps
       |> filter
-    ###
-    # special rules for vertical-align
-    ###
-    if data.name isnt \frame and style.textarea-vertical-align
-      children.unshift span do
-        key: \-1
-        style:
-          display:        \inline-block
-          height:         \100%
-          vertical-align: style.textarea-vertical-align
-    ###
-    if data.text
-      children.unshift data.text
+    console.log children
+    children.unshift data.text if data.text
     React.DOM[@props.htmlTag or @props.defaultHtmlTag] do
       props
       children.concat @props.children
@@ -93,24 +98,27 @@ default-components =
   frame: React.createClass do
     displayName: \ReactODP.Frame
     mixins: [DrawMixin]
+    middlewares: [doTextareaVerticalAlign]
   text-box: React.createClass do
     displayName: \ReactODP.TextBox
     mixins: [DrawMixin]
+    middlewares: [doTextareaVerticalAlign, doVerticalAlign]
   image: React.createClass do
     displayName: \ReactODP.Image
     mixins: [DrawMixin]
+    middlewares: [doTextareaVerticalAlign, doVerticalAlign]
   p: React.createClass do
     displayName: \ReactODP.P
     mixins: [DrawMixin]
+    middlewares: [doTextareaVerticalAlign, doVerticalAlign]
     getDefaultProps: ->
       htmlTag: \p
   span: React.createClass do
     displayName: \ReactODP.Span
     mixins: [DrawMixin]
+    middlewares: [doTextareaVerticalAlign, doVerticalAlign]
     getDefaultProps: ->
       htmlTag: \span
-  # FIXME: does not work in FireFox when the element are not at the same level
-  # of other elements
   line-break: React.createClass do
     displayName: \ReactODP.LineBreak
     mixins: [DrawMixin]
@@ -119,6 +127,13 @@ default-components =
   presentation: React.createClass do
     displayName: \ReactODP.Presentation
     mixins: [DrawMixin]
+  vertical-aligner: React.createClass do
+    displayName: \ReactODP.VerticalAligner
+    mixins: [DrawMixin]
+    getDefaultProps: ->
+      htmlTag: \span
+    componentWillReceiveProps: ->
+      consol.log 'hello'
 
 (this.ODP ?= {}) <<< do
   DrawMixin: DrawMixin

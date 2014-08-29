@@ -57,7 +57,7 @@ utils =
     name:      r.0
   getPresentation: (path, done) ->
     pages = []
-    page-total = 22
+    page-total = 8
     counter = 0
     got-one = (data, i) ->
       data.attrs.y = "#{i * 21.5}cm"
@@ -93,8 +93,6 @@ utils =
           | 'href'        => new-attrs.href    = v
           | 'onclick'     => new-attrs.onclick = v
           | otherwise     => new-attrs.style[ODP.camelFromHyphenated name] = v
-      #if 'DRAW:FRAME' in parents
-      #  console.log node-name, new-attrs, styles[new-attrs.style.style-name]
       new-attrs
         ..href = "#dir#{new-attrs.href}" if new-attrs.href
   transform: (node, onNode = null, parents = []) ->
