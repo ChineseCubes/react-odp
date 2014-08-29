@@ -28,7 +28,6 @@ DrawMixin =
   render: ->
     return if not data = @props.data
     attrs = data.attrs
-    console.log data if data.name is 'frame'
     style =
       left:   attrs?x      or \auto
       top:    attrs?y      or \auto
@@ -122,12 +121,8 @@ default-components =
     mixins: [DrawMixin]
 
 (this.ODP ?= {}) <<< do
-  mixin: DrawMixin
+  DrawMixin: DrawMixin
   components: default-components
   camelFromHyphenated: camelFromHyphenated
   renderProps: renderProps
-  renderComponent: (data, element) ->
-    React.renderComponent do
-      default-components.presentation data: data
-      element
 

@@ -47,9 +47,6 @@
         return;
       }
       attrs = data.attrs;
-      if (data.name === 'frame') {
-        console.log(data);
-      }
       style = {
         left: (attrs != null ? attrs.x : void 8) || 'auto',
         top: (attrs != null ? attrs.y : void 8) || 'auto',
@@ -176,15 +173,10 @@
   import$((ref$ = this.ODP) != null
     ? ref$
     : this.ODP = {}, {
-    mixin: DrawMixin,
+    DrawMixin: DrawMixin,
     components: defaultComponents,
     camelFromHyphenated: camelFromHyphenated,
-    renderProps: renderProps,
-    renderComponent: function(data, element){
-      return React.renderComponent(defaultComponents.presentation({
-        data: data
-      }), element);
-    }
+    renderProps: renderProps
   });
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;

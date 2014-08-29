@@ -1,5 +1,5 @@
 (function(){
-  var config, dots, dpcm;
+  var config, resize, dots, dpcm;
   config = {
     pageSetup: {
       ratio: 4 / 3,
@@ -9,48 +9,34 @@
       height: 21
     }
   };
+  resize = function(dpcm){
+    var ratio, pxWidth, pxHeight, width, height;
+    ratio = config.pageSetup.ratio;
+    pxWidth = config.pageSetup.width * dpcm;
+    pxHeight = config.pageSetup.height * dpcm;
+    width = $(window).width();
+    height = $(window).height();
+    if (width / ratio < height) {
+      return width / pxWidth;
+    } else {
+      return height / pxHeight;
+    }
+  };
   dots = React.renderComponent(DotsDetector({
     unit: 'cm'
   }), $('#detector').get()[0]);
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
   CUBEBooks.getPresentation('./json', function(data){
-    var viewer, resize;
-    viewer = ODP.renderComponent(data, $('#wrap').get()[0]);
-    /**
-    time = 0
-    requestAnimationFrame update = ->
-      time += 1/60s
-      time %= 18s
-      requestAnimationFrame update
-    viewer.setProps do
-      renderProps: (props) ->
-        if props.data.text
-          text = props.data.text
-          delete props.data.text
-          ODP.components.span do
-            props
-            ReactVTT.IsolatedCue do
-              target: './json/demo.vtt'
-              match: text
-              currentTime: -> time
-        else
-          ODP.renderProps props
-    /**/
-    (resize = function(){
-      var ratio, pxWidth, pxHeight, width, height, s;
-      ratio = config.pageSetup.ratio;
-      pxWidth = config.pageSetup.width * dpcm;
-      pxHeight = config.pageSetup.height * dpcm;
-      width = $(window).width();
-      height = $(window).height();
-      s = width / ratio < height
-        ? width / pxWidth
-        : height / pxHeight;
+    var viewer;
+    viewer = React.renderComponent(ODP.components.presentation({
+      scale: resize(dpcm),
+      data: data
+    }), $('#wrap').get()[0]);
+    return $(window).resize(function(){
       return viewer.setProps({
-        scale: s
+        scale: resize(dpcm)
       });
-    })();
-    return $(window).resize(resize);
+    });
   });
 }).call(this);

@@ -7,6 +7,17 @@ config =
     width:  28cm
     height: 21cm
 
+resize = (dpcm) ->
+  ratio     = config.page-setup.ratio
+  px-width  = config.page-setup.width  * dpcm
+  px-height = config.page-setup.height * dpcm
+  width  = $(window).width!
+  height = $(window).height!
+  if width / ratio < height
+    width / px-width
+  else
+    height / px-height
+
 # test dpcm in current browser
 dots = React.renderComponent do
   DotsDetector unit: \cm
@@ -15,7 +26,12 @@ dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
 data <- CUBEBooks.getPresentation './json'
-viewer = ODP.renderComponent data, $(\#wrap)get!0
+viewer = React.renderComponent do
+  ODP.components.presentation do
+    scale: resize dpcm
+    data:  data
+  $(\#wrap)get!0
+$ window .resize -> viewer.setProps scale: resize dpcm
 ###
 # custom components
 ###
@@ -39,17 +55,4 @@ viewer.setProps do
     else
       ODP.renderProps props
 /**/
-
-do resize = ->
-  ratio     = config.page-setup.ratio
-  px-width  = config.page-setup.width  * dpcm
-  px-height = config.page-setup.height * dpcm
-  width  = $(window).width!
-  height = $(window).height!
-  s = if width / ratio < height
-    width / px-width
-  else
-    height / px-height
-  viewer.setProps scale: s
-$ window .resize resize
 
