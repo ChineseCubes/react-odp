@@ -3,7 +3,7 @@ slice = Array.prototype.slice
 
 master-page =
   children:
-    * name: 'frame'
+    * name: 'draw:frame'
       attrs:
         'style-name': \Mgr3
         'text-style-name': \MP4
@@ -12,7 +12,7 @@ master-page =
         width:  \1.41cm
         height: \1.198cm
       children:
-        * name: 'image'
+        * name: 'draw:image'
           attrs:
             href: 'Pictures/100002010000002800000022F506C368.png'
             onclick: 'home'
@@ -26,7 +26,7 @@ master-page =
           #      ...
           #  ...
         ...
-    * name: 'frame'
+    * name: 'draw:frame'
       attrs:
         'style-name': \Mgr4
         'text-style-name': \MP4
@@ -35,7 +35,7 @@ master-page =
         width:  \1.198cm
         height: \1.198cm
       children:
-        * name: 'image'
+        * name: 'draw:image'
           attrs:
             href: 'Pictures/1000020100000022000000223520C9AB.png'
             onclick: 'activity'
@@ -65,13 +65,14 @@ utils =
       counter += 1
       if counter is page-total
         done do
-          name:     \presentation
+          name:      \presentation
+          namespace: \office
           attrs:
             x:      \0
             y:      \0
             width:  \28cm
             height: \21cm
-          children: pages
+          children:  pages
     for let i from 1 to page-total
       CUBEBooks.getPageJSON "#path/page#i.json", -> got-one it, i - 1
   getPageJSON: !(path, done) ->

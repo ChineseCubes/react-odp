@@ -28,15 +28,40 @@
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
   CUBEBooks.getPresentation('./json', function(data){
-    var viewer;
+    var viewer, time, update;
     viewer = React.renderComponent(ODP.components.presentation({
       scale: resize(dpcm),
       data: data
+      /**/,
+      renderProps: function(props){
+        var text;
+        if (props.data.text) {
+          text = props.data.text;
+          delete props.data.text;
+          return ODP.components.span(props, ReactVTT.IsolatedCue({
+            target: './json/demo.vtt',
+            match: text,
+            currentTime: function(){
+              return time;
+            }
+          }));
+        } else {
+          return ODP.renderProps(props);
+        }
+      }
+      /**/
     }), $('#wrap').get()[0]);
-    return $(window).resize(function(){
+    $(window).resize(function(){
       return viewer.setProps({
         scale: resize(dpcm)
       });
+    });
+    /**/
+    time = 0;
+    return requestAnimationFrame(update = function(){
+      time += 1 / 60;
+      time %= 18;
+      return requestAnimationFrame(update);
     });
   });
 }).call(this);

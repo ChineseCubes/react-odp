@@ -30,29 +30,28 @@ viewer = React.renderComponent do
   ODP.components.presentation do
     scale: resize dpcm
     data:  data
+    /**/
+    renderProps: (props) ->
+      if props.data.text
+        text = props.data.text
+        delete props.data.text
+        ODP.components.span do
+          props
+          ReactVTT.IsolatedCue do
+            target: './json/demo.vtt'
+            match: text
+            currentTime: -> time
+      else
+        ODP.renderProps props
+    /**/
   $(\#wrap)get!0
 $ window .resize -> viewer.setProps scale: resize dpcm
-###
-# custom components
-###
-/**
+
+/**/
 time = 0
 requestAnimationFrame update = ->
   time += 1/60s
   time %= 18s
   requestAnimationFrame update
-viewer.setProps do
-  renderProps: (props) ->
-    if props.data.text
-      text = props.data.text
-      delete props.data.text
-      ODP.components.span do
-        props
-        ReactVTT.IsolatedCue do
-          target: './json/demo.vtt'
-          match: text
-          currentTime: -> time
-    else
-      ODP.renderProps props
 /**/
 

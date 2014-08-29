@@ -1,5 +1,4 @@
 {isArray, isString, isNumber, filter, map, mapValues, cloneDeep} = _
-{span} = React.DOM
 
 camelFromHyphenated = ->
   it
@@ -23,18 +22,20 @@ doTextareaVerticalAlign = ->
   it
 doVerticalAlign = ->
   return if it?name is \frame
-  console.log it.name
   return if not it?attrs?style?textarea-vertical-align
-  console.log it
   style = it.attrs.style
   it.children.unshift do
     name: 'vertical-aligner'
+    namespace: 'helper'
     attrs:
       style:
         display:        \inline-block
         height:         \100%
         vertical-align: style.textarea-vertical-align
     children: []
+  it
+removeLineHeight = ->
+  delete it?attrs?style?line-height
   it
 
 DrawMixin =
@@ -47,12 +48,13 @@ DrawMixin =
     | otherwise               => value
   getDefaultProps: ->
     defaultHtmlTag: 'div'
-    classNames:     <[draw]>
     scale:          1.0
     parents:        []
     renderProps: renderProps
-  componentWillMount: ->
-    if isArray @middlewares then for f in @middlewares => f @props.data
+  applyMiddlewares: ->
+    if isArray @middlewares then for f in @middlewares => f it
+  componentWillMount: -> @applyMiddlewares @props.data
+  componentWillReceiveProps: ({data}) -> @applyMiddlewares data
   render: ->
     return if not data = @props.data
     attrs = data.attrs
@@ -62,11 +64,10 @@ DrawMixin =
       width:  attrs?width  or \auto
       height: attrs?height or \auto
     style <<<< attrs?style # import all
-    delete style.line-height # FIXME
     style = mapValues style, @scaleStyle
     style <<< background-image: "url(#{attrs.href})" if attrs.href
     props =
-      className: @props.classNames.concat (data.name or \unknown) .join ' '
+      className: "#{data.namespace} #{data.name}"
       style: style
     # FIXME: should not hard coded here
     if isString attrs.onclick
@@ -74,18 +75,14 @@ DrawMixin =
         ..style.cursor = 'pointer'
         ..onClick = ~> alert attrs.onclick
     child-props-list = for let i, child of data.children
-      throw new Error 'unknow tag name' if not child.name
-      props =
-        key:         i
-        scale:       @props.scale
-        parents:     @props.parents.concat [data.name]
-        data:        cloneDeep child
-        renderProps: @props.renderProps
-      props
+      key:         i
+      scale:       @props.scale
+      parents:     @props.parents.concat [data.name]
+      data:        cloneDeep child
+      renderProps: @props.renderProps
     children = child-props-list
       |> map _, @props.renderProps
       |> filter
-    console.log children
     children.unshift data.text if data.text
     React.DOM[@props.htmlTag or @props.defaultHtmlTag] do
       props
@@ -95,10 +92,11 @@ default-components =
   page: React.createClass do
     displayName: \ReactODP.Page
     mixins: [DrawMixin]
+    middlewares: [doTextareaVerticalAlign, doVerticalAlign]
   frame: React.createClass do
     displayName: \ReactODP.Frame
     mixins: [DrawMixin]
-    middlewares: [doTextareaVerticalAlign]
+    middlewares: [doTextareaVerticalAlign, removeLineHeight]
   text-box: React.createClass do
     displayName: \ReactODP.TextBox
     mixins: [DrawMixin]
@@ -110,15 +108,11 @@ default-components =
   p: React.createClass do
     displayName: \ReactODP.P
     mixins: [DrawMixin]
-    middlewares: [doTextareaVerticalAlign, doVerticalAlign]
-    getDefaultProps: ->
-      htmlTag: \p
+    middlewares: [doTextareaVerticalAlign, doVerticalAlign, removeLineHeight]
   span: React.createClass do
     displayName: \ReactODP.Span
     mixins: [DrawMixin]
     middlewares: [doTextareaVerticalAlign, doVerticalAlign]
-    getDefaultProps: ->
-      htmlTag: \span
   line-break: React.createClass do
     displayName: \ReactODP.LineBreak
     mixins: [DrawMixin]
@@ -132,8 +126,6 @@ default-components =
     mixins: [DrawMixin]
     getDefaultProps: ->
       htmlTag: \span
-    componentWillReceiveProps: ->
-      consol.log 'hello'
 
 (this.ODP ?= {}) <<< do
   DrawMixin: DrawMixin

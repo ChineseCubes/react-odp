@@ -1,7 +1,6 @@
 (function(){
-  var isArray, isString, isNumber, filter, map, mapValues, cloneDeep, span, camelFromHyphenated, renderProps, doTextareaVerticalAlign, doVerticalAlign, DrawMixin, defaultComponents, ref$;
+  var isArray, isString, isNumber, filter, map, mapValues, cloneDeep, camelFromHyphenated, renderProps, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, DrawMixin, defaultComponents, ref$;
   isArray = _.isArray, isString = _.isString, isNumber = _.isNumber, filter = _.filter, map = _.map, mapValues = _.mapValues, cloneDeep = _.cloneDeep;
-  span = React.DOM.span;
   camelFromHyphenated = function(it){
     return it.split('-').map(function(v, i){
       switch (false) {
@@ -45,14 +44,13 @@
     if ((it != null ? it.name : void 8) === 'frame') {
       return;
     }
-    console.log(it.name);
     if (!(it != null && ((ref$ = it.attrs) != null && ((ref1$ = ref$.style) != null && ref1$.textareaVerticalAlign)))) {
       return;
     }
-    console.log(it);
     style = it.attrs.style;
     it.children.unshift({
       name: 'vertical-aligner',
+      namespace: 'helper',
       attrs: {
         style: {
           display: 'inline-block',
@@ -62,6 +60,17 @@
       },
       children: []
     });
+    return it;
+  };
+  removeLineHeight = function(it){
+    var ref$, ref1$;
+    if (it != null) {
+      if ((ref$ = it.attrs) != null) {
+        if ((ref1$ = ref$.style) != null) {
+          delete ref1$.lineHeight;
+        }
+      }
+    }
     return it;
   };
   DrawMixin = {
@@ -83,21 +92,28 @@
     getDefaultProps: function(){
       return {
         defaultHtmlTag: 'div',
-        classNames: ['draw'],
         scale: 1.0,
         parents: [],
         renderProps: renderProps
       };
     },
-    componentWillMount: function(){
+    applyMiddlewares: function(it){
       var i$, ref$, len$, f, results$ = [];
       if (isArray(this.middlewares)) {
         for (i$ = 0, len$ = (ref$ = this.middlewares).length; i$ < len$; ++i$) {
           f = ref$[i$];
-          results$.push(f(this.props.data));
+          results$.push(f(it));
         }
         return results$;
       }
+    },
+    componentWillMount: function(){
+      return this.applyMiddlewares(this.props.data);
+    },
+    componentWillReceiveProps: function(arg$){
+      var data;
+      data = arg$.data;
+      return this.applyMiddlewares(data);
     },
     render: function(){
       var data, attrs, style, props, x$, childPropsList, res$, i$, children, this$ = this;
@@ -114,13 +130,12 @@
       if (attrs != null) {
         importAll$(style, attrs.style);
       }
-      delete style.lineHeight;
       style = mapValues(style, this.scaleStyle);
       if (attrs.href) {
         style.backgroundImage = "url(" + attrs.href + ")";
       }
       props = {
-        className: this.props.classNames.concat(data.name || 'unknown').join(' '),
+        className: data.namespace + " " + data.name,
         style: style
       };
       if (isString(attrs.onclick)) {
@@ -137,36 +152,31 @@
       childPropsList = res$;
       children = filter(
       map(childPropsList, this.props.renderProps));
-      console.log(children);
       if (data.text) {
         children.unshift(data.text);
       }
       return React.DOM[this.props.htmlTag || this.props.defaultHtmlTag](props, children.concat(this.props.children));
       function fn$(i, child){
-        var props;
-        if (!child.name) {
-          throw new Error('unknow tag name');
-        }
-        props = {
+        return {
           key: i,
           scale: this.props.scale,
           parents: this.props.parents.concat([data.name]),
           data: cloneDeep(child),
           renderProps: this.props.renderProps
         };
-        return props;
       }
     }
   };
   defaultComponents = {
     page: React.createClass({
       displayName: 'ReactODP.Page',
-      mixins: [DrawMixin]
+      mixins: [DrawMixin],
+      middlewares: [doTextareaVerticalAlign, doVerticalAlign]
     }),
     frame: React.createClass({
       displayName: 'ReactODP.Frame',
       mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign]
+      middlewares: [doTextareaVerticalAlign, removeLineHeight]
     }),
     textBox: React.createClass({
       displayName: 'ReactODP.TextBox',
@@ -181,22 +191,12 @@
     p: React.createClass({
       displayName: 'ReactODP.P',
       mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign],
-      getDefaultProps: function(){
-        return {
-          htmlTag: 'p'
-        };
-      }
+      middlewares: [doTextareaVerticalAlign, doVerticalAlign, removeLineHeight]
     }),
     span: React.createClass({
       displayName: 'ReactODP.Span',
       mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign],
-      getDefaultProps: function(){
-        return {
-          htmlTag: 'span'
-        };
-      }
+      middlewares: [doTextareaVerticalAlign, doVerticalAlign]
     }),
     lineBreak: React.createClass({
       displayName: 'ReactODP.LineBreak',
@@ -218,9 +218,6 @@
         return {
           htmlTag: 'span'
         };
-      },
-      componentWillReceiveProps: function(){
-        return consol.log('hello');
       }
     })
   };

@@ -5,7 +5,7 @@
   masterPage = {
     children: [
       {
-        name: 'frame',
+        name: 'draw:frame',
         attrs: {
           'style-name': 'Mgr3',
           'text-style-name': 'MP4',
@@ -15,14 +15,14 @@
           height: '1.198cm'
         },
         children: [{
-          name: 'image',
+          name: 'draw:image',
           attrs: {
             href: 'Pictures/100002010000002800000022F506C368.png',
             onclick: 'home'
           }
         }]
       }, {
-        name: 'frame',
+        name: 'draw:frame',
         attrs: {
           'style-name': 'Mgr4',
           'text-style-name': 'MP4',
@@ -32,7 +32,7 @@
           height: '1.198cm'
         },
         children: [{
-          name: 'image',
+          name: 'draw:image',
           attrs: {
             href: 'Pictures/1000020100000022000000223520C9AB.png',
             onclick: 'activity'
@@ -62,6 +62,7 @@
         if (counter === pageTotal) {
           return done({
             name: 'presentation',
+            namespace: 'office',
             attrs: {
               x: '0',
               y: '0',
