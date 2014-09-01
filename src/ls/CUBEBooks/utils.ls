@@ -2,7 +2,6 @@
 {audio, div, source} = React.DOM
 slice = Array.prototype.slice
 
-audio-controls = []
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
   getDefaultProps: ->
@@ -10,18 +9,23 @@ AudioControl = React.createClass do
   getInitialState: ->
     playing: false
   componentWillMount: ->
-    audio-controls.push this
-    @props.element.pause!
+    @props.element
+      ..pause!
+      ..addEventListener "play"  @onChange
+      ..addEventListener "pause" @onChange
+      ..addEventListener "ended" @onChange
+  componentWillUnmount: ->
+    @props.element
+      ..removeEventListener "play"  @onChange
+      ..removeEventListener "pause" @onChange
+      ..removeEventListener "ended" @onChange
   time: ->
     @props.element?currentTime or 0
   toggle: ->
-    if @props.element.paused
-      @props.element.play!
-    else
-      @props.element.pause!
-    for comp in audio-controls
-      # FIXME: should not assume there is only one media element
-      comp.setState playing: not @props.element.paused
+    e = @props.element
+    if e.paused then e.play! else e.pause!
+  onChange: ->
+    @setState playing: not @props.element.paused
   render: ->
     div do
       className: "audio-control#{if @state.playing then ' playing' else ''}"
