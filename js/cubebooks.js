@@ -1,7 +1,29 @@
 (function(){
-  var isArray, isString, cloneDeep, slice, masterPage, utils, ref$;
+  var isArray, isString, cloneDeep, ref$, audio, div, source, slice, AudioControl, masterPage, utils;
   isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep;
+  ref$ = React.DOM, audio = ref$.audio, div = ref$.div, source = ref$.source;
   slice = Array.prototype.slice;
+  AudioControl = React.createClass({
+    displayName: 'CUBEBooks.AudioControl',
+    getDefaultProps: function(){
+      return {
+        autoPlay: false
+      };
+    },
+    time: function(){
+      var ref$;
+      return ((ref$ = this.refs.audio) != null ? ref$.getDOMNode().currentTime : void 8) || 0;
+    },
+    render: function(){
+      return div(null, audio({
+        ref: 'audio',
+        controls: true,
+        autoPlay: this.props.autoPlay
+      }, source({
+        src: './json/demo.mp3'
+      })));
+    }
+  });
   masterPage = {
     children: [
       {
@@ -154,7 +176,8 @@
             return results$;
           }())
       });
-    }
+    },
+    AudioControl: AudioControl
   };
   import$((ref$ = this.CUBEBooks) != null
     ? ref$

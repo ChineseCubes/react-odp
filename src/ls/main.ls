@@ -25,6 +25,11 @@ dots = React.renderComponent do
 dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
+# audio for testing
+audio-control = React.renderComponent do
+  CUBEBooks.AudioControl!
+  $ \#audio .get!0
+
 data <- CUBEBooks.getPresentation './json'
 viewer = React.renderComponent do
   ODP.components.presentation do
@@ -32,6 +37,8 @@ viewer = React.renderComponent do
     data:  data
     /**/
     renderProps: (props) ->
+      #if props.data.name is 'image'
+      #  console.log props.data
       if props.data.text
         text = props.data.text
         delete props.data.text
@@ -40,7 +47,7 @@ viewer = React.renderComponent do
           ReactVTT.IsolatedCue do
             target: './json/demo.vtt'
             match: text
-            currentTime: -> time
+            currentTime: -> audio-control.time!
       else
         ODP.renderProps props
     /**/

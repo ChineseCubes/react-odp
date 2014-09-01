@@ -1,5 +1,22 @@
 {isArray, isString, cloneDeep} = _
+{audio, div, source} = React.DOM
 slice = Array.prototype.slice
+
+AudioControl = React.createClass do
+  displayName: \CUBEBooks.AudioControl
+  getDefaultProps: ->
+    auto-play: false
+  time: ->
+    @refs.audio?getDOMNode!currentTime or 0
+  render: ->
+    div do
+      null
+      audio do
+        ref: 'audio'
+        controls: true
+        auto-play: @props.auto-play
+        source do
+          src: './json/demo.mp3'
 
 master-page =
   children:
@@ -103,6 +120,7 @@ utils =
       children: if not node.children then [] else
         for child in node.children
           utils.transform child, onNode, parents.concat [node.name]
+  AudioControl: AudioControl
 
 (this.CUBEBooks ?= {}) <<< utils
 

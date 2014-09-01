@@ -1,5 +1,5 @@
 (function(){
-  var config, resize, dots, dpcm;
+  var config, resize, dots, dpcm, audioControl;
   config = {
     pageSetup: {
       ratio: 4 / 3,
@@ -27,6 +27,7 @@
   }), $('#detector').get()[0]);
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
+  audioControl = React.renderComponent(CUBEBooks.AudioControl(), $('#audio').get()[0]);
   CUBEBooks.getPresentation('./json', function(data){
     var viewer, time, update;
     viewer = React.renderComponent(ODP.components.presentation({
@@ -42,7 +43,7 @@
             target: './json/demo.vtt',
             match: text,
             currentTime: function(){
-              return time;
+              return audioControl.time();
             }
           }));
         } else {
