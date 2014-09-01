@@ -41,10 +41,10 @@
     },
     render: function(){
       return div({
+        className: "audio-control" + (this.state.playing ? ' playing' : ''),
         style: {
           width: '100%',
-          height: '100%',
-          backgroundColor: this.state.playing ? '#F90' : '#F60'
+          height: '100%'
         },
         onClick: this.toggle
       });

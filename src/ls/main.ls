@@ -40,7 +40,9 @@ viewer = React.renderComponent do
     renderProps: (props) ->
       if props.data.name is 'image' and
          props.data.attrs.onclick is 'activity'
-        delete props.data.attrs.onclick
+        attrs = props.data.attrs
+        delete attrs.href
+        delete attrs.onclick
         ODP.components.image do
           props
           CUBEBooks.AudioControl element: audio

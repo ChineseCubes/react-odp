@@ -35,9 +35,11 @@
       data: data
       /**/,
       renderProps: function(props){
-        var text;
+        var attrs, text;
         if (props.data.name === 'image' && props.data.attrs.onclick === 'activity') {
-          delete props.data.attrs.onclick;
+          attrs = props.data.attrs;
+          delete attrs.href;
+          delete attrs.onclick;
           return ODP.components.image(props, CUBEBooks.AudioControl({
             element: audio
           }));

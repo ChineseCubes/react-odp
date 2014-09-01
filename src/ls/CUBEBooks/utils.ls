@@ -24,10 +24,10 @@ AudioControl = React.createClass do
       comp.setState playing: not @props.element.paused
   render: ->
     div do
+      className: "audio-control#{if @state.playing then ' playing' else ''}"
       style:
         width:  '100%'
         height: '100%'
-        background-color: if @state.playing then '#F90' else '#F60'
       onClick: @toggle
 
 master-page =
