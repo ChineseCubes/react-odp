@@ -1,27 +1,53 @@
 (function(){
-  var isArray, isString, cloneDeep, ref$, audio, div, source, slice, AudioControl, masterPage, utils;
+  var isArray, isString, cloneDeep, ref$, audio, div, source, slice, audioControls, AudioControl, masterPage, utils;
   isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep;
   ref$ = React.DOM, audio = ref$.audio, div = ref$.div, source = ref$.source;
   slice = Array.prototype.slice;
+  audioControls = [];
   AudioControl = React.createClass({
     displayName: 'CUBEBooks.AudioControl',
     getDefaultProps: function(){
       return {
-        autoPlay: false
+        element: null
       };
+    },
+    getInitialState: function(){
+      return {
+        playing: false
+      };
+    },
+    componentWillMount: function(){
+      audioControls.push(this);
+      return this.props.element.pause();
     },
     time: function(){
       var ref$;
-      return ((ref$ = this.refs.audio) != null ? ref$.getDOMNode().currentTime : void 8) || 0;
+      return ((ref$ = this.props.element) != null ? ref$.currentTime : void 8) || 0;
+    },
+    toggle: function(){
+      var i$, ref$, len$, comp, results$ = [];
+      if (this.props.element.paused) {
+        this.props.element.play();
+      } else {
+        this.props.element.pause();
+      }
+      for (i$ = 0, len$ = (ref$ = audioControls).length; i$ < len$; ++i$) {
+        comp = ref$[i$];
+        results$.push(comp.setState({
+          playing: !this.props.element.paused
+        }));
+      }
+      return results$;
     },
     render: function(){
-      return div(null, audio({
-        ref: 'audio',
-        controls: true,
-        autoPlay: this.props.autoPlay
-      }, source({
-        src: './json/demo.mp3'
-      })));
+      return div({
+        style: {
+          width: '100%',
+          height: '100%',
+          backgroundColor: this.state.playing ? '#F90' : '#F60'
+        },
+        onClick: this.toggle
+      });
     }
   });
   masterPage = {

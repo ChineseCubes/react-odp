@@ -26,9 +26,10 @@ dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
 # audio for testing
-audio-control = React.renderComponent do
-  CUBEBooks.AudioControl!
-  $ \#audio .get!0
+#audio-control = React.renderComponent do
+#  CUBEBooks.AudioControl!
+#  $ \#audio .get!0
+audio = $ \audio .get!0
 
 data <- CUBEBooks.getPresentation './json'
 viewer = React.renderComponent do
@@ -37,9 +38,13 @@ viewer = React.renderComponent do
     data:  data
     /**/
     renderProps: (props) ->
-      #if props.data.name is 'image'
-      #  console.log props.data
-      if props.data.text
+      if props.data.name is 'image' and
+         props.data.attrs.onclick is 'activity'
+        delete props.data.attrs.onclick
+        ODP.components.image do
+          props
+          CUBEBooks.AudioControl element: audio
+      else if props.data.text
         text = props.data.text
         delete props.data.text
         ODP.components.span do
@@ -47,7 +52,7 @@ viewer = React.renderComponent do
           ReactVTT.IsolatedCue do
             target: './json/demo.vtt'
             match: text
-            currentTime: -> audio-control.time!
+            currentTime: -> audio.current-time
       else
         ODP.renderProps props
     /**/

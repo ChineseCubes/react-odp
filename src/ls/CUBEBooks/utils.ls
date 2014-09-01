@@ -2,21 +2,33 @@
 {audio, div, source} = React.DOM
 slice = Array.prototype.slice
 
+audio-controls = []
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
   getDefaultProps: ->
-    auto-play: false
+    element: null
+  getInitialState: ->
+    playing: false
+  componentWillMount: ->
+    audio-controls.push this
+    @props.element.pause!
   time: ->
-    @refs.audio?getDOMNode!currentTime or 0
+    @props.element?currentTime or 0
+  toggle: ->
+    if @props.element.paused
+      @props.element.play!
+    else
+      @props.element.pause!
+    for comp in audio-controls
+      # FIXME: should not assume there is only one media element
+      comp.setState playing: not @props.element.paused
   render: ->
     div do
-      null
-      audio do
-        ref: 'audio'
-        controls: true
-        auto-play: @props.auto-play
-        source do
-          src: './json/demo.mp3'
+      style:
+        width:  '100%'
+        height: '100%'
+        background-color: if @state.playing then '#F90' else '#F60'
+      onClick: @toggle
 
 master-page =
   children:
