@@ -155,6 +155,7 @@ body {
   text-align: center;
 }
 .audio-control {
+  background-position: 50% 50%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
