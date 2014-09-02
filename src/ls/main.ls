@@ -31,7 +31,7 @@ console.log "dpcm: #dpcm"
 #  $ \#audio .get!0
 audio = $ \audio .get!0
 
-data <- CUBEBooks.getPresentation './json'
+data <- Data.getPresentation './json'
 viewer = React.renderComponent do
   ODP.components.presentation do
     scale: resize dpcm
@@ -52,7 +52,7 @@ viewer = React.renderComponent do
         delete props.data.text
         attrs.onClick = ->
           console.log "query #{text}"
-          seg <- CUBEBooks.getSegmentations text
+          seg <- Data.getSegmentations text
           console.log(JSON.stringify seg.flatten!, null, 2)
         ODP.components.span do
           props

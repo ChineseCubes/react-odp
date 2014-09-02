@@ -28,7 +28,7 @@
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
   audio = $('audio').get()[0];
-  CUBEBooks.getPresentation('./json', function(data){
+  Data.getPresentation('./json', function(data){
     var viewer;
     viewer = React.renderComponent(ODP.components.presentation({
       scale: resize(dpcm),
@@ -50,7 +50,7 @@
           delete props.data.text;
           attrs.onClick = function(){
             console.log("query " + text);
-            return CUBEBooks.getSegmentations(text, function(seg){
+            return Data.getSegmentations(text, function(seg){
               return console.log(JSON.stringify(seg.flatten(), null, 2));
             });
           };

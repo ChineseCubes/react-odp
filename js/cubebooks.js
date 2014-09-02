@@ -1,66 +1,7 @@
 (function(){
-  var isArray, isString, cloneDeep, flatten, ref$, audio, div, source, slice, AudioControl, masterPage, c, Character, o, Node, getSegmentations, utils;
+  var isArray, isString, cloneDeep, flatten, slice, masterPage, c, Character, o, Node, getSegmentations, utils, ref$, div, AudioControl, Word;
   isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten;
-  ref$ = React.DOM, audio = ref$.audio, div = ref$.div, source = ref$.source;
   slice = Array.prototype.slice;
-  AudioControl = React.createClass({
-    displayName: 'CUBEBooks.AudioControl',
-    getDefaultProps: function(){
-      return {
-        element: null
-      };
-    },
-    getInitialState: function(){
-      return {
-        playing: false
-      };
-    },
-    componentWillMount: function(){
-      var x$;
-      x$ = this.props.element;
-      x$.pause();
-      x$.addEventListener("play", this.onChange);
-      x$.addEventListener("pause", this.onChange);
-      x$.addEventListener("ended", this.onChange);
-      return x$;
-    },
-    componentWillUnmount: function(){
-      var x$;
-      x$ = this.props.element;
-      x$.removeEventListener("play", this.onChange);
-      x$.removeEventListener("pause", this.onChange);
-      x$.removeEventListener("ended", this.onChange);
-      return x$;
-    },
-    time: function(){
-      var ref$;
-      return ((ref$ = this.props.element) != null ? ref$.currentTime : void 8) || 0;
-    },
-    toggle: function(){
-      var e;
-      e = this.props.element;
-      if (e.paused) {
-        return e.play();
-      } else {
-        return e.pause();
-      }
-    },
-    onChange: function(){
-      return this.setState({
-        playing: !this.props.element.paused
-      });
-    },
-    render: function(){
-      return div({
-        className: "audio-control" + (this.state.playing ? ' playing' : ''),
-        style: {
-          width: '100%',
-          height: '100%'
-        },
-        onClick: this.toggle
-      });
-    }
-  });
   masterPage = {
     children: [
       {
@@ -151,7 +92,7 @@
   getSegmentations = function(text, done){
     var data;
     data = {
-      '洗手台': o('Washbasin', 'noun', 'A large bowl or basin used for washing one\'s hands and face.', [o('Wash', 'verb', 'clean with water', [c('xǐ', '洗')]), o('Hand', 'noun', 'The end part of a person’s arm beyond the wrist, including the palm, fingers, and thumb.', [c('shǒu', '手')]), o('Basin', 'noun', 'A wide open container used for preparing food or for holding liquid.', [c('tái', '台')])])
+      '洗手台': o('Washbasin', ['noun'], 'A large bowl or basin used for washing one\'s hands and face.', [o('Wash', ['verb'], 'clean with water', [c('xǐ', '洗')]), o('Hand', ['noun'], 'The end part of a person’s arm beyond the wrist, including the palm, fingers, and thumb.', [c('shǒu', '手')]), o('Basin', ['noun'], 'A wide open container used for preparing food or for holding liquid.', [c('tái', '台')])])
     };
     return done(data[text] || o());
   };
@@ -192,7 +133,7 @@
       }
       return results$;
       function fn$(i){
-        return CUBEBooks.getPageJSON(path + "/page" + i + ".json", function(it){
+        return utils.getPageJSON(path + "/page" + i + ".json", function(it){
           return gotOne(it, i - 1);
         });
       }
@@ -254,12 +195,147 @@
           }())
       });
     },
-    AudioControl: AudioControl,
     getSegmentations: getSegmentations
   };
+  import$((ref$ = this.Data) != null
+    ? ref$
+    : this.Data = {}, utils);
+  div = React.DOM.div;
+  AudioControl = React.createClass({
+    displayName: 'CUBEBooks.AudioControl',
+    getDefaultProps: function(){
+      return {
+        element: null
+      };
+    },
+    getInitialState: function(){
+      return {
+        playing: false
+      };
+    },
+    componentWillMount: function(){
+      var x$;
+      x$ = this.props.element;
+      x$.pause();
+      x$.addEventListener("play", this.onChange);
+      x$.addEventListener("pause", this.onChange);
+      x$.addEventListener("ended", this.onChange);
+      return x$;
+    },
+    componentWillUnmount: function(){
+      var x$;
+      x$ = this.props.element;
+      x$.removeEventListener("play", this.onChange);
+      x$.removeEventListener("pause", this.onChange);
+      x$.removeEventListener("ended", this.onChange);
+      return x$;
+    },
+    time: function(){
+      var ref$;
+      return ((ref$ = this.props.element) != null ? ref$.currentTime : void 8) || 0;
+    },
+    toggle: function(){
+      var e;
+      e = this.props.element;
+      if (e.paused) {
+        return e.play();
+      } else {
+        return e.pause();
+      }
+    },
+    onChange: function(){
+      return this.setState({
+        playing: !this.props.element.paused
+      });
+    },
+    render: function(){
+      return div({
+        className: "audio-control" + (this.state.playing ? ' playing' : ''),
+        style: {
+          width: '100%',
+          height: '100%'
+        },
+        onClick: this.toggle
+      });
+    }
+  });
+  Character = React.createClass({
+    displayName: 'CUBE.Character',
+    getDefaultProps: function(){
+      return {
+        data: null
+      };
+    },
+    render: function(){
+      var data;
+      data = this.props.data;
+      return div({
+        className: 'character'
+      }, div({
+        className: 'zh_TW',
+        zh_TW: data.zh_TW
+      }), div({
+        className: 'zh_CN',
+        zh_TW: data.zh_TW
+      }), div({
+        className: 'pronounciation',
+        pinyin: data.pinyin
+      }));
+    }
+  });
+  Word = React.createClass({
+    displayName: 'CUBE.Word',
+    getDefaultProps: function(){
+      return {
+        data: null
+      };
+    },
+    render: function(){
+      var data, wc;
+      data = this.props.data;
+      return div({
+        className: 'word'
+      }, div({
+        className: 'meaning',
+        en: data.en
+      }), div({
+        className: 'characters'
+      }, (function(){
+        var i$, results$ = [];
+        for (i$ in data.flatten()) {
+          results$.push((fn$.call(this, i$, data.flatten()[i$])));
+        }
+        return results$;
+        function fn$(i, c){
+          return Character({
+            key: i,
+            data: c
+          });
+        }
+      }.call(this))), div({
+        className: 'entry'
+      }, div({
+        className: 'word-class'
+      }, (function(){
+        var i$, ref$, len$, results$ = [];
+        for (i$ = 0, len$ = (ref$ = data.wordClass).length; i$ < len$; ++i$) {
+          wc = ref$[i$];
+          results$.push(div(null, wc));
+        }
+        return results$;
+      }())), div({
+        className: 'definition',
+        definition: data.definition
+      })));
+    }
+  });
   import$((ref$ = this.CUBEBooks) != null
     ? ref$
-    : this.CUBEBooks = {}, utils);
+    : this.CUBEBooks = {}, {
+    AudioControl: AudioControl,
+    Character: Character,
+    Word: Word
+  });
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;
     while (++i < l) if (x === xs[i]) return true;

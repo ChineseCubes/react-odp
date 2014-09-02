@@ -45,7 +45,8 @@ gulp.task \js:app ->
     .pipe gulp.dest "#{path.build}/js"
     .pipe connect.reload!
   gulp.src [
-    "#{path.src}/ls/CUBEBooks/utils.ls"
+    "#{path.src}/ls/CUBEBooks/data.ls"
+    "#{path.src}/ls/CUBEBooks/react-comps.ls"
   ]
     .pipe gulp-concat 'cubebooks.ls'
     .pipe livescript!

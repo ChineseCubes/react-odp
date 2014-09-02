@@ -1,38 +1,5 @@
 {isArray, isString, cloneDeep, flatten} = _
-{audio, div, source} = React.DOM
-slice = Array.prototype.slice
-
-AudioControl = React.createClass do
-  displayName: \CUBEBooks.AudioControl
-  getDefaultProps: ->
-    element: null
-  getInitialState: ->
-    playing: false
-  componentWillMount: ->
-    @props.element
-      ..pause!
-      ..addEventListener "play"  @onChange
-      ..addEventListener "pause" @onChange
-      ..addEventListener "ended" @onChange
-  componentWillUnmount: ->
-    @props.element
-      ..removeEventListener "play"  @onChange
-      ..removeEventListener "pause" @onChange
-      ..removeEventListener "ended" @onChange
-  time: ->
-    @props.element?currentTime or 0
-  toggle: ->
-    e = @props.element
-    if e.paused then e.play! else e.pause!
-  onChange: ->
-    @setState playing: not @props.element.paused
-  render: ->
-    div do
-      className: "audio-control#{if @state.playing then ' playing' else ''}"
-      style:
-        width:  '100%'
-        height: '100%'
-      onClick: @toggle
+slice = Array::slice
 
 master-page =
   children:
@@ -77,21 +44,21 @@ getSegmentations = (text, done)->
     '洗手台':
       o do
         'Washbasin'
-        'noun'
+        ['noun']
         'A large bowl or basin used for washing one\'s hands and face.'
         * o do
             'Wash'
-            'verb'
+            ['verb']
             'clean with water'
             [c 'xǐ' '洗']
           o do
             'Hand'
-            'noun'
+            ['noun']
             'The end part of a person’s arm beyond the wrist, including the palm, fingers, and thumb.'
             [c 'shǒu' '手']
           o do
             'Basin'
-            'noun'
+            ['noun']
             'A wide open container used for preparing food or for holding liquid.'
             [c 'tái' '台']
   done(data[text] or o!)
@@ -120,7 +87,7 @@ utils =
             height: \21cm
           children:  pages
     for let i from 1 to page-total
-      CUBEBooks.getPageJSON "#path/page#i.json", -> got-one it, i - 1
+      utils.getPageJSON "#path/page#i.json", -> got-one it, i - 1
   getPageJSON: !(path, done) ->
     prop-names = <[name x y width height href onClick]>
     data <- $.getJSON path
@@ -144,8 +111,9 @@ utils =
       children: if not node.children then [] else
         for child in node.children
           utils.transform child, onNode, parents.concat [node.name]
-  AudioControl: AudioControl
+  #Character: Character
+  #Node: Node
   getSegmentations: getSegmentations
 
-(this.CUBEBooks ?= {}) <<< utils
+(this.Data ?= {}) <<< utils
 
