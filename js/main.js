@@ -29,23 +29,28 @@
   console.log("dpcm: " + dpcm);
   audio = $('audio').get()[0];
   CUBEBooks.getPresentation('./json', function(data){
-    var viewer, time, update;
+    var viewer;
     viewer = React.renderComponent(ODP.components.presentation({
       scale: resize(dpcm),
       data: data
       /**/,
       renderProps: function(props){
-        var attrs, text;
-        if (props.data.name === 'image' && props.data.attrs.onclick === 'activity') {
-          attrs = props.data.attrs;
+        var data, attrs, text;
+        data = props.data;
+        attrs = data.attrs;
+        switch (false) {
+        case !(data.name === 'image' && attrs.name === 'activity'):
           delete attrs.href;
-          delete attrs.onclick;
+          delete attrs.onClick;
           return ODP.components.image(props, CUBEBooks.AudioControl({
             element: audio
           }));
-        } else if (props.data.text) {
+        case !(data.name === 'span' && data.text):
           text = props.data.text;
           delete props.data.text;
+          attrs.onClick = function(){
+            return console.log("query " + text);
+          };
           return ODP.components.span(props, ReactVTT.IsolatedCue({
             target: './json/demo.vtt',
             match: text,
@@ -53,23 +58,16 @@
               return audio.currentTime;
             }
           }));
-        } else {
+        default:
           return ODP.renderProps(props);
         }
       }
       /**/
     }), $('#wrap').get()[0]);
-    $(window).resize(function(){
+    return $(window).resize(function(){
       return viewer.setProps({
         scale: resize(dpcm)
       });
-    });
-    /**/
-    time = 0;
-    return requestAnimationFrame(update = function(){
-      time += 1 / 60;
-      time %= 18;
-      return requestAnimationFrame(update);
     });
   });
 }).call(this);

@@ -77,7 +77,9 @@
           name: 'draw:image',
           attrs: {
             href: 'Pictures/100002010000002800000022F506C368.png',
-            onclick: 'home'
+            'on-click': function(){
+              return alert('home');
+            }
           }
         }]
       }, {
@@ -93,8 +95,11 @@
         children: [{
           name: 'draw:image',
           attrs: {
+            name: 'activity',
             href: 'Pictures/1000020100000022000000223520C9AB.png',
-            onclick: 'activity'
+            'on-click': function(){
+              throw Error('unimplemented');
+            }
           }
         }]
       }
@@ -143,6 +148,8 @@
       }
     },
     getPageJSON: function(path, done){
+      var propNames;
+      propNames = ['name', 'x', 'y', 'width', 'height', 'href', 'onClick'];
       $.getJSON(path, function(data){
         var ref$, dir;
         data.children = data.children.concat(masterPage.children);
@@ -155,36 +162,19 @@
           };
           for (k in attrs) {
             v = attrs[k];
-            if (!/^margin.*/.test(k)) {
-              name = utils.splitNamespace(k).name;
-              switch (name) {
-              case 'page-width':
-                newAttrs.width = v;
-                break;
-              case 'page-height':
-                newAttrs.height = v;
-                break;
-              case 'width':
-                newAttrs.width = v;
-                break;
-              case 'height':
-                newAttrs.height = v;
-                break;
-              case 'x':
-                newAttrs.x = v;
-                break;
-              case 'y':
-                newAttrs.y = v;
-                break;
-              case 'href':
-                newAttrs.href = v;
-                break;
-              case 'onclick':
-                newAttrs.onclick = v;
-                break;
-              default:
-                newAttrs.style[ODP.camelFromHyphenated(name)] = v;
-              }
+            name = ODP.camelFromHyphenated(utils.splitNamespace(k).name);
+            switch (false) {
+            case name !== 'pageWidth':
+              newAttrs.width = v;
+              break;
+            case name !== 'pageHeight':
+              newAttrs.height = v;
+              break;
+            case !in$(name, propNames):
+              newAttrs[name] = v;
+              break;
+            default:
+              newAttrs.style[name] = v;
             }
           }
           x$ = newAttrs;
@@ -219,6 +209,11 @@
   import$((ref$ = this.CUBEBooks) != null
     ? ref$
     : this.CUBEBooks = {}, utils);
+  function in$(x, xs){
+    var i = -1, l = xs.length >>> 0;
+    while (++i < l) if (x === xs[i]) return true;
+    return false;
+  }
   function import$(obj, src){
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];

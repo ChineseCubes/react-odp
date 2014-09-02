@@ -1,5 +1,5 @@
 (function(){
-  var isArray, isString, isNumber, filter, map, mapValues, cloneDeep, camelFromHyphenated, renderProps, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, DrawMixin, defaultComponents, ref$;
+  var isArray, isString, isNumber, filter, map, mapValues, cloneDeep, camelFromHyphenated, renderProps, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents, ref$;
   isArray = _.isArray, isString = _.isString, isNumber = _.isNumber, filter = _.filter, map = _.map, mapValues = _.mapValues, cloneDeep = _.cloneDeep;
   camelFromHyphenated = function(it){
     return it.split('-').map(function(v, i){
@@ -73,6 +73,15 @@
     }
     return it;
   };
+  makeInteractive = function(it){
+    var ref$;
+    if (it != null && ((ref$ = it.attrs) != null && ref$.onClick)) {
+      if ((ref$ = it.attrs.style) != null) {
+        ref$.cursor = 'pointer';
+      }
+    }
+    return it;
+  };
   DrawMixin = {
     scaleStyle: function(value, key){
       var r;
@@ -116,7 +125,7 @@
       return this.applyMiddlewares(data);
     },
     render: function(){
-      var data, attrs, style, props, x$, childPropsList, res$, i$, children, this$ = this;
+      var data, attrs, style, props, key, attr, childPropsList, res$, i$, children;
       if (!(data = this.props.data)) {
         return;
       }
@@ -138,12 +147,11 @@
         className: data.namespace + " " + data.name,
         style: style
       };
-      if (isString(attrs.onclick)) {
-        x$ = props;
-        x$.style.cursor = 'pointer';
-        x$.onClick = function(){
-          return alert(attrs.onclick);
-        };
+      for (key in attrs) {
+        attr = attrs[key];
+        if (/^on.*$/.test(key)) {
+          props[key] = attr;
+        }
       }
       res$ = [];
       for (i$ in data.children) {
@@ -186,7 +194,7 @@
     image: React.createClass({
       displayName: 'ReactODP.Image',
       mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+      middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
     }),
     p: React.createClass({
       displayName: 'ReactODP.P',
@@ -196,7 +204,7 @@
     span: React.createClass({
       displayName: 'ReactODP.Span',
       mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+      middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
     }),
     lineBreak: React.createClass({
       displayName: 'ReactODP.LineBreak',

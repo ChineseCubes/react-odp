@@ -38,34 +38,27 @@ viewer = React.renderComponent do
     data:  data
     /**/
     renderProps: (props) ->
-      if props.data.name is 'image' and
-         props.data.attrs.onclick is 'activity'
-        attrs = props.data.attrs
+      data  = props.data
+      attrs = data.attrs
+      switch
+      | data.name is 'image' and attrs.name is 'activity'
         delete attrs.href
-        delete attrs.onclick
+        delete attrs.onClick
         ODP.components.image do
           props
           CUBEBooks.AudioControl element: audio
-      else if props.data.text
+      | data.name is 'span' and data.text
         text = props.data.text
         delete props.data.text
+        attrs.onClick = -> console.log "query #{text}"
         ODP.components.span do
           props
           ReactVTT.IsolatedCue do
             target: './json/demo.vtt'
             match: text
             currentTime: -> audio.current-time
-      else
-        ODP.renderProps props
+      | otherwise => ODP.renderProps props
     /**/
   $(\#wrap)get!0
 $ window .resize -> viewer.setProps scale: resize dpcm
-
-/**/
-time = 0
-requestAnimationFrame update = ->
-  time += 1/60s
-  time %= 18s
-  requestAnimationFrame update
-/**/
 

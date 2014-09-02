@@ -37,6 +37,10 @@ doVerticalAlign = ->
 removeLineHeight = ->
   delete it?attrs?style?line-height
   it
+makeInteractive = ->
+  if it?attrs?onClick
+    it.attrs.style?cursor = 'pointer'
+  it
 
 DrawMixin =
   scaleStyle: (value, key) -> # without changing the unit
@@ -69,11 +73,7 @@ DrawMixin =
     props =
       className: "#{data.namespace} #{data.name}"
       style: style
-    # FIXME: should not hard coded here
-    if isString attrs.onclick
-      props
-        ..style.cursor = 'pointer'
-        ..onClick = ~> alert attrs.onclick
+    for key, attr of attrs => props[key] = attr if /^on.*$/test key
     child-props-list = for let i, child of data.children
       key:         i
       scale:       @props.scale
@@ -104,7 +104,7 @@ default-components =
   image: React.createClass do
     displayName: \ReactODP.Image
     mixins: [DrawMixin]
-    middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+    middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
   p: React.createClass do
     displayName: \ReactODP.P
     mixins: [DrawMixin]
@@ -112,7 +112,7 @@ default-components =
   span: React.createClass do
     displayName: \ReactODP.Span
     mixins: [DrawMixin]
-    middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+    middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
   line-break: React.createClass do
     displayName: \ReactODP.LineBreak
     mixins: [DrawMixin]

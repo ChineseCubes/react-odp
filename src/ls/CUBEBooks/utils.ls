@@ -48,7 +48,7 @@ master-page =
         * name: 'draw:image'
           attrs:
             href: 'Pictures/100002010000002800000022F506C368.png'
-            onclick: 'home'
+            'on-click': -> alert 'home'
           #children:
           #  * name: 'p'
           #    attrs:
@@ -70,8 +70,9 @@ master-page =
       children:
         * name: 'draw:image'
           attrs:
+            name: 'activity'
             href: 'Pictures/1000020100000022000000223520C9AB.png'
-            onclick: 'activity'
+            'on-click': -> ...
           #children:
           #  * name: 'p'
           #    attrs:
@@ -109,24 +110,19 @@ utils =
     for let i from 1 to page-total
       CUBEBooks.getPageJSON "#path/page#i.json", -> got-one it, i - 1
   getPageJSON: !(path, done) ->
+    prop-names = <[name x y width height href onClick]>
     data <- $.getJSON path
     data.children = data.children.concat master-page.children
     [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
     done utils.transform data, (attrs = {}, node-name, parents) ->
       new-attrs = style: {}
       for k, v of attrs
-        if not /^margin.*/.test k
-          name = utils.splitNamespace(k)name
-          switch name
-          | 'page-width'  => new-attrs.width   = v
-          | 'page-height' => new-attrs.height  = v
-          | 'width'       => new-attrs.width   = v
-          | 'height'      => new-attrs.height  = v
-          | 'x'           => new-attrs.x       = v
-          | 'y'           => new-attrs.y       = v
-          | 'href'        => new-attrs.href    = v
-          | 'onclick'     => new-attrs.onclick = v
-          | otherwise     => new-attrs.style[ODP.camelFromHyphenated name] = v
+        name = ODP.camelFromHyphenated utils.splitNamespace(k)name
+        switch
+        | name is 'pageWidth'  => new-attrs.width       = v
+        | name is 'pageHeight' => new-attrs.height      = v
+        | name in prop-names   => new-attrs[name]       = v
+        | otherwise            => new-attrs.style[name] = v
       new-attrs
         ..href = "#dir#{new-attrs.href}" if new-attrs.href
   transform: (node, onNode = null, parents = []) ->
