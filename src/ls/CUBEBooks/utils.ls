@@ -1,4 +1,4 @@
-{isArray, isString, cloneDeep} = _
+{isArray, isString, cloneDeep, flatten} = _
 {audio, div, source} = React.DOM
 slice = Array.prototype.slice
 
@@ -49,15 +49,6 @@ master-page =
           attrs:
             href: 'Pictures/100002010000002800000022F506C368.png'
             'on-click': -> alert 'home'
-          #children:
-          #  * name: 'p'
-          #    attrs:
-          #      'style-name': \MP4
-          #    children:
-          #      * name: 'span'
-          #        text: 'home'
-          #      ...
-          #  ...
         ...
     * name: 'draw:frame'
       attrs:
@@ -73,16 +64,37 @@ master-page =
             name: 'activity'
             href: 'Pictures/1000020100000022000000223520C9AB.png'
             'on-click': -> ...
-          #children:
-          #  * name: 'p'
-          #    attrs:
-          #      'style-name': \MP4
-          #    children:
-          #      * name: 'span'
-          #        text: 'activity'
-          #      ...
-          #  ...
         ...
+
+c = class Character
+  (@pinyin, @zh_TW, @zh_CN = @zh_TW) ~>
+  flatten: -> this
+o = class Node
+  (@en = '', @word-class = '', @definition = '', @children = []) ~>
+  flatten: -> flatten <| for child in @children => child.flatten!
+getSegmentations = (text, done)->
+  data =
+    '洗手台':
+      o do
+        'Washbasin'
+        'noun'
+        'A large bowl or basin used for washing one\'s hands and face.'
+        * o do
+            'Wash'
+            'verb'
+            'clean with water'
+            [c 'xǐ' '洗']
+          o do
+            'Hand'
+            'noun'
+            'The end part of a person’s arm beyond the wrist, including the palm, fingers, and thumb.'
+            [c 'shǒu' '手']
+          o do
+            'Basin'
+            'noun'
+            'A wide open container used for preparing food or for holding liquid.'
+            [c 'tái' '台']
+  done(data[text] or o!)
 
 utils =
   splitNamespace: ->
@@ -133,6 +145,7 @@ utils =
         for child in node.children
           utils.transform child, onNode, parents.concat [node.name]
   AudioControl: AudioControl
+  getSegmentations: getSegmentations
 
 (this.CUBEBooks ?= {}) <<< utils
 

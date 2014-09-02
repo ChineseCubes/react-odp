@@ -49,7 +49,10 @@
           text = props.data.text;
           delete props.data.text;
           attrs.onClick = function(){
-            return console.log("query " + text);
+            console.log("query " + text);
+            return CUBEBooks.getSegmentations(text, function(seg){
+              return console.log(JSON.stringify(seg.flatten(), null, 2));
+            });
           };
           return ODP.components.span(props, ReactVTT.IsolatedCue({
             target: './json/demo.vtt',

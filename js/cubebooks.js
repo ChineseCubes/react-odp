@@ -1,6 +1,6 @@
 (function(){
-  var isArray, isString, cloneDeep, ref$, audio, div, source, slice, AudioControl, masterPage, utils;
-  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep;
+  var isArray, isString, cloneDeep, flatten, ref$, audio, div, source, slice, AudioControl, masterPage, c, Character, o, Node, getSegmentations, utils;
+  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten;
   ref$ = React.DOM, audio = ref$.audio, div = ref$.div, source = ref$.source;
   slice = Array.prototype.slice;
   AudioControl = React.createClass({
@@ -105,6 +105,56 @@
       }
     ]
   };
+  c = Character = (function(){
+    Character.displayName = 'Character';
+    var prototype = Character.prototype, constructor = Character;
+    function Character(pinyin, zh_TW, zh_CN){
+      var this$ = this instanceof ctor$ ? this : new ctor$;
+      this$.pinyin = pinyin;
+      this$.zh_TW = zh_TW;
+      this$.zh_CN = zh_CN != null
+        ? zh_CN
+        : this$.zh_TW;
+      return this$;
+    } function ctor$(){} ctor$.prototype = prototype;
+    prototype.flatten = function(){
+      return this;
+    };
+    return Character;
+  }());
+  o = Node = (function(){
+    Node.displayName = 'Node';
+    var prototype = Node.prototype, constructor = Node;
+    function Node(en, wordClass, definition, children){
+      var this$ = this instanceof ctor$ ? this : new ctor$;
+      this$.en = en != null ? en : '';
+      this$.wordClass = wordClass != null ? wordClass : '';
+      this$.definition = definition != null ? definition : '';
+      this$.children = children != null
+        ? children
+        : [];
+      return this$;
+    } function ctor$(){} ctor$.prototype = prototype;
+    prototype.flatten = function(){
+      var child;
+      return flatten((function(){
+        var i$, ref$, len$, results$ = [];
+        for (i$ = 0, len$ = (ref$ = this.children).length; i$ < len$; ++i$) {
+          child = ref$[i$];
+          results$.push(child.flatten());
+        }
+        return results$;
+      }.call(this)));
+    };
+    return Node;
+  }());
+  getSegmentations = function(text, done){
+    var data;
+    data = {
+      '洗手台': o('Washbasin', 'noun', 'A large bowl or basin used for washing one\'s hands and face.', [o('Wash', 'verb', 'clean with water', [c('xǐ', '洗')]), o('Hand', 'noun', 'The end part of a person’s arm beyond the wrist, including the palm, fingers, and thumb.', [c('shǒu', '手')]), o('Basin', 'noun', 'A wide open container used for preparing food or for holding liquid.', [c('tái', '台')])])
+    };
+    return done(data[text] || o());
+  };
   utils = {
     splitNamespace: function(it){
       var r;
@@ -204,7 +254,8 @@
           }())
       });
     },
-    AudioControl: AudioControl
+    AudioControl: AudioControl,
+    getSegmentations: getSegmentations
   };
   import$((ref$ = this.CUBEBooks) != null
     ? ref$

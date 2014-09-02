@@ -50,7 +50,10 @@ viewer = React.renderComponent do
       | data.name is 'span' and data.text
         text = props.data.text
         delete props.data.text
-        attrs.onClick = -> console.log "query #{text}"
+        attrs.onClick = ->
+          console.log "query #{text}"
+          seg <- CUBEBooks.getSegmentations text
+          console.log(JSON.stringify seg.flatten!, null, 2)
         ODP.components.span do
           props
           ReactVTT.IsolatedCue do
