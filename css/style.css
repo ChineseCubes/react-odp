@@ -154,8 +154,129 @@ body {
   left: 50% !important;
   text-align: center;
 }
-html {
-  background-color: #efefef;
+.ui.menu {
+  margin: 0;
+}
+.ui.label.white {
+  background: none;
+}
+.ui.menu .ui.image.avatar {
+  margin: -0.83em 0;
+}
+.ui.round.button {
+  -webkit-border-radius: 2em;
+  border-radius: 2em;
+}
+.ui.yellow.label {
+  background-color: #f0ad4e !important;
+}
+.ui.purple.label {
+  background-color: #9b96f7 !important;
+}
+.ui.pink.label {
+  background-color: #f3a8aa !important;
+}
+.ui.deep-blue.label {
+  background-color: #006dcc !important;
+}
+.ui.deep-green.label {
+  background-color: #5bb75b !important;
+}
+.ui.deep-purple.label {
+  background-color: #564f8a !important;
+}
+.no.margin {
+  margin: 0;
+}
+.float.right {
+  float: right;
+}
+.align.right {
+  text-align: right;
+}
+.one.line.height {
+  line-height: 1em;
+}
+.two.line.height {
+  line-height: 2em;
+}
+.indent {
+  margin-left: 2rem;
+}
+.hidden,
+.shy {
+  display: none;
+}
+.removed {
+  display: none !important;
+}
+.transparent {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.half-transparent {
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+.opaque {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+.inline.block {
+  display: inline-block;
+}
+@media screen and (max-width: 1024px) {
+  .desktop.only {
+    display: none !important;
+  }
+}
+@media screen and (min-width: 1025px) {
+  .mobile.only {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .mobile.only {
+    display: "";
+  }
+}
+@media screen and (min-width: 1025px) {
+  .tablet.only {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .tablet.only {
+    display: "";
+  }
+}
+@media screen and (min-width: 641px) {
+  .tablet.only {
+    display: "";
+  }
+}
+@media screen and (max-width: 640px) {
+  .tablet.only {
+    display: none !important;
+  }
+}
+@media screen and (min-width: 641px) {
+  .phone.only {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 640px) {
+  .phone.only {
+    display: "";
+  }
+}
+@media screen and (min-width: 481px) {
+  .tiny.only {
+    display: none !important;
+  }
 }
 #cube-control {
   font-size: 0;
