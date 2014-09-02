@@ -70,6 +70,7 @@ gulp.task \css:app ->
   gulp.src [
     "#{path.src}/stylus/reset.styl"
     "#{path.src}/stylus/react-odp.styl"
+    "#{path.src}/stylus/cubes-v5.styl"
     "#{path.src}/stylus/main.styl"
   ]
     .pipe gulp-concat 'style.styl'

@@ -1,0 +1,217 @@
+html
+  background-color #efefef
+  //background-image url('../img/bubble-noodles.png')
+  //background-size cover
+  //background-repeat no-repeat
+
+#cube-control
+  font-size 0
+  max-width 960px
+  width 90%
+  margin 1rem auto
+  background-color rgba(#fff, 0.9)
+  position relative
+  box-shadow rgba(#000, 0.5) 0 0 1px
+  &.success
+    #subject
+      background-color hsla(120deg, 60%, 40%, 1)
+    #workarea
+      .word
+        margin-right 0
+        margin-left  0
+      .character
+        background-color hsla(120deg, 60%, 40%, 1)
+
+  &.box.mode, &.line.mode, &.random.mode
+    min-height 640px
+
+  &.content.mode
+    #playground
+      min-height inherit
+
+  &.box.mode
+    #workarea
+      .slot
+        background-color rgba(#000,0.05)
+        //margin-right -3px
+        box-shadow rgba(#000,0.2) 0 0 1rem inset
+        border-radius 0.5rem
+        &:last-child
+          margin-right 0
+
+  &.line.mode, &.random.mode
+    #workarea
+      .slot
+        //border-bottom 1px #ccc solid
+      .word
+        margin-right 0
+        margin-left  0
+
+  &.line.mode
+    #workarea
+      .word
+        border-radius 0
+        background #eee
+
+  #playground
+    min-height 24rem
+    .sentence
+      text-align center
+      position relative
+      //font-size 0
+      margin 2.5rem 0 3rem 0
+    .prev.button
+      position absolute
+      left -3rem
+      width 3rem
+      top   4rem
+    .next.button
+      position absolute
+      right -3rem
+      width  3rem
+      top    4rem
+    .word
+      //font-size 0
+      display inline-block
+      position relative
+      margin 0.5rem
+    .merge.before
+      //display: none
+      position: absolute
+      width 0.5rem
+      height 100%
+      background-color hsla(40deg, 100%, 70%, 1)
+      top   0
+      left -0.5rem
+    .merge.after
+      //display none
+      position absolute
+      width 0.5rem
+      height 100%
+      background-color hsla(40deg, 100%, 70%, 1)
+      top    0
+      right -0.5rem
+    .slot
+      display inline-block
+      position relative
+    .slots
+      //font-size 0
+      display inline-block
+    .characters
+      //font-size 0
+    .character
+      text-align center
+      display inline-block
+      position relative
+      padding 0.5em
+      //margin-right -3px
+      font-size 1.5rem
+      font-weight bold
+      background-color #FF5453
+      color #FFF
+      border-radius 0.5rem
+      &:last-child
+        margin-right 0
+    .pronounciation
+      position absolute
+      font-weight normal
+      font-size 0.75rem
+      top -0.9rem
+      font-family "American Typewriter", monospace
+      left  0
+      right 0
+      text-align center
+      color rgba(#000, 0.5)
+    .meaning
+      font-size 0.9rem
+      text-align center
+      position absolute
+      bottom -1rem
+      left  0
+      right 0
+      text-align center
+      //margin-top 0.3rem
+      margin-left -3rem
+      margin-right -3rem
+      color rgba(#000,1)
+
+  #workarea
+    width 100%
+    background-color #fff
+    box-shadow rgba(#000, 1) 0 0 1px
+    padding 1rem
+    .sentence
+      margin 2.5rem 0 3rem 0
+
+  #deck
+    width 100%
+    padding 1rem
+    text-align center
+    position relative
+    .word
+      .characters
+        cursor pointer
+      .actions
+        display none
+        position absolute
+        top -3.5rem
+        left 50%
+        .menu
+          background-color #666
+          border-radius 0.3rem
+          &.single
+            width 6rem
+            margin-left -3rem
+          &.multiple
+            width 9rem
+            margin-left -4.5rem
+          &:before
+            position absolute
+            left -0.4rem
+            bottom -0.5rem
+            content ""
+            width  1rem
+            height 1rem
+            background-color #666
+            transform rotate(45deg)
+          .buttons
+            position relative
+            z-index 3
+
+  #definition
+    padding 1rem
+    background-color #fff
+    font-size 1rem
+    .title
+      //font-weight bold
+    .description
+      line-height 1.5em
+      margin-left 1em
+    .attributes
+      margin-left 0.5em
+    .comments
+      margin-left 1em
+      font-style italic
+
+  #subject
+    font-size 1.2rem
+    line-height 1.5em
+    font-weight bold
+    text-align center
+    padding 1rem
+    //background-color rgba(#000,0.05)
+    background-color #FF5453
+    color #FFF
+
+  #actions
+    .congratulations
+      //font-size 0
+      display inline-block
+      padding 1rem
+      background-color #fff
+      font-weight bold
+      font-size 1.2rem
+      border-radius 0.5rem
+      box-shadow rgba(#000, 1) 0 0 1px
+      .button
+        margin 0 0.1rem
