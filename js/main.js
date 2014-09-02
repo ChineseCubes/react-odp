@@ -51,7 +51,10 @@
           attrs.onClick = function(){
             console.log("query " + text);
             return Data.getSegmentations(text, function(seg){
-              return console.log(JSON.stringify(seg.flatten(), null, 2));
+              React.renderComponent(CUBEBooks.Sentence({
+                data: seg
+              }), $('#control .content .sentence').get()[0]);
+              return $('#control').modal('show');
             });
           };
           return ODP.components.span(props, ReactVTT.IsolatedCue({

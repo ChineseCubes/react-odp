@@ -53,7 +53,10 @@ viewer = React.renderComponent do
         attrs.onClick = ->
           console.log "query #{text}"
           seg <- Data.getSegmentations text
-          console.log(JSON.stringify seg.flatten!, null, 2)
+          React.renderComponent do
+            CUBEBooks.Sentence data: seg
+            $ '#control .content .sentence' .get!0
+          $ '#control' .modal 'show'
         ODP.components.span do
           props
           ReactVTT.IsolatedCue do

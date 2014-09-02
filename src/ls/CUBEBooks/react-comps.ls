@@ -1,4 +1,4 @@
-{div} = React.DOM
+{div, span} = React.DOM
 
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
@@ -36,39 +36,61 @@ Character = React.createClass do
   displayName: 'CUBE.Character'
   getDefaultProps: ->
     data: null
+    mode: 'zh_TW'
   render: ->
     data = @props.data
     div do
       className: 'character'
-      div className: 'zh_TW' data.zh_TW
-      div className: 'zh_CN' data.zh_TW
-      div className: 'pronounciation' data.pinyin
+      if @props.mode is 'zh_TW'
+        div do
+          className: 'zh_TW'
+          data.zh_TW
+      else
+        div do
+          className: 'zh_CN'
+          data.zh_CN
+      div do
+        className: 'pronounciation'
+        data.pinyin
 
-Word = React.createClass do
-  displayName: 'CUBE.Word'
+Sentence = React.createClass do
+  displayName: 'CUBE.Sentence'
   getDefaultProps: ->
     data: null
+    mode: 'zh_TW'
   render: ->
     data = @props.data
+    cs = data.flatten!
     div do
       className: 'word'
-      div className: 'meaning' data.en
       div do
         className: 'characters'
-        for let i, c of data.flatten!
+        for let i, c of cs
           Character do
             key: i
             data: c
+            mode: @props.mode
+        div do
+          className: 'meaning'
+          data.en
       div do
         className: 'entry'
-        div do
+        span do
+          className: 'ui black small label'
+          (for c in cs => c[@props.mode])join ''
+        span do
           className: 'word-class'
-          for wc in data.word-class
-            div null wc
-        div className: 'definition' data.definition
+          for let i, wc of data.word-class
+            div do
+              key: i
+              className: 'ui small label'
+              wc
+        span do
+          className: 'definition'
+          data.definition
 
 (this.CUBEBooks ?= {}) <<< do
   AudioControl: AudioControl
   Character: Character
-  Word: Word
+  Sentence: Sentence
 

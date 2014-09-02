@@ -70,6 +70,12 @@ gulp.task \css:vendor <[bower]> ->
 gulp.task \css:app ->
   gulp.src [
     "#{path.src}/stylus/reset.styl"
+  ]
+    .pipe gulp-concat 'reset.styl'
+    .pipe stylus use: <[nib]>
+    .pipe gulp.dest "#{path.build}/css"
+    .pipe connect.reload!
+  gulp.src [
     "#{path.src}/stylus/react-odp.styl"
     "#{path.src}/stylus/semantic-custom.styl"
     "#{path.src}/stylus/cubes-v5.styl"

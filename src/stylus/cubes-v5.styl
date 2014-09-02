@@ -1,11 +1,8 @@
-#cube-control
-  font-size 0
-  max-width 960px
-  width 90%
-  margin 1rem auto
-  background-color rgba(#fff, 0.9)
-  position relative
-  box-shadow rgba(#000, 0.5) 0 0 1px
+#control
+  font-family "Noto Sans", "Noto Sans T Chinese", "微軟正黑體", sans-serif
+  //margin 1rem auto
+  //position relative
+  /*
   &.success
     #subject
       background-color hsla(120deg, 60%, 40%, 1)
@@ -15,14 +12,15 @@
         margin-left  0
       .character
         background-color hsla(120deg, 60%, 40%, 1)
-
+  */
+  /*
   &.box.mode, &.line.mode, &.random.mode
     min-height 640px
-
+  */
   &.content.mode
     #playground
       min-height inherit
-
+  /*
   &.box.mode
     #workarea
       .slot
@@ -46,14 +44,24 @@
       .word
         border-radius 0
         background #eee
-
+  */
   #playground
-    min-height 24rem
+    min-height 16rem
+    position relative
+    border-bottom-left-radius  5px
+    border-bottom-right-radius 5px
+    text-align center
+    margin-bottom 3.5rem
+    .aligner, .sentence
+      display inline-block
+    .aligner
+      width  0
+      height 100%
+      vertical-align middle
     .sentence
-      text-align center
-      position relative
+      vertical-align middle
       //font-size 0
-      margin 2.5rem 0 3rem 0
+    /*
     .prev.button
       position absolute
       left -3rem
@@ -64,11 +72,6 @@
       right -3rem
       width  3rem
       top    4rem
-    .word
-      //font-size 0
-      display inline-block
-      position relative
-      margin 0.5rem
     .merge.before
       //display: none
       position: absolute
@@ -91,8 +94,14 @@
     .slots
       //font-size 0
       display inline-block
-    .characters
+    */
+    .word
       //font-size 0
+      display inline-block
+      //position relative
+      margin 0.5rem
+    .characters
+      position relative
     .character
       text-align center
       display inline-block
@@ -129,6 +138,7 @@
       margin-right -3rem
       color rgba(#000,1)
 
+  /*
   #workarea
     width 100%
     background-color #fff
@@ -136,6 +146,7 @@
     padding 1rem
     .sentence
       margin 2.5rem 0 3rem 0
+  */
 
   #deck
     width 100%
@@ -172,20 +183,29 @@
             position relative
             z-index 3
 
-  #definition
+  .entry
+    position absolute
+    left   0
+    right  0
+    top    100%
     padding 1rem
     background-color #fff
+    border-bottom-left-radius  5px
+    border-bottom-right-radius 5px
     font-size 1rem
-    .title
-      //font-weight bold
-    .description
+    text-align left
+    //.title
+    //  font-weight bold
+    .definition
       line-height 1.5em
       margin-left 1em
-    .attributes
+    .word-class
       margin-left 0.5em
+    /*
     .comments
       margin-left 1em
       font-style italic
+    */
 
   #subject
     font-size 1.2rem

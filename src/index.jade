@@ -2,7 +2,8 @@ doctype html
 html
   head
     meta(charset="utf-8")
-    title CUBEBooks
+    title CᴜʙᴇBooks
+    link(rel="stylesheet" type="text/css" href="./css/reset.css")
     link(rel="stylesheet" type="text/css" href="./css/vendor.css")
     link(rel="stylesheet" type="text/css" href="./css/style.css")
   body
@@ -10,6 +11,12 @@ html
       source(src="./json/demo.mp3")
     #detector
     #wrap
+    #control.ui.modal
+      i.close.icon
+      .header CᴜʙᴇControl
+      #playground.content
+        .aligner
+        .sentence playground
     script(src="./js/vendor.js")
     script(src="./js/react-dots-detector.js")
     script(src="./js/react-odp.js")

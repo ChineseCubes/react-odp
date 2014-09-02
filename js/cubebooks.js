@@ -1,5 +1,5 @@
 (function(){
-  var isArray, isString, cloneDeep, flatten, slice, masterPage, c, Character, o, Node, getSegmentations, utils, ref$, div, AudioControl, Word;
+  var isArray, isString, cloneDeep, flatten, slice, masterPage, c, Character, o, Node, getSegmentations, utils, ref$, div, span, AudioControl, Sentence;
   isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten;
   slice = Array.prototype.slice;
   masterPage = {
@@ -200,7 +200,7 @@
   import$((ref$ = this.Data) != null
     ? ref$
     : this.Data = {}, utils);
-  div = React.DOM.div;
+  ref$ = React.DOM, div = ref$.div, span = ref$.span;
   AudioControl = React.createClass({
     displayName: 'CUBEBooks.AudioControl',
     getDefaultProps: function(){
@@ -263,7 +263,8 @@
     displayName: 'CUBE.Character',
     getDefaultProps: function(){
       return {
-        data: null
+        data: null,
+        mode: 'zh_TW'
       };
     },
     render: function(){
@@ -271,62 +272,76 @@
       data = this.props.data;
       return div({
         className: 'character'
-      }, div({
-        className: 'zh_TW',
-        zh_TW: data.zh_TW
-      }), div({
-        className: 'zh_CN',
-        zh_TW: data.zh_TW
-      }), div({
-        className: 'pronounciation',
-        pinyin: data.pinyin
-      }));
+      }, this.props.mode === 'zh_TW'
+        ? div({
+          className: 'zh_TW'
+        }, data.zh_TW)
+        : div({
+          className: 'zh_CN'
+        }, data.zh_CN), div({
+        className: 'pronounciation'
+      }, data.pinyin));
     }
   });
-  Word = React.createClass({
-    displayName: 'CUBE.Word',
+  Sentence = React.createClass({
+    displayName: 'CUBE.Sentence',
     getDefaultProps: function(){
       return {
-        data: null
+        data: null,
+        mode: 'zh_TW'
       };
     },
     render: function(){
-      var data, wc;
+      var data, cs, c;
       data = this.props.data;
+      cs = data.flatten();
       return div({
         className: 'word'
       }, div({
-        className: 'meaning',
-        en: data.en
-      }), div({
         className: 'characters'
       }, (function(){
         var i$, results$ = [];
-        for (i$ in data.flatten()) {
-          results$.push((fn$.call(this, i$, data.flatten()[i$])));
+        for (i$ in cs) {
+          results$.push((fn$.call(this, i$, cs[i$])));
         }
         return results$;
         function fn$(i, c){
           return Character({
             key: i,
-            data: c
+            data: c,
+            mode: this.props.mode
           });
         }
-      }.call(this))), div({
+      }.call(this)), div({
+        className: 'meaning'
+      }, data.en)), div({
         className: 'entry'
-      }, div({
-        className: 'word-class'
+      }, span({
+        className: 'ui black small label'
       }, (function(){
         var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = data.wordClass).length; i$ < len$; ++i$) {
-          wc = ref$[i$];
-          results$.push(div(null, wc));
+        for (i$ = 0, len$ = (ref$ = cs).length; i$ < len$; ++i$) {
+          c = ref$[i$];
+          results$.push(c[this.props.mode]);
         }
         return results$;
-      }())), div({
-        className: 'definition',
-        definition: data.definition
-      })));
+      }.call(this)).join('')), span({
+        className: 'word-class'
+      }, (function(){
+        var i$, results$ = [];
+        for (i$ in data.wordClass) {
+          results$.push((fn$.call(this, i$, data.wordClass[i$])));
+        }
+        return results$;
+        function fn$(i, wc){
+          return div({
+            key: i,
+            className: 'ui small label'
+          }, wc);
+        }
+      }.call(this))), span({
+        className: 'definition'
+      }, data.definition)));
     }
   });
   import$((ref$ = this.CUBEBooks) != null
@@ -334,7 +349,7 @@
     : this.CUBEBooks = {}, {
     AudioControl: AudioControl,
     Character: Character,
-    Word: Word
+    Sentence: Sentence
   });
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;
