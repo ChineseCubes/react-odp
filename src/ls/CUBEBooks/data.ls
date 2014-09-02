@@ -38,7 +38,11 @@ c = class Character
   flatten: -> this
 o = class Node
   (@en = '', @word-class = '', @definition = '', @children = []) ~>
+  isLeaf:  -> not @children.0.leafs
   flatten: -> flatten <| for child in @children => child.flatten!
+  leafs: ->
+    | @isLeaf!  => this
+    | otherwise => flatten <| for child in @children => child.leafs!
 getSegmentations = (text, done)->
   data =
     '洗手台':

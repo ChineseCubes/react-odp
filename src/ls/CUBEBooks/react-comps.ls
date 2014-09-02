@@ -53,6 +53,42 @@ Character = React.createClass do
         className: 'pronounciation'
         data.pinyin
 
+Word = React.createClass do
+  displayName: 'CUBE.Word'
+  getDefaultProps: ->
+    data: null
+    mode: 'zh_TW'
+  render: ->
+    data = @props.data
+    cs = data.flatten!
+    div do
+      className: 'word'
+      div do
+        className: 'characters'
+        for let i, c of cs
+          Character do
+            key: i
+            data: c
+            mode: @props.mode
+        div do
+          className: 'meaning'
+          data.en
+      div do
+        className: 'entry'
+        span do
+          className: 'ui black small label'
+          (for c in cs => c[@props.mode])join ''
+        span do
+          className: 'word-class'
+          for let i, wc of data.word-class
+            div do
+              key: i
+              className: 'ui small label'
+              wc
+        span do
+          className: 'definition'
+          data.definition
+
 Sentence = React.createClass do
   displayName: 'CUBE.Sentence'
   getDefaultProps: ->
@@ -64,7 +100,6 @@ Sentence = React.createClass do
     characters: ''
   render: ->
     data = @props.data
-    cs = data.flatten!
     div do
       null
       nav do
@@ -98,38 +133,21 @@ Sentence = React.createClass do
                   characters: 'active'
               'characters'
       if @state.sentence is 'active'
-        div do
-          className: 'word'
-          div do
-            className: 'characters'
-            for let i, c of cs
-              Character do
-                key: i
-                data: c
-                mode: @props.mode
-            div do
-              className: 'meaning'
-              data.en
-          div do
-            className: 'entry'
-            span do
-              className: 'ui black small label'
-              (for c in cs => c[@props.mode])join ''
-            span do
-              className: 'word-class'
-              for let i, wc of data.word-class
-                div do
-                  key: i
-                  className: 'ui small label'
-                  wc
-            span do
-              className: 'definition'
-              data.definition
-      #else if @state.words is 'active'
-      #else if @state.characters is 'active'
+        Word {} <<< @props
+      else if @state.words is 'active'
+        for let word in data.children
+          Word do
+            data: word
+            mode: @props.mode
+      else if @state.characters is 'active'
+        for let word in data.leafs!
+          Word do
+            data: word
+            mode: @props.mode
 
 (this.CUBEBooks ?= {}) <<< do
   AudioControl: AudioControl
   Character: Character
+  Word: Word
   Sentence: Sentence
 

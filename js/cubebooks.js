@@ -1,5 +1,5 @@
 (function(){
-  var isArray, isString, cloneDeep, flatten, slice, masterPage, c, Character, o, Node, getSegmentations, utils, ref$, a, div, nav, span, AudioControl, Sentence;
+  var isArray, isString, cloneDeep, flatten, slice, masterPage, c, Character, o, Node, getSegmentations, utils, ref$, a, div, nav, span, AudioControl, Word, Sentence;
   isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten;
   slice = Array.prototype.slice;
   masterPage = {
@@ -76,6 +76,9 @@
         : [];
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
+    prototype.isLeaf = function(){
+      return !this.children[0].leafs;
+    };
     prototype.flatten = function(){
       var child;
       return flatten((function(){
@@ -86,6 +89,22 @@
         }
         return results$;
       }.call(this)));
+    };
+    prototype.leafs = function(){
+      var child;
+      switch (false) {
+      case !this.isLeaf():
+        return this;
+      default:
+        return flatten((function(){
+          var i$, ref$, len$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = this.children).length; i$ < len$; ++i$) {
+            child = ref$[i$];
+            results$.push(child.leafs());
+          }
+          return results$;
+        }.call(this)));
+      }
     };
     return Node;
   }());
@@ -284,59 +303,19 @@
       }, data.pinyin));
     }
   });
-  Sentence = React.createClass({
-    displayName: 'CUBE.Sentence',
+  Word = React.createClass({
+    displayName: 'CUBE.Word',
     getDefaultProps: function(){
       return {
         data: null,
         mode: 'zh_TW'
       };
     },
-    getInitialState: function(){
-      return {
-        sentence: 'active',
-        words: '',
-        characters: ''
-      };
-    },
     render: function(){
-      var data, cs, c, this$ = this;
+      var data, cs, c;
       data = this.props.data;
       cs = data.flatten();
-      return div(null, nav({
-        className: 'navbar'
-      }, div({
-        className: 'ui borderless menu'
-      }, div({
-        className: 'right menu'
-      }, a({
-        className: "item sentence " + this.state.sentence,
-        onClick: function(){
-          return this$.setState({
-            sentence: 'active',
-            words: '',
-            characters: ''
-          });
-        }
-      }, 'sentence'), a({
-        className: "item words " + this.state.words,
-        onClick: function(){
-          return this$.setState({
-            sentence: '',
-            words: 'active',
-            characters: ''
-          });
-        }
-      }, 'words'), a({
-        className: "item characters " + this.state.characters,
-        onClick: function(){
-          return this$.setState({
-            sentence: '',
-            words: '',
-            characters: 'active'
-          });
-        }
-      }, 'characters')))), this.state.sentence === 'active' ? div({
+      return div({
         className: 'word'
       }, div({
         className: 'characters'
@@ -382,7 +361,89 @@
         }
       }.call(this))), span({
         className: 'definition'
-      }, data.definition))) : void 8);
+      }, data.definition)));
+    }
+  });
+  Sentence = React.createClass({
+    displayName: 'CUBE.Sentence',
+    getDefaultProps: function(){
+      return {
+        data: null,
+        mode: 'zh_TW'
+      };
+    },
+    getInitialState: function(){
+      return {
+        sentence: 'active',
+        words: '',
+        characters: ''
+      };
+    },
+    render: function(){
+      var data, this$ = this;
+      data = this.props.data;
+      return div(null, nav({
+        className: 'navbar'
+      }, div({
+        className: 'ui borderless menu'
+      }, div({
+        className: 'right menu'
+      }, a({
+        className: "item sentence " + this.state.sentence,
+        onClick: function(){
+          return this$.setState({
+            sentence: 'active',
+            words: '',
+            characters: ''
+          });
+        }
+      }, 'sentence'), a({
+        className: "item words " + this.state.words,
+        onClick: function(){
+          return this$.setState({
+            sentence: '',
+            words: 'active',
+            characters: ''
+          });
+        }
+      }, 'words'), a({
+        className: "item characters " + this.state.characters,
+        onClick: function(){
+          return this$.setState({
+            sentence: '',
+            words: '',
+            characters: 'active'
+          });
+        }
+      }, 'characters')))), this.state.sentence === 'active'
+        ? Word(import$({}, this.props))
+        : this.state.words === 'active'
+          ? (function(){
+            var i$, len$, results$ = [];
+            for (i$ = 0, len$ = data.children.length; i$ < len$; ++i$) {
+              results$.push((fn$.call(this, data.children[i$])));
+            }
+            return results$;
+            function fn$(word){
+              return Word({
+                data: word,
+                mode: this.props.mode
+              });
+            }
+          }.call(this))
+          : this.state.characters === 'active' ? (function(){
+            var i$, len$, results$ = [];
+            for (i$ = 0, len$ = data.leafs().length; i$ < len$; ++i$) {
+              results$.push((fn$.call(this, data.leafs()[i$])));
+            }
+            return results$;
+            function fn$(word){
+              return Word({
+                data: word,
+                mode: this.props.mode
+              });
+            }
+          }.call(this)) : void 8);
     }
   });
   import$((ref$ = this.CUBEBooks) != null
@@ -390,6 +451,7 @@
     : this.CUBEBooks = {}, {
     AudioControl: AudioControl,
     Character: Character,
+    Word: Word,
     Sentence: Sentence
   });
   function in$(x, xs){
