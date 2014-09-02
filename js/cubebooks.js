@@ -1,5 +1,5 @@
 (function(){
-  var isArray, isString, cloneDeep, flatten, slice, masterPage, c, Character, o, Node, getSegmentations, utils, ref$, div, span, AudioControl, Sentence;
+  var isArray, isString, cloneDeep, flatten, slice, masterPage, c, Character, o, Node, getSegmentations, utils, ref$, a, div, nav, span, AudioControl, Sentence;
   isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten;
   slice = Array.prototype.slice;
   masterPage = {
@@ -201,7 +201,7 @@
   import$((ref$ = this.Data) != null
     ? ref$
     : this.Data = {}, utils);
-  ref$ = React.DOM, div = ref$.div, span = ref$.span;
+  ref$ = React.DOM, a = ref$.a, div = ref$.div, nav = ref$.nav, span = ref$.span;
   AudioControl = React.createClass({
     displayName: 'CUBEBooks.AudioControl',
     getDefaultProps: function(){
@@ -292,11 +292,51 @@
         mode: 'zh_TW'
       };
     },
+    getInitialState: function(){
+      return {
+        sentence: 'active',
+        words: '',
+        characters: ''
+      };
+    },
     render: function(){
-      var data, cs, c;
+      var data, cs, c, this$ = this;
       data = this.props.data;
       cs = data.flatten();
-      return div({
+      return div(null, nav({
+        className: 'navbar'
+      }, div({
+        className: 'ui borderless menu'
+      }, div({
+        className: 'right menu'
+      }, a({
+        className: "item sentence " + this.state.sentence,
+        onClick: function(){
+          return this$.setState({
+            sentence: 'active',
+            words: '',
+            characters: ''
+          });
+        }
+      }, 'sentence'), a({
+        className: "item words " + this.state.words,
+        onClick: function(){
+          return this$.setState({
+            sentence: '',
+            words: 'active',
+            characters: ''
+          });
+        }
+      }, 'words'), a({
+        className: "item characters " + this.state.characters,
+        onClick: function(){
+          return this$.setState({
+            sentence: '',
+            words: '',
+            characters: 'active'
+          });
+        }
+      }, 'characters')))), this.state.sentence === 'active' ? div({
         className: 'word'
       }, div({
         className: 'characters'
@@ -342,7 +382,7 @@
         }
       }.call(this))), span({
         className: 'definition'
-      }, data.definition)));
+      }, data.definition))) : void 8);
     }
   });
   import$((ref$ = this.CUBEBooks) != null

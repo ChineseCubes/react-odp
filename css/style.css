@@ -373,6 +373,15 @@ body {
   position: relative;
   z-index: 3;
 }
+#control .navbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+#control .navbar .menu {
+  border-radius: 0;
+}
 #control .entry {
   position: absolute;
   left: 0;
