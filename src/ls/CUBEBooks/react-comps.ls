@@ -135,13 +135,16 @@ Sentence = React.createClass do
       if @state.sentence is 'active'
         Word {} <<< @props
       else if @state.words is 'active'
-        for let word in data.children
+        #XXX: who decide the depth?
+        for let i, word of data.childrenOfDepth 1
           Word do
+            key: i
             data: word
             mode: @props.mode
       else if @state.characters is 'active'
-        for let word in data.leafs!
+        for let i, word of data.leafs!
           Word do
+            key: i
             data: word
             mode: @props.mode
 

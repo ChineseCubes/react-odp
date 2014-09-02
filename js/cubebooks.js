@@ -1,6 +1,6 @@
 (function(){
-  var isArray, isString, cloneDeep, flatten, slice, masterPage, c, Character, o, Node, getSegmentations, utils, ref$, a, div, nav, span, AudioControl, Word, Sentence;
-  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten;
+  var isArray, isString, cloneDeep, flatten, max, slice, masterPage, c, Character, o, Node, getSegmentations, utils, ref$, a, div, nav, span, AudioControl, Word, Sentence;
+  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten, max = _.max;
   slice = Array.prototype.slice;
   masterPage = {
     children: [
@@ -76,9 +76,6 @@
         : [];
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
-    prototype.isLeaf = function(){
-      return !this.children[0].leafs;
-    };
     prototype.flatten = function(){
       var child;
       return flatten((function(){
@@ -89,6 +86,9 @@
         }
         return results$;
       }.call(this)));
+    };
+    prototype.isLeaf = function(){
+      return !this.children[0].leafs;
     };
     prototype.leafs = function(){
       var child;
@@ -101,6 +101,40 @@
           for (i$ = 0, len$ = (ref$ = this.children).length; i$ < len$; ++i$) {
             child = ref$[i$];
             results$.push(child.leafs());
+          }
+          return results$;
+        }.call(this)));
+      }
+    };
+    prototype.depth = function(){
+      var child;
+      switch (false) {
+      case !this.isLeaf():
+        return 0;
+      default:
+        return 1 + max((function(){
+          var i$, ref$, len$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = this.children).length; i$ < len$; ++i$) {
+            child = ref$[i$];
+            results$.push(child.depth());
+          }
+          return results$;
+        }.call(this)));
+      }
+    };
+    prototype.childrenOfDepth = function(depth){
+      var child;
+      switch (false) {
+      case !this.isLeaf():
+        return this;
+      case depth !== 0:
+        return this;
+      default:
+        return flatten((function(){
+          var i$, ref$, len$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = this.children).length; i$ < len$; ++i$) {
+            child = ref$[i$];
+            results$.push(child.childrenOfDepth(depth - 1));
           }
           return results$;
         }.call(this)));
@@ -419,26 +453,28 @@
         ? Word(import$({}, this.props))
         : this.state.words === 'active'
           ? (function(){
-            var i$, len$, results$ = [];
-            for (i$ = 0, len$ = data.children.length; i$ < len$; ++i$) {
-              results$.push((fn$.call(this, data.children[i$])));
+            var i$, results$ = [];
+            for (i$ in data.childrenOfDepth(1)) {
+              results$.push((fn$.call(this, i$, data.childrenOfDepth(1)[i$])));
             }
             return results$;
-            function fn$(word){
+            function fn$(i, word){
               return Word({
+                key: i,
                 data: word,
                 mode: this.props.mode
               });
             }
           }.call(this))
           : this.state.characters === 'active' ? (function(){
-            var i$, len$, results$ = [];
-            for (i$ = 0, len$ = data.leafs().length; i$ < len$; ++i$) {
-              results$.push((fn$.call(this, data.leafs()[i$])));
+            var i$, results$ = [];
+            for (i$ in data.leafs()) {
+              results$.push((fn$.call(this, i$, data.leafs()[i$])));
             }
             return results$;
-            function fn$(word){
+            function fn$(i, word){
               return Word({
+                key: i,
                 data: word,
                 mode: this.props.mode
               });

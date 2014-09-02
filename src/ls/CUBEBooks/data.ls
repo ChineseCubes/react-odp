@@ -1,4 +1,4 @@
-{isArray, isString, cloneDeep, flatten} = _
+{isArray, isString, cloneDeep, flatten, max} = _
 slice = Array::slice
 
 master-page =
@@ -38,11 +38,19 @@ c = class Character
   flatten: -> this
 o = class Node
   (@en = '', @word-class = '', @definition = '', @children = []) ~>
-  isLeaf:  -> not @children.0.leafs
   flatten: -> flatten <| for child in @children => child.flatten!
-  leafs: ->
+  isLeaf:  -> not @children.0.leafs
+  leafs:   ->
     | @isLeaf!  => this
     | otherwise => flatten <| for child in @children => child.leafs!
+  depth:   ->
+    | @isLeaf!  => 0
+    | otherwise => 1 + (max <| for child in @children => child.depth!)
+  childrenOfDepth: (depth) ->
+    | @isLeaf!   => this
+    | depth is 0 => this
+    | otherwise
+      flatten <| for child in @children => child.childrenOfDepth depth - 1
 getSegmentations = (text, done)->
   data =
     '洗手台':
