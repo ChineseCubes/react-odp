@@ -108,8 +108,16 @@ getSegmentations = (text, done)->
             'Sweet'
             ['adjective']
             'containing or having a taste like sugar'
-            * c 'tián' '甜'
-              c 'de' '的'
+            * o do
+                'Sweet'
+                ['noun']
+                'a small piece of sweet food made of sugar or chocolate'
+                [c 'tián' '甜']
+              o do
+                '(adj.)'
+                []
+                ''
+                [c 'de' '的']
           o do
             'Ice Cream'
             ['noun']
@@ -123,8 +131,16 @@ getSegmentations = (text, done)->
                 'Cream'
                 ['noun']
                 'used in the names of foods containing cream or something similar to it'
-                * c 'qí' '淇'
-                  c 'lín' '淋'
+                * o do
+                    ''
+                    ['noun']
+                    'name of a river'
+                    [c 'qí' '淇']
+                  o do
+                    'pour'
+                    ['verb']
+                    'to sprinkle'
+                    [c 'lín' '淋']
   done(data[text] or o!)
 
 utils =
