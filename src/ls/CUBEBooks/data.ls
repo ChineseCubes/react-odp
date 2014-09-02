@@ -45,7 +45,7 @@ getSegmentations = (text, done)->
       o do
         'Washbasin'
         ['noun']
-        'A large bowl or basin used for washing one\'s hands and face.'
+        'a large bowl or basin used for washing one\'s hands and face'
         * o do
             'Wash'
             ['verb']
@@ -54,13 +54,73 @@ getSegmentations = (text, done)->
           o do
             'Hand'
             ['noun']
-            'The end part of a person’s arm beyond the wrist, including the palm, fingers, and thumb.'
+            'the end part of a person’s arm beyond the wrist, including the palm, fingers, and thumb'
             [c 'shǒu' '手']
           o do
             'Basin'
             ['noun']
-            'A wide open container used for preparing food or for holding liquid.'
+            'a wide open container used for preparing food or for holding liquid'
             [c 'tái' '台']
+    '他點了又冰又甜的冰淇淋。':
+      o do
+        'He ordered an icy and sweet ice cream.'
+        ['phase']
+        'He ordered an icy and sweet ice cream.'
+        * o do
+            'He'
+            ['pronoun']
+            'used to refer to a man, boy, or male animal that has already been mentioned or is already known about'
+            [c 'tā' '他']
+          o do
+            'Ordered'
+            ['adjective']
+            'well arranged or controlled'
+            * o do
+                'Order'
+                ['verb']
+                'to ask for food or a drink in a restaurant, bar etc'
+                [c 'diǎn' '點']
+              o do
+                '-ed'
+                ['suffix']
+                'forms the regular past tense and past participle of verbs'
+                [c 'le' '了']
+          o do
+            'Yet'
+            ['adverb']
+            'used to emphasize that something is even more than it was before'
+            [c 'yòu' '又']
+          o do
+            'Icy'
+            ['adjective']
+            'extremely cold'
+            [c 'bīng' '冰']
+          o do
+            'Yet'
+            ['adverb']
+            'used to emphasize that something is even more than it was before'
+            [c 'yòu' '又']
+          o do
+            'Sweet'
+            ['adjective']
+            'containing or having a taste like sugar'
+            * c 'tián' '甜'
+              c 'de' '的'
+          o do
+            'Ice Cream'
+            ['noun']
+            'a frozen sweet food made of milk, cream, and sugar, with fruit, nuts, chocolate etc sometimes added to it'
+            * o do
+                'Icy'
+                ['adjective']
+                'extremely cold'
+                [c 'bīng' '冰']
+              o do
+                'Cream'
+                ['noun']
+                'used in the names of foods containing cream or something similar to it'
+                * c 'qí' '淇'
+                  c 'lín' '淋'
   done(data[text] or o!)
 
 utils =
