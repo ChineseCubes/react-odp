@@ -257,6 +257,12 @@
     getSegmentations: function(text, done){
       return done(utils.data[text] || Node());
     },
+    strip: function(it){
+      var tmp;
+      tmp = document.createElement('span');
+      tmp.innerHTML = it;
+      return tmp.textContent || tmp.innerText || '';
+    },
     buildSyntaxTreeFromNotes: function(node){
       var keys, values, zh, en, current;
       keys = [];
@@ -265,7 +271,7 @@
       en = null;
       current = 0;
       utils.traverse(node, function(node, parents){
-        var ss;
+        var ss, char;
         if (!node.text) {
           return;
         }
@@ -293,8 +299,16 @@
               if (!new RegExp(zh).test(keys[current])) {
                 ++current;
               }
+              char = Char();
               values[current].children.push(Node(en, [], en, zh.length === 1
-                ? [Char('pinyin', zh + "")]
+                ? (char = Char(), $.get("https://www.moedict.tw/~" + zh + ".json", function(moe){
+                  var x$;
+                  x$ = char;
+                  x$.zh_TW = utils.strip(moe.title);
+                  x$.zh_CN = utils.strip(moe.heteronyms[0].alt);
+                  x$.pinyin = utils.strip(moe.heteronyms[0].pinyin);
+                  return x$;
+                }), [char])
                 : (function(){
                   var i$, len$, results$ = [];
                   for (i$ = 0, len$ = zh.length; i$ < len$; ++i$) {
@@ -302,7 +316,18 @@
                   }
                   return results$;
                   function fn$(c){
-                    return Node('', [], '', [Char('pinyin', c)]);
+                    var char, n;
+                    char = Char();
+                    n = Node('', [], '', [char]);
+                    $.get("https://www.moedict.tw/~" + c + ".json", function(moe){
+                      var x$;
+                      x$ = char;
+                      x$.zh_TW = utils.strip(moe.title);
+                      x$.zh_CN = utils.strip(moe.heteronyms[0].alt);
+                      x$.pinyin = utils.strip(moe.heteronyms[0].pinyin);
+                      return n.definition = utils.strip(moe.translation.English);
+                    });
+                    return n;
                   }
                 }.call(this))));
               zh = null;
@@ -522,20 +547,6 @@
         }
         return results$;
       }.call(this)).join('')), span({
-        className: 'word-class'
-      }, (function(){
-        var i$, results$ = [];
-        for (i$ in focus.wordClass) {
-          results$.push((fn$.call(this, i$, focus.wordClass[i$])));
-        }
-        return results$;
-        function fn$(i, wc){
-          return div({
-            key: i,
-            className: 'ui small label'
-          }, wc);
-        }
-      }.call(this))), span({
         className: 'definition'
       }, focus.definition))) : void 8);
     }

@@ -108,6 +108,10 @@ utils =
   #Node: Node
   getSegmentations: (text, done)->
     done(utils.data[text] or Node!)
+  strip: ->
+    tmp = document.createElement 'span'
+    tmp.innerHTML = it
+    tmp.textContent or tmp.innerText or ''
   buildSyntaxTreeFromNotes: (node) ->
     keys   = []
     values = []
@@ -137,14 +141,30 @@ utils =
             en := node.text
           if zh and en
             ++current if not new RegExp(zh)test keys[current]
+            char = Char!
             values[current]children.push do
               Node en, [], en,
                 if zh.length is 1
-                  [Char 'pinyin' "#zh"]
+                  char = Char!
+                  do
+                    moe <- $.get "https://www.moedict.tw/~#zh.json"
+                    char
+                      ..zh_TW = utils.strip moe.title
+                      ..zh_CN = utils.strip moe.heteronyms.0.alt
+                      ..pinyin = utils.strip moe.heteronyms.0.pinyin
+                  [char]
                 else
                   for let c in zh
-                    Node '', [], '',
-                      [Char 'pinyin' c]
+                    char = Char!
+                    n = Node '', [], '', [char]
+                    do
+                      moe <- $.get "https://www.moedict.tw/~#c.json"
+                      char
+                        ..zh_TW = utils.strip moe.title
+                        ..zh_CN = utils.strip moe.heteronyms.0.alt
+                        ..pinyin = utils.strip moe.heteronyms.0.pinyin
+                      n.definition = utils.strip moe.translation.English
+                    n
             zh := null
             en := null
     utils.data = zipObject keys, values

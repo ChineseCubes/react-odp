@@ -131,13 +131,14 @@ Sentence = React.createClass do
           span do
             className: 'ui black small label'
             (for c in focus.flatten! => c[@props.mode])join ''
-          span do
-            className: 'word-class'
-            for let i, wc of focus.word-class
-              div do
-                key: i
-                className: 'ui small label'
-                wc
+          # XXX: hide word classes for now
+          #span do
+          #  className: 'word-class'
+          #  for let i, wc of focus.word-class
+          #    div do
+          #      key: i
+          #      className: 'ui small label'
+          #      wc
           span do
             className: 'definition'
             focus.definition
