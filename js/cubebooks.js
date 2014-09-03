@@ -269,26 +269,29 @@
       }).replace('to ', '');
     },
     buildSyntaxTreeFromNotes: function(node){
-      var keys, values, zh, en, current;
+      var keys, values, keywords, zh, en, i, ks, key, value, re, r;
       keys = [];
       values = [];
+      keywords = [];
       zh = null;
       en = null;
-      current = 0;
       utils.traverse(node, function(node, parents){
-        var ss, char;
+        var current, ss, char;
         if (!node.text) {
           return;
         }
         if (parents[2] !== 'notes') {
+          current = keywords[keywords.length - 1];
+          if (!current || 0 !== Object.keys(current).length) {
+            keywords.push({});
+          } else {
+            keywords.push(current);
+          }
           return keys.push(node.text);
         } else {
           if (keys.length > values.length) {
             return values.push(Node(node.text, [], node.text));
           } else {
-            if (current >= values.length) {
-              return;
-            }
             if (!zh) {
               ss = node.text.split(' ');
               if (ss.length !== 1) {
@@ -301,11 +304,7 @@
               en = node.text;
             }
             if (zh && en) {
-              if (!new RegExp(zh).test(keys[current])) {
-                ++current;
-              }
-              char = Char();
-              values[current].children.push(Node(en, [], en, zh.length === 1
+              keywords[keywords.length - 1][zh] = Node(en, [], en, zh.length === 1
                 ? (char = Char(), $.get("https://www.moedict.tw/~" + zh + ".json", function(moe){
                   var x$;
                   x$ = char;
@@ -338,13 +337,23 @@
                     });
                     return n;
                   }
-                }.call(this))));
+                }.call(this)));
               zh = null;
               return en = null;
             }
           }
         }
       });
+      for (i in keywords) {
+        ks = keywords[i];
+        key = keys[i] + "";
+        value = values[i];
+        re = new RegExp(Object.keys(ks).join('|'));
+        while (r = re.exec(key)) {
+          key = key.replace(r[0], '');
+          value.children.push(ks[r[0]]);
+        }
+      }
       return utils.data = zipObject(keys, values);
     }
   };

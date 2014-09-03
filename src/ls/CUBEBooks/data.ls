@@ -117,12 +117,19 @@ utils =
   buildSyntaxTreeFromNotes: (node) ->
     keys   = []
     values = []
+    keywords = []
     zh = null
     en = null
-    current = 0
     utils.traverse node, (node, parents) ->
       return if not node.text
       if parents.2 isnt 'notes'
+        current = keywords[*-1]
+        if not current or 0 isnt Object.keys current .length
+          keywords.push {}
+        else
+          # use the same container if get another sentence
+          # and keep the length of keywords is the same as keys
+          keywords.push current
         keys.push node.text
       else
         if keys.length > values.length
@@ -131,7 +138,6 @@ utils =
             []
             node.text
         else
-          return if current >= values.length
           if not zh
             ss = node.text.split ' '
             if ss.length isnt 1
@@ -142,9 +148,7 @@ utils =
           else if not en
             en := node.text
           if zh and en
-            ++current if not new RegExp(zh)test keys[current]
-            char = Char!
-            values[current]children.push do
+            keywords[*-1][zh] =
               Node en, [], en,
                 if zh.length is 1
                   char = Char!
@@ -172,6 +176,15 @@ utils =
                     n
             zh := null
             en := null
+    # XXX:  maybe there is a better solution
+    # TODO: deal with punctuation marks
+    for i, ks of keywords
+      key = "#{keys[i]}"
+      value = values[i]
+      re = new RegExp(Object.keys ks .join '|')
+      while r = re.exec key
+        key = key.replace r.0, ''
+        value.children.push ks[r.0]
     utils.data = zipObject keys, values
 
 (this.Data ?= {}) <<< utils
