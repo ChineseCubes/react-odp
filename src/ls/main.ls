@@ -31,13 +31,13 @@ console.log "dpcm: #dpcm"
 #  $ \#audio .get!0
 audio = $ \audio .get!0
 
-data <- Data.getPresentation './json'
+data <- Data.getPresentation './LRRH'
 Data.buildSyntaxTreeFromNotes data
 viewer = React.renderComponent do
   ODP.components.presentation do
     scale: resize dpcm
     data:  data
-    /**/
+    /*
     renderProps: (props) ->
       data  = props.data
       attrs = data.attrs

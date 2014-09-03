@@ -156,7 +156,7 @@
     getPresentation: function(path, done){
       var pages, pageTotal, counter, gotOne, i$, results$ = [];
       pages = [];
-      pageTotal = 8;
+      pageTotal = 13;
       counter = 0;
       gotOne = function(data, i){
         data.attrs.y = i * 21.5 + "cm";

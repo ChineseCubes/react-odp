@@ -28,47 +28,40 @@
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
   audio = $('audio').get()[0];
-  Data.getPresentation('./json', function(data){
+  Data.getPresentation('./LRRH', function(data){
     var viewer;
     Data.buildSyntaxTreeFromNotes(data);
     viewer = React.renderComponent(ODP.components.presentation({
       scale: resize(dpcm),
       data: data
-      /**/,
-      renderProps: function(props){
-        var data, attrs, text;
-        data = props.data;
-        attrs = data.attrs;
-        switch (false) {
-        case !(data.name === 'image' && attrs.name === 'activity'):
-          delete attrs.href;
-          delete attrs.onClick;
-          return ODP.components.image(props, CUBEBooks.AudioControl({
-            element: audio
-          }));
-        case !(data.name === 'span' && data.text):
-          text = props.data.text;
-          delete props.data.text;
-          attrs.onClick = function(){
-            console.log("query " + text);
-            return Data.getSegmentations(text, function(seg){
-              React.renderComponent(CUBEBooks.Sentence({
-                data: seg
-              }), $('#control .content .sentence').get()[0]);
-              return $('#control').modal('show');
-            });
-          };
-          return ODP.components.span(props, ReactVTT.IsolatedCue({
-            target: './json/demo.vtt',
-            match: text,
-            currentTime: function(){
-              return audio.currentTime;
-            }
-          }));
-        default:
-          return ODP.renderProps(props);
-        }
-      }
+      /*
+      renderProps: (props) ->
+        data  = props.data
+        attrs = data.attrs
+        switch
+        | data.name is 'image' and attrs.name is 'activity'
+          delete attrs.href
+          delete attrs.onClick
+          ODP.components.image do
+            props
+            CUBEBooks.AudioControl element: audio
+        | data.name is 'span' and data.text
+          text = props.data.text
+          delete props.data.text
+          attrs.onClick = ->
+            console.log "query #{text}"
+            seg <- Data.getSegmentations text
+            React.renderComponent do
+              CUBEBooks.Sentence data: seg
+              $ '#control .content .sentence' .get!0
+            $ '#control' .modal 'show'
+          ODP.components.span do
+            props
+            ReactVTT.IsolatedCue do
+              target: './json/demo.vtt'
+              match: text
+              currentTime: -> audio.current-time
+        | otherwise => ODP.renderProps props
       /**/
     }), $('#wrap').get()[0]);
     return $(window).resize(function(){
