@@ -1,6 +1,6 @@
 (function(){
-  var isArray, isString, cloneDeep, flatten, max, slice, masterPage, c, Character, o, Node, getSegmentations, utils, ref$, a, div, nav, span, AudioControl, Word, Sentence;
-  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten, max = _.max;
+  var isArray, isString, cloneDeep, flatten, max, zipObject, slice, masterPage, c, Char, o, Node, utils, ref$, a, div, nav, span, AudioControl, Character, Word, Sentence;
+  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten, max = _.max, zipObject = _.zipObject;
   slice = Array.prototype.slice;
   masterPage = {
     children: [
@@ -46,10 +46,10 @@
       }
     ]
   };
-  c = Character = (function(){
-    Character.displayName = 'Character';
-    var prototype = Character.prototype, constructor = Character;
-    function Character(pinyin, zh_TW, zh_CN){
+  c = Char = (function(){
+    Char.displayName = 'Char';
+    var prototype = Char.prototype, constructor = Char;
+    function Char(pinyin, zh_TW, zh_CN){
       var this$ = this instanceof ctor$ ? this : new ctor$;
       this$.pinyin = pinyin;
       this$.zh_TW = zh_TW;
@@ -61,7 +61,7 @@
     prototype.flatten = function(){
       return this;
     };
-    return Character;
+    return Char;
   }());
   o = Node = (function(){
     Node.displayName = 'Node';
@@ -69,7 +69,9 @@
     function Node(en, wordClass, definition, children){
       var this$ = this instanceof ctor$ ? this : new ctor$;
       this$.en = en != null ? en : '';
-      this$.wordClass = wordClass != null ? wordClass : '';
+      this$.wordClass = wordClass != null
+        ? wordClass
+        : [];
       this$.definition = definition != null ? definition : '';
       this$.children = children != null
         ? children
@@ -142,14 +144,6 @@
     };
     return Node;
   }());
-  getSegmentations = function(text, done){
-    var data;
-    data = {
-      '洗手台': o('Washbasin', ['noun'], 'a large bowl or basin used for washing one\'s hands and face', [o('Wash', ['verb'], 'clean with water', [c('xǐ', '洗')]), o('Hand', ['noun'], 'the end part of a person’s arm beyond the wrist, including the palm, fingers, and thumb', [c('shǒu', '手')]), o('Basin', ['noun'], 'a wide open container used for preparing food or for holding liquid', [c('tái', '台')])]),
-      '他點了又冰又甜的冰淇淋。': o('He ordered an icy and sweet ice cream.', ['phase'], 'He ordered an icy and sweet ice cream.', [o('He', ['pronoun'], 'used to refer to a man, boy, or male animal that has already been mentioned or is already known about', [c('tā', '他')]), o('Ordered', ['adjective'], 'well arranged or controlled', [o('Order', ['verb'], 'to ask for food or a drink in a restaurant, bar etc', [c('diǎn', '點', '点')]), o('-ed', ['suffix'], 'forms the regular past tense and past participle of verbs', [c('le', '了')])]), o('Yet', ['adverb'], 'used to emphasize that something is even more than it was before', [c('yòu', '又')]), o('Icy', ['adjective'], 'extremely cold', [c('bīng', '冰')]), o('Yet', ['adverb'], 'used to emphasize that something is even more than it was before', [c('yòu', '又')]), o('Sweet', ['adjective'], 'containing or having a taste like sugar', [o('Sweet', ['noun'], 'a small piece of sweet food made of sugar or chocolate', [c('tián', '甜')]), o('(adj.)', [], '', [c('de', '的')])]), o('Ice Cream', ['noun'], 'a frozen sweet food made of milk, cream, and sugar, with fruit, nuts, chocolate etc sometimes added to it', [o('Icy', ['adjective'], 'extremely cold', [c('bīng', '冰')]), o('Cream', ['noun'], 'used in the names of foods containing cream or something similar to it', [o('', ['noun'], 'name of a river', [c('qí', '淇')]), o('pour', ['verb'], 'to sprinkle', [c('lín', '淋')])])])])
-    };
-    return done(data[text] || o());
-  };
   utils = {
     splitNamespace: function(it){
       var r;
@@ -260,29 +254,64 @@
       }
       return results$;
     },
-    getSegmentations: getSegmentations,
+    getSegmentations: function(text, done){
+      return done(utils.data[text] || Node());
+    },
     buildSyntaxTreeFromNotes: function(node){
-      var keys, values, prevState;
+      var keys, values, zh, en, current;
       keys = [];
       values = [];
-      prevState = null;
+      zh = null;
+      en = null;
+      current = 0;
       utils.traverse(node, function(node, parents){
+        var ss;
         if (!node.text) {
           return;
         }
         if (parents[2] !== 'notes') {
-          keys.push(node.text);
-          return prevState = 'key';
+          return keys.push(node.text);
         } else {
-          if (prevState === 'key') {
-            values.push(Node(node.text, ['unknown'], node.text));
-            if (keys.length === values.length) {
-              return prevState = 'node';
+          if (keys.length > values.length) {
+            return values.push(Node(node.text, [], node.text));
+          } else {
+            if (current >= values.length) {
+              return;
+            }
+            if (!zh) {
+              ss = node.text.split(' ');
+              if (ss.length !== 1) {
+                zh = ss[0];
+                en = ss[1];
+              } else {
+                zh = node.text;
+              }
+            } else if (!en) {
+              en = node.text;
+            }
+            if (zh && en) {
+              if (!new RegExp(zh).test(keys[current])) {
+                ++current;
+              }
+              values[current].children.push(Node(en, [], en, zh.length === 1
+                ? [Char('pinyin', zh + "")]
+                : (function(){
+                  var i$, len$, results$ = [];
+                  for (i$ = 0, len$ = zh.length; i$ < len$; ++i$) {
+                    results$.push((fn$.call(this, zh[i$])));
+                  }
+                  return results$;
+                  function fn$(c){
+                    return Node('', [], '', [Char('pinyin', c)]);
+                  }
+                }.call(this))));
+              zh = null;
+              return en = null;
             }
           }
         }
       });
-      return console.log(keys, values);
+      return utils.data = zipObject(keys, values);
     }
   };
   import$((ref$ = this.Data) != null

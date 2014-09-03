@@ -1,4 +1,4 @@
-{isArray, isString, cloneDeep, flatten, max} = _
+{isArray, isString, cloneDeep, flatten, max, zipObject} = _
 slice = Array::slice
 
 master-page =
@@ -33,11 +33,11 @@ master-page =
             'on-click': -> ...
         ...
 
-c = class Character
+c = class Char
   (@pinyin, @zh_TW, @zh_CN = @zh_TW) ~>
   flatten: -> this
 o = class Node
-  (@en = '', @word-class = '', @definition = '', @children = []) ~>
+  (@en = '', @word-class = [], @definition = '', @children = []) ~>
   flatten: -> flatten <| for child in @children => child.flatten!
   isLeaf:  -> not @children.0.leafs
   leafs:   ->
@@ -51,105 +51,6 @@ o = class Node
     | depth is 0 => [this]
     | otherwise
       flatten <| for child in @children => child.childrenOfDepth depth - 1
-getSegmentations = (text, done)->
-  data =
-    '洗手台':
-      o do
-        'Washbasin'
-        ['noun']
-        'a large bowl or basin used for washing one\'s hands and face'
-        * o do
-            'Wash'
-            ['verb']
-            'clean with water'
-            [c 'xǐ' '洗']
-          o do
-            'Hand'
-            ['noun']
-            'the end part of a person’s arm beyond the wrist, including the palm, fingers, and thumb'
-            [c 'shǒu' '手']
-          o do
-            'Basin'
-            ['noun']
-            'a wide open container used for preparing food or for holding liquid'
-            [c 'tái' '台']
-    '他點了又冰又甜的冰淇淋。':
-      o do
-        'He ordered an icy and sweet ice cream.'
-        ['phase']
-        'He ordered an icy and sweet ice cream.'
-        * o do
-            'He'
-            ['pronoun']
-            'used to refer to a man, boy, or male animal that has already been mentioned or is already known about'
-            [c 'tā' '他']
-          o do
-            'Ordered'
-            ['adjective']
-            'well arranged or controlled'
-            * o do
-                'Order'
-                ['verb']
-                'to ask for food or a drink in a restaurant, bar etc'
-                [c 'diǎn' '點' '点']
-              o do
-                '-ed'
-                ['suffix']
-                'forms the regular past tense and past participle of verbs'
-                [c 'le' '了']
-          o do
-            'Yet'
-            ['adverb']
-            'used to emphasize that something is even more than it was before'
-            [c 'yòu' '又']
-          o do
-            'Icy'
-            ['adjective']
-            'extremely cold'
-            [c 'bīng' '冰']
-          o do
-            'Yet'
-            ['adverb']
-            'used to emphasize that something is even more than it was before'
-            [c 'yòu' '又']
-          o do
-            'Sweet'
-            ['adjective']
-            'containing or having a taste like sugar'
-            * o do
-                'Sweet'
-                ['noun']
-                'a small piece of sweet food made of sugar or chocolate'
-                [c 'tián' '甜']
-              o do
-                '(adj.)'
-                []
-                ''
-                [c 'de' '的']
-          o do
-            'Ice Cream'
-            ['noun']
-            'a frozen sweet food made of milk, cream, and sugar, with fruit, nuts, chocolate etc sometimes added to it'
-            * o do
-                'Icy'
-                ['adjective']
-                'extremely cold'
-                [c 'bīng' '冰']
-              o do
-                'Cream'
-                ['noun']
-                'used in the names of foods containing cream or something similar to it'
-                * o do
-                    ''
-                    ['noun']
-                    'name of a river'
-                    [c 'qí' '淇']
-                  o do
-                    'pour'
-                    ['verb']
-                    'to sprinkle'
-                    [c 'lín' '淋']
-  done(data[text] or o!)
 
 utils =
   splitNamespace: ->
@@ -205,26 +106,48 @@ utils =
       utils.traverse child, onNode, parents.concat [node.name]
   #Character: Character
   #Node: Node
-  getSegmentations: getSegmentations
+  getSegmentations: (text, done)->
+    done(utils.data[text] or Node!)
   buildSyntaxTreeFromNotes: (node) ->
     keys   = []
     values = []
-    prev-state = null
+    zh = null
+    en = null
+    current = 0
     utils.traverse node, (node, parents) ->
       return if not node.text
-      #console.log parents, node.text
       if parents.2 isnt 'notes'
         keys.push node.text
-        prev-state := 'key'
       else
-        if prev-state is 'key'
+        if keys.length > values.length
           values.push Node do
             node.text
-            ['unknown']
+            []
             node.text
-          if keys.length is values.length
-            prev-state := 'node'
-    console.log keys, values
+        else
+          return if current >= values.length
+          if not zh
+            ss = node.text.split ' '
+            if ss.length isnt 1
+              zh := ss.0
+              en := ss.1
+            else
+              zh := node.text
+          else if not en
+            en := node.text
+          if zh and en
+            ++current if not new RegExp(zh)test keys[current]
+            values[current]children.push do
+              Node en, [], en,
+                if zh.length is 1
+                  [Char 'pinyin' "#zh"]
+                else
+                  for let c in zh
+                    Node '', [], '',
+                      [Char 'pinyin' c]
+            zh := null
+            en := null
+    utils.data = zipObject keys, values
 
 (this.Data ?= {}) <<< utils
 
