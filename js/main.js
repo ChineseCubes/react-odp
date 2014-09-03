@@ -50,7 +50,6 @@
           text = props.data.text;
           delete props.data.text;
           attrs.onClick = function(){
-            console.log("query " + text);
             return Data.getSegmentations(text, function(seg){
               React.renderComponent(CUBEBooks.Sentence({
                 data: seg

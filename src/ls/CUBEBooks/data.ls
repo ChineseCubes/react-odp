@@ -1,4 +1,4 @@
-{isArray, isString, cloneDeep, flatten, max, min, zipObject} = _
+{isArray, isString, cloneDeep, flatten, max, min, map, zipObject} = _
 slice = Array::slice
 
 master-page =
@@ -108,12 +108,18 @@ utils =
   #Node: Node
   getSegmentations: (text, done)->
     done(utils.data[text] or Node!)
+  askMoeDict: (ch, done) ->
+    moe <- $.get "https://www.moedict.tw/~#ch.json"
+    tagless = utils.strip
+    done do
+      zh_TW:   tagless moe.title
+      zh_CN:   tagless(moe.heteronyms.0.alt or moe.title)
+      pinyin:  tagless moe.heteronyms.0.pinyin
+      English: tagless(moe.translation.English)split /,\w*?/
   strip: ->
     tmp = document.createElement 'span'
     tmp.innerHTML = it
     tmp.textContent or tmp.innerText or ''
-  shortestDefinition: ->
-    min it.split(','), (.length) .replace 'to ', ''
   buildSyntaxTreeFromNotes: (node) ->
     keys   = []
     values = []
@@ -153,26 +159,21 @@ utils =
                 if zh.length is 1
                   char = Char!
                   do
-                    moe <- $.get "https://www.moedict.tw/~#zh.json"
-                    char
-                      ..zh_TW = utils.strip moe.title
-                      ..zh_CN = utils.strip (moe.heteronyms.0.alt or char.zh_TW)
-                      ..pinyin = utils.strip moe.heteronyms.0.pinyin
+                    moe <- utils.askMoeDict zh
+                    delete moe.English
+                    char <<< moe
                   [char]
                 else
                   for let c in zh
                     char = Char!
                     n = Node '', [], '', [char]
                     do
-                      moe <- $.get "https://www.moedict.tw/~#c.json"
-                      char
-                        ..zh_TW = utils.strip moe.title
-                        ..zh_CN = utils.strip (moe.heteronyms.0.alt or char.zh_TW)
-                        ..pinyin = utils.strip moe.heteronyms.0.pinyin
-                      def = utils.strip moe.translation.English
+                      moe <- utils.askMoeDict c
+                      char <<< moe{zh_TW, zh_CN, pinyin}
+                      def = min moe.English, \length
                       n
-                        ..en = utils.shortestDefinition def
-                        ..definition = def
+                        ..en         = def
+                        ..definition = moe.English.join ', '
                     n
             zh := null
             en := null
