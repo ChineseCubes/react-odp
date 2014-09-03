@@ -199,9 +199,32 @@ utils =
       children: if not node.children then [] else
         for child in node.children
           utils.transform child, onNode, parents.concat [node.name]
+  traverse: (node, onNode = null, parents = []) ->
+    onNode node, parents
+    for child in node.children
+      utils.traverse child, onNode, parents.concat [node.name]
   #Character: Character
   #Node: Node
   getSegmentations: getSegmentations
+  buildSyntaxTreeFromNotes: (node) ->
+    keys   = []
+    values = []
+    prev-state = null
+    utils.traverse node, (node, parents) ->
+      return if not node.text
+      #console.log parents, node.text
+      if parents.2 isnt 'notes'
+        keys.push node.text
+        prev-state := 'key'
+      else
+        if prev-state is 'key'
+          values.push Node do
+            node.text
+            ['unknown']
+            node.text
+          if keys.length is values.length
+            prev-state := 'node'
+    console.log keys, values
 
 (this.Data ?= {}) <<< utils
 

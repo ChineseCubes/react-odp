@@ -30,6 +30,7 @@
   audio = $('audio').get()[0];
   Data.getPresentation('./json', function(data){
     var viewer;
+    Data.buildSyntaxTreeFromNotes(data);
     viewer = React.renderComponent(ODP.components.presentation({
       scale: resize(dpcm),
       data: data

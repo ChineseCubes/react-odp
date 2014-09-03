@@ -249,7 +249,41 @@
           }())
       });
     },
-    getSegmentations: getSegmentations
+    traverse: function(node, onNode, parents){
+      var i$, ref$, len$, child, results$ = [];
+      onNode == null && (onNode = null);
+      parents == null && (parents = []);
+      onNode(node, parents);
+      for (i$ = 0, len$ = (ref$ = node.children).length; i$ < len$; ++i$) {
+        child = ref$[i$];
+        results$.push(utils.traverse(child, onNode, parents.concat([node.name])));
+      }
+      return results$;
+    },
+    getSegmentations: getSegmentations,
+    buildSyntaxTreeFromNotes: function(node){
+      var keys, values, prevState;
+      keys = [];
+      values = [];
+      prevState = null;
+      utils.traverse(node, function(node, parents){
+        if (!node.text) {
+          return;
+        }
+        if (parents[2] !== 'notes') {
+          keys.push(node.text);
+          return prevState = 'key';
+        } else {
+          if (prevState === 'key') {
+            values.push(Node(node.text, ['unknown'], node.text));
+            if (keys.length === values.length) {
+              return prevState = 'node';
+            }
+          }
+        }
+      });
+      return console.log(keys, values);
+    }
   };
   import$((ref$ = this.Data) != null
     ? ref$

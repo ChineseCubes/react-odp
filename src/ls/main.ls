@@ -32,6 +32,7 @@ console.log "dpcm: #dpcm"
 audio = $ \audio .get!0
 
 data <- Data.getPresentation './json'
+Data.buildSyntaxTreeFromNotes data
 viewer = React.renderComponent do
   ODP.components.presentation do
     scale: resize dpcm
