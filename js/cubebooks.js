@@ -305,7 +305,7 @@
                   var x$;
                   x$ = char;
                   x$.zh_TW = utils.strip(moe.title);
-                  x$.zh_CN = utils.strip(moe.heteronyms[0].alt);
+                  x$.zh_CN = utils.strip(moe.heteronyms[0].alt || char.zh_TW);
                   x$.pinyin = utils.strip(moe.heteronyms[0].pinyin);
                   return x$;
                 }), [char])
@@ -323,7 +323,7 @@
                       var x$;
                       x$ = char;
                       x$.zh_TW = utils.strip(moe.title);
-                      x$.zh_CN = utils.strip(moe.heteronyms[0].alt);
+                      x$.zh_CN = utils.strip(moe.heteronyms[0].alt || char.zh_TW);
                       x$.pinyin = utils.strip(moe.heteronyms[0].pinyin);
                       return n.definition = utils.strip(moe.translation.English);
                     });

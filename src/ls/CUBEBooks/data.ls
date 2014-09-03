@@ -150,7 +150,7 @@ utils =
                     moe <- $.get "https://www.moedict.tw/~#zh.json"
                     char
                       ..zh_TW = utils.strip moe.title
-                      ..zh_CN = utils.strip moe.heteronyms.0.alt
+                      ..zh_CN = utils.strip (moe.heteronyms.0.alt or char.zh_TW)
                       ..pinyin = utils.strip moe.heteronyms.0.pinyin
                   [char]
                 else
@@ -161,7 +161,7 @@ utils =
                       moe <- $.get "https://www.moedict.tw/~#c.json"
                       char
                         ..zh_TW = utils.strip moe.title
-                        ..zh_CN = utils.strip moe.heteronyms.0.alt
+                        ..zh_CN = utils.strip (moe.heteronyms.0.alt or char.zh_TW)
                         ..pinyin = utils.strip moe.heteronyms.0.pinyin
                       n.definition = utils.strip moe.translation.English
                     n
