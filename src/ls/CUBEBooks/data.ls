@@ -41,14 +41,14 @@ o = class Node
   flatten: -> flatten <| for child in @children => child.flatten!
   isLeaf:  -> not @children.0.leafs
   leafs:   ->
-    | @isLeaf!  => this
+    | @isLeaf!  => [this]
     | otherwise => flatten <| for child in @children => child.leafs!
   depth:   ->
     | @isLeaf!  => 0
     | otherwise => 1 + (max <| for child in @children => child.depth!)
   childrenOfDepth: (depth) ->
-    | @isLeaf!   => this
-    | depth is 0 => this
+    | @isLeaf!   => [this]
+    | depth is 0 => [this]
     | otherwise
       flatten <| for child in @children => child.childrenOfDepth depth - 1
 getSegmentations = (text, done)->

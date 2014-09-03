@@ -94,7 +94,7 @@
       var child;
       switch (false) {
       case !this.isLeaf():
-        return this;
+        return [this];
       default:
         return flatten((function(){
           var i$, ref$, len$, results$ = [];
@@ -126,9 +126,9 @@
       var child;
       switch (false) {
       case !this.isLeaf():
-        return this;
+        return [this];
       case depth !== 0:
-        return this;
+        return [this];
       default:
         return flatten((function(){
           var i$, ref$, len$, results$ = [];
@@ -346,13 +346,14 @@
       };
     },
     render: function(){
-      var data, cs, c;
+      var data, cs;
       data = this.props.data;
       cs = data.flatten();
       return div({
         className: 'word'
       }, div({
-        className: 'characters'
+        className: 'characters',
+        onClick: this.props.onClick
       }, (function(){
         var i$, results$ = [];
         for (i$ in cs) {
@@ -368,13 +369,83 @@
         }
       }.call(this)), div({
         className: 'meaning'
-      }, data.en)), div({
+      }, data.en)));
+    }
+  });
+  Sentence = React.createClass({
+    DEPTH: {
+      sentence: 0,
+      words: 1,
+      characters: Infinity
+    },
+    displayName: 'CUBE.Sentence',
+    getDefaultProps: function(){
+      return {
+        data: null,
+        mode: 'zh_TW'
+      };
+    },
+    getInitialState: function(){
+      return {
+        focus: null,
+        depth: 0
+      };
+    },
+    componentWillReceiveProps: function(props){
+      if (this.props.data.en !== props.data.en) {
+        return this.setState(this.getInitialState());
+      }
+    },
+    renderDepthButton: function(name){
+      var actived, this$ = this;
+      actived = this.state.depth === this.DEPTH[name];
+      return a({
+        className: "item " + name + " " + (actived ? 'active' : ''),
+        onClick: function(){
+          return this$.setState({
+            depth: this$.DEPTH[name]
+          });
+        }
+      }, name);
+    },
+    toggleDefinition: function(it){
+      return this.setState({
+        focus: it === this.state.focus ? null : it
+      });
+    },
+    render: function(){
+      var data, focus, c;
+      data = this.props.data;
+      return div(null, nav({
+        className: 'navbar'
+      }, div({
+        className: 'ui borderless menu'
+      }, div({
+        className: 'right menu'
+      }, this.renderDepthButton('sentence'), this.renderDepthButton('words'), this.renderDepthButton('characters')))), (function(){
+        var i$, results$ = [];
+        for (i$ in data.childrenOfDepth(this.state.depth)) {
+          results$.push((fn$.call(this, i$, data.childrenOfDepth(this.state.depth)[i$])));
+        }
+        return results$;
+        function fn$(i, word){
+          var this$ = this;
+          return Word({
+            key: i,
+            data: word,
+            mode: this.props.mode,
+            onClick: function(){
+              return this$.toggleDefinition(word);
+            }
+          });
+        }
+      }.call(this)), this.state.focus ? (focus = this.state.focus, div({
         className: 'entry'
       }, span({
         className: 'ui black small label'
       }, (function(){
         var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = cs).length; i$ < len$; ++i$) {
+        for (i$ = 0, len$ = (ref$ = focus.flatten()).length; i$ < len$; ++i$) {
           c = ref$[i$];
           results$.push(c[this.props.mode]);
         }
@@ -383,8 +454,8 @@
         className: 'word-class'
       }, (function(){
         var i$, results$ = [];
-        for (i$ in data.wordClass) {
-          results$.push((fn$.call(this, i$, data.wordClass[i$])));
+        for (i$ in focus.wordClass) {
+          results$.push((fn$.call(this, i$, focus.wordClass[i$])));
         }
         return results$;
         function fn$(i, wc){
@@ -395,91 +466,7 @@
         }
       }.call(this))), span({
         className: 'definition'
-      }, data.definition)));
-    }
-  });
-  Sentence = React.createClass({
-    displayName: 'CUBE.Sentence',
-    getDefaultProps: function(){
-      return {
-        data: null,
-        mode: 'zh_TW'
-      };
-    },
-    getInitialState: function(){
-      return {
-        sentence: 'active',
-        words: '',
-        characters: ''
-      };
-    },
-    render: function(){
-      var data, this$ = this;
-      data = this.props.data;
-      return div(null, nav({
-        className: 'navbar'
-      }, div({
-        className: 'ui borderless menu'
-      }, div({
-        className: 'right menu'
-      }, a({
-        className: "item sentence " + this.state.sentence,
-        onClick: function(){
-          return this$.setState({
-            sentence: 'active',
-            words: '',
-            characters: ''
-          });
-        }
-      }, 'sentence'), a({
-        className: "item words " + this.state.words,
-        onClick: function(){
-          return this$.setState({
-            sentence: '',
-            words: 'active',
-            characters: ''
-          });
-        }
-      }, 'words'), a({
-        className: "item characters " + this.state.characters,
-        onClick: function(){
-          return this$.setState({
-            sentence: '',
-            words: '',
-            characters: 'active'
-          });
-        }
-      }, 'characters')))), this.state.sentence === 'active'
-        ? Word(import$({}, this.props))
-        : this.state.words === 'active'
-          ? (function(){
-            var i$, results$ = [];
-            for (i$ in data.childrenOfDepth(1)) {
-              results$.push((fn$.call(this, i$, data.childrenOfDepth(1)[i$])));
-            }
-            return results$;
-            function fn$(i, word){
-              return Word({
-                key: i,
-                data: word,
-                mode: this.props.mode
-              });
-            }
-          }.call(this))
-          : this.state.characters === 'active' ? (function(){
-            var i$, results$ = [];
-            for (i$ in data.leafs()) {
-              results$.push((fn$.call(this, i$, data.leafs()[i$])));
-            }
-            return results$;
-            function fn$(i, word){
-              return Word({
-                key: i,
-                data: word,
-                mode: this.props.mode
-              });
-            }
-          }.call(this)) : void 8);
+      }, focus.definition))) : void 8);
     }
   });
   import$((ref$ = this.CUBEBooks) != null

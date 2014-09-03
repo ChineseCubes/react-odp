@@ -237,8 +237,6 @@ body {
 #control #playground {
   min-height: 16rem;
   position: relative;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   text-align: center;
   margin-bottom: 3.5rem;
 /*
@@ -294,6 +292,7 @@ body {
 }
 #control #playground .characters {
   position: relative;
+  cursor: pointer;
 }
 #control #playground .character {
   text-align: center;
@@ -388,9 +387,6 @@ body {
   right: 0;
   top: 100%;
   padding: 1rem;
-  background-color: #fff;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   font-size: 1rem;
   text-align: left;
 /*

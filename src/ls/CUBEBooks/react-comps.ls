@@ -65,6 +65,7 @@ Word = React.createClass do
       className: 'word'
       div do
         className: 'characters'
+        onClick: @props.onClick
         for let i, c of cs
           Character do
             key: i
@@ -73,31 +74,30 @@ Word = React.createClass do
         div do
           className: 'meaning'
           data.en
-      div do
-        className: 'entry'
-        span do
-          className: 'ui black small label'
-          (for c in cs => c[@props.mode])join ''
-        span do
-          className: 'word-class'
-          for let i, wc of data.word-class
-            div do
-              key: i
-              className: 'ui small label'
-              wc
-        span do
-          className: 'definition'
-          data.definition
 
 Sentence = React.createClass do
+  DEPTH:
+    sentence:   0
+    words:      1
+    characters: Infinity
   displayName: 'CUBE.Sentence'
   getDefaultProps: ->
     data: null
     mode: 'zh_TW'
   getInitialState: ->
-    sentence:   'active'
-    words:      ''
-    characters: ''
+    focus: null
+    depth: 0
+  componentWillReceiveProps: (props) ->
+    if @props.data.en isnt props.data.en
+      @setState @getInitialState!
+  renderDepthButton: (name) ->
+    actived = @state.depth is @DEPTH[name]
+    a do
+      className: "item #name #{if actived then 'active' else ''}"
+      onClick: ~> @setState depth: @DEPTH[name]
+      name
+  toggleDefinition: ->
+    @setState focus: if it is @state.focus then null else it
   render: ->
     data = @props.data
     div do
@@ -108,45 +108,33 @@ Sentence = React.createClass do
           className: 'ui borderless menu'
           div do
             className: 'right menu'
-            a do
-              className: "item sentence #{@state.sentence}"
-              onClick: ~>
-                @setState do
-                  sentence:   'active'
-                  words:      ''
-                  characters: ''
-              'sentence'
-            a do
-              className: "item words #{@state.words}"
-              onClick: ~>
-                @setState do
-                  sentence:   ''
-                  words:      'active'
-                  characters: ''
-              'words'
-            a do
-              className: "item characters #{@state.characters}"
-              onClick: ~>
-                @setState do
-                  sentence:   ''
-                  words:      ''
-                  characters: 'active'
-              'characters'
-      if @state.sentence is 'active'
-        Word {} <<< @props
-      else if @state.words is 'active'
-        #XXX: who decide the depth?
-        for let i, word of data.childrenOfDepth 1
-          Word do
-            key: i
-            data: word
-            mode: @props.mode
-      else if @state.characters is 'active'
-        for let i, word of data.leafs!
-          Word do
-            key: i
-            data: word
-            mode: @props.mode
+            @renderDepthButton 'sentence'
+            @renderDepthButton 'words'
+            @renderDepthButton 'characters'
+      #XXX: who decide the depth?
+      for let i, word of data.childrenOfDepth @state.depth
+        Word do
+          key: i
+          data: word
+          mode: @props.mode
+          onClick: ~> @toggleDefinition word
+      if @state.focus
+        focus = @state.focus
+        div do
+          className: 'entry'
+          span do
+            className: 'ui black small label'
+            (for c in focus.flatten! => c[@props.mode])join ''
+          span do
+            className: 'word-class'
+            for let i, wc of focus.word-class
+              div do
+                key: i
+                className: 'ui small label'
+                wc
+          span do
+            className: 'definition'
+            focus.definition
 
 (this.CUBEBooks ?= {}) <<< do
   AudioControl: AudioControl
