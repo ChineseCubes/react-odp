@@ -146,7 +146,7 @@
     var data;
     data = {
       '洗手台': o('Washbasin', ['noun'], 'a large bowl or basin used for washing one\'s hands and face', [o('Wash', ['verb'], 'clean with water', [c('xǐ', '洗')]), o('Hand', ['noun'], 'the end part of a person’s arm beyond the wrist, including the palm, fingers, and thumb', [c('shǒu', '手')]), o('Basin', ['noun'], 'a wide open container used for preparing food or for holding liquid', [c('tái', '台')])]),
-      '他點了又冰又甜的冰淇淋。': o('He ordered an icy and sweet ice cream.', ['phase'], 'He ordered an icy and sweet ice cream.', [o('He', ['pronoun'], 'used to refer to a man, boy, or male animal that has already been mentioned or is already known about', [c('tā', '他')]), o('Ordered', ['adjective'], 'well arranged or controlled', [o('Order', ['verb'], 'to ask for food or a drink in a restaurant, bar etc', [c('diǎn', '點')]), o('-ed', ['suffix'], 'forms the regular past tense and past participle of verbs', [c('le', '了')])]), o('Yet', ['adverb'], 'used to emphasize that something is even more than it was before', [c('yòu', '又')]), o('Icy', ['adjective'], 'extremely cold', [c('bīng', '冰')]), o('Yet', ['adverb'], 'used to emphasize that something is even more than it was before', [c('yòu', '又')]), o('Sweet', ['adjective'], 'containing or having a taste like sugar', [o('Sweet', ['noun'], 'a small piece of sweet food made of sugar or chocolate', [c('tián', '甜')]), o('(adj.)', [], '', [c('de', '的')])]), o('Ice Cream', ['noun'], 'a frozen sweet food made of milk, cream, and sugar, with fruit, nuts, chocolate etc sometimes added to it', [o('Icy', ['adjective'], 'extremely cold', [c('bīng', '冰')]), o('Cream', ['noun'], 'used in the names of foods containing cream or something similar to it', [o('', ['noun'], 'name of a river', [c('qí', '淇')]), o('pour', ['verb'], 'to sprinkle', [c('lín', '淋')])])])])
+      '他點了又冰又甜的冰淇淋。': o('He ordered an icy and sweet ice cream.', ['phase'], 'He ordered an icy and sweet ice cream.', [o('He', ['pronoun'], 'used to refer to a man, boy, or male animal that has already been mentioned or is already known about', [c('tā', '他')]), o('Ordered', ['adjective'], 'well arranged or controlled', [o('Order', ['verb'], 'to ask for food or a drink in a restaurant, bar etc', [c('diǎn', '點', '点')]), o('-ed', ['suffix'], 'forms the regular past tense and past participle of verbs', [c('le', '了')])]), o('Yet', ['adverb'], 'used to emphasize that something is even more than it was before', [c('yòu', '又')]), o('Icy', ['adjective'], 'extremely cold', [c('bīng', '冰')]), o('Yet', ['adverb'], 'used to emphasize that something is even more than it was before', [c('yòu', '又')]), o('Sweet', ['adjective'], 'containing or having a taste like sugar', [o('Sweet', ['noun'], 'a small piece of sweet food made of sugar or chocolate', [c('tián', '甜')]), o('(adj.)', [], '', [c('de', '的')])]), o('Ice Cream', ['noun'], 'a frozen sweet food made of milk, cream, and sugar, with fruit, nuts, chocolate etc sometimes added to it', [o('Icy', ['adjective'], 'extremely cold', [c('bīng', '冰')]), o('Cream', ['noun'], 'used in the names of foods containing cream or something similar to it', [o('', ['noun'], 'name of a river', [c('qí', '淇')]), o('pour', ['verb'], 'to sprinkle', [c('lín', '淋')])])])])
     };
     return done(data[text] || o());
   };
@@ -408,6 +408,11 @@
         }
       }, name);
     },
+    toggleMode: function(){
+      return this.setProps({
+        mode: this.props.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
+      });
+    },
     toggleDefinition: function(it){
       return this.setState({
         focus: it === this.state.focus ? null : it
@@ -422,7 +427,10 @@
         className: 'ui borderless menu'
       }, div({
         className: 'right menu'
-      }, this.renderDepthButton('sentence'), this.renderDepthButton('words'), this.renderDepthButton('characters')))), (function(){
+      }, this.renderDepthButton('sentence'), this.renderDepthButton('words'), this.renderDepthButton('characters'), a({
+        className: 'item toggle chinese',
+        onClick: this.toggleMode
+      }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), (function(){
         var i$, results$ = [];
         for (i$ in data.childrenOfDepth(this.state.depth)) {
           results$.push((fn$.call(this, i$, data.childrenOfDepth(this.state.depth)[i$])));

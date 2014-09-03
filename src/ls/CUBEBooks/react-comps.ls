@@ -96,6 +96,8 @@ Sentence = React.createClass do
       className: "item #name #{if actived then 'active' else ''}"
       onClick: ~> @setState depth: @DEPTH[name]
       name
+  toggleMode: ->
+    @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
   toggleDefinition: ->
     @setState focus: if it is @state.focus then null else it
   render: ->
@@ -111,6 +113,10 @@ Sentence = React.createClass do
             @renderDepthButton 'sentence'
             @renderDepthButton 'words'
             @renderDepthButton 'characters'
+            a do
+              className: 'item toggle chinese'
+              onClick: @toggleMode
+              if @props.mode is 'zh_TW' then 'T' else 'S'
       #XXX: who decide the depth?
       for let i, word of data.childrenOfDepth @state.depth
         Word do

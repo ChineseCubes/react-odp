@@ -91,7 +91,7 @@ getSegmentations = (text, done)->
                 'Order'
                 ['verb']
                 'to ask for food or a drink in a restaurant, bar etc'
-                [c 'diǎn' '點']
+                [c 'diǎn' '點' '点']
               o do
                 '-ed'
                 ['suffix']
