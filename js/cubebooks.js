@@ -1,6 +1,6 @@
 (function(){
-  var isArray, isString, cloneDeep, flatten, max, zipObject, slice, masterPage, c, Char, o, Node, utils, ref$, a, div, nav, span, AudioControl, Character, Word, Sentence;
-  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten, max = _.max, zipObject = _.zipObject;
+  var isArray, isString, cloneDeep, flatten, max, min, zipObject, slice, masterPage, c, Char, o, Node, utils, ref$, a, div, nav, span, AudioControl, Character, Word, Sentence;
+  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten, max = _.max, min = _.min, zipObject = _.zipObject;
   slice = Array.prototype.slice;
   masterPage = {
     children: [
@@ -263,6 +263,11 @@
       tmp.innerHTML = it;
       return tmp.textContent || tmp.innerText || '';
     },
+    shortestDefinition: function(it){
+      return min(it.split(','), function(it){
+        return it.length;
+      }).replace('to ', '');
+    },
     buildSyntaxTreeFromNotes: function(node){
       var keys, values, zh, en, current;
       keys = [];
@@ -320,12 +325,16 @@
                     char = Char();
                     n = Node('', [], '', [char]);
                     $.get("https://www.moedict.tw/~" + c + ".json", function(moe){
-                      var x$;
+                      var x$, def, y$;
                       x$ = char;
                       x$.zh_TW = utils.strip(moe.title);
                       x$.zh_CN = utils.strip(moe.heteronyms[0].alt || char.zh_TW);
                       x$.pinyin = utils.strip(moe.heteronyms[0].pinyin);
-                      return n.definition = utils.strip(moe.translation.English);
+                      def = utils.strip(moe.translation.English);
+                      y$ = n;
+                      y$.en = utils.shortestDefinition(def);
+                      y$.definition = def;
+                      return y$;
                     });
                     return n;
                   }

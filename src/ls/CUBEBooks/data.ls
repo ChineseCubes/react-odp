@@ -1,4 +1,4 @@
-{isArray, isString, cloneDeep, flatten, max, zipObject} = _
+{isArray, isString, cloneDeep, flatten, max, min, zipObject} = _
 slice = Array::slice
 
 master-page =
@@ -112,6 +112,8 @@ utils =
     tmp = document.createElement 'span'
     tmp.innerHTML = it
     tmp.textContent or tmp.innerText or ''
+  shortestDefinition: ->
+    min it.split(','), (.length) .replace 'to ', ''
   buildSyntaxTreeFromNotes: (node) ->
     keys   = []
     values = []
@@ -163,7 +165,10 @@ utils =
                         ..zh_TW = utils.strip moe.title
                         ..zh_CN = utils.strip (moe.heteronyms.0.alt or char.zh_TW)
                         ..pinyin = utils.strip moe.heteronyms.0.pinyin
-                      n.definition = utils.strip moe.translation.English
+                      def = utils.strip moe.translation.English
+                      n
+                        ..en = utils.shortestDefinition def
+                        ..definition = def
                     n
             zh := null
             en := null
