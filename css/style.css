@@ -216,7 +216,7 @@ html {
 }
 #control .playground .comp.sentence {
   position: relative;
-  margin: 1rem;
+  margin: 3rem 1rem;
 }
 #control .playground .comp.word {
   position: relative;
@@ -226,6 +226,9 @@ html {
   margin: 0.5rem;
 }
 #control .playground .comp.word .meaning {
+  position: absolute;
+  left: 0;
+  right: 0;
   font-size: 0.9rem;
   min-height: 0.9rem;
   text-align: center;
