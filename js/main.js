@@ -49,7 +49,6 @@
           text = props.data.text
           delete props.data.text
           attrs.onClick = ->
-            console.log "query #{text}"
             seg <- Data.getSegmentations text
             React.renderComponent do
               CUBEBooks.Sentence data: seg

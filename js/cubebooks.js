@@ -1,6 +1,6 @@
 (function(){
-  var isArray, isString, cloneDeep, flatten, max, min, zipObject, slice, masterPage, c, Char, o, Node, utils, ref$, a, div, nav, span, AudioControl, Character, Word, Sentence;
-  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten, max = _.max, min = _.min, zipObject = _.zipObject;
+  var isArray, isString, cloneDeep, flatten, max, min, map, zipObject, slice, masterPage, c, Char, o, Node, utils, ref$, a, div, nav, span, AudioControl, Character, Word, Sentence;
+  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten, max = _.max, min = _.min, map = _.map, zipObject = _.zipObject;
   slice = Array.prototype.slice;
   masterPage = {
     children: [
@@ -257,38 +257,48 @@
     getSegmentations: function(text, done){
       return done(utils.data[text] || Node());
     },
+    askMoeDict: function(ch, done){
+      return $.get("https://www.moedict.tw/~" + ch + ".json", function(moe){
+        var tagless;
+        tagless = utils.strip;
+        return done({
+          zh_TW: tagless(moe.title),
+          zh_CN: tagless(moe.heteronyms[0].alt || moe.title),
+          pinyin: tagless(moe.heteronyms[0].pinyin),
+          English: tagless(moe.translation.English).split(/,\w*?/)
+        });
+      });
+    },
     strip: function(it){
       var tmp;
       tmp = document.createElement('span');
       tmp.innerHTML = it;
       return tmp.textContent || tmp.innerText || '';
     },
-    shortestDefinition: function(it){
-      return min(it.split(','), function(it){
-        return it.length;
-      }).replace('to ', '');
-    },
     buildSyntaxTreeFromNotes: function(node){
-      var keys, values, zh, en, current;
+      var keys, values, keywords, zh, en, i, ks, key, value, re, r;
       keys = [];
       values = [];
+      keywords = [];
       zh = null;
       en = null;
-      current = 0;
       utils.traverse(node, function(node, parents){
-        var ss, char;
+        var current, ss, char;
         if (!node.text) {
           return;
         }
         if (parents[2] !== 'notes') {
+          current = keywords[keywords.length - 1];
+          if (!current || 0 !== Object.keys(current).length) {
+            keywords.push({});
+          } else {
+            keywords.push(current);
+          }
           return keys.push(node.text);
         } else {
           if (keys.length > values.length) {
             return values.push(Node(node.text, [], node.text));
           } else {
-            if (current >= values.length) {
-              return;
-            }
             if (!zh) {
               ss = node.text.split(' ');
               if (ss.length !== 1) {
@@ -301,18 +311,10 @@
               en = node.text;
             }
             if (zh && en) {
-              if (!new RegExp(zh).test(keys[current])) {
-                ++current;
-              }
-              char = Char();
-              values[current].children.push(Node(en, [], en, zh.length === 1
-                ? (char = Char(), $.get("https://www.moedict.tw/~" + zh + ".json", function(moe){
-                  var x$;
-                  x$ = char;
-                  x$.zh_TW = utils.strip(moe.title);
-                  x$.zh_CN = utils.strip(moe.heteronyms[0].alt || char.zh_TW);
-                  x$.pinyin = utils.strip(moe.heteronyms[0].pinyin);
-                  return x$;
+              keywords[keywords.length - 1][zh] = Node(en, [], en, zh.length === 1
+                ? (char = Char(), utils.askMoeDict(zh, function(moe){
+                  delete moe.English;
+                  return import$(char, moe);
                 }), [char])
                 : (function(){
                   var i$, len$, results$ = [];
@@ -324,27 +326,36 @@
                     var char, n;
                     char = Char();
                     n = Node('', [], '', [char]);
-                    $.get("https://www.moedict.tw/~" + c + ".json", function(moe){
-                      var x$, def, y$;
-                      x$ = char;
-                      x$.zh_TW = utils.strip(moe.title);
-                      x$.zh_CN = utils.strip(moe.heteronyms[0].alt || char.zh_TW);
-                      x$.pinyin = utils.strip(moe.heteronyms[0].pinyin);
-                      def = utils.strip(moe.translation.English);
-                      y$ = n;
-                      y$.en = utils.shortestDefinition(def);
-                      y$.definition = def;
-                      return y$;
+                    utils.askMoeDict(c, function(moe){
+                      var def, x$;
+                      char.zh_TW = moe.zh_TW;
+                      char.zh_CN = moe.zh_CN;
+                      char.pinyin = moe.pinyin;
+                      def = min(moe.English, 'length');
+                      x$ = n;
+                      x$.en = def;
+                      x$.definition = moe.English.join(', ');
+                      return x$;
                     });
                     return n;
                   }
-                }.call(this))));
+                }.call(this)));
               zh = null;
               return en = null;
             }
           }
         }
       });
+      for (i in keywords) {
+        ks = keywords[i];
+        key = keys[i] + "";
+        value = values[i];
+        re = new RegExp(Object.keys(ks).join('|'));
+        while (r = re.exec(key)) {
+          key = key.replace(r[0], '');
+          value.children.push(ks[r[0]]);
+        }
+      }
       return utils.data = zipObject(keys, values);
     }
   };
