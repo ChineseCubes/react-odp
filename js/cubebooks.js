@@ -345,7 +345,6 @@
           }
         }
       });
-      console.log(keys, values, keywords);
       if (keys.length !== values.length) {
         console.warn('the translations of sentences are not match');
       }
@@ -440,16 +439,16 @@
       var data;
       data = this.props.data;
       return div({
-        className: 'character'
-      }, this.props.mode === 'zh_TW'
+        className: 'comp character'
+      }, div({
+        className: 'pronounciation'
+      }, data.pinyin), this.props.mode === 'zh_TW'
         ? div({
-          className: 'zh_TW'
+          className: 'char zh_TW'
         }, data.zh_TW)
         : div({
-          className: 'zh_CN'
-        }, data.zh_CN), div({
-        className: 'pronounciation'
-      }, data.pinyin));
+          className: 'char zh_CN'
+        }, data.zh_CN));
     }
   });
   Word = React.createClass({
@@ -465,7 +464,7 @@
       data = this.props.data;
       cs = data.flatten();
       return div({
-        className: 'word'
+        className: 'comp word'
       }, div({
         className: 'characters',
         onClick: this.props.onClick
@@ -482,9 +481,9 @@
             mode: this.props.mode
           });
         }
-      }.call(this)), div({
+      }.call(this))), div({
         className: 'meaning'
-      }, data.en)));
+      }, data.en));
     }
   });
   Sentence = React.createClass({
@@ -536,7 +535,9 @@
     render: function(){
       var data, focus, c;
       data = this.props.data;
-      return div(null, nav({
+      return div({
+        className: 'playground'
+      }, nav({
         className: 'navbar'
       }, div({
         className: 'ui borderless menu'
@@ -545,7 +546,11 @@
       }, this.renderDepthButton('sentence'), this.renderDepthButton('words'), this.renderDepthButton('characters'), a({
         className: 'item toggle chinese',
         onClick: this.toggleMode
-      }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), (function(){
+      }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), div({
+        className: 'comp sentence'
+      }, div({
+        className: 'aligner'
+      }), (function(){
         var i$, results$ = [];
         for (i$ in data.childrenOfDepth(this.state.depth)) {
           results$.push((fn$.call(this, i$, data.childrenOfDepth(this.state.depth)[i$])));
@@ -562,20 +567,22 @@
             }
           });
         }
-      }.call(this)), this.state.focus ? (focus = this.state.focus, div({
+      }.call(this))), div({
         className: 'entry'
-      }, span({
-        className: 'ui black small label'
-      }, (function(){
-        var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = focus.flatten()).length; i$ < len$; ++i$) {
-          c = ref$[i$];
-          results$.push(c[this.props.mode]);
-        }
-        return results$;
-      }.call(this)).join('')), span({
-        className: 'definition'
-      }, focus.definition))) : void 8);
+      }, this.state.focus ? (focus = this.state.focus, [
+        span({
+          className: 'ui black small label'
+        }, (function(){
+          var i$, ref$, len$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = focus.flatten()).length; i$ < len$; ++i$) {
+            c = ref$[i$];
+            results$.push(c[this.props.mode]);
+          }
+          return results$;
+        }.call(this)).join('')), span({
+          className: 'definition'
+        }, focus.definition)
+      ]) : void 8));
     }
   });
   import$((ref$ = this.CUBEBooks) != null

@@ -53,7 +53,7 @@
             return Data.getSegmentations(text, function(seg){
               React.renderComponent(CUBEBooks.Sentence({
                 data: seg
-              }), $('#control .content .sentence').get()[0]);
+              }), $('#control > .content').get()[0]);
               return $('#control').modal('show');
             });
           };

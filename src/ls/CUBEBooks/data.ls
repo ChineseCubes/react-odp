@@ -178,7 +178,6 @@ utils =
             en := null
     # XXX:  maybe there is a better solution
     # TODO: deal with punctuation marks
-    console.log keys, values, keywords
     if keys.length isnt values.length
       console.warn 'the translations of sentences are not match'
     for i, ks of keywords

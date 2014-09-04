@@ -55,7 +55,7 @@ viewer = React.renderComponent do
           seg <- Data.getSegmentations text
           React.renderComponent do
             CUBEBooks.Sentence data: seg
-            $ '#control .content .sentence' .get!0
+            $ '#control > .content' .get!0
           $ '#control' .modal 'show'
         ODP.components.span do
           props
