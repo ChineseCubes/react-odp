@@ -346,10 +346,18 @@
           }
         }
       });
+      console.log(keys, values, keywords);
+      if (keys.length !== values.length) {
+        console.warn('the translations of sentences are not match');
+      }
       for (i in keywords) {
         ks = keywords[i];
         key = keys[i] + "";
         value = values[i];
+        if (!Object.keys(ks).length) {
+          console.warn("segment translations of '" + key + "' are missing");
+          continue;
+        }
         re = new RegExp(Object.keys(ks).join('|'));
         while (r = re.exec(key)) {
           key = key.replace(r[0], '');

@@ -179,9 +179,15 @@ utils =
             en := null
     # XXX:  maybe there is a better solution
     # TODO: deal with punctuation marks
+    console.log keys, values, keywords
+    if keys.length isnt values.length
+      console.warn 'the translations of sentences are not match'
     for i, ks of keywords
       key = "#{keys[i]}"
       value = values[i]
+      if not Object.keys(ks)length
+        console.warn "segment translations of '#key' are missing"
+        continue
       re = new RegExp(Object.keys ks .join '|')
       while r = re.exec key
         key = key.replace r.0, ''
