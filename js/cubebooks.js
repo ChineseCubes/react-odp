@@ -1,6 +1,6 @@
 (function(){
-  var isArray, isString, cloneDeep, flatten, max, min, map, zipObject, slice, masterPage, c, Char, o, Node, utils, ref$, a, div, nav, span, AudioControl, Character, Word, Sentence;
-  isArray = _.isArray, isString = _.isString, cloneDeep = _.cloneDeep, flatten = _.flatten, max = _.max, min = _.min, map = _.map, zipObject = _.zipObject;
+  var isArray, isString, flatten, max, min, map, zipObject, slice, masterPage, c, Char, o, Node, punctuations, utils, ref$, a, div, nav, span, AudioControl, Character, Word, Sentence;
+  isArray = _.isArray, isString = _.isString, flatten = _.flatten, max = _.max, min = _.min, map = _.map, zipObject = _.zipObject;
   slice = Array.prototype.slice;
   masterPage = {
     children: [
@@ -144,6 +144,11 @@
     };
     return Node;
   }());
+  punctuations = {
+    '，': o('', [''], 'comma', [c('', '，')]),
+    '。': o('', [''], 'full stop', [c('', '。')]),
+    '？': o('', [''], 'question mark', [c('', '？')])
+  };
   utils = {
     splitNamespace: function(it){
       var r;
@@ -275,7 +280,7 @@
       return tmp.textContent || tmp.innerText || '';
     },
     buildSyntaxTreeFromNotes: function(node){
-      var keys, values, keywords, zh, en, i, ks, key, value, re, r;
+      var keys, values, keywords, zh, en, i, ks, key, value, reverseSorted, re, r;
       keys = [];
       values = [];
       keywords = [];
@@ -356,13 +361,18 @@
           console.warn("segment translations of '" + key + "' are missing");
           continue;
         }
-        re = new RegExp(Object.keys(ks).join('|'));
+        import$(ks, punctuations);
+        reverseSorted = Object.keys(ks).sort(fn$);
+        re = new RegExp(reverseSorted.join('|'));
         while (r = re.exec(key)) {
           key = key.replace(r[0], '');
           value.children.push(ks[r[0]]);
         }
       }
       return utils.data = zipObject(keys, values);
+      function fn$(a, b){
+        return b.length - a.length;
+      }
     }
   };
   import$((ref$ = this.Data) != null

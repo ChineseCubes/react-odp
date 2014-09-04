@@ -1,4 +1,4 @@
-{isArray, isString, cloneDeep, flatten, max, min, map, zipObject} = _
+{isArray, isString, flatten, max, min, map, zipObject} = _
 slice = Array::slice
 
 master-page =
@@ -51,6 +51,11 @@ o = class Node
     | depth is 0 => [this]
     | otherwise
       flatten <| for child in @children => child.childrenOfDepth depth - 1
+
+punctuations =
+  '，': o '' [''] 'comma' [c '' '，']
+  '。': o '' [''] 'full stop' [c '' '。']
+  '？': o '' [''] 'question mark' [c '' '？']
 
 utils =
   splitNamespace: ->
@@ -186,7 +191,9 @@ utils =
       if not Object.keys(ks)length
         console.warn "segment translations of '#key' are missing"
         continue
-      re = new RegExp(Object.keys ks .join '|')
+      ks <<< punctuations
+      reverse-sorted = Object.keys(ks)sort (a, b) -> b.length - a.length
+      re = new RegExp reverse-sorted.join '|'
       while r = re.exec key
         key = key.replace r.0, ''
         value.children.push ks[r.0]
