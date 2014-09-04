@@ -1,4 +1,4 @@
-{a, div, nav, span} = React.DOM
+{a, div, i, nav, span} = React.DOM
 
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
@@ -63,6 +63,7 @@ Word = React.createClass do
     cs = data.flatten!
     div do
       className: 'comp word'
+      ActionMenu!
       div do
         className: 'characters'
         onClick: @props.onClick
@@ -74,6 +75,25 @@ Word = React.createClass do
       div do
         className: 'meaning'
         data.en
+
+ActionMenu = React.createClass do
+  displayName: 'CUBE.ActionMenu'
+  render: ->
+    div do
+      className: 'actions'
+      div do
+        className: 'menu multiple'
+        div do
+          className: 'ui buttons'
+          div do
+            className: 'ui icon button black listen'
+            i className: 'icon volume up'
+          div do
+            className: 'ui icon button black write'
+            i className: 'icon pencil'
+          div do
+            className: 'ui icon button black split'
+            i className: 'icon cut'
 
 Sentence = React.createClass do
   DEPTH:

@@ -1,3 +1,12 @@
+@import 'nib'
+
+transform(v)
+  -moz-transform v
+  -o-transform v
+  -ms-transform v
+  -webkit-transform v
+  transform v
+
 #control
   font-family "Noto Sans", "Noto Sans T Chinese", "微軟正黑體", sans-serif
   .content
@@ -28,6 +37,7 @@
         position relative
         margin 1rem
       &.word
+        position relative
         cursor pointer
         display inline-block
         vertical-align middle
@@ -38,6 +48,34 @@
           font-size 0.9rem
           text-align center
           color rgba(#000,1)
+        .actions
+          display none
+          position absolute
+          top -3.5rem
+          left 50%
+          text-align center
+          padding 0
+          .menu
+            background-color #666
+            border-radius 0.3rem
+            &.single
+              width 6rem
+              margin-left -3rem
+            &.multiple
+              width 9rem
+              margin-left -4.5rem
+            &:before
+              position absolute
+              left -0.5rem
+              bottom -0.5rem
+              content ""
+              width  1rem
+              height 1rem
+              background-color #666
+              transform rotate(45deg)
+            .buttons
+              position relative
+              z-index 3
       &.characters
         display inline-block
         position relative
@@ -69,32 +107,6 @@
     .word
       .characters
         cursor pointer
-      .actions
-        display none
-        position absolute
-        top -3.5rem
-        left 50%
-        .menu
-          background-color #666
-          border-radius 0.3rem
-          &.single
-            width 6rem
-            margin-left -3rem
-          &.multiple
-            width 9rem
-            margin-left -4.5rem
-          &:before
-            position absolute
-            left -0.4rem
-            bottom -0.5rem
-            content ""
-            width  1rem
-            height 1rem
-            background-color #666
-            transform rotate(45deg)
-          .buttons
-            position relative
-            z-index 3
 
 
   #subject

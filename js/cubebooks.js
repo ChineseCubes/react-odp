@@ -1,5 +1,5 @@
 (function(){
-  var isArray, isString, flatten, max, min, map, zipObject, slice, masterPage, c, Char, o, Node, punctuations, utils, ref$, a, div, nav, span, AudioControl, Character, Word, Sentence;
+  var isArray, isString, flatten, max, min, map, zipObject, slice, masterPage, c, Char, o, Node, punctuations, utils, ref$, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, Sentence;
   isArray = _.isArray, isString = _.isString, flatten = _.flatten, max = _.max, min = _.min, map = _.map, zipObject = _.zipObject;
   slice = Array.prototype.slice;
   masterPage = {
@@ -378,7 +378,7 @@
   import$((ref$ = this.Data) != null
     ? ref$
     : this.Data = {}, utils);
-  ref$ = React.DOM, a = ref$.a, div = ref$.div, nav = ref$.nav, span = ref$.span;
+  ref$ = React.DOM, a = ref$.a, div = ref$.div, i = ref$.i, nav = ref$.nav, span = ref$.span;
   AudioControl = React.createClass({
     displayName: 'CUBEBooks.AudioControl',
     getDefaultProps: function(){
@@ -475,7 +475,7 @@
       cs = data.flatten();
       return div({
         className: 'comp word'
-      }, div({
+      }, ActionMenu(), div({
         className: 'characters',
         onClick: this.props.onClick
       }, (function(){
@@ -494,6 +494,30 @@
       }.call(this))), div({
         className: 'meaning'
       }, data.en));
+    }
+  });
+  ActionMenu = React.createClass({
+    displayName: 'CUBE.ActionMenu',
+    render: function(){
+      return div({
+        className: 'actions'
+      }, div({
+        className: 'menu multiple'
+      }, div({
+        className: 'ui buttons'
+      }, div({
+        className: 'ui icon button black listen'
+      }, i({
+        className: 'icon volume up'
+      })), div({
+        className: 'ui icon button black write'
+      }, i({
+        className: 'icon pencil'
+      })), div({
+        className: 'ui icon button black split'
+      }, i({
+        className: 'icon cut'
+      })))));
     }
   });
   Sentence = React.createClass({
