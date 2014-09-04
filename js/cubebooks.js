@@ -581,7 +581,7 @@
         className: 'entry'
       }, this.state.focus ? (focus = this.state.focus, [
         span({
-          className: 'ui black small label'
+          className: 'ui black label'
         }, (function(){
           var i$, ref$, len$, results$ = [];
           for (i$ = 0, len$ = (ref$ = focus.flatten()).length; i$ < len$; ++i$) {
