@@ -57,9 +57,8 @@ utils =
     r = it.toLowerCase!split(':')reverse!
     namespace: r.1
     name:      r.0
-  getPresentation: (path, done) ->
+  getPresentation: (path, page-total, done) ->
     pages = []
-    page-total = 13
     counter = 0
     got-one = (data, i) ->
       data.attrs.y = "#{i * 21.5}cm"

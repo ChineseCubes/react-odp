@@ -153,10 +153,9 @@
         name: r[0]
       };
     },
-    getPresentation: function(path, done){
-      var pages, pageTotal, counter, gotOne, i$, results$ = [];
+    getPresentation: function(path, pageTotal, done){
+      var pages, counter, gotOne, i$, results$ = [];
       pages = [];
-      pageTotal = 13;
       counter = 0;
       gotOne = function(data, i){
         data.attrs.y = i * 21.5 + "cm";
