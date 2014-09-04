@@ -43,6 +43,7 @@ Character = React.createClass do
       className: 'comp character'
       div do
         className: 'pronounciation'
+        style: display: \none
         data.pinyin
       if @props.mode is 'zh_TW'
         div do
@@ -74,6 +75,7 @@ Word = React.createClass do
             mode: @props.mode
       div do
         className: 'meaning'
+        style: display: \none
         data.en
 
 ActionMenu = React.createClass do
@@ -126,8 +128,19 @@ Sentence = React.createClass do
       className: 'playground'
       nav do
         className: 'navbar'
+        style: display: \none
         div do
           className: 'ui borderless menu'
+          div do
+            className: 'left menu'
+            a do
+              className: 'item toggle chinese'
+              onClick: -> $('.pronounciation').toggle!
+              \Pinyin
+            a do
+              className: 'item toggle chinese'
+              onClick: -> $('.meaning').toggle!
+              \English
           div do
             className: 'right menu'
             @renderDepthButton 'sentence'

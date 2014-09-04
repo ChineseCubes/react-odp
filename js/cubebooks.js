@@ -451,7 +451,10 @@
       return div({
         className: 'comp character'
       }, div({
-        className: 'pronounciation'
+        className: 'pronounciation',
+        style: {
+          display: 'none'
+        }
       }, data.pinyin), this.props.mode === 'zh_TW'
         ? div({
           className: 'char zh_TW'
@@ -492,7 +495,10 @@
           });
         }
       }.call(this))), div({
-        className: 'meaning'
+        className: 'meaning',
+        style: {
+          display: 'none'
+        }
       }, data.en));
     }
   });
@@ -572,10 +578,25 @@
       return div({
         className: 'playground'
       }, nav({
-        className: 'navbar'
+        className: 'navbar',
+        style: {
+          display: 'none'
+        }
       }, div({
         className: 'ui borderless menu'
       }, div({
+        className: 'left menu'
+      }, a({
+        className: 'item toggle chinese',
+        onClick: function(){
+          return $('.pronounciation').toggle();
+        }
+      }, 'Pinyin'), a({
+        className: 'item toggle chinese',
+        onClick: function(){
+          return $('.meaning').toggle();
+        }
+      }, 'English')), div({
         className: 'right menu'
       }, this.renderDepthButton('sentence'), this.renderDepthButton('words'), this.renderDepthButton('characters'), a({
         className: 'item toggle chinese',
