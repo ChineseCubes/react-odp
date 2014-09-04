@@ -9,6 +9,10 @@ transform(v)
 
 #control
   font-family "Noto Sans", "Noto Sans T Chinese", "Noto Sans S Chinese", "微軟正黑體", sans-serif
+  .header
+    .settings.icon
+      float right
+      cursor pointer
   .content
     padding 0
     border-bottom-left-radius  5px
@@ -17,6 +21,11 @@ transform(v)
     font-size 120%
     text-align center
     .navbar
+      position absolute
+      overflow hidden
+      left  0
+      top   1px
+      right 0
       .menu
         border-radius 0
     .entry
@@ -35,7 +44,8 @@ transform(v)
     .comp
       &.sentence
         position relative
-        margin 3rem 1rem
+        margin-bottom 0.9rem // match the height of meaning
+        padding 3rem 1rem
       &.word
         position relative
         cursor pointer

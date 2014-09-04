@@ -25,11 +25,13 @@ dots = React.renderComponent do
 dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
-# audio for testing
-#audio-control = React.renderComponent do
-#  CUBEBooks.AudioControl!
-#  $ \#audio .get!0
 audio = $ \audio .get!0
+
+sentence = null
+React.renderComponent do
+  CUBEBooks.SettingsButton do
+    onClick: -> sentence?toggleSettings!
+  $ '#settings' .get!0
 
 data <- Data.getPresentation './json' 8
 Data.buildSyntaxTreeFromNotes data
@@ -53,7 +55,7 @@ viewer = React.renderComponent do
         delete props.data.text
         attrs.onClick = ->
           seg <- Data.getSegmentations text
-          React.renderComponent do
+          sentence := React.renderComponent do
             CUBEBooks.Sentence data: seg
             $ '#control > .content' .get!0
           $ '#control' .modal 'show'

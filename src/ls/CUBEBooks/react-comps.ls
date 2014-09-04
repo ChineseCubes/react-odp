@@ -99,6 +99,11 @@ ActionMenu = React.createClass do
             className: 'ui icon button black split'
             i className: 'icon cut'
 
+SettingsButton = React.createClass do
+  displayName: 'CUBE.SettingsButton'
+  render: ->
+    @transferPropsTo i className: 'settings icon'
+
 Sentence = React.createClass do
   DEPTH:
     sentence:   0
@@ -111,11 +116,14 @@ Sentence = React.createClass do
     pinyin: false
     meaning: false
   getInitialState: ->
+    pinyin: @props.pinyin
+    meaning: @props.meaning
     focus: null
     depth: 0
   componentWillReceiveProps: (props) ->
     if @props.data.en isnt props.data.en
-      @setState @getInitialState!
+      @setState @getInitialState!{focus, depth}
+      $(@refs.settings.getDOMNode!)height 0
   renderDepthButton: (name) ->
     actived = @state.depth is @DEPTH[name]
     a do
@@ -126,24 +134,40 @@ Sentence = React.createClass do
     @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
   toggleDefinition: ->
     @setState focus: if it is @state.focus then null else it
+  toggleSettings: ->
+    $settings = $ @refs.settings.getDOMNode!
+    $settings.animate height: if $settings.height! isnt 0 then 0 else 48
   render: ->
     data = @props.data
     div do
       className: 'playground'
+      div do
+        className: 'comp sentence'
+        div className: 'aligner'
+        #XXX: who decide the depth?
+        for let i, word of data.childrenOfDepth @state.depth
+          Word do
+            key: i
+            data: word
+            mode: @props.mode
+            pinyin: @state.pinyin
+            meaning: @state.meaning
+            onClick: ~> @toggleDefinition word
       nav do
+        ref: 'settings'
         className: 'navbar'
-        style: display: \none
+        style: height: 0
         div do
           className: 'ui borderless menu'
           div do
             className: 'left menu'
             a do
-              className: 'item toggle chinese'
-              onClick: ~> @setProps pinyin: !@props.pinyin
+              className: "item toggle chinese #{if @state.pinyin then \active else ''}"
+              onClick: ~> @setState pinyin: !@state.pinyin
               \Pinyin
             a do
-              className: 'item toggle chinese'
-              onClick: ~> @setProps meaning: !@props.meaning
+              className: "item toggle chinese #{if @state.meaning then \active else ''}"
+              onClick: ~> @setState meaning: !@state.meaning
               \English
           div do
             className: 'right menu'
@@ -154,18 +178,6 @@ Sentence = React.createClass do
               className: 'item toggle chinese'
               onClick: @toggleMode
               if @props.mode is 'zh_TW' then 'T' else 'S'
-      div do
-        className: 'comp sentence'
-        div className: 'aligner'
-        #XXX: who decide the depth?
-        for let i, word of data.childrenOfDepth @state.depth
-          Word do
-            key: i
-            data: word
-            mode: @props.mode
-            pinyin: @props.pinyin
-            meaning: @props.meaning
-            onClick: ~> @toggleDefinition word
       div do
         className: 'entry'
         if @state.focus
@@ -187,6 +199,7 @@ Sentence = React.createClass do
 
 (this.CUBEBooks ?= {}) <<< do
   AudioControl: AudioControl
+  SettingsButton: SettingsButton
   Character: Character
   Word: Word
   Sentence: Sentence

@@ -185,6 +185,10 @@ html {
 #control {
   font-family: "Noto Sans", "Noto Sans T Chinese", "Noto Sans S Chinese", "微軟正黑體", sans-serif;
 }
+#control .header .settings.icon {
+  float: right;
+  cursor: pointer;
+}
 #control .content {
   padding: 0;
   border-bottom-left-radius: 5px;
@@ -193,6 +197,13 @@ html {
 #control .playground {
   font-size: 120%;
   text-align: center;
+}
+#control .playground .navbar {
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  top: 1px;
+  right: 0;
 }
 #control .playground .navbar .menu {
   -webkit-border-radius: 0;
@@ -216,7 +227,8 @@ html {
 }
 #control .playground .comp.sentence {
   position: relative;
-  margin: 3rem 1rem;
+  margin-bottom: 0.9rem;
+  padding: 3rem 1rem;
 }
 #control .playground .comp.word {
   position: relative;

@@ -1,5 +1,5 @@
 (function(){
-  var isArray, isString, flatten, max, min, map, zipObject, slice, masterPage, c, Char, o, Node, punctuations, utils, ref$, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, Sentence;
+  var isArray, isString, flatten, max, min, map, zipObject, slice, masterPage, c, Char, o, Node, punctuations, utils, ref$, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Sentence;
   isArray = _.isArray, isString = _.isString, flatten = _.flatten, max = _.max, min = _.min, map = _.map, zipObject = _.zipObject;
   slice = Array.prototype.slice;
   masterPage = {
@@ -524,6 +524,14 @@
       })))));
     }
   });
+  SettingsButton = React.createClass({
+    displayName: 'CUBE.SettingsButton',
+    render: function(){
+      return this.transferPropsTo(i({
+        className: 'settings icon'
+      }));
+    }
+  });
   Sentence = React.createClass({
     DEPTH: {
       sentence: 0,
@@ -541,13 +549,20 @@
     },
     getInitialState: function(){
       return {
+        pinyin: this.props.pinyin,
+        meaning: this.props.meaning,
         focus: null,
         depth: 0
       };
     },
     componentWillReceiveProps: function(props){
+      var ref$;
       if (this.props.data.en !== props.data.en) {
-        return this.setState(this.getInitialState());
+        this.setState({
+          focus: (ref$ = this.getInitialState()).focus,
+          depth: ref$.depth
+        });
+        return $(this.refs.settings.getDOMNode()).height(0);
       }
     },
     renderDepthButton: function(name){
@@ -572,40 +587,19 @@
         focus: it === this.state.focus ? null : it
       });
     },
+    toggleSettings: function(){
+      var $settings;
+      $settings = $(this.refs.settings.getDOMNode());
+      return $settings.animate({
+        height: $settings.height() !== 0 ? 0 : 48
+      });
+    },
     render: function(){
       var data, focus, c, this$ = this;
       data = this.props.data;
       return div({
         className: 'playground'
-      }, nav({
-        className: 'navbar',
-        style: {
-          display: 'none'
-        }
       }, div({
-        className: 'ui borderless menu'
-      }, div({
-        className: 'left menu'
-      }, a({
-        className: 'item toggle chinese',
-        onClick: function(){
-          return this$.setProps({
-            pinyin: !this$.props.pinyin
-          });
-        }
-      }, 'Pinyin'), a({
-        className: 'item toggle chinese',
-        onClick: function(){
-          return this$.setProps({
-            meaning: !this$.props.meaning
-          });
-        }
-      }, 'English')), div({
-        className: 'right menu'
-      }, this.renderDepthButton('sentence'), this.renderDepthButton('words'), this.renderDepthButton('characters'), a({
-        className: 'item toggle chinese',
-        onClick: this.toggleMode
-      }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), div({
         className: 'comp sentence'
       }, div({
         className: 'aligner'
@@ -621,14 +615,43 @@
             key: i,
             data: word,
             mode: this.props.mode,
-            pinyin: this.props.pinyin,
-            meaning: this.props.meaning,
+            pinyin: this.state.pinyin,
+            meaning: this.state.meaning,
             onClick: function(){
               return this$.toggleDefinition(word);
             }
           });
         }
-      }.call(this))), div({
+      }.call(this))), nav({
+        ref: 'settings',
+        className: 'navbar',
+        style: {
+          height: 0
+        }
+      }, div({
+        className: 'ui borderless menu'
+      }, div({
+        className: 'left menu'
+      }, a({
+        className: "item toggle chinese " + (this.state.pinyin ? 'active' : ''),
+        onClick: function(){
+          return this$.setState({
+            pinyin: !this$.state.pinyin
+          });
+        }
+      }, 'Pinyin'), a({
+        className: "item toggle chinese " + (this.state.meaning ? 'active' : ''),
+        onClick: function(){
+          return this$.setState({
+            meaning: !this$.state.meaning
+          });
+        }
+      }, 'English')), div({
+        className: 'right menu'
+      }, this.renderDepthButton('sentence'), this.renderDepthButton('words'), this.renderDepthButton('characters'), a({
+        className: 'item toggle chinese',
+        onClick: this.toggleMode
+      }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), div({
         className: 'entry'
       }, this.state.focus ? (focus = this.state.focus, [
         span({
@@ -650,6 +673,7 @@
     ? ref$
     : this.CUBEBooks = {}, {
     AudioControl: AudioControl,
+    SettingsButton: SettingsButton,
     Character: Character,
     Word: Word,
     Sentence: Sentence

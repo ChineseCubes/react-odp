@@ -1,5 +1,5 @@
 (function(){
-  var config, resize, dots, dpcm, audio;
+  var config, resize, dots, dpcm, audio, sentence;
   config = {
     pageSetup: {
       ratio: 4 / 3,
@@ -28,6 +28,12 @@
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
   audio = $('audio').get()[0];
+  sentence = null;
+  React.renderComponent(CUBEBooks.SettingsButton({
+    onClick: function(){
+      return sentence != null ? sentence.toggleSettings() : void 8;
+    }
+  }), $('#settings').get()[0]);
   Data.getPresentation('./json', 8, function(data){
     var viewer;
     Data.buildSyntaxTreeFromNotes(data);
@@ -51,7 +57,7 @@
           delete props.data.text;
           attrs.onClick = function(){
             return Data.getSegmentations(text, function(seg){
-              React.renderComponent(CUBEBooks.Sentence({
+              sentence = React.renderComponent(CUBEBooks.Sentence({
                 data: seg
               }), $('#control > .content').get()[0]);
               return $('#control').modal('show');
