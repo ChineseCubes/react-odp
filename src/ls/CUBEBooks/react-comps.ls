@@ -37,14 +37,14 @@ Character = React.createClass do
   getDefaultProps: ->
     data: null
     mode: 'zh_TW'
+    pinyin: false
   render: ->
     data = @props.data
     div do
       className: 'comp character'
       div do
         className: 'pronounciation'
-        style: display: \none
-        data.pinyin
+        if @props.pinyin then data.pinyin else ''
       if @props.mode is 'zh_TW'
         div do
           className: 'char zh_TW'
@@ -59,6 +59,8 @@ Word = React.createClass do
   getDefaultProps: ->
     data: null
     mode: 'zh_TW'
+    pinyin: false
+    meaning: false
   render: ->
     data = @props.data
     cs = data.flatten!
@@ -73,10 +75,10 @@ Word = React.createClass do
             key: i
             data: c
             mode: @props.mode
+            pinyin: @props.pinyin
       div do
         className: 'meaning'
-        style: display: \none
-        data.en
+        if @props.meaning then data.en else ''
 
 ActionMenu = React.createClass do
   displayName: 'CUBE.ActionMenu'
@@ -106,6 +108,8 @@ Sentence = React.createClass do
   getDefaultProps: ->
     data: null
     mode: 'zh_TW'
+    pinyin: false
+    meaning: false
   getInitialState: ->
     focus: null
     depth: 0
@@ -135,11 +139,11 @@ Sentence = React.createClass do
             className: 'left menu'
             a do
               className: 'item toggle chinese'
-              onClick: -> $('.pronounciation').toggle!
+              onClick: ~> @setProps pinyin: !@props.pinyin
               \Pinyin
             a do
               className: 'item toggle chinese'
-              onClick: -> $('.meaning').toggle!
+              onClick: ~> @setProps meaning: !@props.meaning
               \English
           div do
             className: 'right menu'
@@ -159,6 +163,8 @@ Sentence = React.createClass do
             key: i
             data: word
             mode: @props.mode
+            pinyin: @props.pinyin
+            meaning: @props.meaning
             onClick: ~> @toggleDefinition word
       div do
         className: 'entry'

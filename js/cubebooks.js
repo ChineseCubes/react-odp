@@ -442,7 +442,8 @@
     getDefaultProps: function(){
       return {
         data: null,
-        mode: 'zh_TW'
+        mode: 'zh_TW',
+        pinyin: false
       };
     },
     render: function(){
@@ -451,11 +452,8 @@
       return div({
         className: 'comp character'
       }, div({
-        className: 'pronounciation',
-        style: {
-          display: 'none'
-        }
-      }, data.pinyin), this.props.mode === 'zh_TW'
+        className: 'pronounciation'
+      }, this.props.pinyin ? data.pinyin : ''), this.props.mode === 'zh_TW'
         ? div({
           className: 'char zh_TW'
         }, data.zh_TW)
@@ -469,7 +467,9 @@
     getDefaultProps: function(){
       return {
         data: null,
-        mode: 'zh_TW'
+        mode: 'zh_TW',
+        pinyin: false,
+        meaning: false
       };
     },
     render: function(){
@@ -491,15 +491,13 @@
           return Character({
             key: i,
             data: c,
-            mode: this.props.mode
+            mode: this.props.mode,
+            pinyin: this.props.pinyin
           });
         }
       }.call(this))), div({
-        className: 'meaning',
-        style: {
-          display: 'none'
-        }
-      }, data.en));
+        className: 'meaning'
+      }, this.props.meaning ? data.en : ''));
     }
   });
   ActionMenu = React.createClass({
@@ -536,7 +534,9 @@
     getDefaultProps: function(){
       return {
         data: null,
-        mode: 'zh_TW'
+        mode: 'zh_TW',
+        pinyin: false,
+        meaning: false
       };
     },
     getInitialState: function(){
@@ -573,7 +573,7 @@
       });
     },
     render: function(){
-      var data, focus, c;
+      var data, focus, c, this$ = this;
       data = this.props.data;
       return div({
         className: 'playground'
@@ -589,12 +589,16 @@
       }, a({
         className: 'item toggle chinese',
         onClick: function(){
-          return $('.pronounciation').toggle();
+          return this$.setProps({
+            pinyin: !this$.props.pinyin
+          });
         }
       }, 'Pinyin'), a({
         className: 'item toggle chinese',
         onClick: function(){
-          return $('.meaning').toggle();
+          return this$.setProps({
+            meaning: !this$.props.meaning
+          });
         }
       }, 'English')), div({
         className: 'right menu'
@@ -617,6 +621,8 @@
             key: i,
             data: word,
             mode: this.props.mode,
+            pinyin: this.props.pinyin,
+            meaning: this.props.meaning,
             onClick: function(){
               return this$.toggleDefinition(word);
             }

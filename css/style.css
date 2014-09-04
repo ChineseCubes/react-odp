@@ -227,6 +227,7 @@ html {
 }
 #control .playground .comp.word .meaning {
   font-size: 0.9rem;
+  min-height: 0.9rem;
   text-align: center;
   color: #000;
 }
@@ -292,6 +293,7 @@ html {
 #control .playground .comp.character .pronounciation {
   font-weight: normal;
   font-size: 0.75rem;
+  min-height: 0.75rem;
   font-family: "American Typewriter", monospace;
   text-align: center;
   color: rgba(0,0,0,0.5);
