@@ -339,3 +339,7 @@ html {
 .audio-control.playing {
   background-image: url("../json/Pictures/pause.png");
 }
+@font-face {
+  font-family: 'cwTeX Q KaiZH';
+  src: url("../fonts/cwTeX-Q-KaiZH-subset.ttf");
+}
