@@ -569,6 +569,7 @@
       return a({
         className: "item " + name + " " + (actived ? 'active' : ''),
         onClick: function(){
+          this$.focus(null);
           return this$.setState({
             depth: this$.DEPTH[name]
           });
@@ -581,8 +582,20 @@
       });
     },
     focus: function(it){
+      var ref$, comp;
+      if ((ref$ = this.state.focus) != null) {
+        ref$.setState({
+          menu: false
+        });
+      }
+      comp = it === this.state.focus ? null : it;
+      if (comp != null) {
+        comp.setState({
+          menu: true
+        });
+      }
       return this.setState({
-        focus: it === this.state.focus ? null : it
+        focus: comp
       });
     },
     toggleSettings: function(){
@@ -617,17 +630,7 @@
             pinyin: this.state.pinyin,
             meaning: this.state.meaning,
             onClick: function(){
-              var k, ref$, comp, own$ = {}.hasOwnProperty;
-              for (k in ref$ = this$.refs) if (own$.call(ref$, k)) {
-                comp = ref$[k];
-                if (!isNaN(+k)) {
-                  console.log(k === i);
-                  comp.setState({
-                    menu: k === i ? !comp.state.menu : false
-                  });
-                }
-              }
-              return this$.focus(word);
+              return this$.focus(this$.refs[i]);
             }
           });
         }
@@ -662,7 +665,7 @@
         onClick: this.toggleMode
       }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), div({
         className: 'entry'
-      }, this.state.focus ? (focus = this.state.focus, [
+      }, this.state.focus ? (focus = this.state.focus.props.data, [
         span({
           className: 'ui black label'
         }, (function(){

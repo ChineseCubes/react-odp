@@ -131,12 +131,17 @@ Sentence = React.createClass do
     actived = @state.depth is @DEPTH[name]
     a do
       className: "item #name #{if actived then 'active' else ''}"
-      onClick: ~> @setState depth: @DEPTH[name]
+      onClick: ~>
+        @focus null
+        @setState depth: @DEPTH[name]
       name
   toggleMode: ->
     @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
   focus: ->
-    @setState focus: if it is @state.focus then null else it
+    @state.focus?setState menu: off
+    comp = if it is @state.focus then null else it
+    comp?setState menu: on
+    @setState focus: comp
   toggleSettings: ->
     $settings = $ @refs.settings.getDOMNode!
     $settings.animate height: if $settings.height! isnt 0 then 0 else 48
@@ -156,11 +161,7 @@ Sentence = React.createClass do
             mode: @props.mode
             pinyin: @state.pinyin
             meaning: @state.meaning
-            onClick: ~>
-              for own k, comp of @refs | not isNaN +k
-                console.log k is i
-                comp.setState menu: if k is i then not comp.state.menu else off
-              @focus word
+            onClick: ~> @focus @refs[i]
       nav do
         ref: 'settings'
         className: 'navbar'
@@ -189,7 +190,7 @@ Sentence = React.createClass do
       div do
         className: 'entry'
         if @state.focus
-          focus = @state.focus
+          focus = @state.focus.props.data
           * span do
               className: 'ui black label'
               (for c in focus.flatten! => c[@props.mode])join ''
