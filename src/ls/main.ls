@@ -1,13 +1,18 @@
-config =
-  # FIXME: office:automatic-styles > style:page-layout
+config = path: './demo'
+
+{attrs} <- $.get "#{config.path}/masterpage.json"
+width  = parseInt attrs['FO:PAGE-WIDTH'], 10
+height = parseInt attrs['FO:PAGE-HEIGHT'], 10
+orientation = attrs['STYLE:PRING-ORIENTATION']
+ratio = if orientation is \landscape then width / height else height / width
+config <<< do
   page-setup:
-    ratio:  4 / 3
+    ratio:  ratio
     x:      0cm
     y:      0cm
-    width:  28cm
-    height: 21cm
-    page-number: 8
-  path: './demo'
+    width:  width
+    height: height
+    total-pages: attrs['TOTAL-PAGES']
 
 resize = (dpcm) ->
   ratio     = config.page-setup.ratio
@@ -41,7 +46,7 @@ settings-button = React.renderComponent do
   CUBEBooks.SettingsButton!
   $ '#settings' .get!0
 
-data <- Data.getPresentation config.path, config.page-setup.page-number
+data <- Data.getPresentation config.path, config.page-setup.total-pages
 Data.buildSyntaxTreeFromNotes data
 viewer = React.renderComponent do
   ODP.components.presentation do
