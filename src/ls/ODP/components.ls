@@ -71,7 +71,6 @@ DrawMixin =
     style = mapValues style, @scaleStyle
     # TODO:
     #style = mapValues style, (v, k) ~> v?split(/\s+/)map(~> @scaleStyle it, k)join ' '
-    console.log style
     style <<< background-image: "url(#{attrs.href})" if attrs.href
     props =
       className: "#{data.namespace} #{data.name}"

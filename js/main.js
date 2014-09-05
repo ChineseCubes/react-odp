@@ -4,7 +4,7 @@
     path: './demo'
   };
   $.get(config.path + "/masterpage.json", function(arg$){
-    var attrs, width, height, orientation, ratio, resize, dots, dpcm, audio, stroke, settingsButton;
+    var attrs, width, height, orientation, ratio, resize, dots, dpcm, audio, settingsButton;
     attrs = arg$.attrs;
     width = parseInt(attrs['FO:PAGE-WIDTH'], 10);
     height = parseInt(attrs['FO:PAGE-HEIGHT'], 10);
@@ -41,15 +41,6 @@
     dpcm = dots.state.x;
     console.log("dpcm: " + dpcm);
     audio = $('audio').get()[0];
-    stroke = function(it){
-      var ss;
-      ss = new zhStrokeData.SpriteStroker(it, {
-        url: '../../strokes/'
-      });
-      console.log(ss, ss.sprite);
-      $('#strokes').empty().append(ss.domElement);
-      return ss.play();
-    };
     settingsButton = React.renderComponent(CUBEBooks.SettingsButton(), $('#settings').get()[0]);
     return Data.getPresentation(config.path, config.pageSetup.totalPages, function(data){
       var viewer;
@@ -81,10 +72,7 @@
                 settingsButton.setProps({
                   onClick: sentence.toggleSettings
                 });
-                $('#control').modal('show');
-                return stroke(text.replace(/，|。|？/g, function(){
-                  return '';
-                }));
+                return $('#control').modal('show');
               });
             };
             return ODP.components.span(props, ReactVTT.IsolatedCue({

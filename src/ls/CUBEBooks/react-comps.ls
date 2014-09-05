@@ -69,7 +69,8 @@ Word = React.createClass do
     cs = data.flatten!
     div do
       className: 'comp word'
-      if @state.menu then ActionMenu!
+      if @state.menu
+        ActionMenu onClick: ~> @props.onMenuClick it
       div do
         className: 'characters'
         onClick: @props.onClick
@@ -95,7 +96,7 @@ ActionMenu = React.createClass do
           #div do
           #  className: 'ui icon button black listen'
           #  i className: 'icon volume up'
-          div do
+          @transferPropsTo div do
             className: 'ui icon button black write'
             i className: 'icon pencil'
           #div do
@@ -106,6 +107,29 @@ SettingsButton = React.createClass do
   displayName: 'CUBE.SettingsButton'
   render: ->
     @transferPropsTo i className: 'settings icon'
+
+Stroker = React.createClass do
+  displayName: 'ZhStrokeData.SpriteStroker'
+  getDefaultProps: ->
+    path: '../../strokes/'
+    words: '萌'
+  reset: (props) ->
+    props.words .= replace /，|。|？|『|』|「|」|：/g -> ''
+    @stroker =
+      new zh-stroke-data.SpriteStroker props.words, props.path
+    console.log @stroker
+    $container = $ @refs.container.getDOMNode!
+    $container
+      .empty!
+      .append @stroker.dom-elemennt
+  play:  -> @stroker.play!
+  pause: -> @stroker.pause it
+  componentDidMount: -> @reset @props
+  componentWillReceiveProps: @reset
+  render: ->
+    div do
+      ref: 'container'
+      className: 'strokes'
 
 Sentence = React.createClass do
   DEPTH:
@@ -162,6 +186,8 @@ Sentence = React.createClass do
             pinyin: @state.pinyin
             meaning: @state.meaning
             onClick: ~> @focus @refs[i]
+            onMenuClick: ~> @refs.stroker.play!
+        Stroker ref: 'stroker'
       nav do
         ref: 'settings'
         className: 'navbar'

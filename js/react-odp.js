@@ -140,7 +140,6 @@
         importAll$(style, attrs.style);
       }
       style = mapValues(style, this.scaleStyle);
-      console.log(style);
       if (attrs.href) {
         style.backgroundImage = "url(" + attrs.href + ")";
       }

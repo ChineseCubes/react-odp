@@ -1,5 +1,5 @@
 (function(){
-  var isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, utils, ref$, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Sentence;
+  var isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, utils, ref$, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Stroker, Sentence;
   isArray = _.isArray, isString = _.isString, flatten = _.flatten, max = _.max, min = _.min, map = _.map, zipObject = _.zipObject;
   slice = Array.prototype.slice;
   shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
@@ -491,12 +491,16 @@
       };
     },
     render: function(){
-      var data, cs;
+      var data, cs, this$ = this;
       data = this.props.data;
       cs = data.flatten();
       return div({
         className: 'comp word'
-      }, this.state.menu ? ActionMenu() : void 8, div({
+      }, this.state.menu ? ActionMenu({
+        onClick: function(it){
+          return this$.props.onMenuClick(it);
+        }
+      }) : void 8, div({
         className: 'characters',
         onClick: this.props.onClick
       }, (function(){
@@ -527,11 +531,11 @@
         className: 'menu single'
       }, div({
         className: 'ui buttons'
-      }, div({
+      }, this.transferPropsTo(div({
         className: 'ui icon button black write'
       }, i({
         className: 'icon pencil'
-      })))));
+      }))))));
     }
   });
   SettingsButton = React.createClass({
@@ -540,6 +544,41 @@
       return this.transferPropsTo(i({
         className: 'settings icon'
       }));
+    }
+  });
+  Stroker = React.createClass({
+    displayName: 'ZhStrokeData.SpriteStroker',
+    getDefaultProps: function(){
+      return {
+        path: '../../strokes/',
+        words: '萌'
+      };
+    },
+    reset: function(props){
+      var $container;
+      props.words = props.words.replace(/，|。|？|『|』|「|」|：/g, function(){
+        return '';
+      });
+      this.stroker = new zhStrokeData.SpriteStroker(props.words, props.path);
+      console.log(this.stroker);
+      $container = $(this.refs.container.getDOMNode());
+      return $container.empty().append(this.stroker.domElemennt);
+    },
+    play: function(){
+      return this.stroker.play();
+    },
+    pause: function(it){
+      return this.stroker.pause(it);
+    },
+    componentDidMount: function(){
+      return this.reset(this.props);
+    },
+    componentWillReceiveProps: this.reset,
+    render: function(){
+      return div({
+        ref: 'container',
+        className: 'strokes'
+      });
     }
   });
   Sentence = React.createClass({
@@ -643,10 +682,15 @@
             meaning: this.state.meaning,
             onClick: function(){
               return this$.focus(this$.refs[i]);
+            },
+            onMenuClick: function(){
+              return this$.refs.stroker.play();
             }
           });
         }
-      }.call(this))), nav({
+      }.call(this)), Stroker({
+        ref: 'stroker'
+      })), nav({
         ref: 'settings',
         className: 'navbar',
         style: {
