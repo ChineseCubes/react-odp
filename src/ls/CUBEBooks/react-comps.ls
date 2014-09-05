@@ -1,3 +1,4 @@
+{isNaN} = _
 {a, div, i, nav, span} = React.DOM
 
 AudioControl = React.createClass do
@@ -35,9 +36,9 @@ AudioControl = React.createClass do
 Character = React.createClass do
   displayName: 'CUBE.Character'
   getDefaultProps: ->
-    data: null
-    mode: 'zh_TW'
-    pinyin: false
+    data:   null
+    mode:   'zh_TW'
+    pinyin: off
   render: ->
     data = @props.data
     div do
@@ -57,16 +58,18 @@ Character = React.createClass do
 Word = React.createClass do
   displayName: 'CUBE.Word'
   getDefaultProps: ->
-    data: null
-    mode: 'zh_TW'
-    pinyin: false
-    meaning: false
+    data:    null
+    mode:    'zh_TW'
+    pinyin:  off
+    meaning: off
+  getInitialState: ->
+    menu:    off
   render: ->
     data = @props.data
     cs = data.flatten!
     div do
       className: 'comp word'
-      ActionMenu!
+      if @state.menu then ActionMenu!
       div do
         className: 'characters'
         onClick: @props.onClick
@@ -86,18 +89,18 @@ ActionMenu = React.createClass do
     div do
       className: 'actions'
       div do
-        className: 'menu multiple'
+        className: 'menu single'
         div do
           className: 'ui buttons'
-          div do
-            className: 'ui icon button black listen'
-            i className: 'icon volume up'
+          #div do
+          #  className: 'ui icon button black listen'
+          #  i className: 'icon volume up'
           div do
             className: 'ui icon button black write'
             i className: 'icon pencil'
-          div do
-            className: 'ui icon button black split'
-            i className: 'icon cut'
+          #div do
+          #  className: 'ui icon button black split'
+          #  i className: 'icon cut'
 
 SettingsButton = React.createClass do
   displayName: 'CUBE.SettingsButton'
@@ -111,10 +114,10 @@ Sentence = React.createClass do
     characters: Infinity
   displayName: 'CUBE.Sentence'
   getDefaultProps: ->
-    data: null
-    mode: 'zh_TW'
-    pinyin: false
-    meaning: false
+    data:    null
+    mode:    'zh_TW'
+    pinyin:  off
+    meaning: off
   getInitialState: ->
     pinyin: @props.pinyin
     meaning: @props.meaning
@@ -132,7 +135,7 @@ Sentence = React.createClass do
       name
   toggleMode: ->
     @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
-  toggleDefinition: ->
+  focus: ->
     @setState focus: if it is @state.focus then null else it
   toggleSettings: ->
     $settings = $ @refs.settings.getDOMNode!
@@ -148,11 +151,16 @@ Sentence = React.createClass do
         for let i, word of data.childrenOfDepth @state.depth
           Word do
             key: i
+            ref: i
             data: word
             mode: @props.mode
             pinyin: @state.pinyin
             meaning: @state.meaning
-            onClick: ~> @toggleDefinition word
+            onClick: ~>
+              for own k, comp of @refs | not isNaN +k
+                console.log k is i
+                comp.setState menu: if k is i then not comp.state.menu else off
+              @focus word
       nav do
         ref: 'settings'
         className: 'navbar'

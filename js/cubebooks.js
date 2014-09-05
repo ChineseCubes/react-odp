@@ -1,5 +1,5 @@
 (function(){
-  var isArray, isString, flatten, max, min, map, zipObject, slice, masterPage, c, Char, o, Node, punctuations, utils, ref$, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Sentence;
+  var isArray, isString, flatten, max, min, map, zipObject, slice, masterPage, c, Char, o, Node, punctuations, utils, ref$, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Sentence;
   isArray = _.isArray, isString = _.isString, flatten = _.flatten, max = _.max, min = _.min, map = _.map, zipObject = _.zipObject;
   slice = Array.prototype.slice;
   masterPage = {
@@ -378,6 +378,7 @@
   import$((ref$ = this.Data) != null
     ? ref$
     : this.Data = {}, utils);
+  isNaN = _.isNaN;
   ref$ = React.DOM, a = ref$.a, div = ref$.div, i = ref$.i, nav = ref$.nav, span = ref$.span;
   AudioControl = React.createClass({
     displayName: 'CUBEBooks.AudioControl',
@@ -472,13 +473,18 @@
         meaning: false
       };
     },
+    getInitialState: function(){
+      return {
+        menu: false
+      };
+    },
     render: function(){
       var data, cs;
       data = this.props.data;
       cs = data.flatten();
       return div({
         className: 'comp word'
-      }, ActionMenu(), div({
+      }, this.state.menu ? ActionMenu() : void 8, div({
         className: 'characters',
         onClick: this.props.onClick
       }, (function(){
@@ -506,21 +512,13 @@
       return div({
         className: 'actions'
       }, div({
-        className: 'menu multiple'
+        className: 'menu single'
       }, div({
         className: 'ui buttons'
       }, div({
-        className: 'ui icon button black listen'
-      }, i({
-        className: 'icon volume up'
-      })), div({
         className: 'ui icon button black write'
       }, i({
         className: 'icon pencil'
-      })), div({
-        className: 'ui icon button black split'
-      }, i({
-        className: 'icon cut'
       })))));
     }
   });
@@ -582,7 +580,7 @@
         mode: this.props.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
       });
     },
-    toggleDefinition: function(it){
+    focus: function(it){
       return this.setState({
         focus: it === this.state.focus ? null : it
       });
@@ -613,12 +611,23 @@
           var this$ = this;
           return Word({
             key: i,
+            ref: i,
             data: word,
             mode: this.props.mode,
             pinyin: this.state.pinyin,
             meaning: this.state.meaning,
             onClick: function(){
-              return this$.toggleDefinition(word);
+              var k, ref$, comp, own$ = {}.hasOwnProperty;
+              for (k in ref$ = this$.refs) if (own$.call(ref$, k)) {
+                comp = ref$[k];
+                if (!isNaN(+k)) {
+                  console.log(k === i);
+                  comp.setState({
+                    menu: k === i ? !comp.state.menu : false
+                  });
+                }
+              }
+              return this$.focus(word);
             }
           });
         }

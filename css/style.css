@@ -251,7 +251,6 @@ small {
   color: #000;
 }
 #control .playground .comp.word .actions {
-  display: none;
   position: absolute;
   top: -3.5rem;
   left: 50%;
@@ -264,8 +263,8 @@ small {
   border-radius: 0.3rem;
 }
 #control .playground .comp.word .actions .menu.single {
-  width: 6rem;
-  margin-left: -3rem;
+  width: 3rem;
+  margin-left: -1.5rem;
 }
 #control .playground .comp.word .actions .menu.multiple {
   width: 9rem;
