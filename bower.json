@@ -20,5 +20,9 @@
     "react-vtt": "~0.1.2",
     "semantic-ui": "~0.19.0"
   },
-  "overrides": {}
+  "overrides": {
+    "q": {
+      "main": "q.js"
+    }
+  }
 }

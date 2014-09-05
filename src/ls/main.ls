@@ -6,6 +6,8 @@ config =
     y:      0cm
     width:  28cm
     height: 21cm
+    page-number: 8
+  path: './demo'
 
 resize = (dpcm) ->
   ratio     = config.page-setup.ratio
@@ -27,11 +29,18 @@ console.log "dpcm: #dpcm"
 
 audio = $ \audio .get!0
 
+stroke = ->
+  ss = new zh-stroke-data.SpriteStroker it, url: '../../strokes/'
+  #console.log ss, ss.sprite
+  #$('#strokes')append ss.dom-element
+  #ss.play!
+#stroke '洗手台'
+
 settings-button = React.renderComponent do
   CUBEBooks.SettingsButton!
   $ '#settings' .get!0
 
-data <- Data.getPresentation './json' 8
+data <- Data.getPresentation config.path, config.page-setup.page-number
 Data.buildSyntaxTreeFromNotes data
 viewer = React.renderComponent do
   ODP.components.presentation do
@@ -61,7 +70,7 @@ viewer = React.renderComponent do
         ODP.components.span do
           props
           ReactVTT.IsolatedCue do
-            target: './json/demo.vtt'
+            target: "#{config.path}/demo.vtt"
             match: text
             currentTime: -> audio.current-time
       | otherwise => ODP.renderProps props

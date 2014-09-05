@@ -1,13 +1,15 @@
 (function(){
-  var config, resize, dots, dpcm, audio, settingsButton;
+  var config, resize, dots, dpcm, audio, stroke, settingsButton;
   config = {
     pageSetup: {
       ratio: 4 / 3,
       x: 0,
       y: 0,
       width: 28,
-      height: 21
-    }
+      height: 21,
+      pageNumber: 8
+    },
+    path: './demo'
   };
   resize = function(dpcm){
     var ratio, pxWidth, pxHeight, width, height;
@@ -28,8 +30,14 @@
   dpcm = dots.state.x;
   console.log("dpcm: " + dpcm);
   audio = $('audio').get()[0];
+  stroke = function(it){
+    var ss;
+    return ss = new zhStrokeData.SpriteStroker(it, {
+      url: '../../strokes/'
+    });
+  };
   settingsButton = React.renderComponent(CUBEBooks.SettingsButton(), $('#settings').get()[0]);
-  Data.getPresentation('./json', 8, function(data){
+  Data.getPresentation(config.path, config.pageSetup.pageNumber, function(data){
     var viewer;
     Data.buildSyntaxTreeFromNotes(data);
     viewer = React.renderComponent(ODP.components.presentation({
@@ -63,7 +71,7 @@
             });
           };
           return ODP.components.span(props, ReactVTT.IsolatedCue({
-            target: './json/demo.vtt',
+            target: config.path + "/demo.vtt",
             match: text,
             currentTime: function(){
               return audio.currentTime;
