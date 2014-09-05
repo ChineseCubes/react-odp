@@ -27,10 +27,8 @@ console.log "dpcm: #dpcm"
 
 audio = $ \audio .get!0
 
-sentence = null
-React.renderComponent do
-  CUBEBooks.SettingsButton do
-    onClick: -> sentence?toggleSettings!
+settings-button = React.renderComponent do
+  CUBEBooks.SettingsButton!
   $ '#settings' .get!0
 
 data <- Data.getPresentation './json' 8
@@ -55,9 +53,10 @@ viewer = React.renderComponent do
         delete props.data.text
         attrs.onClick = ->
           seg <- Data.getSegmentations text
-          sentence := React.renderComponent do
+          sentence = React.renderComponent do
             CUBEBooks.Sentence data: seg
             $ '#control > .content' .get!0
+          settings-button.setProps onClick: sentence.toggleSettings
           $ '#control' .modal 'show'
         ODP.components.span do
           props
