@@ -32,9 +32,12 @@
   audio = $('audio').get()[0];
   stroke = function(it){
     var ss;
-    return ss = new zhStrokeData.SpriteStroker(it, {
+    ss = new zhStrokeData.SpriteStroker(it, {
       url: '../../strokes/'
     });
+    console.log(ss, ss.sprite);
+    $('#strokes').empty().append(ss.domElement);
+    return ss.play();
   };
   settingsButton = React.renderComponent(CUBEBooks.SettingsButton(), $('#settings').get()[0]);
   Data.getPresentation(config.path, config.pageSetup.pageNumber, function(data){
@@ -67,7 +70,10 @@
               settingsButton.setProps({
                 onClick: sentence.toggleSettings
               });
-              return $('#control').modal('show');
+              $('#control').modal('show');
+              return stroke(text.replace(/，|。|？/g, function(){
+                return '';
+              }));
             });
           };
           return ODP.components.span(props, ReactVTT.IsolatedCue({

@@ -233,8 +233,10 @@
         this.arrowSprite.time = this.sprite.time;
         this.currentTime = this.sprite.time * this.sprite.length / this.speed;
       }
-      if (!this.paused && this.sprite.time < 1) {
-        requestAnimationFrame(this.play);
+      if (!this.paused) {
+        if (!this.sprite || this.sprite.time < 1) {
+          requestAnimationFrame(this.play);
+        }
       }
     };
     prototype.width = 0;

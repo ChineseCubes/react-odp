@@ -31,10 +31,11 @@ audio = $ \audio .get!0
 
 stroke = ->
   ss = new zh-stroke-data.SpriteStroker it, url: '../../strokes/'
-  #console.log ss, ss.sprite
-  #$('#strokes')append ss.dom-element
-  #ss.play!
-#stroke '洗手台'
+  console.log ss, ss.sprite
+  $('#strokes')
+    .empty!
+    .append ss.dom-element
+  ss.play!
 
 settings-button = React.renderComponent do
   CUBEBooks.SettingsButton!
@@ -67,6 +68,7 @@ viewer = React.renderComponent do
             $ '#control > .content' .get!0
           settings-button.setProps onClick: sentence.toggleSettings
           $ '#control' .modal 'show'
+          stroke text.replace /，|。|？/g -> ''
         ODP.components.span do
           props
           ReactVTT.IsolatedCue do

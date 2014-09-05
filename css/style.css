@@ -355,10 +355,16 @@ small {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
-  background-image: url("../json/Pictures/play.png");
+  background-image: url("../demo/Pictures/play.png");
 }
 .audio-control.playing {
-  background-image: url("../json/Pictures/pause.png");
+  background-image: url("../demo/Pictures/pause.png");
+}
+#strokes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fff;
 }
 @font-face {
   font-family: 'cwTeX Q KaiZH';
