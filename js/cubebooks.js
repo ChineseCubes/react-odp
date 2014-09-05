@@ -22,14 +22,14 @@
           'style-name': 'Mgr3',
           'text-style-name': 'MP4',
           x: '0.34cm',
-          y: '0.32cm',
+          y: '0.38cm',
           width: '1.41cm',
           height: '1.198cm'
         },
         children: [{
           name: 'draw:image',
           attrs: {
-            href: 'Pictures/100002010000002800000022F506C368.png',
+            href: 'Pictures/home.png',
             'on-click': function(){
               return alert('home');
             }
