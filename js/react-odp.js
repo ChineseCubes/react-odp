@@ -90,9 +90,9 @@
         return value;
       case !isNumber(value):
         return value * this.props.scale;
-      case !/\d*\.?\d+%$/.test(value):
+      case !/^\d*\.?\d+%$/.test(value):
         return value;
-      case !(r = /(\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/.exec(value)):
+      case !(r = /^(\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/.exec(value)):
         return +r[1] * this.props.scale + "" + (r[2] || '');
       default:
         return value;
@@ -140,6 +140,7 @@
         importAll$(style, attrs.style);
       }
       style = mapValues(style, this.scaleStyle);
+      console.log(style);
       if (attrs.href) {
         style.backgroundImage = "url(" + attrs.href + ")";
       }

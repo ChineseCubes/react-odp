@@ -1,16 +1,28 @@
 (function(){
-  var isArray, isString, flatten, max, min, map, zipObject, slice, masterPage, c, Char, o, Node, punctuations, utils, ref$, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Sentence;
+  var isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, utils, ref$, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Sentence;
   isArray = _.isArray, isString = _.isString, flatten = _.flatten, max = _.max, min = _.min, map = _.map, zipObject = _.zipObject;
   slice = Array.prototype.slice;
+  shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
   masterPage = {
     children: [
       {
         name: 'draw:frame',
         attrs: {
+          background: '#fff',
+          opacity: '0.75',
+          '-webkit-box-shadow': shadow,
+          '-moz-box-shadow': shadow,
+          'box-shadow': shadow,
+          width: '28cm',
+          height: '2cm'
+        }
+      }, {
+        name: 'draw:frame',
+        attrs: {
           'style-name': 'Mgr3',
           'text-style-name': 'MP4',
-          x: '0.19cm',
-          y: '0.22cm',
+          x: '0.34cm',
+          y: '0.32cm',
           width: '1.41cm',
           height: '1.198cm'
         },
@@ -28,10 +40,10 @@
         attrs: {
           'style-name': 'Mgr4',
           'text-style-name': 'MP4',
-          x: '26.4cm',
-          y: '0.4cm',
-          width: '1.198cm',
-          height: '1.198cm'
+          x: '26.16cm',
+          y: '0.35cm',
+          width: '1.458cm',
+          height: '1.358cm'
         },
         children: [{
           name: 'draw:image',

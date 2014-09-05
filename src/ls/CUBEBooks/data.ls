@@ -1,14 +1,24 @@
 {isArray, isString, flatten, max, min, map, zipObject} = _
 slice = Array::slice
 
+shadow = '0 0 5px 5px rgba(0,0,0,0.1);'
 master-page =
   children:
     * name: 'draw:frame'
       attrs:
+        background: '#fff'
+        opacity: '0.75'
+        '-webkit-box-shadow': shadow
+        '-moz-box-shadow': shadow
+        'box-shadow': shadow
+        width:  \28cm
+        height: \2cm
+    * name: 'draw:frame'
+      attrs:
         'style-name': \Mgr3
         'text-style-name': \MP4
-        x:      \0.19cm
-        y:      \0.22cm
+        x:      \0.34cm
+        y:      \0.32cm
         width:  \1.41cm
         height: \1.198cm
       children:
@@ -21,10 +31,10 @@ master-page =
       attrs:
         'style-name': \Mgr4
         'text-style-name': \MP4
-        x:      \26.4cm
-        y:      \0.4cm
-        width:  \1.198cm
-        height: \1.198cm
+        x:      \26.16cm
+        y:      \0.35cm
+        width:  \1.458cm
+        height: \1.358cm
       children:
         * name: 'draw:image'
           attrs:

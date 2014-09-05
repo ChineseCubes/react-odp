@@ -46,8 +46,8 @@ DrawMixin =
   scaleStyle: (value, key) -> # without changing the unit
     | key in <[opacity]>      => value
     | isNumber value          => value * @props.scale
-    | /\d*\.?\d+%$/test value => value
-    | r = /(\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/exec value
+    | /^\d*\.?\d+%$/test value => value
+    | r = /^(\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/exec value
       "#{+r.1 * @props.scale}#{r.2 or ''}"
     | otherwise               => value
   getDefaultProps: ->
@@ -69,6 +69,9 @@ DrawMixin =
       height: attrs?height or \auto
     style <<<< attrs?style # import all
     style = mapValues style, @scaleStyle
+    # TODO:
+    #style = mapValues style, (v, k) ~> v?split(/\s+/)map(~> @scaleStyle it, k)join ' '
+    console.log style
     style <<< background-image: "url(#{attrs.href})" if attrs.href
     props =
       className: "#{data.namespace} #{data.name}"
