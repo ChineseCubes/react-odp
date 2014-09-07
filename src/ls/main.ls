@@ -3,7 +3,7 @@ config = path: './demo'
 {attrs} <- $.get "#{config.path}/masterpage.json"
 width  = parseInt attrs['FO:PAGE-WIDTH'], 10
 height = parseInt attrs['FO:PAGE-HEIGHT'], 10
-orientation = attrs['STYLE:PRING-ORIENTATION']
+orientation = attrs['STYLE:PRINT-ORIENTATION']
 ratio = if orientation is \landscape then width / height else height / width
 config <<< do
   page-setup:

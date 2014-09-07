@@ -8,7 +8,7 @@
     attrs = arg$.attrs;
     width = parseInt(attrs['FO:PAGE-WIDTH'], 10);
     height = parseInt(attrs['FO:PAGE-HEIGHT'], 10);
-    orientation = attrs['STYLE:PRING-ORIENTATION'];
+    orientation = attrs['STYLE:PRINT-ORIENTATION'];
     ratio = orientation === 'landscape'
       ? width / height
       : height / width;
