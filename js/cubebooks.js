@@ -288,7 +288,7 @@
     strip: function(it){
       var tmp;
       tmp = document.createElement('span');
-      tmp.innerHTML = new XMLSerializer().serializeToString(new DOMParser().parseFromString(it, 'text/html'));
+      tmp.innerHTML = document.contentType === "application/xhtml+xml" ? new XMLSerializer().serializeToString(new DOMParser().parseFromString(it, 'text/html')) : it;
       return tmp.textContent || tmp.innerText || '';
     },
     buildSyntaxTreeFromNotes: function(node){

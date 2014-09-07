@@ -34329,7 +34329,7 @@ var ExecutionEnvironment = _dereq_("./ExecutionEnvironment");
  * @internal
  */
 var setInnerHTML = function(node, html) {
-  node.innerHTML = html;
+  node.innerHTML = ((document.contentType === "application/xhtml+xml") ? (new XMLSerializer().serializeToString(new DOMParser().parseFromString(html, 'text/html'))) : html);
 };
 
 if (ExecutionEnvironment.canUseDOM) {
@@ -34376,7 +34376,7 @@ if (ExecutionEnvironment.canUseDOM) {
           textNode.deleteData(0, 1);
         }
       } else {
-        node.innerHTML = html;
+        node.innerHTML = ((document.contentType === "application/xhtml+xml") ? (new XMLSerializer().serializeToString(new DOMParser().parseFromString(html, 'text/html'))) : html);
       }
     };
   }

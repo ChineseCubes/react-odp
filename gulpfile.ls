@@ -1,4 +1,4 @@
-require! <[gulp gulp-concat gulp-filter gulp-flatten]>
+require! <[gulp gulp-concat gulp-filter gulp-flatten gulp-replace]>
 require! <[bower main-bower-files]>
 connect    = require \gulp-connect
 gutil      = require \gulp-util
@@ -34,6 +34,9 @@ gulp.task \js:vendor <[bower]> ->
   gulp.src main-bower-files!
     .pipe gulp-filter <[**/*.js !**/*.min.js]>
     .pipe gulp-concat 'vendor.js'
+    .pipe gulp-replace 'node.innerHTML = html;', """
+      node.innerHTML = ((document.contentType === "application/xhtml+xml") ? (new XMLSerializer().serializeToString(new DOMParser().parseFromString(html, 'text/html'))) : html);
+    """
     .pipe gulp.dest "#{path.build}/js"
 
 gulp.task \js:app ->
