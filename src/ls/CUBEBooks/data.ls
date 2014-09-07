@@ -132,7 +132,8 @@ utils =
       English: tagless(moe.translation.English)split /,\w*?/
   strip: ->
     tmp = document.createElement 'span'
-    tmp.innerHTML = it
+    tmp.innerHTML = new XMLSerializer().serializeToString do
+      new DOMParser!parseFromString it, 'text/html'
     tmp.textContent or tmp.innerText or ''
   buildSyntaxTreeFromNotes: (node) ->
     keys   = []
