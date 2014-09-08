@@ -34331,7 +34331,7 @@ var ExecutionEnvironment = _dereq_("./ExecutionEnvironment");
 var setInnerHTML = function(node, html) {
   if (document.contentType === "application/xhtml+xml") {
   var dom = new DOMParser().parseFromString(html, 'text/html');
-  html = new XMLSerializer().serializeToString(dom);
+  html = new XMLSerializer().serializeToString(dom.body);
 }
 else if (document.xmlVersion) {
   var dom = document.implementation.createHTMLDocument('');
@@ -34387,7 +34387,7 @@ if (ExecutionEnvironment.canUseDOM) {
       } else {
         if (document.contentType === "application/xhtml+xml") {
   var dom = new DOMParser().parseFromString(html, 'text/html');
-  html = new XMLSerializer().serializeToString(dom);
+  html = new XMLSerializer().serializeToString(dom.body);
 }
 else if (document.xmlVersion) {
   var dom = document.implementation.createHTMLDocument('');

@@ -291,7 +291,7 @@
       tmp.innerHTML = (function(){
         switch (false) {
         case document.contentType !== 'application/xhtml+xml':
-          return new XMLSerializer().serializeToString(new DOMParser().parseFromString(it, 'text/html'));
+          return new XMLSerializer().serializeToString(new DOMParser().parseFromString(it, 'text/html').body);
         case !document.xmlVersion:
           dom = document.implementation.createHTMLDocument('');
           dom.body.innerHTML = it;

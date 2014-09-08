@@ -37,7 +37,7 @@ gulp.task \js:vendor <[bower]> ->
     .pipe gulp-replace 'node.innerHTML = html;', """
       if (document.contentType === "application/xhtml+xml") {
         var dom = new DOMParser().parseFromString(html, 'text/html');
-        html = new XMLSerializer().serializeToString(dom);
+        html = new XMLSerializer().serializeToString(dom.body);
       }
       else if (document.xmlVersion) {
         var dom = document.implementation.createHTMLDocument('');

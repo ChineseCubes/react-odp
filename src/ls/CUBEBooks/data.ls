@@ -135,7 +135,7 @@ utils =
     tmp.innerHTML = switch
       | document.contentType is 'application/xhtml+xml'
         new XMLSerializer!serializeToString do
-          new DOMParser!parseFromString it, 'text/html'
+          new DOMParser!parseFromString(it, 'text/html').body
       | document.xmlVersion
         dom = document.implementation.createHTMLDocument ''
         dom.body.innerHTML = it
