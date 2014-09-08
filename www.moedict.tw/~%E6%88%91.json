@@ -1,0 +1,57 @@
+{
+  "non_radical_stroke_count": 3,
+  "title": "我",
+  "radical": "<a href=\"#~戈\">戈</a>",
+  "stroke_count": 7,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~我\">我</a></span><a href=\"#~喜歡\">喜歡</a><span class='punct'><a href=\"#~你\">你</a>」、</span><span class='punct'>「<a href=\"#~我\">我</a></span><a href=\"#~是\">是</a><a href=\"#~他\">他</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~老師\">老師</a>」。</span>"
+          ],
+          "def": "<a href=\"#~稱\">稱</a><span class='punct'><a href=\"#~自己\">自己</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~我\">我</a></span><span class='punct'><a href=\"#~國\">國</a>」、</span><span class='punct'>「<a href=\"#~我\">我</a></span><span class='punct'><a href=\"#~方\">方</a>」、</span><span class='punct'>「<a href=\"#~敵\">敵</a></span><a href=\"#~我\">我</a><span class='punct'><a href=\"#~雙方\">雙方</a>」。</span>"
+          ],
+          "def": "<a href=\"#~稱\">稱</a><a href=\"#~自己\">自己</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~一方\">一方</a>，</span><a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~我們\">我們</a>」。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~我行我素\">我行我素</a>」、</span><span class='punct'>「<a href=\"#~自我\">自我</a></span><span class='punct'><a href=\"#~反省\">反省</a>」、</span><span class='punct'>「<a href=\"#~自我\">自我</a></span><span class='punct'><a href=\"#~介紹\">介紹</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~自己\">自己</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~大\">大</a></span><a href=\"#~公\">公</a><span class='punct'><a href=\"#~無我\">無我</a>」。</span>"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~私心\">私心</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1014730000",
+      "pinyin": "wǒ",
+      "bopomofo": "ㄨㄛˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "je",
+      "moi"
+    ],
+    "Deutsch": [
+      "ich (mir, mich)​ <Personalpronomen 1. Pers.&gt (Pron)​"
+    ],
+    "English": [
+      "I",
+      "me",
+      "my"
+    ]
+  },
+  "xrefs": []
+}

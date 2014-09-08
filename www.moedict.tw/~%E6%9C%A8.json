@@ -1,0 +1,96 @@
+{
+  "non_radical_stroke_count": 0,
+  "title": "木",
+  "radical": "<a href=\"#~木\">木</a>",
+  "stroke_count": 4,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~樹\">樹</a></span><span class='punct'><a href=\"#~木\">木</a>」、</span><span class='punct'>「<a href=\"#~草木\">草木</a>」、</span><span class='punct'>「<a href=\"#~花木扶疏\">花木扶疏</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~樹\">樹</a>，</span><a href=\"#~木本植物\">木本植物</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~通稱\">通稱</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~檜\">檜</a></span><span class='punct'><a href=\"#~木\">木</a>」、</span><span class='punct'>「<a href=\"#~朽木不可雕\">朽木不可雕</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~木材\">木材</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~行將就木\">行將就木</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~棺材\">棺材</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~五行\">五行</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span><a href=\"#~參見\">參見</a><span class='punct'>【<a href=\"#~五行\">五行</a></span>】。"
+        },
+        {
+          "def": "<a href=\"#~八音\">八音</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span><a href=\"#~參見\">參見</a><span class='punct'>【<a href=\"#~八音\">八音</a></span>】。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~木\">木</a></span><span class='punct'><a href=\"#~屋\">屋</a>」、</span><span class='punct'>「<a href=\"#~木\">木</a></span><span class='punct'><a href=\"#~椅\">椅</a>」、</span><span class='punct'>「<a href=\"#~木\">木</a></span><span class='punct'><a href=\"#~劍\">劍</a>」。</span>"
+          ],
+          "def": "<a href=\"#~用\">用</a><a href=\"#~木材\">木材</a><a href=\"#~製\">製</a><a href=\"#~成\">成</a><span class='punct'><a href=\"#~的\">的</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~呆\">呆</a></span><span class='punct'><a href=\"#~木\">木</a>」、</span><span class='punct'>「<a href=\"#~鈍頭\">鈍頭</a></span><a href=\"#~木\">木</a><span class='punct'><a href=\"#~腦\">腦</a>」。</span>"
+          ],
+          "def": "<a href=\"#~呆\">呆</a><span class='punct'><a href=\"#~笨\">笨</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~麻木\">麻木</a>」。</span>"
+          ],
+          "def": "<a href=\"#~沒有\">沒有</a><span class='punct'><a href=\"#~知覺\">知覺</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~木訥\">木訥</a>」。</span>"
+          ],
+          "def": "<a href=\"#~性情\">性情</a><span class='punct'><a href=\"#~質樸\">質樸</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~二\">二</a><a href=\"#~一\">一</a><a href=\"#~四部\">四部</a><a href=\"#~首\">首</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span>"
+        }
+      ],
+      "id": "1018530000",
+      "pinyin": "mù",
+      "bopomofo": "ㄇㄨˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "bois",
+      "arbre",
+      "cercueil",
+      "engourdi"
+    ],
+    "Deutsch": [
+      "Baum (S)​",
+      "Holz (S)​",
+      "Nutzholz (S)​",
+      "hölzern, aus Holz gemacht (Adj)​",
+      "Radikal Nr. 75 = Baum, Holz",
+      "erstarrt, empfindungslos, taub (Adj)​"
+    ],
+    "English": [
+      "surname Mu",
+      "tree",
+      "wood",
+      "coffin",
+      "wooden",
+      "simple",
+      "numb",
+      "one of the eight ancient musical instruments <a href=\"#~八音\">八音</a>[ba1 yin1]"
+    ]
+  },
+  "xrefs": []
+}

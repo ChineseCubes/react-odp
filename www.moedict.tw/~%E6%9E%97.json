@@ -1,0 +1,61 @@
+{
+  "non_radical_stroke_count": 4,
+  "title": "林",
+  "radical": "<a href=\"#~木\">木</a>",
+  "stroke_count": 8,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~樹\">樹</a></span><span class='punct'><a href=\"#~林\">林</a>」、</span><span class='punct'>「<a href=\"#~叢林\">叢林</a>」、</span><span class='punct'>「<a href=\"#~落葉\">落葉</a></span><span class='punct'><a href=\"#~林\">林</a>」、</span><span class='punct'>「<a href=\"#~林蔭大道\">林蔭大道</a>」。</span>"
+          ],
+          "def": "<a href=\"#~成\">成</a><a href=\"#~片\">片</a><a href=\"#~的\">的</a><a href=\"#~樹\">樹</a><a href=\"#~木\">木</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~竹子\">竹子</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~儒\">儒</a></span><span class='punct'><a href=\"#~林\">林</a>」、</span><span class='punct'>「<a href=\"#~藝林\">藝林</a>」、</span><span class='punct'>「<a href=\"#~碑林\">碑林</a>」。</span>"
+          ],
+          "def": "<a href=\"#~匯聚\">匯聚</a><a href=\"#~在\">在</a><a href=\"#~一起\">一起</a><a href=\"#~的\">的</a><a href=\"#~同類\">同類</a><a href=\"#~人\">人</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~事物\">事物</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~農林\">農林</a></span><a href=\"#~漁\">漁</a><a href=\"#~牧\">牧</a><span class='punct'><a href=\"#~礦\">礦</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~林業\">林業</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~高樓\">高樓</a></span><span class='punct'><a href=\"#~林立\">林立</a>」、</span><span class='punct'>「<a href=\"#~林林總總\">林林總總</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~眾多\">眾多</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1018810000",
+      "pinyin": "lín",
+      "bopomofo": "ㄌㄧㄣˊ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "forêt",
+      "bois"
+    ],
+    "Deutsch": [
+      "Wald  (S)​",
+      "Lin  (Eig, Fam)​"
+    ],
+    "English": [
+      "surname Lin",
+      "woods",
+      "forest",
+      "CL:<a href=\"#~片\">片</a>[pian4]",
+      "circle(s)​ (i.e. specific group of people)​",
+      "a collection (of similar things)​"
+    ]
+  },
+  "xrefs": []
+}

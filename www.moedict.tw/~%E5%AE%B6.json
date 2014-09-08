@@ -1,0 +1,147 @@
+{
+  "non_radical_stroke_count": 7,
+  "title": "家",
+  "radical": "<a href=\"#~宀\">宀</a>",
+  "stroke_count": 10,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~回\">回</a></span><span class='punct'><a href=\"#~家\">家</a>」、</span><span class='punct'>「<a href=\"#~搬家\">搬家</a>」、</span><span class='punct'>「<a href=\"#~無家可歸\">無家可歸</a>」、</span><span class='punct'>「<a href=\"#~離家\">離家</a></span><span class='punct'><a href=\"#~在外\">在外</a>」。</span>"
+          ],
+          "def": "<a href=\"#~家人\">家人</a><a href=\"#~共同\">共同</a><a href=\"#~生活\">生活</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~處所\">處所</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~白手起家\">白手起家</a>」、</span><span class='punct'>「<a href=\"#~成家立業\">成家立業</a>」、</span><span class='punct'>「<a href=\"#~詩\">詩</a></span><a href=\"#~禮\">禮</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~家\">家</a>」、</span><span class='punct'>「<a href=\"#~忠孝\">忠孝</a></span><span class='punct'><a href=\"#~傳家\">傳家</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~家庭\">家庭</a>；</span><span class='punct'><a href=\"#~家族\">家族</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~家務\">家務</a>」、</span><span class='punct'>「<a href=\"#~家境\">家境</a>」、</span><span class='punct'>「<a href=\"#~家業\">家業</a>」、</span><span class='punct'>「<a href=\"#~家規\">家規</a>」。</span>"
+          ],
+          "def": "<a href=\"#~家庭\">家庭</a><a href=\"#~或\">或</a><a href=\"#~家族\">家族</a><span class='punct'><a href=\"#~中的\">中的</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~攜\">攜</a></span><a href=\"#~家\">家</a><a href=\"#~帶\">帶</a><span class='punct'><a href=\"#~眷\">眷</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~家人\">家人</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~家禽\">家禽</a>」、</span><span class='punct'>「<a href=\"#~家畜\">家畜</a>」。</span>"
+          ],
+          "def": "<a href=\"#~家\">家</a><a href=\"#~中\">中</a><a href=\"#~飼養\">飼養</a><span class='punct'><a href=\"#~的\">的</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~儒家\">儒家</a>」、</span><span class='punct'>「<a href=\"#~道家\">道家</a>」、</span><span class='punct'>「<a href=\"#~諸子百家\">諸子百家</a>」、</span><span class='punct'>「<a href=\"#~自成一家\">自成一家</a>」。</span>"
+          ],
+          "def": "<a href=\"#~學術\">學術</a><span class='punct'><a href=\"#~派別\">派別</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~畫家\">畫家</a>」、</span><span class='punct'>「<a href=\"#~美食家\">美食家</a>」、</span><span class='punct'>「<a href=\"#~收藏家\">收藏家</a>」、</span><span class='punct'>「<a href=\"#~雕刻家\">雕刻家</a>」。</span>"
+          ],
+          "def": "<a href=\"#~具\">具</a><a href=\"#~某\">某</a><a href=\"#~種\">種</a><a href=\"#~專長\">專長</a><a href=\"#~或\">或</a><a href=\"#~技術\">技術</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~人\">人</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~商家\">商家</a>」、</span><span class='punct'>「<a href=\"#~漁家\">漁家</a>」、</span><span class='punct'>「<a href=\"#~農家子弟\">農家子弟</a>」。</span>"
+          ],
+          "def": "<a href=\"#~從事\">從事</a><a href=\"#~某\">某</a><a href=\"#~種\">種</a><a href=\"#~行業\">行業</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~人\">人</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~自家\">自家</a>」、</span><span class='punct'>「<a href=\"#~仇家\">仇家</a>」、</span><span class='punct'>「<a href=\"#~老人家\">老人家</a>」、</span><span class='punct'>「<a href=\"#~姑娘\">姑娘</a></span><span class='punct'><a href=\"#~家\">家</a>」。</span>"
+          ],
+          "def": "<a href=\"#~自稱\">自稱</a><a href=\"#~或\">或</a><a href=\"#~稱\">稱</a><a href=\"#~具\">具</a><a href=\"#~某\">某</a><a href=\"#~種\">種</a><a href=\"#~身分\">身分</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~人\">人</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~家父\">家父</a>」、</span><span class='punct'>「<a href=\"#~家母\">家母</a>」、</span><span class='punct'>「<a href=\"#~家兄\">家兄</a>」、</span><span class='punct'>「<a href=\"#~家\">家</a></span><span class='punct'><a href=\"#~嫂\">嫂</a>」。</span>"
+          ],
+          "def": "<a href=\"#~對\">對</a><a href=\"#~人\">人</a><a href=\"#~謙\">謙</a><a href=\"#~稱\">稱</a><a href=\"#~自己\">自己</a><a href=\"#~的\">的</a><a href=\"#~親\">親</a><span class='punct'><a href=\"#~長\">長</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~妾\">妾</a></span><a href=\"#~家\">家</a><a href=\"#~河\">河</a><span class='punct'><a href=\"#~陽\">陽</a>」。</span>"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~居住\">居住</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~齊家\">齊家</a></span><a href=\"#~治國\">治國</a><a href=\"#~平\">平</a><span class='punct'><a href=\"#~天下\">天下</a>」。</span>"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><a href=\"#~古代\">古代</a><a href=\"#~大夫\">大夫</a><a href=\"#~所\">所</a><a href=\"#~統治\">統治</a><a href=\"#~的\">的</a><a href=\"#~政治\">政治</a><span class='punct'><a href=\"#~區域\">區域</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~兩\">兩</a></span><span class='punct'><a href=\"#~家人\">家人</a>」、</span><span class='punct'>「<a href=\"#~一家\">一家</a></span><span class='punct'><a href=\"#~店\">店</a>」、</span><span class='punct'>「<a href=\"#~三\">三</a></span><a href=\"#~家\">家</a><span class='punct'><a href=\"#~公司\">公司</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~量詞\">量詞</a>。</span><a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><span class='punct'><a href=\"#~家庭\">家庭</a>、</span><span class='punct'><a href=\"#~商店\">商店</a>、</span><a href=\"#~企業\">企業</a><span class='punct'><a href=\"#~等\">等</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1010260000",
+      "pinyin": "jiā",
+      "bopomofo": "ㄐㄧㄚ"
+    },
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~曹\">曹</a></span><span class='punct'><a href=\"#~大家\">大家</a>」。</span>"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><a href=\"#~對\">對</a><a href=\"#~女子\">女子</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~尊稱\">尊稱</a>。</span><a href=\"#~同\">同</a><span class='punct'>「<a href=\"#~姑\">姑</a>」。</span>"
+        }
+      ],
+      "id": "1010260000",
+      "pinyin": "gū",
+      "bopomofo": "ㄍㄨ"
+    },
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~整天\">整天</a></span><a href=\"#~家\">家</a><span class='punct'><a href=\"#~忙\">忙</a>」。</span>"
+          ],
+          "def": "陸⃝<span class='punct'><a href=\"#~助詞\">助詞</a>。</span><a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~狀語\">狀語</a><a href=\"#~與\">與</a><a href=\"#~動詞\">動詞</a><a href=\"#~或\">或</a><a href=\"#~形容詞\">形容詞</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~間\">間</a>，</span><a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~價\">價</a>」。</span>"
+        }
+      ],
+      "id": "1010260000",
+      "pinyin": "jie陸⃟",
+      "bopomofo": "˙ㄐㄧㄝ陸⃟"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "famille",
+      "foyer",
+      "maison",
+      "domicile",
+      "(mot de mesure pour les experts, spécialistes, ...)​"
+    ],
+    "Deutsch": [
+      "Familie, Haushalt (S)​",
+      "Zuhause (S)​",
+      "ZEW für Geschäft, Restaurant, Hotel, Unternehmen, Institution etc. (Zähl)​"
+    ],
+    "English": [
+      "surname Jia",
+      "home",
+      "family",
+      "(polite)​ my (sister, uncle etc)​",
+      "classifier for families or businesses",
+      "refers to the philosophical schools of pre-Han China",
+      "noun suffix for a specialist in some activity, such as a musician or revolutionary, corresponding to English -ist, -er, -ary or -ian",
+      "CL:<a href=\"#~個\">個</a>|个[ge4]"
+    ]
+  },
+  "xrefs": []
+}

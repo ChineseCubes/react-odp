@@ -1,0 +1,70 @@
+{
+  "non_radical_stroke_count": 3,
+  "title": "在",
+  "radical": "<a href=\"#~土\">土</a>",
+  "stroke_count": 6,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~精神\">精神</a></span><a href=\"#~永\">永</a><span class='punct'><a href=\"#~在\">在</a>」、</span><span class='punct'>「<a href=\"#~父母\">父母</a></span><span class='punct'><a href=\"#~健在\">健在</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~存活\">存活</a>；</span><span class='punct'><a href=\"#~在世\">在世</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~在位\">在位</a>」、</span><span class='punct'>「<a href=\"#~在職\">在職</a>」、</span><span class='punct'>「<a href=\"#~在家\">在家</a>」、</span><span class='punct'>「<a href=\"#~在\">在</a></span><a href=\"#~商\">商</a><a href=\"#~言\">言</a><span class='punct'><a href=\"#~商\">商</a>」。</span>"
+          ],
+          "def": "<a href=\"#~居\">居</a><span class='punct'><a href=\"#~於\">於</a>、</span><a href=\"#~處於\">處於</a><a href=\"#~某\">某</a><a href=\"#~個位\">個位</a><a href=\"#~置\">置</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~時間\">時間</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~事在人為\">事在人為</a>」、</span><span class='punct'>「<a href=\"#~師父\">師父</a></span><a href=\"#~領\">領</a><span class='punct'><a href=\"#~進門\">進門</a>，</span><a href=\"#~修行\">修行</a><a href=\"#~在\">在</a><span class='punct'><a href=\"#~個人\">個人</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~決定\">決定</a>；</span><span class='punct'><a href=\"#~取決\">取決</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~老闆\">老闆</a></span><a href=\"#~在\">在</a><span class='punct'><a href=\"#~開會\">開會</a>」、</span><span class='punct'>「<a href=\"#~他\">他</a></span><a href=\"#~在\">在</a><a href=\"#~講\">講</a><span class='punct'><a href=\"#~電話\">電話</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><a href=\"#~正在\">正在</a><a href=\"#~進行\">進行</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~狀態\">狀態</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~我\">我</a></span><a href=\"#~習慣\">習慣</a><a href=\"#~在\">在</a><a href=\"#~晚上\">晚上</a><span class='punct'><a href=\"#~讀書\">讀書</a>」、</span><span class='punct'>「<a href=\"#~他\">他</a></span><a href=\"#~喜歡\">喜歡</a><a href=\"#~在外\">在外</a><a href=\"#~面\">面</a><span class='punct'><a href=\"#~吃飯\">吃飯</a>」、</span><span class='punct'>「<a href=\"#~在\">在</a></span><a href=\"#~這個\">這個</a><a href=\"#~領域\">領域</a><span class='punct'><a href=\"#~上\">上</a>，</span><a href=\"#~他\">他</a><a href=\"#~是\">是</a><span class='punct'><a href=\"#~專家\">專家</a>」、</span><span class='punct'>「<a href=\"#~在\">在</a></span><a href=\"#~經濟\">經濟</a><a href=\"#~許可\">許可</a><span class='punct'><a href=\"#~下\">下</a>，</span><a href=\"#~我\">我</a><a href=\"#~會\">會</a><span class='punct'><a href=\"#~參加\">參加</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~介詞\">介詞</a>。</span><a href=\"#~引進\">引進</a><a href=\"#~動作\">動作</a><a href=\"#~行為\">行為</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~時間\">時間</a>、</span><span class='punct'><a href=\"#~處所\">處所</a>、</span><a href=\"#~範疇\">範疇</a><a href=\"#~或\">或</a><a href=\"#~條件\">條件</a><span class='punct'><a href=\"#~等\">等</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1007430000",
+      "pinyin": "zài",
+      "bopomofo": "ㄗㄞˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "en train de",
+      "à",
+      "dans",
+      "en",
+      "exister",
+      "vivre"
+    ],
+    "Deutsch": [
+      "sich befinden in, an, auf, bei (V)​",
+      "Partikel <progressiver Aspekt> (gerade ablaufende Handlung)​"
+    ],
+    "English": [
+      "(located)​ at",
+      "(to be)​ in",
+      "to exist",
+      "in the middle of doing sth",
+      "(indicating an action in progress)​"
+    ]
+  },
+  "xrefs": []
+}
