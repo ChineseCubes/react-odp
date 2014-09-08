@@ -1,5 +1,7 @@
 /*! jQuery Address v${version} | (c) 2009, 2013 Rostislav Hristov | jquery.org/license */
 (function ($) {
+    $.address = { unbind: function(){return $.address }, bind: function(){return $.address } };
+    return;
 
     $.address = (function () {
 

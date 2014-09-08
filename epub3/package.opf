@@ -5,7 +5,7 @@
     <dc:creator id="creator">Audrey Tang</dc:creator>
     <dc:language>zh-Hant</dc:language>
     <dc:identifier id="pub-id">MedleyDemo</dc:identifier>
-    <meta property="dcterms:modified">2014-09-08T02:16:09Z</meta>
+    <meta property="dcterms:modified">2014-09-09T01:11:11Z</meta>
     <dc:date>2014-07-12</dc:date>
     <dc:publisher>Audrey Tang</dc:publisher>
     <dc:contributor id="contrib1">Audrey Tang</dc:contributor>
@@ -17,6 +17,23 @@
 <manifest>
      <item href="TOC.xhtml" properties="nav scripted"
            id="toc" media-type="application/xhtml+xml" />
+     <item href="page1.xhtml" properties="scripted"
+           id="page1" media-type="application/xhtml+xml" />
+     <item href="page2.xhtml" properties="scripted"
+           id="page2" media-type="application/xhtml+xml" />
+     <item href="page3.xhtml" properties="scripted"
+           id="page3" media-type="application/xhtml+xml" />
+     <item href="page4.xhtml" properties="scripted"
+           id="page4" media-type="application/xhtml+xml" />
+     <item href="page5.xhtml" properties="scripted"
+           id="page5" media-type="application/xhtml+xml" />
+     <item href="page6.xhtml" properties="scripted"
+           id="page6" media-type="application/xhtml+xml" />
+     <item href="page7.xhtml" properties="scripted"
+           id="page7" media-type="application/xhtml+xml" />
+     <item href="page8.xhtml" properties="scripted"
+           id="page8" media-type="application/xhtml+xml" />
+
      <item href="images/bg.jpg"
            id="images-bg-jpg" media-type="image/jpeg" />
      <item href="images/cat.png"
@@ -165,6 +182,13 @@
            id="js-vendor-js" media-type="application/javascript" />
 </manifest>
 <spine page-progression-direction="ltr">
-    <itemref idref="toc" linear="yes"/>
+    <itemref idref="page1" linear="yes"/>
+    <itemref idref="page2" linear="yes"/>
+    <itemref idref="page3" linear="yes"/>
+    <itemref idref="page4" linear="yes"/>
+    <itemref idref="page5" linear="yes"/>
+    <itemref idref="page6" linear="yes"/>
+    <itemref idref="page7" linear="yes"/>
+    <itemref idref="page8" linear="yes"/>
 </spine>
 </package>

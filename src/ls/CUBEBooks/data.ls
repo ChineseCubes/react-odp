@@ -123,7 +123,7 @@ utils =
   getSegmentations: (text, done)->
     done(utils.data[text] or Node!)
   askMoeDict: (ch, done) ->
-    moe <- $.get "https://www.moedict.tw/~#ch.json"
+    moe <- $.getJSON "https://www.moedict.tw/~#ch.json"
     tagless = utils.strip
     done do
       zh_TW:   tagless moe.title

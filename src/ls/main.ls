@@ -1,6 +1,8 @@
 config = path: './demo'
 
-{attrs} <- $.get "#{config.path}/masterpage.json"
+<- window.requestAnimationFrame
+<- $
+{attrs} <- $.getJSON "#{config.path}/masterpage.json"
 width  = parseInt attrs['FO:PAGE-WIDTH'], 10
 height = parseInt attrs['FO:PAGE-HEIGHT'], 10
 orientation = attrs['STYLE:PRINT-ORIENTATION']
@@ -40,9 +42,14 @@ settings-button = React.renderComponent do
 
 data <- Data.getPresentation config.path, config.page-setup.total-pages
 Data.buildSyntaxTreeFromNotes data
+if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
+  page = RegExp.$1
+  data.children = [data.children[ ($('#wrap').data('page') || page) - 1 ]]
+  data.children.0.attrs.y = 0
+  forced-dpcm = 0.98
 viewer = React.renderComponent do
   ODP.components.presentation do
-    scale: resize dpcm
+    scale: forced-dpcm or resize dpcm
     data:  data
     /**/
     renderProps: (props) ->
@@ -74,5 +81,6 @@ viewer = React.renderComponent do
       | otherwise => ODP.renderProps props
     /**/
   $(\#wrap)get!0
-$ window .resize -> viewer.setProps scale: resize dpcm
 
+unless forced-dpcm
+  $ window .resize -> viewer.setProps scale: resize dpcm
