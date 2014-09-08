@@ -71,7 +71,7 @@
               case !(data.name === 'span' && data.text):
                 text = props.data.text;
                 delete props.data.text;
-                attrs.onClick = function(){
+                props.onClick = function(){
                   return Data.getSegmentations(text, function(seg){
                     var sentence;
                     sentence = React.renderComponent(CUBEBooks.Sentence({
@@ -83,13 +83,9 @@
                     return $('#control').modal('show');
                   });
                 };
-                return ODP.components.span(props, ReactVTT.IsolatedCue({
-                  target: config.path + "/demo.vtt",
-                  match: text,
-                  currentTime: function(){
-                    return audio.currentTime;
-                  }
-                }));
+                props.style = attrs.style;
+                props.style.cursor = 'pointer';
+                return React.DOM.span(props, text);
               default:
                 return ODP.renderProps(props);
               }
