@@ -123,7 +123,7 @@ utils =
   getSegmentations: (text, done)->
     done(utils.data[text] or Node!)
   askMoeDict: (ch, done) ->
-    moe <- $.getJSON "https://www.moedict.tw/~#ch.json"
+    moe <- $.getJSON "www.moedict.tw/~#ch.json"
     tagless = utils.strip
     done do
       zh_TW:   tagless moe.title
@@ -134,12 +134,15 @@ utils =
     tmp = document.createElement 'span'
     tmp.innerHTML = switch
       | document.contentType is 'application/xhtml+xml'
-        new XMLSerializer!serializeToString do
+        new XMLSerializer!serializeToString(
           new DOMParser!parseFromString(it, 'text/html').body
+        ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
       | document.xmlVersion
         dom = document.implementation.createHTMLDocument ''
         dom.body.innerHTML = it
-        new XMLSerializer!serializeToString dom.body
+        new XMLSerializer!serializeToString(
+          dom.body
+        ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
       | otherwise => it
     tmp.textContent or tmp.innerText or ''
   buildSyntaxTreeFromNotes: (node) ->

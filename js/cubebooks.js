@@ -274,7 +274,7 @@
       return done(utils.data[text] || Node());
     },
     askMoeDict: function(ch, done){
-      return $.getJSON("https://www.moedict.tw/~" + ch + ".json", function(moe){
+      return $.getJSON("./www.moedict.tw/~" + ch + ".json", function(moe){
         var tagless;
         tagless = utils.strip;
         return done({

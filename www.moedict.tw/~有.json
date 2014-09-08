@@ -1,0 +1,118 @@
+{
+  "non_radical_stroke_count": 2,
+  "title": "有",
+  "radical": "<a href=\"#~月\">月</a>",
+  "stroke_count": 6,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~魚缸\">魚缸</a></span><a href=\"#~裡\">裡</a><a href=\"#~有\">有</a><a href=\"#~十\">十</a><a href=\"#~條\">條</a><span class='punct'><a href=\"#~魚\">魚</a>」、</span><span class='punct'>「<a href=\"#~書櫃\">書櫃</a></span><a href=\"#~裡\">裡</a><a href=\"#~有\">有</a><a href=\"#~很\">很</a><a href=\"#~多\">多</a><span class='punct'><a href=\"#~工具書\">工具書</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><a href=\"#~存在\">存在</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~無\">無</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~記者\">記者</a></span><a href=\"#~有\">有</a><a href=\"#~新聞\">新聞</a><a href=\"#~自由\">自由</a><span class='punct'><a href=\"#~權\">權</a>」、</span><span class='punct'>「<a href=\"#~我\">我</a></span><a href=\"#~藏\">藏</a><a href=\"#~有\">有</a><a href=\"#~許多\">許多</a><a href=\"#~古籍\">古籍</a><span class='punct'><a href=\"#~線裝書\">線裝書</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><span class='punct'><a href=\"#~具有\">具有</a>；</span><span class='punct'><a href=\"#~領有\">領有</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~這\">這</a></span><a href=\"#~空地\">空地</a><a href=\"#~有\">有</a><a href=\"#~三\">三</a><a href=\"#~個\">個</a><a href=\"#~足球場\">足球場</a><a href=\"#~這麼\">這麼</a><span class='punct'><a href=\"#~大\">大</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><a href=\"#~達到\">達到</a><span class='punct'>（<a href=\"#~一定\">一定</a></span><a href=\"#~的\">的</a><span class='punct'><a href=\"#~程度\">程度</a>、</span><a href=\"#~數量\">數量</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~中午\">中午</a></span><span class='punct'><a href=\"#~後\">後</a>，</span><a href=\"#~天氣\">天氣</a><a href=\"#~有\">有</a><a href=\"#~了\">了</a><span class='punct'><a href=\"#~變化\">變化</a>」、</span><span class='punct'>「<a href=\"#~他\">他</a></span><a href=\"#~跟\">跟</a><a href=\"#~我\">我</a><a href=\"#~的\">的</a><a href=\"#~關係\">關係</a><a href=\"#~有\">有</a><a href=\"#~了\">了</a><a href=\"#~新\">新</a><span class='punct'><a href=\"#~發展\">發展</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><span class='punct'><a href=\"#~出現\">出現</a>；</span><a href=\"#~發生\">發生</a><span class='punct'>（<a href=\"#~某\">某</a></span><a href=\"#~種\">種</a><a href=\"#~情況\">情況</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~有\">有</a></span><span class='punct'><a href=\"#~創意\">創意</a>」、</span><span class='punct'>「<a href=\"#~有\">有</a></span><span class='punct'><a href=\"#~涵養\">涵養</a>」、</span><span class='punct'>「<a href=\"#~有\">有</a></span><span class='punct'><a href=\"#~學問\">學問</a>」。</span>"
+          ],
+          "def": "<a href=\"#~連結\">連結</a><span class='punct'><a href=\"#~名詞\">名詞</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~領有\">領有</a><a href=\"#~的\">的</a><a href=\"#~事物\">事物</a><a href=\"#~程度\">程度</a><a href=\"#~較\">較</a><span class='punct'><a href=\"#~深\">深</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~有\">有</a></span><a href=\"#~一天\">一天</a><a href=\"#~你\">你</a><a href=\"#~會\">會</a><a href=\"#~感激\">感激</a><a href=\"#~我\">我</a><span class='punct'><a href=\"#~的\">的</a>」、</span><span class='punct'>「<a href=\"#~有\">有</a></span><a href=\"#~一天\">一天</a><span class='punct'><a href=\"#~下午\">下午</a>，</span><a href=\"#~他\">他</a><a href=\"#~突然\">突然</a><span class='punct'><a href=\"#~來訪\">來訪</a>」。</span>"
+          ],
+          "def": "<a href=\"#~連結\">連結</a><span class='punct'><a href=\"#~名詞\">名詞</a>，</span><a href=\"#~泛指\">泛指</a><a href=\"#~不\">不</a><a href=\"#~確定\">確定</a><a href=\"#~的\">的</a><a href=\"#~一個\">一個</a><a href=\"#~或\">或</a><a href=\"#~幾\">幾</a><span class='punct'><a href=\"#~個\">個</a>，</span><a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~某\">某</a>」。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~在\">在</a></span><a href=\"#~休息\">休息</a><span class='punct'><a href=\"#~室\">室</a>，</span><a href=\"#~有的\">有的</a><a href=\"#~人\">人</a><a href=\"#~在\">在</a><a href=\"#~看\">看</a><span class='punct'><a href=\"#~書\">書</a>，</span><a href=\"#~有的\">有的</a><a href=\"#~人\">人</a><a href=\"#~在\">在</a><span class='punct'><a href=\"#~睡覺\">睡覺</a>」、</span><span class='punct'>「<a href=\"#~關於\">關於</a></span><span class='punct'><a href=\"#~飲食\">飲食</a>，</span><a href=\"#~有\">有</a><a href=\"#~人\">人</a><a href=\"#~喜歡\">喜歡</a><span class='punct'><a href=\"#~清淡\">清淡</a>，</span><a href=\"#~有\">有</a><a href=\"#~人\">人</a><a href=\"#~喜歡\">喜歡</a><a href=\"#~重\">重</a><a href=\"#~口味\">口味</a><span class='punct'><a href=\"#~的\">的</a>」。</span>"
+          ],
+          "def": "<a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~人\">人</a><a href=\"#~或\">或</a><a href=\"#~事前\">事前</a><span class='punct'><a href=\"#~面\">面</a>，</span><a href=\"#~表示\">表示</a><span class='punct'><a href=\"#~一部分\">一部分</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~有請\">有請</a>」、</span><span class='punct'>「<a href=\"#~有待\">有待</a>」、</span><span class='punct'>「<a href=\"#~有勞\">有勞</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~助詞\">助詞</a>。</span><a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~某\">某</a><a href=\"#~些\">些</a><a href=\"#~動詞\">動詞</a><span class='punct'><a href=\"#~前\">前</a>，</span><a href=\"#~表示\">表示</a><span class='punct'><a href=\"#~客氣\">客氣</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝「<span class='punct'>「<a href=\"#~李\">李</a></span><span class='punct'><a href=\"#~正宗\">正宗</a>！」，</span><span class='punct'>「<a href=\"#~有\">有</a>！」」。</span>"
+          ],
+          "def": "<a href=\"#~應對\">應對</a><span class='punct'><a href=\"#~語\">語</a>。</span><a href=\"#~表示\">表示</a><a href=\"#~在\">在</a><span class='punct'><a href=\"#~這裡\">這裡</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~克\">克</a></span><a href=\"#~贊\">贊</a><a href=\"#~我\">我</a><a href=\"#~天人\">天人</a><a href=\"#~之\">之</a><a href=\"#~休\">休</a><span class='punct'><a href=\"#~期\">期</a>，</span><a href=\"#~光\">光</a><a href=\"#~我\">我</a><a href=\"#~有\">有</a><a href=\"#~唐\">唐</a><a href=\"#~之\">之</a><a href=\"#~勳\">勳</a><a href=\"#~業\">業</a>（<span class='punct'>《<a href=\"#~舊\">舊</a></span><a href=\"#~唐\">唐</a><a href=\"#~書\">書</a>‧<a href=\"#~卷\">卷</a><a href=\"#~七\">七</a>‧<a href=\"#~睿\">睿</a><a href=\"#~宗\">宗</a><span class='punct'><a href=\"#~本紀\">本紀</a>》</span>）​」。"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~前綴\">前綴</a>，</span><a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~朝代\">朝代</a><a href=\"#~名\">名</a><span class='punct'><a href=\"#~前\">前</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1018420000",
+      "pinyin": "yǒu",
+      "bopomofo": "ㄧㄡˇ"
+    },
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~世衰道微\">世衰道微</a>，</span><a href=\"#~邪說\">邪說</a><a href=\"#~暴行\">暴行</a><a href=\"#~有\">有</a><a href=\"#~作\">作</a>（<span class='punct'>《<a href=\"#~孟子\">孟子</a></span>‧<a href=\"#~滕\">滕</a><a href=\"#~文\">文</a><a href=\"#~公\">公</a><span class='punct'><a href=\"#~下\">下</a>》</span>）​」。"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~又\">又</a>；</span><span class='punct'><a href=\"#~再\">再</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~吾\">吾</a></span><a href=\"#~十\">十</a><a href=\"#~有\">有</a><a href=\"#~五\">五</a><a href=\"#~而\">而</a><a href=\"#~志\">志</a><a href=\"#~於\">於</a><span class='punct'><a href=\"#~學\">學</a>，</span><a href=\"#~三\">三</a><a href=\"#~十\">十</a><a href=\"#~而立\">而立</a>（<span class='punct'>《<a href=\"#~論語\">論語</a></span>‧<a href=\"#~為\">為</a><span class='punct'><a href=\"#~政\">政</a>》</span>）​」。"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><a href=\"#~置於\">置於</a><a href=\"#~整數\">整數</a><a href=\"#~與\">與</a><a href=\"#~零數\">零數</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~間\">間</a>，</span><a href=\"#~用以\">用以</a><a href=\"#~表示\">表示</a><span class='punct'><a href=\"#~相加\">相加</a>，</span><a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~又\">又</a>」。</span>"
+        }
+      ],
+      "id": "1018420000",
+      "pinyin": "yòu",
+      "bopomofo": "ㄧㄡˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "avoir",
+      "posséder",
+      "il y a",
+      "exister"
+    ],
+    "Deutsch": [
+      "existieren  (V)​",
+      "haben  (V)​",
+      "es gibt "
+    ],
+    "English": [
+      "to have",
+      "there is",
+      "there are",
+      "to exist",
+      "to be"
+    ]
+  },
+  "xrefs": []
+}

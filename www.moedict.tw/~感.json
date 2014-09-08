@@ -1,0 +1,72 @@
+{
+  "non_radical_stroke_count": 9,
+  "title": "感",
+  "radical": "<a href=\"#~心\">心</a>",
+  "stroke_count": 13,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~感動\">感動</a>」、</span><span class='punct'>「<a href=\"#~感化\">感化</a>」、</span><span class='punct'>「<a href=\"#~感人肺腑\">感人肺腑</a>」。</span>"
+          ],
+          "def": "<a href=\"#~觸動\">觸動</a><span class='punct'><a href=\"#~人心\">人心</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~感\">感</a></span><a href=\"#~到\">到</a><span class='punct'><a href=\"#~意外\">意外</a>」、</span><span class='punct'>「<a href=\"#~深\">深</a></span><a href=\"#~感愧\">感愧</a><span class='punct'><a href=\"#~疚\">疚</a>」、</span><span class='punct'>「<a href=\"#~倍\">倍</a></span><a href=\"#~感\">感</a><span class='punct'><a href=\"#~親切\">親切</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~覺得\">覺得</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~美感\">美感</a>」、</span><span class='punct'>「<a href=\"#~反感\">反感</a>」、</span><span class='punct'>「<a href=\"#~成就\">成就</a></span><span class='punct'><a href=\"#~感\">感</a>」、</span><span class='punct'>「<a href=\"#~感慨萬千\">感慨萬千</a>」。</span>"
+          ],
+          "def": "<a href=\"#~內心\">內心</a><a href=\"#~對\">對</a><a href=\"#~事物\">事物</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~反應\">反應</a>；</span><a href=\"#~自我\">自我</a><a href=\"#~認知\">認知</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~看法\">看法</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~感謝\">感謝</a>」、</span><span class='punct'>「<a href=\"#~感激\">感激</a>」、</span><span class='punct'>「<a href=\"#~感恩圖報\">感恩圖報</a>」。</span>"
+          ],
+          "def": "<a href=\"#~心懷\">心懷</a><span class='punct'><a href=\"#~謝意\">謝意</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~感光\">感光</a>」、</span><span class='punct'>「<a href=\"#~感染\">感染</a>」、</span><span class='punct'>「<a href=\"#~感冒\">感冒</a>」、</span><span class='punct'>「<a href=\"#~感\">感</a></span><a href=\"#~了\">了</a><a href=\"#~點\">點</a><span class='punct'><a href=\"#~風寒\">風寒</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~接觸\">接觸</a>；</span><span class='punct'><a href=\"#~引起\">引起</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1014020000",
+      "pinyin": "gǎn",
+      "bopomofo": "ㄍㄢˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "sentiment",
+      "sens",
+      "sentir",
+      "éprouver",
+      "émouvoir",
+      "toucher"
+    ],
+    "Deutsch": [
+      "innerlich fühlen, Gefühl  (S)​",
+      "Gan  (Eig, Fam)​"
+    ],
+    "English": [
+      "to feel",
+      "to move",
+      "to touch",
+      "to affect",
+      "feeling",
+      "emotion",
+      "(suffix)​ sense of ~"
+    ]
+  },
+  "xrefs": []
+}

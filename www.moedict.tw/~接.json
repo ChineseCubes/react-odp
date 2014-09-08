@@ -1,0 +1,86 @@
+{
+  "non_radical_stroke_count": 8,
+  "title": "接",
+  "radical": "<a href=\"#~手\">手</a>",
+  "stroke_count": 11,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~接近\">接近</a>」、</span><span class='punct'>「<a href=\"#~交頭接耳\">交頭接耳</a>」、</span><span class='punct'>「<a href=\"#~短兵相接\">短兵相接</a>」、</span><span class='punct'>「<a href=\"#~四\">四</a></span><a href=\"#~目\">目</a><span class='punct'><a href=\"#~相接\">相接</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~交合\">交合</a>；</span><span class='punct'><a href=\"#~接觸\">接觸</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~接\">接</a></span><span class='punct'><a href=\"#~枝\">枝</a>」、</span><span class='punct'>「<a href=\"#~焊接\">焊接</a>」、</span><span class='punct'>「<a href=\"#~接\">接</a></span><span class='punct'><a href=\"#~電線\">電線</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~連接\">連接</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~接續\">接續</a>」、</span><span class='punct'>「<a href=\"#~接連\">接連</a>」、</span><span class='punct'>「<a href=\"#~上氣不接下氣\">上氣不接下氣</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~連續\">連續</a>；</span><span class='punct'><a href=\"#~繼續\">繼續</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~接\">接</a></span><span class='punct'><a href=\"#~球\">球</a>」、</span><span class='punct'>「<a href=\"#~接招\">接招</a>」、</span><span class='punct'>「<a href=\"#~接\">接</a></span><span class='punct'><a href=\"#~水\">水</a>」、</span><span class='punct'>「<a href=\"#~把\">把</a></span><a href=\"#~拋\">拋</a><a href=\"#~過來\">過來</a><a href=\"#~的\">的</a><a href=\"#~繡球\">繡球</a><a href=\"#~接\">接</a><span class='punct'><a href=\"#~住\">住</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~承受\">承受</a>；</span><a href=\"#~托\">托</a><span class='punct'><a href=\"#~住\">住</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~接納\">接納</a>」、</span><span class='punct'>「<a href=\"#~接見\">接見</a>」、</span><span class='punct'>「<a href=\"#~接\">接</a></span><span class='punct'><a href=\"#~電話\">電話</a>」、</span><span class='punct'>「<a href=\"#~接收\">接收</a></span><span class='punct'><a href=\"#~訊號\">訊號</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~接受\">接受</a>；</span><span class='punct'><a href=\"#~收受\">收受</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~迎接\">迎接</a>」、</span><span class='punct'>「<a href=\"#~接待\">接待</a>」。</span>"
+          ],
+          "def": "<a href=\"#~引\">引</a><span class='punct'><a href=\"#~領\">領</a>；</span><span class='punct'><a href=\"#~迎\">迎</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~接替\">接替</a>」、</span><span class='punct'>「<a href=\"#~接任\">接任</a>」、</span><span class='punct'>「<a href=\"#~接力\">接力</a>」、</span><span class='punct'>「<a href=\"#~交接\">交接</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~承繼\">承繼</a>；</span><span class='punct'><a href=\"#~延續\">延續</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1015910000",
+      "pinyin": "jiē",
+      "bopomofo": "ㄐㄧㄝ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "être proche de",
+      "joindre",
+      "relier",
+      "recevoir",
+      "accueillir",
+      "reprendre",
+      "répondre (au téléphone)​"
+    ],
+    "Deutsch": [
+      "verbinden, verknüpfen, abholen, empfangen  (V)​"
+    ],
+    "English": [
+      "to receive",
+      "to answer (the phone)​",
+      "to meet or welcome sb",
+      "to connect",
+      "to catch",
+      "to join",
+      "to extend",
+      "to take one's turn on duty",
+      "to take over for sb"
+    ]
+  },
+  "xrefs": []
+}

@@ -34331,12 +34331,12 @@ var ExecutionEnvironment = _dereq_("./ExecutionEnvironment");
 var setInnerHTML = function(node, html) {
   if (document.contentType === "application/xhtml+xml") {
   var dom = new DOMParser().parseFromString(html, 'text/html');
-  html = new XMLSerializer().serializeToString(dom.body);
+  html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '');
 }
 else if (document.xmlVersion) {
   var dom = document.implementation.createHTMLDocument('');
   dom.body.innerHTML = html;
-  html = new XMLSerializer().serializeToString(dom.body);
+  html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '');
 }
 node.innerHTML = html;
 };
@@ -34387,12 +34387,12 @@ if (ExecutionEnvironment.canUseDOM) {
       } else {
         if (document.contentType === "application/xhtml+xml") {
   var dom = new DOMParser().parseFromString(html, 'text/html');
-  html = new XMLSerializer().serializeToString(dom.body);
+  html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '');
 }
 else if (document.xmlVersion) {
   var dom = document.implementation.createHTMLDocument('');
   dom.body.innerHTML = html;
-  html = new XMLSerializer().serializeToString(dom.body);
+  html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '');
 }
 node.innerHTML = html;
       }
@@ -75740,7 +75740,7 @@ $.fn.video.settings = {
     render: function(){
       var children, currentTime;
       children = this.state.track != null
-      ? ( currentTime = (ref$ = this.state).currentTime || (ref$.currentTime = this.props.currentTime()), this.state.track.update(currentTime), (function(){
+        ? (currentTime = this.props.currentTime(), this.state.track.update(currentTime), (function(){
           var i$, results$ = [];
           for (i$ in this.cuesToDisplay()) {
             results$.push((fn$.call(this, i$, this.cuesToDisplay()[i$])));

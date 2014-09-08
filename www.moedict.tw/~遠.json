@@ -1,0 +1,67 @@
+{
+  "non_radical_stroke_count": 10,
+  "title": "遠",
+  "radical": "<a href=\"#~辵\">辵</a>",
+  "stroke_count": 14,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~遼遠\">遼遠</a>」、</span><span class='punct'>「<a href=\"#~遠走高飛\">遠走高飛</a>」、</span><span class='punct'>「<a href=\"#~久遠\">久遠</a>」、</span><span class='punct'>「<a href=\"#~深謀遠慮\">深謀遠慮</a>」。</span>"
+          ],
+          "def": "<a href=\"#~空間\">空間</a><a href=\"#~或\">或</a><a href=\"#~時間\">時間</a><a href=\"#~的\">的</a><a href=\"#~距離\">距離</a><a href=\"#~長\">長</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~近\">近</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~遠親\">遠親</a>」、</span><span class='punct'>「<a href=\"#~遠房\">遠房</a>」、</span><span class='punct'>「<a href=\"#~疏遠\">疏遠</a>」。</span>"
+          ],
+          "def": "<a href=\"#~關係\">關係</a><a href=\"#~不\">不</a><span class='punct'><a href=\"#~密切\">密切</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~差\">差</a></span><a href=\"#~得\">得</a><span class='punct'><a href=\"#~遠\">遠</a>」、</span><span class='punct'>「<a href=\"#~相差\">相差</a></span><a href=\"#~甚\">甚</a><span class='punct'><a href=\"#~遠\">遠</a>」、</span><span class='punct'>「<a href=\"#~遠不如\">遠不如</a></span><span class='punct'><a href=\"#~從前\">從前</a>」。</span>"
+          ],
+          "def": "<a href=\"#~差距\">差距</a><span class='punct'><a href=\"#~大\">大</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "alt": "远",
+      "id": "1041720000",
+      "pinyin": "yuǎn",
+      "bopomofo": "ㄩㄢˇ"
+    },
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~遠\">遠</a></span><a href=\"#~嫌\">嫌</a><a href=\"#~避\">避</a><span class='punct'><a href=\"#~怨\">怨</a>」、</span><span class='punct'>「<a href=\"#~敬而遠之\">敬而遠之</a>」、</span><span class='punct'>「<a href=\"#~親\">親</a></span><span class='punct'><a href=\"#~賢臣\">賢臣</a>，</span><a href=\"#~遠\">遠</a><span class='punct'><a href=\"#~小人\">小人</a>」。</span>"
+          ],
+          "def": "<a href=\"#~避\">避</a><span class='punct'><a href=\"#~開\">開</a>；</span><a href=\"#~不\">不</a><span class='punct'><a href=\"#~親近\">親近</a>。</span>"
+        }
+      ],
+      "alt": "远",
+      "id": "1041720000",
+      "pinyin": "yuàn<br>陸⃝yuǎn",
+      "bopomofo": "ㄩㄢˋ<br>陸⃝ㄩㄢˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "éloigné",
+      "loin"
+    ],
+    "Deutsch": [
+      "weit, entfernt, entlegen  (Adj)​"
+    ],
+    "English": [
+      "far",
+      "distant",
+      "remote",
+      "to distance oneself from (classical)​"
+    ]
+  },
+  "xrefs": []
+}

@@ -82,5 +82,12 @@ viewer = React.renderComponent do
     /**/
   $(\#wrap)get!0
 
-unless forced-dpcm
+if forced-dpcm
+  $.fn.modal = ->
+    @fadeIn \fast
+    @css marginTop: \-200px, opacity: 0.9
+    $('#wrap').css \opacity 0.5
+    @on \click \.close ~> $('#wrap').css \opacity 1 @fadeOut \fast
+    $('#wrap').one \click ~> $('#wrap').css \opacity 1 @fastOut \fast
+else
   $ window .resize -> viewer.setProps scale: resize dpcm

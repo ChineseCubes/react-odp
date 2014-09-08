@@ -96,7 +96,23 @@
             }
             /**/
           }), $('#wrap').get()[0]);
-          if (!forcedDpcm) {
+          if (forcedDpcm) {
+            return $.fn.modal = function(){
+              var this$ = this;
+              this.fadeIn('fast');
+              this.css({
+                marginTop: '-200px',
+                opacity: 0.9
+              });
+              $('#wrap').css('opacity', 0.5);
+              this.on('click', '.close', function(){
+                return $('#wrap').css('opacity', 1, this$.fadeOut('fast'));
+              });
+              return $('#wrap').one('click', function(){
+                return $('#wrap').css('opacity', 1, this$.fadeOut('fast'));
+              });
+            };
+          } else {
             return $(window).resize(function(){
               return viewer.setProps({
                 scale: resize(dpcm)

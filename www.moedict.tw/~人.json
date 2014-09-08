@@ -1,0 +1,75 @@
+{
+  "non_radical_stroke_count": 0,
+  "title": "人",
+  "radical": "<a href=\"#~人\">人</a>",
+  "stroke_count": 2,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~人類\">人類</a>」、</span><span class='punct'>「<a href=\"#~人種\">人種</a>」、</span><span class='punct'>「<a href=\"#~男人\">男人</a>」、</span><span class='punct'>「<a href=\"#~女人\">女人</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~萬物之靈\">萬物之靈</a>；</span><a href=\"#~具有\">具有</a><a href=\"#~最\">最</a><a href=\"#~高\">高</a><a href=\"#~智慧\">智慧</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~動物\">動物</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~捨己救人\">捨己救人</a>」、</span><span class='punct'>「<a href=\"#~人云亦云\">人云亦云</a>」、</span><span class='punct'>「<a href=\"#~己所不欲，勿施於人\">己所不欲，勿施於人</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~他人\">他人</a>；</span><span class='punct'><a href=\"#~別人\">別人</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~人人\">人人</a></span><span class='punct'><a href=\"#~稱羨\">稱羨</a>」、</span><span class='punct'>「<a href=\"#~人心惶惶\">人心惶惶</a>」、</span><span class='punct'>「<a href=\"#~人\">人</a></span><a href=\"#~盡\">盡</a><a href=\"#~皆\">皆</a><span class='punct'><a href=\"#~知\">知</a>」、</span><span class='punct'>「<a href=\"#~才華\">才華</a></span><span class='punct'><a href=\"#~過人\">過人</a>」。</span>"
+          ],
+          "def": "<a href=\"#~每\">每</a><span class='punct'><a href=\"#~人\">人</a>；</span><a href=\"#~一般\">一般</a><span class='punct'><a href=\"#~人\">人</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~軍人\">軍人</a>」、</span><span class='punct'>「<a href=\"#~證人\">證人</a>」、</span><span class='punct'>「<a href=\"#~美洲\">美洲</a></span><span class='punct'><a href=\"#~人\">人</a>」。</span>"
+          ],
+          "def": "<a href=\"#~指\">指</a><a href=\"#~某\">某</a><a href=\"#~種\">種</a><span class='punct'><a href=\"#~人\">人</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~管理\">管理</a></span><a href=\"#~乏\">乏</a><span class='punct'><a href=\"#~人\">人</a>」、</span><span class='punct'>「<a href=\"#~完成\">完成</a></span><a href=\"#~這\">這</a><a href=\"#~件\">件</a><a href=\"#~事\">事</a><a href=\"#~要不\">要不</a><a href=\"#~少\">少</a><span class='punct'><a href=\"#~人\">人</a>」。</span>"
+          ],
+          "def": "<a href=\"#~指\">指</a><span class='punct'><a href=\"#~人力\">人力</a>、</span><span class='punct'><a href=\"#~人手\">人手</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~整個\">整個</a></span><a href=\"#~人\">人</a><a href=\"#~長\">長</a><span class='punct'><a href=\"#~痘子\">痘子</a>」、</span><span class='punct'>「<a href=\"#~最近\">最近</a></span><a href=\"#~他人\">他人</a><a href=\"#~總是\">總是</a><a href=\"#~迷\">迷</a><a href=\"#~迷糊\">迷糊</a><a href=\"#~糊\">糊</a><span class='punct'><a href=\"#~的\">的</a>」。</span>"
+          ],
+          "def": "<a href=\"#~指\">指</a><a href=\"#~人\">人</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~身心\">身心</a>、</span><span class='punct'><a href=\"#~意識\">意識</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~二\">二</a><a href=\"#~一\">一</a><a href=\"#~四部\">四部</a><a href=\"#~首\">首</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span>"
+        }
+      ],
+      "id": "1000680000",
+      "pinyin": "rén",
+      "bopomofo": "ㄖㄣˊ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "une personne",
+      "homme",
+      "être humain",
+      "homo sapiens"
+    ],
+    "Deutsch": [
+      "Radikal Nr. 9 = Mensch "
+    ],
+    "English": [
+      "man",
+      "person",
+      "people",
+      "CL:<a href=\"#~個\">個</a>|个[ge4],<a href=\"#~位\">位</a>[wei4]"
+    ]
+  },
+  "xrefs": []
+}

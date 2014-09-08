@@ -1,0 +1,43 @@
+{
+  "non_radical_stroke_count": 8,
+  "title": "聚",
+  "radical": "<a href=\"#~耳\">耳</a>",
+  "stroke_count": 14,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~聚餐\">聚餐</a>」、</span><span class='punct'>「<a href=\"#~他們\">他們</a></span><a href=\"#~每\">每</a><a href=\"#~週\">週</a><a href=\"#~小\">小</a><a href=\"#~聚\">聚</a><a href=\"#~一\">一</a><span class='punct'><a href=\"#~次\">次</a>」、</span><span class='punct'>「<a href=\"#~人\">人</a></span><a href=\"#~以\">以</a><span class='punct'><a href=\"#~類聚\">類聚</a>，</span><a href=\"#~物\">物</a><a href=\"#~以\">以</a><a href=\"#~群\">群</a><span class='punct'><a href=\"#~分\">分</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~會合\">會合</a>；</span><a href=\"#~集合\">集合</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~散\">散</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1032730000",
+      "pinyin": "jù",
+      "bopomofo": "ㄐㄩˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "se réunir"
+    ],
+    "Deutsch": [
+      "sich versammeln, zusammentreffen, zusammenkommen  (V)​",
+      "erfassen, sammeln  (Num)​",
+      "poly  (Num, Chem)​"
+    ],
+    "English": [
+      "to congregate",
+      "to assemble",
+      "to mass",
+      "to gather together",
+      "to amass",
+      "to polymerize"
+    ]
+  },
+  "xrefs": []
+}

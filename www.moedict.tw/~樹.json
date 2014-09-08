@@ -1,0 +1,60 @@
+{
+  "non_radical_stroke_count": 12,
+  "title": "樹",
+  "radical": "<a href=\"#~木\">木</a>",
+  "stroke_count": 16,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~樹\">樹</a></span><span class='punct'><a href=\"#~枝\">枝</a>」、</span><span class='punct'>「<a href=\"#~松樹\">松樹</a>」、</span><span class='punct'>「<a href=\"#~行道樹\">行道樹</a>」。</span>"
+          ],
+          "def": "<a href=\"#~木本植物\">木本植物</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~總稱\">總稱</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~十年樹木，百年樹人\">十年樹木，百年樹人</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~種植\">種植</a>；</span><span class='punct'><a href=\"#~栽培\">栽培</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~樹立\">樹立</a>」、</span><span class='punct'>「<a href=\"#~建樹\">建樹</a>」、</span><span class='punct'>「<a href=\"#~獨樹一幟\">獨樹一幟</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~建立\">建立</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~玄\">玄</a></span><a href=\"#~都\">都</a><a href=\"#~觀\">觀</a><a href=\"#~裡\">裡</a><a href=\"#~桃\">桃</a><a href=\"#~千\">千</a><span class='punct'><a href=\"#~樹\">樹</a>，</span><a href=\"#~盡是\">盡是</a><a href=\"#~劉\">劉</a><a href=\"#~郎\">郎</a><a href=\"#~去\">去</a><a href=\"#~後\">後</a><a href=\"#~栽\">栽</a><span class='punct'>（<a href=\"#~唐\">唐</a></span>•<a href=\"#~劉\">劉</a><a href=\"#~禹\">禹</a><a href=\"#~錫\">錫</a>〈<a href=\"#~戲\">戲</a><a href=\"#~贈\">贈</a><a href=\"#~看\">看</a><a href=\"#~花\">花</a><a href=\"#~諸君\">諸君</a><a href=\"#~子\">子</a><span class='punct'><a href=\"#~詩\">詩</a>〉</span>）​」。"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~量詞\">量詞</a>。</span><a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><a href=\"#~樹\">樹</a><span class='punct'><a href=\"#~木\">木</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "alt": "树",
+      "id": "1020240000",
+      "pinyin": "shù",
+      "bopomofo": "ㄕㄨˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "arbre",
+      "ériger",
+      "cultiver"
+    ],
+    "Deutsch": [
+      "Baum "
+    ],
+    "English": [
+      "tree",
+      "CL:<a href=\"#~棵\">棵</a>[ke1]",
+      "to cultivate",
+      "to set up"
+    ]
+  },
+  "xrefs": []
+}

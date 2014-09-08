@@ -37,12 +37,12 @@ gulp.task \js:vendor <[bower]> ->
     .pipe gulp-replace 'node.innerHTML = html;', """
       if (document.contentType === "application/xhtml+xml") {
         var dom = new DOMParser().parseFromString(html, 'text/html');
-        html = new XMLSerializer().serializeToString(dom.body);
+        html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\\/body>$/, '');
       }
       else if (document.xmlVersion) {
         var dom = document.implementation.createHTMLDocument('');
         dom.body.innerHTML = html;
-        html = new XMLSerializer().serializeToString(dom.body);
+        html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\\/body>$/, '');
       }
       node.innerHTML = html;
     """

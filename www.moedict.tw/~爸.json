@@ -1,0 +1,31 @@
+{
+  "non_radical_stroke_count": 4,
+  "title": "爸",
+  "radical": "<a href=\"#~父\">父</a>",
+  "stroke_count": 8,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "def": "<span class='punct'><a href=\"#~爸爸\">爸爸</a>。</span>"
+        }
+      ],
+      "id": "1024720000",
+      "pinyin": "bà",
+      "bopomofo": "ㄅㄚˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "père",
+      "papa"
+    ],
+    "English": [
+      "father",
+      "dad",
+      "pa",
+      "papa"
+    ]
+  },
+  "xrefs": []
+}

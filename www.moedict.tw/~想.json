@@ -1,0 +1,64 @@
+{
+  "non_radical_stroke_count": 9,
+  "title": "想",
+  "radical": "<a href=\"#~心\">心</a>",
+  "stroke_count": 13,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~想法\">想法</a></span><span class='punct'><a href=\"#~子\">子</a>」、</span><span class='punct'>「<a href=\"#~想\">想</a></span><a href=\"#~不\">不</a><span class='punct'><a href=\"#~透\">透</a>」、</span><span class='punct'>「<a href=\"#~苦想\">苦想</a></span><span class='punct'><a href=\"#~深思\">深思</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~思量\">思量</a>；</span><span class='punct'><a href=\"#~考慮\">考慮</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~推想\">推想</a>」、</span><span class='punct'>「<a href=\"#~可想而知\">可想而知</a>」、</span><span class='punct'>「<a href=\"#~想當然\">想當然</a></span><span class='punct'><a href=\"#~耳\">耳</a>」、</span><span class='punct'>「<a href=\"#~我\">我</a></span><a href=\"#~想\">想</a><a href=\"#~他\">他</a><a href=\"#~不會\">不會</a><span class='punct'><a href=\"#~見死不救\">見死不救</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~猜測\">猜測</a>；</span><a href=\"#~推\">推</a><span class='punct'><a href=\"#~度\">度</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~想\">想</a></span><a href=\"#~去\">去</a><a href=\"#~看\">看</a><span class='punct'><a href=\"#~電影\">電影</a>」、</span><span class='punct'>「<a href=\"#~想\">想</a></span><a href=\"#~出國\">出國</a><span class='punct'><a href=\"#~旅遊\">旅遊</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~希望\">希望</a>；</span><span class='punct'><a href=\"#~計劃\">計劃</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~想念\">想念</a>」、</span><span class='punct'>「<a href=\"#~想\">想</a></span><span class='punct'><a href=\"#~家\">家</a>」、</span><span class='punct'>「<a href=\"#~朝思暮想\">朝思暮想</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~思念\">思念</a>；</span><span class='punct'><a href=\"#~掛念\">掛念</a>。</span>"
+        }
+      ],
+      "id": "1014030000",
+      "pinyin": "xiǎng",
+      "bopomofo": "ㄒㄧㄤˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "penser",
+      "songer",
+      "supposer",
+      "estimer",
+      "vouloir",
+      "désirer",
+      "penser à"
+    ],
+    "Deutsch": [
+      "vermissen (V)​",
+      "wollen, möchten (V)​",
+      "denken (V)​"
+    ],
+    "English": [
+      "to think",
+      "to believe",
+      "to suppose",
+      "to wish",
+      "to want",
+      "to miss (feel wistful about the absence of sb or sth)​"
+    ]
+  },
+  "xrefs": []
+}

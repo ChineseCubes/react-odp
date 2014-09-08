@@ -1,0 +1,48 @@
+{
+  "non_radical_stroke_count": 10,
+  "title": "遙",
+  "radical": "<a href=\"#~辵\">辵</a>",
+  "stroke_count": 14,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~遙望\">遙望</a>」、</span><span class='punct'>「<a href=\"#~遙遠\">遙遠</a>」、</span><span class='punct'>「<a href=\"#~遙相呼應\">遙相呼應</a>」。</span>"
+          ],
+          "def": "<span class='punct'>（<a href=\"#~距離\">距離</a></span>）​<span class='punct'><a href=\"#~遠\">遠</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~遙遙無期\">遙遙無期</a>」。</span>"
+          ],
+          "def": "<span class='punct'>（<a href=\"#~時間\">時間</a></span>）​<span class='punct'><a href=\"#~久\">久</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "alt": "遥",
+      "id": "1041760000",
+      "pinyin": "yáo",
+      "bopomofo": "ㄧㄠˊ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "lointain",
+      "éloigné"
+    ],
+    "Deutsch": [
+      "fern ",
+      "weit weg, weitab "
+    ],
+    "English": [
+      "distant",
+      "remote",
+      "far",
+      "far away"
+    ]
+  },
+  "xrefs": []
+}
