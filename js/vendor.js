@@ -34329,7 +34329,16 @@ var ExecutionEnvironment = _dereq_("./ExecutionEnvironment");
  * @internal
  */
 var setInnerHTML = function(node, html) {
-  node.innerHTML = ((document.contentType === "application/xhtml+xml") ? (new XMLSerializer().serializeToString(new DOMParser().parseFromString(html, 'text/html'))) : html);
+  if (document.contentType === "application/xhtml+xml") {
+  var dom = new DOMParser().parseFromString(html, 'text/html');
+  html = new XMLSerializer().serializeToString(dom);
+}
+else if (document.xmlVersion) {
+  var dom = document.implementation.createHTMLDocument('');
+  dom.body.innerHTML = html;
+  html = new XMLSerializer().serializeToString(dom.body);
+}
+node.innerHTML = html;
 };
 
 if (ExecutionEnvironment.canUseDOM) {
@@ -34376,7 +34385,16 @@ if (ExecutionEnvironment.canUseDOM) {
           textNode.deleteData(0, 1);
         }
       } else {
-        node.innerHTML = ((document.contentType === "application/xhtml+xml") ? (new XMLSerializer().serializeToString(new DOMParser().parseFromString(html, 'text/html'))) : html);
+        if (document.contentType === "application/xhtml+xml") {
+  var dom = new DOMParser().parseFromString(html, 'text/html');
+  html = new XMLSerializer().serializeToString(dom);
+}
+else if (document.xmlVersion) {
+  var dom = document.implementation.createHTMLDocument('');
+  dom.body.innerHTML = html;
+  html = new XMLSerializer().serializeToString(dom.body);
+}
+node.innerHTML = html;
       }
     };
   }

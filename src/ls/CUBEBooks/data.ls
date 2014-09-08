@@ -132,10 +132,15 @@ utils =
       English: tagless(moe.translation.English)split /,\w*?/
   strip: ->
     tmp = document.createElement 'span'
-    tmp.innerHTML = if document.contentType is "application/xhtml+xml"
-      then new XMLSerializer().serializeToString do
-        new DOMParser!parseFromString it, 'text/html'
-      else it
+    tmp.innerHTML = switch
+      | document.contentType is 'application/xhtml+xml'
+        new XMLSerializer!serializeToString do
+          new DOMParser!parseFromString it, 'text/html'
+      | document.xmlVersion
+        dom = document.implementation.createHTMLDocument ''
+        dom.body.innerHTML = it
+        new XMLSerializer!serializeToString dom.body
+      | otherwise => it
     tmp.textContent or tmp.innerText or ''
   buildSyntaxTreeFromNotes: (node) ->
     keys   = []

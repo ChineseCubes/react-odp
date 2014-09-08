@@ -35,7 +35,16 @@ gulp.task \js:vendor <[bower]> ->
     .pipe gulp-filter <[**/*.js !**/*.min.js]>
     .pipe gulp-concat 'vendor.js'
     .pipe gulp-replace 'node.innerHTML = html;', """
-      node.innerHTML = ((document.contentType === "application/xhtml+xml") ? (new XMLSerializer().serializeToString(new DOMParser().parseFromString(html, 'text/html'))) : html);
+      if (document.contentType === "application/xhtml+xml") {
+        var dom = new DOMParser().parseFromString(html, 'text/html');
+        html = new XMLSerializer().serializeToString(dom);
+      }
+      else if (document.xmlVersion) {
+        var dom = document.implementation.createHTMLDocument('');
+        dom.body.innerHTML = html;
+        html = new XMLSerializer().serializeToString(dom.body);
+      }
+      node.innerHTML = html;
     """
     .pipe gulp.dest "#{path.build}/js"
 

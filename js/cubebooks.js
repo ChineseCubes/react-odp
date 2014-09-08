@@ -286,9 +286,20 @@
       });
     },
     strip: function(it){
-      var tmp;
+      var tmp, dom;
       tmp = document.createElement('span');
-      tmp.innerHTML = document.contentType === "application/xhtml+xml" ? new XMLSerializer().serializeToString(new DOMParser().parseFromString(it, 'text/html')) : it;
+      tmp.innerHTML = (function(){
+        switch (false) {
+        case document.contentType !== 'application/xhtml+xml':
+          return new XMLSerializer().serializeToString(new DOMParser().parseFromString(it, 'text/html'));
+        case !document.xmlVersion:
+          dom = document.implementation.createHTMLDocument('');
+          dom.body.innerHTML = it;
+          return new XMLSerializer().serializeToString(dom.body);
+        default:
+          return it;
+        }
+      }());
       return tmp.textContent || tmp.innerText || '';
     },
     buildSyntaxTreeFromNotes: function(node){
