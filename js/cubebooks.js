@@ -29,7 +29,7 @@
         children: [{
           name: 'draw:image',
           attrs: {
-            href: 'Pictures/home.png',
+            href: '../images/home.png',
             'on-click': function(){
               return alert('home');
             }
@@ -49,7 +49,7 @@
           name: 'draw:image',
           attrs: {
             name: 'activity',
-            href: 'Pictures/1000020100000022000000223520C9AB.png',
+            href: '../images/play.png',
             'on-click': function(){
               throw Error('unimplemented');
             }
@@ -274,7 +274,7 @@
       return done(utils.data[text] || Node());
     },
     askMoeDict: function(ch, done){
-      return $.getJSON("./www.moedict.tw/~" + ch + ".json", function(moe){
+      return $.getJSON("www.moedict.tw/~" + ch + ".json", function(moe){
         var tagless;
         tagless = utils.strip;
         return done({
@@ -291,11 +291,11 @@
       tmp.innerHTML = (function(){
         switch (false) {
         case document.contentType !== 'application/xhtml+xml':
-          return new XMLSerializer().serializeToString(new DOMParser().parseFromString(it, 'text/html').body);
+          return new XMLSerializer().serializeToString(new DOMParser().parseFromString(it, 'text/html').body).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '');
         case !document.xmlVersion:
           dom = document.implementation.createHTMLDocument('');
           dom.body.innerHTML = it;
-          return new XMLSerializer().serializeToString(dom.body);
+          return new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '');
         default:
           return it;
         }
@@ -303,14 +303,12 @@
       return tmp.textContent || tmp.innerText || '';
     },
     buildSyntaxTreeFromNotes: function(node){
-      var keys, values, keywords, zh, en, i, ks, key, value, reverseSorted, re, r;
+      var keys, values, keywords;
       keys = [];
       values = [];
       keywords = [];
-      zh = null;
-      en = null;
       utils.traverse(node, function(node, parents){
-        var current, ss, char;
+        var current, key, chars, res$, i$, to$, i;
         if (!node.text) {
           return;
         }
@@ -322,80 +320,21 @@
             keywords.push(current);
           }
           return keys.push(node.text);
-        } else {
-          if (keys.length > values.length) {
-            return values.push(Node(node.text, [], node.text));
-          } else {
-            if (!zh) {
-              ss = node.text.split(' ');
-              if (ss.length !== 1) {
-                zh = ss[0];
-                en = ss[1];
-              } else {
-                zh = node.text;
-              }
-            } else if (!en) {
-              en = node.text;
-            }
-            if (zh && en) {
-              keywords[keywords.length - 1][zh] = Node(en, [], en, zh.length === 1
-                ? (char = Char(), utils.askMoeDict(zh, function(moe){
-                  delete moe.English;
-                  return import$(char, moe);
-                }), [char])
-                : (function(){
-                  var i$, len$, results$ = [];
-                  for (i$ = 0, len$ = zh.length; i$ < len$; ++i$) {
-                    results$.push((fn$.call(this, zh[i$])));
-                  }
-                  return results$;
-                  function fn$(c){
-                    var char, n;
-                    char = Char();
-                    n = Node('', [], '', [char]);
-                    utils.askMoeDict(c, function(moe){
-                      var def, x$;
-                      char.zh_TW = moe.zh_TW;
-                      char.zh_CN = moe.zh_CN;
-                      char.pinyin = moe.pinyin;
-                      def = min(moe.English, 'length');
-                      x$ = n;
-                      x$.en = def;
-                      x$.definition = moe.English.join(', ');
-                      return x$;
-                    });
-                    return n;
-                  }
-                }.call(this)));
-              zh = null;
-              return en = null;
-            }
+        } else if (keys.length > values.length) {
+          key = keys[values.length];
+          res$ = [];
+          for (i$ = 0, to$ = key.length; i$ < to$; ++i$) {
+            i = i$;
+            res$.push(Node('', [], '', [Char('', key[i])]));
           }
+          chars = res$;
+          return values.push(Node(node.text, [], node.text, chars));
         }
       });
       if (keys.length !== values.length) {
         console.warn('the translations of sentences are not match');
       }
-      for (i in keywords) {
-        ks = keywords[i];
-        key = keys[i] + "";
-        value = values[i];
-        if (!Object.keys(ks).length) {
-          console.warn("segment translations of '" + key + "' are missing");
-          continue;
-        }
-        import$(ks, punctuations);
-        reverseSorted = Object.keys(ks).sort(fn$);
-        re = new RegExp(reverseSorted.join('|'));
-        while (r = re.exec(key)) {
-          key = key.replace(r[0], '');
-          value.children.push(ks[r[0]]);
-        }
-      }
       return utils.data = zipObject(keys, values);
-      function fn$(a, b){
-        return b.length - a.length;
-      }
     }
   };
   import$((ref$ = this.Data) != null

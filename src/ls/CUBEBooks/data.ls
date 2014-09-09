@@ -24,7 +24,7 @@ master-page =
       children:
         * name: 'draw:image'
           attrs:
-            href: 'Pictures/home.png'
+            href: '../images/home.png'
             'on-click': -> alert 'home'
         ...
     * name: 'draw:frame'
@@ -39,7 +39,7 @@ master-page =
         * name: 'draw:image'
           attrs:
             name: 'activity'
-            href: 'Pictures/1000020100000022000000223520C9AB.png'
+            href: '../images/play.png'
             'on-click': -> ...
         ...
 
@@ -149,8 +149,6 @@ utils =
     keys   = []
     values = []
     keywords = []
-    zh = null
-    en = null
     utils.traverse node, (node, parents) ->
       return if not node.text
       if parents.2 isnt 'notes'
@@ -162,62 +160,18 @@ utils =
           # and keep the length of keywords is the same as keys
           keywords.push current
         keys.push node.text
-      else
-        if keys.length > values.length
-          values.push Node do
-            node.text
-            []
-            node.text
-        else
-          if not zh
-            ss = node.text.split ' '
-            if ss.length isnt 1
-              zh := ss.0
-              en := ss.1
-            else
-              zh := node.text
-          else if not en
-            en := node.text
-          if zh and en
-            keywords[*-1][zh] =
-              Node en, [], en,
-                if zh.length is 1
-                  char = Char!
-                  do
-                    moe <- utils.askMoeDict zh
-                    delete moe.English
-                    char <<< moe
-                  [char]
-                else
-                  for let c in zh
-                    char = Char!
-                    n = Node '', [], '', [char]
-                    do
-                      moe <- utils.askMoeDict c
-                      char <<< moe{zh_TW, zh_CN, pinyin}
-                      def = min moe.English, \length
-                      n
-                        ..en         = def
-                        ..definition = moe.English.join ', '
-                    n
-            zh := null
-            en := null
+      else if keys.length > values.length
+        key = keys[values.length]
+        chars = for i from 0 til key.length => Node '', [], '', [Char '', key[i]]
+        values.push Node do
+          node.text
+          []
+          node.text
+          chars
     # XXX:  maybe there is a better solution
     # TODO: deal with punctuation marks
     if keys.length isnt values.length
       console.warn 'the translations of sentences are not match'
-    for i, ks of keywords
-      key = "#{keys[i]}"
-      value = values[i]
-      if not Object.keys(ks)length
-        console.warn "segment translations of '#key' are missing"
-        continue
-      ks <<< punctuations
-      reverse-sorted = Object.keys(ks)sort (a, b) -> b.length - a.length
-      re = new RegExp reverse-sorted.join '|'
-      while r = re.exec key
-        key = key.replace r.0, ''
-        value.children.push ks[r.0]
     utils.data = zipObject keys, values
 
 (this.Data ?= {}) <<< utils

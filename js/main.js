@@ -1,7 +1,7 @@
 (function(){
   var config;
   config = {
-    path: './demo'
+    path: './LRRH'
   };
   window.requestAnimationFrame(function(){
     return $(function(){
@@ -55,8 +55,7 @@
           }
           viewer = React.renderComponent(ODP.components.presentation({
             scale: forcedDpcm || resize(dpcm),
-            data: data
-            /**/,
+            data: data,
             renderProps: function(props){
               var data, attrs, text;
               data = props.data;
@@ -70,7 +69,6 @@
                 }));
               case !(data.name === 'span' && data.text):
                 text = props.data.text;
-                delete props.data.text;
                 attrs.onClick = function(){
                   return Data.getSegmentations(text, function(seg){
                     var sentence;
@@ -83,18 +81,11 @@
                     return $('#control').modal('show');
                   });
                 };
-                return ODP.components.span(props, ReactVTT.IsolatedCue({
-                  target: config.path + "/demo.vtt",
-                  match: text,
-                  currentTime: function(){
-                    return audio.currentTime;
-                  }
-                }));
+                return ODP.components.span(props);
               default:
                 return ODP.renderProps(props);
               }
             }
-            /**/
           }), $('#wrap').get()[0]);
           if (forcedDpcm) {
             return $.fn.modal = function(){
@@ -109,7 +100,7 @@
                 return $('#wrap').css('opacity', 1, this$.fadeOut('fast'));
               });
               return $('#wrap').one('click', function(){
-                return $('#wrap').css('opacity', 1, this$.fadeOut('fast'));
+                return $('#wrap').css('opacity', 1, this$.fastOut('fast'));
               });
             };
           } else {
