@@ -303,12 +303,13 @@
       return tmp.textContent || tmp.innerText || '';
     },
     buildSyntaxTreeFromNotes: function(node){
-      var keys, values, keywords;
+      var keys, values, keywords, idx;
       keys = [];
       values = [];
       keywords = [];
+      idx = 0;
       utils.traverse(node, function(node, parents){
-        var current, key, chars, res$, i$, to$, i;
+        var current, i, x$;
         if (!node.text) {
           return;
         }
@@ -319,20 +320,26 @@
           } else {
             keywords.push(current);
           }
-          return keys.push(node.text);
-        } else if (keys.length > values.length) {
-          key = keys[values.length];
-          res$ = [];
-          for (i$ = 0, to$ = key.length; i$ < to$; ++i$) {
-            i = i$;
-            res$.push(Node('', [], '', [Char('', key[i])]));
-          }
-          chars = res$;
-          return values.push(Node(node.text, [], node.text, chars));
+          keys.push(node.text);
+          return values.push(Node('', [], '', (function(){
+            var i$, to$, results$ = [];
+            for (i$ = 0, to$ = node.text.length; i$ < to$; ++i$) {
+              i = i$;
+              results$.push(Node('', [], '', [Char('', node.text[i])]));
+            }
+            return results$;
+          }())));
+        } else {
+          x$ = values[idx];
+          x$.en = node.text;
+          x$.definition = node.text;
+          console.log(node.text, values[idx]);
+          return ++idx;
         }
       });
-      if (keys.length !== values.length) {
+      if (keys.length !== idx) {
         console.warn('the translations of sentences are not match');
+        console.log(keys, values);
       }
       return utils.data = zipObject(keys, values);
     }

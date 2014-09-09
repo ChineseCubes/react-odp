@@ -149,6 +149,7 @@ utils =
     keys   = []
     values = []
     keywords = []
+    idx = 0
     utils.traverse node, (node, parents) ->
       return if not node.text
       if parents.2 isnt 'notes'
@@ -160,18 +161,23 @@ utils =
           # and keep the length of keywords is the same as keys
           keywords.push current
         keys.push node.text
-      else if keys.length > values.length
-        key = keys[values.length]
-        chars = for i from 0 til key.length => Node '', [], '', [Char '', key[i]]
         values.push Node do
-          node.text
+          ''
           []
-          node.text
-          chars
+          ''
+          for i from 0 til node.text.length
+            Node '', [], '', [Char '', node.text[i]]
+      else
+        values[idx]
+          ..en = node.text
+          ..definition = node.text
+        console.log node.text, values[idx]
+        ++idx
     # XXX:  maybe there is a better solution
     # TODO: deal with punctuation marks
-    if keys.length isnt values.length
+    if keys.length isnt idx
       console.warn 'the translations of sentences are not match'
+      console.log keys, values
     utils.data = zipObject keys, values
 
 (this.Data ?= {}) <<< utils
