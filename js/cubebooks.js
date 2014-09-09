@@ -204,7 +204,7 @@
     },
     getPageJSON: function(path, done){
       var propNames;
-      propNames = ['name', 'x', 'y', 'width', 'height', 'href', 'onClick'];
+      propNames = ['name', 'x', 'y', 'width', 'height', 'href', 'data', 'onClick'];
       $.getJSON(path, function(data){
         var ref$, dir;
         data.children = data.children.concat(masterPage.children);
@@ -303,23 +303,18 @@
       return tmp.textContent || tmp.innerText || '';
     },
     buildSyntaxTreeFromNotes: function(node){
-      var keys, values, keywords, idx;
+      var keys, values, idx, keywords, re;
       keys = [];
       values = [];
-      keywords = [];
       idx = 0;
+      keywords = {};
+      re = null;
       utils.traverse(node, function(node, parents){
-        var current, i, x$;
-        if (!node.text) {
+        var ref$, i, ks, x$, str, r;
+        if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
           return;
         }
         if (parents[2] !== 'notes') {
-          current = keywords[keywords.length - 1];
-          if (!current || 0 !== Object.keys(current).length) {
-            keywords.push({});
-          } else {
-            keywords.push(current);
-          }
           keys.push(node.text);
           return values.push(Node('', [], '', (function(){
             var i$, to$, results$ = [];
@@ -329,11 +324,25 @@
             }
             return results$;
           }())));
+        } else if (node.attrs.data) {
+          ks = slice.call(node.attrs.data);
+          ks.sort(function(a, b){
+            return b.traditional.length - a.traditional.length;
+          });
+          return re = new RegExp(ks.map(function(it){
+            keywords[it.traditional] = it;
+            return it.traditional;
+          }).join('|'));
         } else {
           x$ = values[idx];
           x$.en = node.text;
           x$.definition = node.text;
-          console.log(node.text, values[idx]);
+          str = keys[idx] + "";
+          console.log(re);
+          while (r = re.exec(str)) {
+            str = str.replace(r[0], '');
+            console.log(str, r[0], keywords[r[0]]);
+          }
           return ++idx;
         }
       });

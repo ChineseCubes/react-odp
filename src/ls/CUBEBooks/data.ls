@@ -92,7 +92,7 @@ utils =
     for let i from 1 to page-total
       utils.getPageJSON "#path/page#i.json", -> got-one it, i - 1
   getPageJSON: !(path, done) ->
-    prop-names = <[name x y width height href onClick]>
+    prop-names = <[name x y width height href data onClick]>
     data <- $.getJSON path
     data.children = data.children.concat master-page.children
     [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
@@ -148,18 +148,13 @@ utils =
   buildSyntaxTreeFromNotes: (node) ->
     keys   = []
     values = []
-    keywords = []
     idx = 0
+    keywords = {}
+    re = null
     utils.traverse node, (node, parents) ->
-      return if not node.text
+      return if not node.text and not node.attrs?data
       if parents.2 isnt 'notes'
-        current = keywords[*-1]
-        if not current or 0 isnt Object.keys current .length
-          keywords.push {}
-        else
-          # use the same container if get another sentence
-          # and keep the length of keywords is the same as keys
-          keywords.push current
+        # prepare the root Node of this sentence
         keys.push node.text
         values.push Node do
           ''
@@ -167,13 +162,27 @@ utils =
           ''
           for i from 0 til node.text.length
             Node '', [], '', [Char '', node.text[i]]
+      else if node.attrs.data
+        # prepare the RegExp for segmentation
+        ks = slice.call node.attrs.data
+        ks.sort (a, b) -> b.traditional.length - a.traditional.length
+        re := new RegExp(ks.map ->
+          # use `map` as `each`
+          keywords[it.traditional] = it
+          it.traditional
+        .join '|')
       else
+        # fill the translation,
         values[idx]
           ..en = node.text
           ..definition = node.text
-        console.log node.text, values[idx]
+        # and segment the sentence
+        str = "#{keys[idx]}"
+        console.log re
+        while r = re.exec str
+          str .= replace r.0, ''
+          console.log str, r.0, keywords[r.0]
         ++idx
-    # XXX:  maybe there is a better solution
     # TODO: deal with punctuation marks
     if keys.length isnt idx
       console.warn 'the translations of sentences are not match'
