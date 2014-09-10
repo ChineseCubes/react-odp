@@ -78,15 +78,15 @@
   o = Node = (function(){
     Node.displayName = 'Node';
     var prototype = Node.prototype, constructor = Node;
-    function Node(en, wordClass, definition, children){
+    function Node(children, definition, short, wordClass){
       var this$ = this instanceof ctor$ ? this : new ctor$;
-      this$.en = en != null ? en : '';
-      this$.wordClass = wordClass != null
-        ? wordClass
-        : [];
-      this$.definition = definition != null ? definition : '';
       this$.children = children != null
         ? children
+        : [];
+      this$.definition = definition != null ? definition : '';
+      this$.short = short != null ? short : '';
+      this$.wordClass = wordClass != null
+        ? wordClass
         : [];
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
@@ -157,9 +157,9 @@
     return Node;
   }());
   punctuations = {
-    '，': o('', [''], 'comma', [c('', '，')]),
-    '。': o('', [''], 'full stop', [c('', '。')]),
-    '？': o('', [''], 'question mark', [c('', '？')])
+    '，': o([c('', '，')], 'comma'),
+    '。': o([c('', '。')], 'full stop'),
+    '？': o([c('', '？')], 'question mark')
   };
   utils = {
     splitNamespace: function(it){
@@ -343,7 +343,7 @@
         }
         if (parents[2] !== 'notes') {
           keys.push(node.text);
-          return values.push(Node('', [], ''));
+          return values.push(Node());
         } else if (node.attrs.data) {
           ks = slice.call(node.attrs.data);
           ks.sort(function(a, b){
@@ -355,7 +355,7 @@
           }).join('|'));
         } else {
           x$ = s = values[idx];
-          x$.en = node.text;
+          x$.short = node.text;
           x$.definition = node.text;
           str = keys[idx] + "";
           while (r = re.exec(str)) {
@@ -364,7 +364,7 @@
             en = tagless(def.translation).split(/\//);
             shortest = slice.call(en).sort(fn$)[0];
             console.log(shortest);
-            s.children.push(Node(shortest, [], en.join(', '), (fn1$())));
+            s.children.push(Node((fn1$()), en.join(', '), shortest));
           }
           return ++idx;
         }
@@ -524,7 +524,7 @@
         }
       }.call(this))), div({
         className: 'meaning'
-      }, this.props.meaning ? data.en : ''));
+      }, this.props.meaning ? data.short : ''));
     }
   });
   ActionMenu = React.createClass({
@@ -611,7 +611,7 @@
     },
     componentWillReceiveProps: function(props){
       var ref$;
-      if (this.props.data.en !== props.data.en) {
+      if (this.props.data.short !== props.data.short) {
         this.setState({
           focus: (ref$ = this.getInitialState()).focus,
           depth: ref$.depth

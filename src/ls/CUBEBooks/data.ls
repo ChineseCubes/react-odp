@@ -47,7 +47,7 @@ c = class Char
   (@pinyin, @zh_TW, @zh_CN = @zh_TW) ~>
   flatten: -> this
 o = class Node
-  (@en = '', @word-class = [], @definition = '', @children = []) ~>
+  (@children = [], @definition = '', @short = '', @word-class = []) ~>
   flatten: -> flatten <| for child in @children => child.flatten!
   isLeaf:  -> not @children.0.leafs
   leafs:   ->
@@ -63,9 +63,9 @@ o = class Node
       flatten <| for child in @children => child.childrenOfDepth depth - 1
 
 punctuations =
-  '，': o '' [''] 'comma' [c '' '，']
-  '。': o '' [''] 'full stop' [c '' '。']
-  '？': o '' [''] 'question mark' [c '' '？']
+  '，': o [c '' '，'] 'comma'
+  '。': o [c '' '。'] 'full stop'
+  '？': o [c '' '？'] 'question mark'
 
 utils =
   splitNamespace: ->
@@ -173,7 +173,7 @@ utils =
       if parents.2 isnt 'notes'
         # prepare the root Node of this sentence
         keys.push node.text
-        values.push Node '', [], ''
+        values.push Node!
       else if node.attrs.data
         # prepare the RegExp for segmentation
         ks = slice.call node.attrs.data
@@ -186,7 +186,7 @@ utils =
       else
         # fill the translation,
         (s = values[idx])
-          ..en = node.text
+          ..short = node.text
           ..definition = node.text
         # and segment the sentence
         str = "#{keys[idx]}"
@@ -199,15 +199,14 @@ utils =
           # XXX: should sort surrogates
           s.children.push do
             Node do
-              shortest
-              []
-              en.join ', '
               for i from 0 til r.0.length
                 c = Char '', r.0[i]
                 do
                   data <- utils.askMoeDict r.0[i]
                   c <<< data
                 c
+              en.join ', '
+              shortest
 
         ++idx
     # TODO: deal with punctuation marks

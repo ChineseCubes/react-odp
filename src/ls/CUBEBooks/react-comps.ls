@@ -82,7 +82,7 @@ Word = React.createClass do
             pinyin: @props.pinyin
       div do
         className: 'meaning'
-        if @props.meaning then data.en else ''
+        if @props.meaning then data.short else ''
 
 ActionMenu = React.createClass do
   displayName: 'CUBE.ActionMenu'
@@ -148,7 +148,7 @@ Sentence = React.createClass do
     focus: null
     depth: 0
   componentWillReceiveProps: (props) ->
-    if @props.data.en isnt props.data.en
+    if @props.data.short isnt props.data.short
       @setState @getInitialState!{focus, depth}
       $(@refs.settings.getDOMNode!)height 0
   renderDepthButton: (name) ->
