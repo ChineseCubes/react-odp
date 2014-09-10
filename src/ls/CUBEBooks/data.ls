@@ -72,14 +72,32 @@ utils =
     r = it.toLowerCase!split(':')reverse!
     namespace: r.1
     name:      r.0
-  getPresentation: (path, page-total, done) ->
+  unslash: ->
+    "#{it.replace /\/$/ ''}"
+  getMasterPage: (path, done) ->
+    {attrs}:mp <- $.getJSON "#{utils.unslash path}/masterpage.json"
+    # patch it
+    width  = parseInt attrs['FO:PAGE-WIDTH'],  10
+    height = parseInt attrs['FO:PAGE-HEIGHT'], 10
+    orientation = attrs['STYLE:PRINT-ORIENTATION']
+    ratio = if orientation is \landscape then width / height else height / width
+    mp.setup =
+      path:   path
+      ratio:  ratio
+      x:      0cm
+      y:      0cm
+      width:  width
+      height: height
+      total-pages: attrs['TOTAL-PAGES']
+    done mp <<< master-page
+  getPresentation: ({setup}:master-page, done) ->
     pages = []
     counter = 0
     got-one = (data, i) ->
       data.attrs.y = "#{i * 21.5}cm"
       pages.push data
       counter += 1
-      if counter is page-total
+      if counter is setup.total-pages
         done do
           name:      \presentation
           namespace: \office
@@ -89,8 +107,8 @@ utils =
             width:  \28cm
             height: \21cm
           children:  pages
-    for let i from 1 to page-total
-      utils.getPageJSON "#path/page#i.json", -> got-one it, i - 1
+    for let i from 1 to setup.total-pages
+      utils.getPageJSON "#{utils.unslash setup.path}/page#i.json", -> got-one it, i - 1
   getPageJSON: !(path, done) ->
     prop-names = <[name x y width height href data onClick]>
     data <- $.getJSON path
@@ -178,10 +196,10 @@ utils =
           ..definition = node.text
         # and segment the sentence
         str = "#{keys[idx]}"
-        console.log re
+        #console.log re
         while r = re.exec str
           str .= replace r.0, ''
-          console.log str, r.0, keywords[r.0]
+          #console.log str, r.0, keywords[r.0]
         ++idx
     # TODO: deal with punctuation marks
     if keys.length isnt idx

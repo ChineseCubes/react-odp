@@ -170,15 +170,41 @@
         name: r[0]
       };
     },
-    getPresentation: function(path, pageTotal, done){
-      var pages, counter, gotOne, i$, results$ = [];
+    unslash: function(it){
+      return it.replace(/\/$/, '') + "";
+    },
+    getMasterPage: function(path, done){
+      return $.getJSON(utils.unslash(path) + "/masterpage.json", function(mp){
+        var attrs, width, height, orientation, ratio;
+        attrs = mp.attrs;
+        width = parseInt(attrs['FO:PAGE-WIDTH'], 10);
+        height = parseInt(attrs['FO:PAGE-HEIGHT'], 10);
+        orientation = attrs['STYLE:PRINT-ORIENTATION'];
+        ratio = orientation === 'landscape'
+          ? width / height
+          : height / width;
+        mp.setup = {
+          path: path,
+          ratio: ratio,
+          x: 0,
+          y: 0,
+          width: width,
+          height: height,
+          totalPages: attrs['TOTAL-PAGES']
+        };
+        return done(import$(mp, masterPage));
+      });
+    },
+    getPresentation: function(masterPage, done){
+      var setup, pages, counter, gotOne, i$, to$, results$ = [];
+      setup = masterPage.setup;
       pages = [];
       counter = 0;
       gotOne = function(data, i){
         data.attrs.y = i * 21.5 + "cm";
         pages.push(data);
         counter += 1;
-        if (counter === pageTotal) {
+        if (counter === setup.totalPages) {
           return done({
             name: 'presentation',
             namespace: 'office',
@@ -192,12 +218,12 @@
           });
         }
       };
-      for (i$ = 1; i$ <= pageTotal; ++i$) {
+      for (i$ = 1, to$ = setup.totalPages; i$ <= to$; ++i$) {
         results$.push((fn$.call(this, i$)));
       }
       return results$;
       function fn$(i){
-        return utils.getPageJSON(path + "/page" + i + ".json", function(it){
+        return utils.getPageJSON(utils.unslash(setup.path) + "/page" + i + ".json", function(it){
           return gotOne(it, i - 1);
         });
       }
@@ -338,10 +364,8 @@
           x$.en = node.text;
           x$.definition = node.text;
           str = keys[idx] + "";
-          console.log(re);
           while (r = re.exec(str)) {
             str = str.replace(r[0], '');
-            console.log(str, r[0], keywords[r[0]]);
           }
           return ++idx;
         }
@@ -712,14 +736,14 @@
     Word: Word,
     Sentence: Sentence
   });
-  function in$(x, xs){
-    var i = -1, l = xs.length >>> 0;
-    while (++i < l) if (x === xs[i]) return true;
-    return false;
-  }
   function import$(obj, src){
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];
     return obj;
+  }
+  function in$(x, xs){
+    var i = -1, l = xs.length >>> 0;
+    while (++i < l) if (x === xs[i]) return true;
+    return false;
   }
 }).call(this);

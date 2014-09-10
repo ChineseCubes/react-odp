@@ -1,34 +1,14 @@
 (function(){
-  var config;
-  config = {
-    path: './LRRH'
-  };
   window.requestAnimationFrame(function(){
     return $(function(){
-      return $.getJSON(config.path + "/masterpage.json", function(arg$){
-        var attrs, width, height, orientation, ratio, resize, dots, dpcm, audio, settingsButton;
-        attrs = arg$.attrs;
-        width = parseInt(attrs['FO:PAGE-WIDTH'], 10);
-        height = parseInt(attrs['FO:PAGE-HEIGHT'], 10);
-        orientation = attrs['STYLE:PRINT-ORIENTATION'];
-        ratio = orientation === 'landscape'
-          ? width / height
-          : height / width;
-        import$(config, {
-          pageSetup: {
-            ratio: ratio,
-            x: 0,
-            y: 0,
-            width: width,
-            height: height,
-            totalPages: attrs['TOTAL-PAGES']
-          }
-        });
+      return Data.getMasterPage('./LRRH/', function(mp){
+        var setup, resize, dots, dpcm, audio;
+        setup = mp.setup;
         resize = function(dpcm){
           var ratio, pxWidth, pxHeight, width, height;
-          ratio = config.pageSetup.ratio;
-          pxWidth = config.pageSetup.width * dpcm;
-          pxHeight = config.pageSetup.height * dpcm;
+          ratio = setup.ratio;
+          pxWidth = setup.width * dpcm;
+          pxHeight = setup.height * dpcm;
           width = $(window).width();
           height = $(window).height();
           if (width / ratio < height) {
@@ -43,10 +23,10 @@
         dpcm = dots.state.x;
         console.log("dpcm: " + dpcm);
         audio = $('audio').get()[0];
-        settingsButton = React.renderComponent(CUBEBooks.SettingsButton(), $('#settings').get()[0]);
-        return Data.getPresentation(config.path, config.pageSetup.totalPages, function(data){
-          var page, forcedDpcm, viewer;
+        return Data.getPresentation(mp, function(data){
+          var settingsButton, page, forcedDpcm, viewer;
           Data.buildSyntaxTreeFromNotes(data);
+          settingsButton = React.renderComponent(CUBEBooks.SettingsButton(), $('#settings').get()[0]);
           if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
             page = RegExp.$1;
             data.children = [data.children[($('#wrap').data('page') || page) - 1]];
@@ -83,7 +63,7 @@
                   });
                 };
                 return ODP.components.span(props, ReactVTT.IsolatedCue({
-                  target: config.path + "/audio.vtt",
+                  target: setup.path + "/audio.vtt",
                   match: text,
                   currentTime: function(){
                     return audio.currentTime;
@@ -121,9 +101,4 @@
       });
     });
   });
-  function import$(obj, src){
-    var own = {}.hasOwnProperty;
-    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
-    return obj;
-  }
 }).call(this);

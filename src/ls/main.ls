@@ -1,25 +1,11 @@
-config = path: './LRRH'
-
 <- window.requestAnimationFrame
 <- $
-{attrs} <- $.getJSON "#{config.path}/masterpage.json"
-width  = parseInt attrs['FO:PAGE-WIDTH'], 10
-height = parseInt attrs['FO:PAGE-HEIGHT'], 10
-orientation = attrs['STYLE:PRINT-ORIENTATION']
-ratio = if orientation is \landscape then width / height else height / width
-config <<< do
-  page-setup:
-    ratio:  ratio
-    x:      0cm
-    y:      0cm
-    width:  width
-    height: height
-    total-pages: attrs['TOTAL-PAGES']
+{setup}:mp <- Data.getMasterPage './LRRH/'
 
 resize = (dpcm) ->
-  ratio     = config.page-setup.ratio
-  px-width  = config.page-setup.width  * dpcm
-  px-height = config.page-setup.height * dpcm
+  ratio     = setup.ratio
+  px-width  = setup.width  * dpcm
+  px-height = setup.height * dpcm
   width  = $(window).width!
   height = $(window).height!
   if width / ratio < height
@@ -36,12 +22,13 @@ console.log "dpcm: #dpcm"
 
 audio = $ \audio .get!0
 
+data <- Data.getPresentation mp
+Data.buildSyntaxTreeFromNotes data
+
 settings-button = React.renderComponent do
   CUBEBooks.SettingsButton!
   $ '#settings' .get!0
 
-data <- Data.getPresentation config.path, config.page-setup.total-pages
-Data.buildSyntaxTreeFromNotes data
 if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
   page = RegExp.$1
   data.children = [data.children[ ($('#wrap').data('page') || page) - 1 ]]
@@ -74,7 +61,7 @@ viewer = React.renderComponent do
         ODP.components.span do
           props
           ReactVTT.IsolatedCue do
-            target: "#{config.path}/audio.vtt"
+            target: "#{setup.path}/audio.vtt"
             match: text
             currentTime: -> audio.current-time
       | otherwise => ODP.renderProps props
