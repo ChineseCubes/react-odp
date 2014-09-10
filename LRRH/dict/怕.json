@@ -1,0 +1,61 @@
+{
+  "non_radical_stroke_count": 5,
+  "title": "怕",
+  "radical": "<a href=\"#~心\">心</a>",
+  "stroke_count": 8,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~害怕\">害怕</a>」、</span><span class='punct'>「<a href=\"#~貪生怕死\">貪生怕死</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~害怕\">害怕</a>；</span><span class='punct'><a href=\"#~恐懼\">恐懼</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~這\">這</a></span><a href=\"#~儀器\">儀器</a><a href=\"#~怕\">怕</a><span class='punct'><a href=\"#~摔\">摔</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~禁不住\">禁不住</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~我\">我</a></span><a href=\"#~怕\">怕</a><a href=\"#~他\">他</a><a href=\"#~不\">不</a><span class='punct'><a href=\"#~允諾\">允諾</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~擔心\">擔心</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~這\">這</a></span><a href=\"#~本\">本</a><a href=\"#~書\">書</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~價格\">價格</a>，</span><a href=\"#~怕\">怕</a><a href=\"#~有\">有</a><a href=\"#~上\">上</a><a href=\"#~千\">千</a><a href=\"#~元\">元</a><span class='punct'><a href=\"#~吧\">吧</a>！」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~估計\">估計</a>；</span><span class='punct'><a href=\"#~猜測\">猜測</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1013260000",
+      "pinyin": "pà",
+      "bopomofo": "ㄆㄚˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "craindre",
+      "avoir peur",
+      "être effrayé"
+    ],
+    "Deutsch": [
+      "fürchten, Angst haben "
+    ],
+    "English": [
+      "surname Pa",
+      "to be afraid",
+      "to fear",
+      "to dread",
+      "to be unable to endure",
+      "perhaps"
+    ]
+  },
+  "xrefs": []
+}

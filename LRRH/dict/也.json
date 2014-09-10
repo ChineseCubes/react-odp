@@ -1,0 +1,94 @@
+{
+  "non_radical_stroke_count": 2,
+  "title": "也",
+  "radical": "<a href=\"#~乙\">乙</a>",
+  "stroke_count": 3,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~我\">我</a></span><a href=\"#~是\">是</a><span class='punct'><a href=\"#~學生\">學生</a>，</span><a href=\"#~他\">他</a><a href=\"#~也\">也</a><a href=\"#~是\">是</a><span class='punct'><a href=\"#~學生\">學生</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><span class='punct'><a href=\"#~同樣\">同樣</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~他\">他</a></span><a href=\"#~會\">會</a><span class='punct'><a href=\"#~德語\">德語</a>，</span><a href=\"#~也\">也</a><a href=\"#~會\">會</a><span class='punct'><a href=\"#~法語\">法語</a>」、</span><span class='punct'>「<a href=\"#~你\">你</a></span><a href=\"#~去\">去</a><span class='punct'><a href=\"#~也行\">也行</a>，</span><a href=\"#~不\">不</a><a href=\"#~去\">去</a><span class='punct'><a href=\"#~也行\">也行</a>」。</span>"
+          ],
+          "def": "<a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~複句\">複句</a><span class='punct'><a href=\"#~中\">中</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~兩\">兩</a><span class='punct'><a href=\"#~事\">事</a>、</span><a href=\"#~兩\">兩</a><a href=\"#~種\">種</a><a href=\"#~情況\">情況</a><span class='punct'><a href=\"#~並列\">並列</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~昨天\">昨天</a></span><a href=\"#~他\">他</a><a href=\"#~也\">也</a><a href=\"#~去\">去</a><a href=\"#~了\">了</a><span class='punct'><a href=\"#~嗎\">嗎</a>」、</span><span class='punct'>「<a href=\"#~明天\">明天</a></span><a href=\"#~我\">我</a><a href=\"#~也\">也</a><a href=\"#~要\">要</a><span class='punct'><a href=\"#~參加\">參加</a>」。</span>"
+          ],
+          "def": "<a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~單句\">單句</a><span class='punct'><a href=\"#~中\">中</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~暗含\">暗含</a><a href=\"#~與\">與</a><a href=\"#~另\">另</a><a href=\"#~一\">一</a><a href=\"#~件\">件</a><a href=\"#~事\">事</a><span class='punct'><a href=\"#~相同\">相同</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~哪怕\">哪怕</a></span><a href=\"#~家人\">家人</a><span class='punct'><a href=\"#~反對\">反對</a>，</span><a href=\"#~他\">他</a><a href=\"#~也\">也</a><a href=\"#~要\">要</a><a href=\"#~跟\">跟</a><a href=\"#~她\">她</a><span class='punct'><a href=\"#~結婚\">結婚</a>」、</span><span class='punct'>「<a href=\"#~不管\">不管</a></span><a href=\"#~困難\">困難</a><a href=\"#~多\">多</a><span class='punct'><a href=\"#~大\">大</a>，</span><a href=\"#~我們\">我們</a><a href=\"#~也\">也</a><a href=\"#~要\">要</a><span class='punct'><a href=\"#~克服\">克服</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><a href=\"#~無論\">無論</a><a href=\"#~這樣\">這樣</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~那樣\">那樣</a>，</span><a href=\"#~後果\">後果</a><a href=\"#~都\">都</a><span class='punct'><a href=\"#~相同\">相同</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~即使\">即使</a></span><a href=\"#~你\">你</a><a href=\"#~不\">不</a><span class='punct'><a href=\"#~說\">說</a>，</span><a href=\"#~我\">我</a><a href=\"#~也\">也</a><span class='punct'><a href=\"#~知道\">知道</a>」、</span><span class='punct'>「<a href=\"#~也\">也</a></span><a href=\"#~唯有\">唯有</a><a href=\"#~這麼\">這麼</a><span class='punct'><a href=\"#~做\">做</a>，</span><a href=\"#~事情\">事情</a><a href=\"#~才能\">才能</a><span class='punct'><a href=\"#~解決\">解決</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><a href=\"#~轉折\">轉折</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~讓步\">讓步</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~一點\">一點</a></span><a href=\"#~也\">也</a><a href=\"#~不\">不</a><span class='punct'><a href=\"#~誇張\">誇張</a>」、</span><span class='punct'>「<a href=\"#~他\">他</a></span><a href=\"#~工作\">工作</a><span class='punct'><a href=\"#~忙\">忙</a>，</span><a href=\"#~連\">連</a><a href=\"#~飯\">飯</a><a href=\"#~也\">也</a><a href=\"#~忘\">忘</a><a href=\"#~了\">了</a><span class='punct'><a href=\"#~吃\">吃</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><a href=\"#~強調\">強調</a><span class='punct'><a href=\"#~語氣\">語氣</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~這樣\">這樣</a></span><a href=\"#~也\">也</a><span class='punct'><a href=\"#~好\">好</a>」、</span><span class='punct'>「<a href=\"#~假日\">假日</a></span><a href=\"#~到\">到</a><a href=\"#~郊外\">郊外</a><a href=\"#~走\">走</a><span class='punct'><a href=\"#~走\">走</a>，</span><a href=\"#~倒\">倒</a><a href=\"#~也\">也</a><span class='punct'><a href=\"#~不錯\">不錯</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><a href=\"#~委婉\">委婉</a><span class='punct'><a href=\"#~語氣\">語氣</a>。</span>"
+        },
+        {
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~助詞\">助詞</a>：</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~孔子\">孔子</a>，</span><a href=\"#~魯\">魯</a><a href=\"#~人\">人</a><span class='punct'><a href=\"#~也\">也</a>」、</span><span class='punct'>「<a href=\"#~不\">不</a></span><a href=\"#~知\">知</a><a href=\"#~為\">為</a><a href=\"#~不\">不</a><span class='punct'><a href=\"#~知\">知</a>，</span><a href=\"#~是\">是</a><a href=\"#~知\">知</a><span class='punct'><a href=\"#~也\">也</a>」、</span><span class='punct'>「<a href=\"#~斯\">斯</a></span><a href=\"#~可\">可</a><span class='punct'><a href=\"#~忍\">忍</a>，</span><a href=\"#~孰\">孰</a><a href=\"#~不可\">不可</a><a href=\"#~忍\">忍</a><span class='punct'><a href=\"#~也\">也</a>」、</span><span class='punct'>「<a href=\"#~流離\">流離</a></span><a href=\"#~喪\">喪</a><span class='punct'><a href=\"#~子\">子</a>，</span><a href=\"#~何其\">何其</a><a href=\"#~悲\">悲</a><span class='punct'><a href=\"#~也\">也</a>」。</span>"
+          ],
+          "def": "(1)​<a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~句\">句</a><span class='punct'><a href=\"#~尾\">尾</a>，</span><a href=\"#~表示\">表示</a><span class='punct'><a href=\"#~肯定\">肯定</a>、</span><span class='punct'><a href=\"#~疑問\">疑問</a>、</span><span class='punct'><a href=\"#~感嘆\">感嘆</a>、</span><a href=\"#~祈\">祈</a><a href=\"#~使\">使</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~語氣\">語氣</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~其\">其</a></span><a href=\"#~為人\">為人</a><a href=\"#~也\">也</a><a href=\"#~孝\">孝</a><span class='punct'><a href=\"#~弟\">弟</a>」、</span><span class='punct'>「<a href=\"#~大道\">大道</a></span><a href=\"#~之\">之</a><a href=\"#~行\">行</a><span class='punct'><a href=\"#~也\">也</a>，</span><span class='punct'><a href=\"#~天下為公\">天下為公</a>」、</span><span class='punct'>「<a href=\"#~其\">其</a></span><a href=\"#~為\">為</a><a href=\"#~氣\">氣</a><span class='punct'><a href=\"#~也\">也</a>，</span><a href=\"#~至\">至</a><a href=\"#~大\">大</a><a href=\"#~至\">至</a><span class='punct'><a href=\"#~剛\">剛</a>」。</span>"
+          ],
+          "def": "(2)​<a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~句\">句</a><span class='punct'><a href=\"#~中\">中</a>，</span><a href=\"#~調整\">調整</a><a href=\"#~音節\">音節</a><a href=\"#~或\">或</a><a href=\"#~表示\">表示</a><a href=\"#~語氣\">語氣</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~停頓\">停頓</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1000400000",
+      "pinyin": "yě",
+      "bopomofo": "ㄧㄝˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "également",
+      "aussi",
+      "à la fois",
+      "même",
+      "voire"
+    ],
+    "Deutsch": [
+      "auch  (Adv)​"
+    ],
+    "English": [
+      "surname Ye",
+      "also",
+      "too",
+      "(in Classical Chinese)​ final particle implying affirmation"
+    ]
+  },
+  "xrefs": []
+}

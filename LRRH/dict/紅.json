@@ -1,0 +1,86 @@
+{
+  "non_radical_stroke_count": 3,
+  "title": "紅",
+  "radical": "<a href=\"#~糸\">糸</a>",
+  "stroke_count": 9,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~紅霞\">紅霞</a>」、</span><span class='punct'>「<a href=\"#~鮮紅\">鮮紅</a>」、</span><span class='punct'>「<a href=\"#~紅\">紅</a></span><span class='punct'><a href=\"#~太陽\">太陽</a>」、</span><span class='punct'>「<a href=\"#~日\">日</a></span><a href=\"#~出\">出</a><a href=\"#~江\">江</a><a href=\"#~花紅\">花紅</a><a href=\"#~勝\">勝</a><span class='punct'><a href=\"#~火\">火</a>」。</span>"
+          ],
+          "def": "<a href=\"#~似\">似</a><a href=\"#~鮮血\">鮮血</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~顏色\">顏色</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~披\">披</a></span><a href=\"#~紅\">紅</a><a href=\"#~戴\">戴</a><span class='punct'><a href=\"#~綠\">綠</a>」、</span><span class='punct'>「<a href=\"#~落\">落</a></span><span class='punct'><a href=\"#~紅\">紅</a>」、</span><span class='punct'>「<a href=\"#~刺刀\">刺刀</a></span><a href=\"#~見\">見</a><span class='punct'><a href=\"#~紅\">紅</a>」。</span>"
+          ],
+          "def": "<a href=\"#~借\">借</a><a href=\"#~指\">指</a><a href=\"#~某\">某</a><a href=\"#~些\">些</a><a href=\"#~紅色\">紅色</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~絲綢\">絲綢</a>、</span><span class='punct'><a href=\"#~花\">花</a>、</span><a href=\"#~血\">血</a><span class='punct'><a href=\"#~等\">等</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~紅白喜事\">紅白喜事</a>」。</span>"
+          ],
+          "def": "<a href=\"#~象徵\">象徵</a><span class='punct'><a href=\"#~喜慶\">喜慶</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~走紅\">走紅</a>」、</span><span class='punct'>「<a href=\"#~紅\">紅</a></span><span class='punct'><a href=\"#~角\">角</a>」、</span><span class='punct'>「<a href=\"#~當紅\">當紅</a></span><span class='punct'><a href=\"#~影星\">影星</a>」、</span><span class='punct'>「<a href=\"#~唱歌\">唱歌</a></span><a href=\"#~唱\">唱</a><a href=\"#~紅\">紅</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "<a href=\"#~象徵\">象徵</a><a href=\"#~成功\">成功</a><a href=\"#~或\">或</a><a href=\"#~受\">受</a><span class='punct'><a href=\"#~重視\">重視</a>、</span><a href=\"#~受\">受</a><span class='punct'><a href=\"#~歡迎\">歡迎</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~分紅\">分紅</a>」。</span>"
+          ],
+          "def": "<a href=\"#~指\">指</a><span class='punct'><a href=\"#~紅利\">紅利</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~紅軍\">紅軍</a>」、</span><span class='punct'>「<a href=\"#~紅區\">紅區</a>」、</span><span class='punct'>「<a href=\"#~走紅\">走紅</a></span><a href=\"#~專\">專</a><span class='punct'><a href=\"#~道路\">道路</a>」。</span>"
+          ],
+          "def": "陸⃝<a href=\"#~象徵\">象徵</a><span class='punct'><a href=\"#~革命\">革命</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "alt": "红",
+      "id": "1030830000",
+      "pinyin": "hóng",
+      "bopomofo": "ㄏㄨㄥˊ"
+    },
+    {
+      "definitions": [
+        {
+          "def": "<a href=\"#~參見\">參見</a><span class='punct'>【<a href=\"#~女紅\">女紅</a></span>】。"
+        }
+      ],
+      "alt": "红",
+      "id": "1030830000",
+      "pinyin": "gōng",
+      "bopomofo": "ㄍㄨㄥ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "rouge",
+      "succès",
+      "vogue",
+      "dividende",
+      "gratification"
+    ],
+    "Deutsch": [
+      "rot, erfolgreich; Dividende  (Adj)​"
+    ],
+    "English": [
+      "surname Hong",
+      "red",
+      "popular",
+      "revolutionary",
+      "bonus"
+    ]
+  },
+  "xrefs": []
+}

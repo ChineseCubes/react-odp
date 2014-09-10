@@ -1,0 +1,107 @@
+{
+  "non_radical_stroke_count": 4,
+  "title": "主",
+  "radical": "<a href=\"#~丶\">丶</a>",
+  "stroke_count": 5,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~地主\">地主</a>」、</span><span class='punct'>「<a href=\"#~屋主\">屋主</a>」、</span><span class='punct'>「<a href=\"#~車主\">車主</a>」、</span><span class='punct'>「<a href=\"#~一家之主\">一家之主</a>」。</span>"
+          ],
+          "def": "<a href=\"#~權力\">權力</a><a href=\"#~地位\">地位</a><a href=\"#~或\">或</a><a href=\"#~財物\">財物</a><a href=\"#~的\">的</a><a href=\"#~擁有\">擁有</a><span class='punct'><a href=\"#~人\">人</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~主僕\">主僕</a>」、</span><span class='punct'>「<a href=\"#~賓主\">賓主</a></span><span class='punct'><a href=\"#~盡歡\">盡歡</a>」、</span><span class='punct'>「<a href=\"#~客隨主便\">客隨主便</a>」。</span>"
+          ],
+          "def": "<a href=\"#~與\">與</a><a href=\"#~賓客\">賓客</a><a href=\"#~奴僕\">奴僕</a><a href=\"#~相對\">相對</a><a href=\"#~的\">的</a><a href=\"#~人\">人</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~賓\">賓</a>」、</span><span class='punct'>「<a href=\"#~客\">客</a>」、</span><span class='punct'>「<a href=\"#~奴\">奴</a>」、</span><span class='punct'>「<a href=\"#~僕\">僕</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~施主\">施主</a>」、</span><span class='punct'>「<a href=\"#~事主\">事主</a>」、</span><span class='punct'>「<a href=\"#~失主\">失主</a>」、</span><span class='punct'>「<a href=\"#~苦主\">苦主</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~當事人\">當事人</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~主婚\">主婚</a>」、</span><span class='punct'>「<a href=\"#~主講\">主講</a>」、</span><span class='punct'>「<a href=\"#~主持\">主持</a>」、</span><span class='punct'>「<a href=\"#~主辦\">主辦</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~負責\">負責</a>；</span><a href=\"#~掌\">掌</a><span class='punct'><a href=\"#~理\">理</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~主力\">主力</a>」、</span><span class='punct'>「<a href=\"#~主食\">主食</a>」、</span><span class='punct'>「<a href=\"#~主將\">主將</a>」、</span><span class='punct'>「<a href=\"#~主軸\">主軸</a>」。</span>"
+          ],
+          "def": "<a href=\"#~最\">最</a><a href=\"#~基本\">基本</a><span class='punct'><a href=\"#~的\">的</a>；</span><a href=\"#~最\">最</a><a href=\"#~重要\">重要</a><span class='punct'><a href=\"#~的\">的</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~主見\">主見</a>」、</span><span class='punct'>「<a href=\"#~主觀\">主觀</a>」、</span><span class='punct'>「<a href=\"#~主動\">主動</a></span><span class='punct'><a href=\"#~參與\">參與</a>」。</span>"
+          ],
+          "def": "<a href=\"#~自我\">自我</a><span class='punct'><a href=\"#~的\">的</a>；</span><a href=\"#~出\">出</a><a href=\"#~於\">於</a><a href=\"#~自身\">自身</a><span class='punct'><a href=\"#~的\">的</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~主戰\">主戰</a>」、</span><span class='punct'>「<a href=\"#~主張\">主張</a>」、</span><span class='punct'>「<a href=\"#~不由自主\">不由自主</a>」、</span><span class='punct'>「<a href=\"#~婚姻\">婚姻</a></span><span class='punct'><a href=\"#~自主\">自主</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~贊成\">贊成</a>；</span><span class='punct'><a href=\"#~主張\">主張</a>；</span><span class='punct'><a href=\"#~決定\">決定</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~主意\">主意</a>」、</span><span class='punct'>「<a href=\"#~六神無主\">六神無主</a>」、</span><span class='punct'>「<a href=\"#~心裡\">心裡</a></span><a href=\"#~沒\">沒</a><span class='punct'><a href=\"#~主\">主</a>」。</span>"
+          ],
+          "def": "<a href=\"#~確定\">確定</a><a href=\"#~不移\">不移</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~看法\">看法</a>；</span><span class='punct'><a href=\"#~主見\">主見</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~月暈\">月暈</a></span><a href=\"#~主\">主</a><span class='punct'><a href=\"#~風\">風</a>，</span><a href=\"#~日暈\">日暈</a><a href=\"#~主\">主</a><span class='punct'><a href=\"#~雨\">雨</a>」、</span><span class='punct'>「<a href=\"#~早\">早</a></span><a href=\"#~霞\">霞</a><a href=\"#~主\">主</a><span class='punct'><a href=\"#~雨\">雨</a>，</span><a href=\"#~晚霞\">晚霞</a><a href=\"#~主\">主</a><span class='punct'><a href=\"#~晴\">晴</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~顯示\">顯示</a>；</span><span class='punct'><a href=\"#~預示\">預示</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~木主\">木主</a>」、</span><span class='punct'>「<a href=\"#~神主\">神主</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~牌位\">牌位</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~基督教\">基督教</a>、</span><a href=\"#~猶太教\">猶太教</a><a href=\"#~等\">等</a><a href=\"#~教徒\">教徒</a><a href=\"#~對\">對</a><a href=\"#~信仰\">信仰</a><a href=\"#~的\">的</a><a href=\"#~神\">神</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~稱呼\">稱呼</a>。</span>"
+        }
+      ],
+      "id": "1000250000",
+      "pinyin": "zhǔ",
+      "bopomofo": "ㄓㄨˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "hôte",
+      "propriétaire",
+      "patron",
+      "dieu",
+      "seigneur",
+      "diriger",
+      "présider",
+      "être pour",
+      "principal",
+      "essentiel"
+    ],
+    "Deutsch": [
+      "Eigentümer, Meister, Herr "
+    ],
+    "English": [
+      "owner",
+      "master",
+      "host",
+      "individual or party concerned",
+      "God",
+      "Lord",
+      "main",
+      "to indicate or signify",
+      "trump card (in card games)​"
+    ]
+  },
+  "xrefs": []
+}

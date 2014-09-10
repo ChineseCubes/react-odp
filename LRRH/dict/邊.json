@@ -1,0 +1,100 @@
+{
+  "non_radical_stroke_count": 15,
+  "title": "邊",
+  "radical": "<a href=\"#~辵\">辵</a>",
+  "stroke_count": 19,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~邊\">邊</a></span><a href=\"#~塵\">塵</a><a href=\"#~不\">不</a><span class='punct'><a href=\"#~驚\">驚</a>」、</span><span class='punct'>「<a href=\"#~戍邊\">戍邊</a>」、</span><span class='punct'>「<a href=\"#~邊陲\">邊陲</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~邊界\">邊界</a>；</span><span class='punct'><a href=\"#~邊境\">邊境</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~邊沿\">邊沿</a>」、</span><span class='punct'>「<a href=\"#~河邊\">河邊</a>」、</span><span class='punct'>「<a href=\"#~田\">田</a></span><span class='punct'><a href=\"#~邊\">邊</a>」、</span><span class='punct'>「<a href=\"#~村\">村</a></span><span class='punct'><a href=\"#~邊\">邊</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~邊緣\">邊緣</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~手\">手</a></span><span class='punct'><a href=\"#~邊\">邊</a>」、</span><span class='punct'>「<a href=\"#~身邊\">身邊</a>」、</span><span class='punct'>「<a href=\"#~旁邊\">旁邊</a>」。</span>"
+          ],
+          "def": "<a href=\"#~物體\">物體</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~近旁\">近旁</a>；</span><span class='punct'><a href=\"#~旁邊\">旁邊</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~多邊\">多邊</a></span><span class='punct'><a href=\"#~競爭\">競爭</a>」、</span><span class='punct'>「<a href=\"#~雙邊\">雙邊</a></span><span class='punct'><a href=\"#~協商\">協商</a>」、</span><span class='punct'>「<a href=\"#~這邊\">這邊</a></span><a href=\"#~比\">比</a><a href=\"#~那邊\">那邊</a><span class='punct'><a href=\"#~強\">強</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~方面\">方面</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~邊\">邊</a></span><a href=\"#~吃\">吃</a><a href=\"#~邊\">邊</a><span class='punct'><a href=\"#~談\">談</a>」、</span><span class='punct'>「<a href=\"#~邊\">邊</a></span><span class='punct'><a href=\"#~上學\">上學</a>，</span><a href=\"#~邊\">邊</a><span class='punct'><a href=\"#~打工\">打工</a>，</span><a href=\"#~邊\">邊</a><span class='punct'><a href=\"#~寫作\">寫作</a>」。</span>"
+          ],
+          "def": "<a href=\"#~兩\">兩</a><a href=\"#~個\">個</a><a href=\"#~或\">或</a><a href=\"#~幾\">幾</a><a href=\"#~個\">個</a><a href=\"#~分別\">分別</a><a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~不\">不</a><a href=\"#~同動詞\">同動詞</a><span class='punct'><a href=\"#~前\">前</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~不\">不</a><a href=\"#~同\">同</a><span class='punct'><a href=\"#~動作\">動作</a>、</span><a href=\"#~行為\">行為</a><a href=\"#~同時\">同時</a><a href=\"#~進行\">進行</a><a href=\"#~或\">或</a><a href=\"#~幾\">幾</a><a href=\"#~種\">種</a><a href=\"#~情況\">情況</a><a href=\"#~同時\">同時</a><span class='punct'><a href=\"#~存在\">存在</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~邊際\">邊際</a>」、</span><span class='punct'>「<a href=\"#~邊境\">邊境</a>」、</span><span class='punct'>「<a href=\"#~無邊\">無邊</a></span><a href=\"#~落\">落</a><a href=\"#~木\">木</a><a href=\"#~蕭蕭\">蕭蕭</a><span class='punct'><a href=\"#~下\">下</a>」。</span>"
+          ],
+          "def": "<a href=\"#~交界\">交界</a><span class='punct'><a href=\"#~處\">處</a>；</span><span class='punct'><a href=\"#~界限\">界限</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~花邊\">花邊</a></span><span class='punct'><a href=\"#~兒\">兒</a>」、</span><span class='punct'>「<a href=\"#~金\">金</a></span><a href=\"#~邊\">邊</a><a href=\"#~兒\">兒</a><span class='punct'><a href=\"#~眼鏡\">眼鏡</a>」、</span><span class='punct'>「<a href=\"#~裙子\">裙子</a></span><a href=\"#~下\">下</a><a href=\"#~襬\">襬</a><a href=\"#~鑲\">鑲</a><a href=\"#~著\">著</a><a href=\"#~一道\">一道</a><a href=\"#~邊\">邊</a><span class='punct'><a href=\"#~兒\">兒</a>」。</span>"
+          ],
+          "def": "<a href=\"#~邊沿\">邊沿</a><a href=\"#~部分\">部分</a><a href=\"#~的\">的</a><a href=\"#~條\">條</a><a href=\"#~狀\">狀</a><span class='punct'><a href=\"#~裝飾\">裝飾</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~幾何學\">幾何學</a><a href=\"#~上\">上</a><a href=\"#~指\">指</a><a href=\"#~夾\">夾</a><a href=\"#~成\">成</a><a href=\"#~角\">角</a><a href=\"#~的\">的</a><a href=\"#~射線\">射線</a><a href=\"#~或\">或</a><a href=\"#~圍\">圍</a><a href=\"#~成\">成</a><a href=\"#~多角形\">多角形</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~線段\">線段</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~後邊\">後邊</a>」、</span><span class='punct'>「<a href=\"#~上邊\">上邊</a>」、</span><span class='punct'>「<a href=\"#~右邊\">右邊</a>」、</span><span class='punct'>「<a href=\"#~北邊\">北邊</a>」、</span><span class='punct'>「<a href=\"#~外邊\">外邊</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~詞綴\">詞綴</a>。</span><a href=\"#~附\">附</a><a href=\"#~在\">在</a><a href=\"#~單\">單</a><a href=\"#~音節\">音節</a><a href=\"#~表示\">表示</a><a href=\"#~方位\">方位</a><a href=\"#~的\">的</a><a href=\"#~構\">構</a><a href=\"#~詞\">詞</a><a href=\"#~成分\">成分</a><span class='punct'><a href=\"#~後面\">後面</a>，</span><a href=\"#~構\">構</a><a href=\"#~成\">成</a><a href=\"#~雙\">雙</a><a href=\"#~音節\">音節</a><span class='punct'><a href=\"#~方位詞\">方位詞</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "alt": "边",
+      "id": "1041960000",
+      "pinyin": "biān",
+      "bopomofo": "ㄅㄧㄢ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "(suffixe locatif)​",
+      "côté",
+      "bord",
+      "marge",
+      "frontière",
+      "en même temps",
+      "simultanément"
+    ],
+    "Deutsch": [
+      "Grenze, Grenzgebiet, Schranke  (S)​",
+      "Schranke, Grenze  (S)​",
+      "Seite  (S)​",
+      "Seitenrand, Rand, Kante  (S)​",
+      "an, nahe bei, neben, voneinander  (Präp)​",
+      "Bian  (Eig, Fam)​"
+    ],
+    "English": [
+      "side",
+      "edge",
+      "margin",
+      "border",
+      "boundary",
+      "CL:<a href=\"#~個\">個</a>|个[ge4]",
+      "simultaneously",
+      "suffix of a noun of locality"
+    ]
+  },
+  "xrefs": []
+}

@@ -1,0 +1,79 @@
+{
+  "non_radical_stroke_count": 0,
+  "title": "衣",
+  "radical": "<a href=\"#~衣\">衣</a>",
+  "stroke_count": 6,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~衣襟\">衣襟</a>」、</span><span class='punct'>「<a href=\"#~穿\">穿</a></span><a href=\"#~衣\">衣</a><span class='punct'><a href=\"#~吃飯\">吃飯</a>」、</span><span class='punct'>「<a href=\"#~衣不蔽體\">衣不蔽體</a>」、</span><span class='punct'>「<a href=\"#~豐衣足食\">豐衣足食</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~衣服\">衣服</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~糖衣\">糖衣</a>」、</span><span class='punct'>「<a href=\"#~弓\">弓</a></span><span class='punct'><a href=\"#~衣\">衣</a>」、</span><span class='punct'>「<a href=\"#~筍\">筍</a></span><span class='punct'><a href=\"#~衣\">衣</a>」。</span>"
+          ],
+          "def": "<a href=\"#~包\">包</a><a href=\"#~在\">在</a><a href=\"#~物體\">物體</a><a href=\"#~外面\">外面</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~東西\">東西</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~胎衣\">胎衣</a>」、</span><span class='punct'>「<a href=\"#~胞衣\">胞衣</a>」。</span>"
+          ],
+          "def": "<a href=\"#~母體\">母體</a><a href=\"#~內\">內</a><a href=\"#~包裹\">包裹</a><a href=\"#~胎兒\">胎兒</a><a href=\"#~的\">的</a><a href=\"#~胎盤\">胎盤</a><a href=\"#~和\">和</a><span class='punct'><a href=\"#~胎膜\">胎膜</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~苔\">苔</a></span><span class='punct'><a href=\"#~衣\">衣</a>」、</span><span class='punct'>「<a href=\"#~地衣\">地衣</a>」。</span>"
+          ],
+          "def": "<a href=\"#~特指\">特指</a><a href=\"#~苔蘚\">苔蘚</a><a href=\"#~類\">類</a><a href=\"#~隱\">隱</a><a href=\"#~花\">花</a><span class='punct'><a href=\"#~植物\">植物</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~二\">二</a><a href=\"#~一\">一</a><a href=\"#~四部\">四部</a><a href=\"#~首\">首</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span>"
+        }
+      ],
+      "id": "1037080000",
+      "pinyin": "yī",
+      "bopomofo": "ㄧ"
+    },
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~衣\">衣</a></span><span class='punct'><a href=\"#~布衣\">布衣</a>」、</span><span class='punct'>「<a href=\"#~衣錦榮歸\">衣錦榮歸</a>」、</span><span class='punct'>「<a href=\"#~解\">解</a></span><a href=\"#~衣\">衣</a><a href=\"#~衣\">衣</a><span class='punct'><a href=\"#~我\">我</a>，</span><a href=\"#~推\">推</a><a href=\"#~食\">食</a><a href=\"#~食\">食</a><a href=\"#~我\">我</a>（<span class='punct'>《<a href=\"#~史記\">史記</a></span>‧<a href=\"#~卷\">卷</a><a href=\"#~九\">九</a><a href=\"#~十\">十</a><a href=\"#~二\">二</a>‧<a href=\"#~淮\">淮</a><a href=\"#~陰\">陰</a><a href=\"#~侯\">侯</a><span class='punct'><a href=\"#~列傳\">列傳</a>》</span>）​」。"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><a href=\"#~穿\">穿</a><span class='punct'>（<a href=\"#~衣服\">衣服</a></span>）​；<a href=\"#~拿\">拿</a><a href=\"#~衣服\">衣服</a><a href=\"#~給\">給</a><a href=\"#~人\">人</a><span class='punct'><a href=\"#~穿\">穿</a>。</span>"
+        }
+      ],
+      "id": "1037080000",
+      "pinyin": "yì<br>陸⃝yī",
+      "bopomofo": "ㄧˋ<br>陸⃝ㄧ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "vêtements",
+      "peau",
+      "enveloppe",
+      "s'habiller",
+      "porter (un vêtement)​"
+    ],
+    "Deutsch": [
+      "Kleidung  (S)​",
+      "Yi  (Eig, Fam)​"
+    ],
+    "English": [
+      "clothes",
+      "CL:<a href=\"#~件\">件</a>[jian4]",
+      "to dress",
+      "to wear",
+      "to put on (clothes)​"
+    ]
+  },
+  "xrefs": []
+}

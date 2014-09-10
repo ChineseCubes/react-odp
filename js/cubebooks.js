@@ -190,27 +190,41 @@
     unslash: function(it){
       return it.replace(/\/$/, '') + "";
     },
+    camelFromHyphenated: function(it){
+      return it.split('-').map(function(v, i){
+        switch (false) {
+        case i !== 0:
+          return v;
+        default:
+          return v.slice(0, 1).toUpperCase() + "" + v.slice(1);
+        }
+      }).join('');
+    },
     getMasterPage: function(path, done){
-      return $.getJSON(utils.unslash(path) + "/masterpage.json", function(mp){
-        var attrs, width, height, orientation, ratio;
-        attrs = mp.attrs;
-        width = parseInt(attrs['FO:PAGE-WIDTH'], 10);
-        height = parseInt(attrs['FO:PAGE-HEIGHT'], 10);
-        orientation = attrs['STYLE:PRINT-ORIENTATION'];
-        ratio = orientation === 'landscape'
-          ? width / height
-          : height / width;
-        mp.setup = {
-          path: path,
-          ratio: ratio,
-          x: 0,
-          y: 0,
-          width: width,
-          height: height,
-          totalPages: attrs['TOTAL-PAGES']
-        };
-        return done(import$(mp, masterPage));
+      path = utils.unslash(path);
+      return $.getJSON(path + "/masterpage.json", function(it){
+        return done(utils.patchMasterPage(it, path));
       });
+    },
+    patchMasterPage: function(mp, path){
+      var attrs, width, height, orientation, ratio;
+      attrs = mp.attrs;
+      width = parseInt(attrs['FO:PAGE-WIDTH'], 10);
+      height = parseInt(attrs['FO:PAGE-HEIGHT'], 10);
+      orientation = attrs['STYLE:PRINT-ORIENTATION'];
+      ratio = orientation === 'landscape'
+        ? width / height
+        : height / width;
+      mp.setup = {
+        path: path,
+        ratio: ratio,
+        x: 0,
+        y: 0,
+        width: width,
+        height: height,
+        totalPages: attrs['TOTAL-PAGES']
+      };
+      return import$(mp, masterPage);
     },
     getPresentation: function(masterPage, done){
       var setup, path, pages, counter, gotOne, i$, to$, results$ = [];
@@ -259,7 +273,7 @@
         };
         for (k in attrs) {
           v = attrs[k];
-          name = ODP.camelFromHyphenated(utils.splitNamespace(k).name);
+          name = utils.camelFromHyphenated(utils.splitNamespace(k).name);
           switch (false) {
           case name !== 'pageWidth':
             newAttrs.width = v;
@@ -302,9 +316,14 @@
     },
     traverse: function(node, onNode, parents){
       var i$, ref$, len$, child, results$ = [];
-      onNode == null && (onNode = null);
       parents == null && (parents = []);
+      if (!onNode) {
+        return;
+      }
       onNode(node, parents);
+      if (!node.children) {
+        return;
+      }
       for (i$ = 0, len$ = (ref$ = node.children).length; i$ < len$; ++i$) {
         child = ref$[i$];
         results$.push(utils.traverse(child, onNode, parents.concat([node.name])));
@@ -314,17 +333,17 @@
     getSegmentations: function(text, done){
       return done(utils.data[text] || Node());
     },
-    askMoeDict: function(str, done){
+    askDict: function(str, path, done){
       var counter, result, tagless, i$, to$, results$ = [];
       counter = 0;
-      result = {};
+      result = [];
       tagless = utils.strip;
       for (i$ = 0, to$ = str.length; i$ < to$; ++i$) {
         results$.push((fn$.call(this, i$)));
       }
       return results$;
       function fn$(i){
-        return $.getJSON("www.moedict.tw/~" + str[i] + ".json", function(moe){
+        return $.getJSON(path + "/dict/" + encodeURI(str[i]) + ".json", function(moe){
           result[+i] = {
             zh_TW: tagless(moe.title),
             zh_CN: tagless(moe.heteronyms[0].alt || moe.title),
@@ -354,7 +373,7 @@
       }());
       return tmp.textContent || tmp.innerText || '';
     },
-    buildSyntaxTreeFromNotes: function(node){
+    buildSyntaxTreeFromNotes: function(node, path){
       var tagless, keys, values, idx, keywords, re;
       tagless = utils.strip;
       keys = [];
@@ -408,7 +427,7 @@
           return ++idx;
         }
         function fn$(key, child){
-          utils.askMoeDict(key, function(moe){
+          utils.askDict(key, path, function(moe){
             var ref$, ref1$, i$, to$, i, en, x$, results$ = [];
             if (key.length === 1) {
               return ref1$ = child.children[0], ref1$.pinyin = (ref$ = moe[0]).pinyin, ref1$.zh_TW = ref$.zh_TW, ref1$.zh_CN = ref$.zh_CN, ref1$;
@@ -418,11 +437,6 @@
                 if (!moe[i]) {
                   continue;
                 }
-                console.log({
-                  pinyin: (ref$ = moe[i]).pinyin,
-                  zh_TW: ref$.zh_TW,
-                  zh_CN: ref$.zh_CN
-                });
                 en = moe[i].English;
                 x$ = child.children[i];
                 x$.definition = en.join(', ');

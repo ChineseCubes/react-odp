@@ -1,0 +1,52 @@
+{
+  "non_radical_stroke_count": 6,
+  "title": "屋",
+  "radical": "<a href=\"#~尸\">尸</a>",
+  "stroke_count": 9,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~房屋\">房屋</a>」、</span><span class='punct'>「<a href=\"#~住\">住</a></span><span class='punct'><a href=\"#~屋\">屋</a>」、</span><span class='punct'>「<a href=\"#~預售屋\">預售屋</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~房子\">房子</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~正屋\">正屋</a>」、</span><span class='punct'>「<a href=\"#~屋\">屋</a></span><span class='punct'><a href=\"#~裡\">裡</a>」、</span><span class='punct'>「<a href=\"#~請\">請</a></span><a href=\"#~到\">到</a><a href=\"#~屋\">屋</a><a href=\"#~內\">內</a><span class='punct'><a href=\"#~坐\">坐</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~房間\">房間</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~書\">書</a></span><span class='punct'><a href=\"#~屋\">屋</a>」、</span><span class='punct'>「<a href=\"#~咖啡\">咖啡</a></span><span class='punct'><a href=\"#~屋\">屋</a>」、</span><span class='punct'>「<a href=\"#~烤肉\">烤肉</a></span><span class='punct'><a href=\"#~屋\">屋</a>」。</span>"
+          ],
+          "def": "<span class='punct'>（<a href=\"#~作為\">作為</a></span>）​<a href=\"#~店鋪\">店鋪</a><span class='punct'>（<a href=\"#~的\">的</a></span><a href=\"#~屋子\">屋子</a>）​。"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1010890000",
+      "pinyin": "wū",
+      "bopomofo": "ㄨ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "maison",
+      "chambre"
+    ],
+    "Deutsch": [
+      "Haus  (S)​",
+      "Zimmer  (S)​"
+    ],
+    "English": [
+      "house",
+      "room",
+      "CL:<a href=\"#~間\">間</a>|间[jian1],<a href=\"#~個\">個</a>|个[ge4]"
+    ]
+  },
+  "xrefs": []
+}

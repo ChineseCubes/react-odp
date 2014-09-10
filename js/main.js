@@ -25,7 +25,7 @@
         audio = $('audio').get()[0];
         return Data.getPresentation(mp, function(data){
           var settingsButton, page, forcedDpcm, viewer;
-          Data.buildSyntaxTreeFromNotes(data);
+          Data.buildSyntaxTreeFromNotes(data, mp.setup.path);
           settingsButton = React.renderComponent(CUBEBooks.SettingsButton(), $('#settings').get()[0]);
           if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
             page = RegExp.$1;

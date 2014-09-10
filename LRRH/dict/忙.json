@@ -1,0 +1,52 @@
+{
+  "non_radical_stroke_count": 3,
+  "title": "忙",
+  "radical": "<a href=\"#~心\">心</a>",
+  "stroke_count": 6,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~忙碌\">忙碌</a>」、</span><span class='punct'>「<a href=\"#~工作\">工作</a></span><a href=\"#~很\">很</a><span class='punct'><a href=\"#~忙\">忙</a>」、</span><span class='punct'>「<a href=\"#~忙裡偷閒\">忙裡偷閒</a>」。</span>"
+          ],
+          "def": "<a href=\"#~事務\">事務</a><span class='punct'><a href=\"#~繁多\">繁多</a>，</span><a href=\"#~沒有\">沒有</a><a href=\"#~空閒\">空閒</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~閒\">閒</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~忙\">忙</a></span><a href=\"#~東\">東</a><a href=\"#~忙\">忙</a><span class='punct'><a href=\"#~西\">西</a>」、</span><span class='punct'>「<a href=\"#~你\">你</a></span><a href=\"#~最近\">最近</a><a href=\"#~都\">都</a><a href=\"#~忙\">忙</a><a href=\"#~些\">些</a><span class='punct'><a href=\"#~什麼\">什麼</a>？」。</span>"
+          ],
+          "def": "<a href=\"#~不\">不</a><a href=\"#~停\">停</a><a href=\"#~地\">地</a><span class='punct'><a href=\"#~做\">做</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~急忙\">急忙</a>」、</span><span class='punct'>「<a href=\"#~手忙腳亂\">手忙腳亂</a>」、</span><span class='punct'>「<a href=\"#~不\">不</a></span><a href=\"#~慌\">慌</a><a href=\"#~不\">不</a><span class='punct'><a href=\"#~忙\">忙</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~慌張\">慌張</a>；</span><span class='punct'><a href=\"#~急促\">急促</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1013070000",
+      "pinyin": "máng",
+      "bopomofo": "ㄇㄤˊ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "se presser",
+      "occupé"
+    ],
+    "Deutsch": [
+      "beschäftigt (Adv)​"
+    ],
+    "English": [
+      "busy",
+      "hurriedly",
+      "to hurry",
+      "to rush"
+    ]
+  },
+  "xrefs": []
+}

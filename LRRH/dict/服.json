@@ -1,0 +1,126 @@
+{
+  "non_radical_stroke_count": 4,
+  "title": "服",
+  "radical": "<a href=\"#~月\">月</a>",
+  "stroke_count": 8,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~校服\">校服</a>」、</span><span class='punct'>「<a href=\"#~禮服\">禮服</a>」、</span><span class='punct'>「<a href=\"#~奇裝異服\">奇裝異服</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~衣服\">衣服</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~服藥\">服藥</a>」、</span><span class='punct'>「<a href=\"#~服毒\">服毒</a>」、</span><span class='punct'>「<a href=\"#~內服藥\">內服藥</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~食用\">食用</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~服罪\">服罪</a>」、</span><span class='punct'>「<a href=\"#~服\">服</a></span><span class='punct'><a href=\"#~法\">法</a>」、</span><span class='punct'>「<a href=\"#~服刑\">服刑</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~承受\">承受</a>；</span><span class='punct'><a href=\"#~服從\">服從</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~服\">服</a></span><span class='punct'><a href=\"#~勤\">勤</a>」、</span><span class='punct'>「<a href=\"#~服兵役\">服兵役</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~擔任\">擔任</a>；</span><span class='punct'><a href=\"#~從事\">從事</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~不服老\">不服老</a>」、</span><span class='punct'>「<a href=\"#~他\">他</a></span><a href=\"#~不服\">不服</a><span class='punct'><a href=\"#~判決\">判決</a>，</span><a href=\"#~決定\">決定</a><span class='punct'><a href=\"#~上訴\">上訴</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~甘心\">甘心</a>；</span><span class='punct'><a href=\"#~服氣\">服氣</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~他\">他</a></span><a href=\"#~剛\">剛</a><a href=\"#~到\">到</a><a href=\"#~新\">新</a><span class='punct'><a href=\"#~環境\">環境</a>，</span><a href=\"#~有\">有</a><a href=\"#~點\">點</a><span class='punct'><a href=\"#~水土不服\">水土不服</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~適應\">適應</a>；</span><span class='punct'><a href=\"#~習慣\">習慣</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~不服\">不服</a>」、</span><span class='punct'>「<a href=\"#~口服\">口服</a></span><a href=\"#~心\">心</a><span class='punct'><a href=\"#~不服\">不服</a>」、</span><span class='punct'>「<a href=\"#~高尚\">高尚</a></span><a href=\"#~情操\">情操</a><a href=\"#~令\">令</a><a href=\"#~人\">人</a><span class='punct'><a href=\"#~佩服\">佩服</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~信服\">信服</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~說服\">說服</a>」、</span><span class='punct'>「<a href=\"#~以\">以</a></span><a href=\"#~理\">理</a><a href=\"#~服\">服</a><span class='punct'><a href=\"#~人\">人</a>」、</span><span class='punct'>「<a href=\"#~難以\">難以</a></span><a href=\"#~服\">服</a><span class='punct'><a href=\"#~眾\">眾</a>」。</span>"
+          ],
+          "def": "<a href=\"#~使\">使</a><span class='punct'><a href=\"#~信服\">信服</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~五服\">五服</a>」、</span><span class='punct'>「<a href=\"#~服喪\">服喪</a></span><span class='punct'><a href=\"#~期滿\">期滿</a>」、</span><span class='punct'>「<a href=\"#~有\">有</a></span><a href=\"#~服\">服</a><a href=\"#~在\">在</a><span class='punct'><a href=\"#~身\">身</a>」、</span><span class='punct'>「<a href=\"#~持\">持</a></span><a href=\"#~服\">服</a><a href=\"#~三\">三</a><span class='punct'><a href=\"#~年\">年</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~喪服\">喪服</a>；</span><span class='punct'><a href=\"#~喪事\">喪事</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~非\">非</a></span><a href=\"#~先\">先</a><a href=\"#~王\">王</a><a href=\"#~之\">之</a><a href=\"#~法\">法</a><a href=\"#~服\">服</a><a href=\"#~不敢\">不敢</a><a href=\"#~服\">服</a>（<span class='punct'>《<a href=\"#~孝\">孝</a></span><a href=\"#~經\">經</a>‧<a href=\"#~卿大夫\">卿大夫</a><span class='punct'><a href=\"#~章\">章</a>》</span>）​」、<span class='punct'>「<a href=\"#~周\">周</a></span><a href=\"#~公\">公</a><a href=\"#~服\">服</a><a href=\"#~天子\">天子</a><a href=\"#~之\">之</a><a href=\"#~冕\">冕</a>（<span class='punct'>《<a href=\"#~漢\">漢</a></span><a href=\"#~書\">書</a>‧<a href=\"#~卷\">卷</a><a href=\"#~九\">九</a><a href=\"#~十\">十</a><a href=\"#~九\">九</a>‧<a href=\"#~王\">王</a><a href=\"#~莽\">莽</a><a href=\"#~傳\">傳</a><span class='punct'><a href=\"#~上\">上</a>》</span>）​」。"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><a href=\"#~穿\">穿</a><span class='punct'>（<a href=\"#~衣服\">衣服</a></span>）​；<span class='punct'><a href=\"#~戴\">戴</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1018430000",
+      "pinyin": "fú",
+      "bopomofo": "ㄈㄨˊ"
+    },
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~他\">他</a></span><a href=\"#~吃\">吃</a><a href=\"#~了\">了</a><a href=\"#~幾\">幾</a><a href=\"#~服藥\">服藥</a><a href=\"#~後\">後</a><a href=\"#~就\">就</a><a href=\"#~痊癒\">痊癒</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~量詞\">量詞</a>。</span><a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><a href=\"#~中藥\">中藥</a><a href=\"#~服用\">服用</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~劑量\">劑量</a>。</span>"
+        }
+      ],
+      "id": "1018430000",
+      "pinyin": "fú<br>陸⃝fù",
+      "bopomofo": "ㄈㄨˊ<br>陸⃝ㄈㄨˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "servir",
+      "habits",
+      "vêtement",
+      "deuil",
+      "obéir",
+      "dose (médecine)​"
+    ],
+    "Deutsch": [
+      "einnehmen  (V, Med)​",
+      "etw. auf sich nehmen, übernehmen  (V)​",
+      "jmd. überzeugen  (V)​",
+      "Kleidung  (V)​",
+      "sich einleben",
+      "eingewöhnen",
+      "akklimatisieren  (V)​",
+      "Fu  (Eig, Fam)​"
+    ],
+    "English": [
+      "clothes",
+      "dress",
+      "garment",
+      "to serve (in the military, a prison sentence etc)​",
+      "to obey",
+      "to convince",
+      "to admire",
+      "to acclimatize",
+      "to take (medicine)​",
+      "mourning clothes",
+      "to wear mourning clothes",
+      "dose (measure word for medicine)​"
+    ]
+  },
+  "xrefs": []
+}

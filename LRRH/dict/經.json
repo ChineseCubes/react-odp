@@ -1,0 +1,140 @@
+{
+  "non_radical_stroke_count": 7,
+  "title": "經",
+  "radical": "<a href=\"#~糸\">糸</a>",
+  "stroke_count": 13,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~經紗\">經紗</a>」、</span><span class='punct'>「<a href=\"#~經\">經</a></span><span class='punct'><a href=\"#~絲\">絲</a>」、</span><span class='punct'>「<a href=\"#~經緯\">經緯</a></span><span class='punct'><a href=\"#~細密\">細密</a>」。</span>"
+          ],
+          "def": "<a href=\"#~紡織\">紡織</a><a href=\"#~物\">物</a><a href=\"#~上\">上</a><a href=\"#~縱向\">縱向</a><a href=\"#~的\">的</a><a href=\"#~絲線\">絲線</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~緯\">緯</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~天經地義\">天經地義</a>」、</span><span class='punct'>「<a href=\"#~離經叛道\">離經叛道</a>」。</span>"
+          ],
+          "def": "<a href=\"#~經久\">經久</a><a href=\"#~不\">不</a><a href=\"#~變\">變</a><a href=\"#~的\">的</a><a href=\"#~道理\">道理</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~法則\">法則</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~十三經\">十三經</a>」、</span><span class='punct'>「<a href=\"#~道德\">道德</a></span><span class='punct'><a href=\"#~經\">經</a>」、</span><span class='punct'>「<a href=\"#~聖經\">聖經</a>」、</span><span class='punct'>「<a href=\"#~可蘭經\">可蘭經</a>」。</span>"
+          ],
+          "def": "<a href=\"#~傳統\">傳統</a><a href=\"#~的\">的</a><a href=\"#~典範\">典範</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~著作\">著作</a>；</span><a href=\"#~闡述\">闡述</a><a href=\"#~宗教\">宗教</a><a href=\"#~教義\">教義</a><a href=\"#~的\">的</a><a href=\"#~根本\">根本</a><a href=\"#~性\">性</a><span class='punct'><a href=\"#~著作\">著作</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~經常\">經常</a>」、</span><span class='punct'>「<a href=\"#~不經之談\">不經之談</a>」、</span><span class='punct'>「<a href=\"#~荒誕不經\">荒誕不經</a>」。</span>"
+          ],
+          "def": "<a href=\"#~經久\">經久</a><a href=\"#~不\">不</a><a href=\"#~變\">變</a><span class='punct'><a href=\"#~的\">的</a>；</span><a href=\"#~正常\">正常</a><span class='punct'><a href=\"#~的\">的</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~閉經\">閉經</a>」、</span><span class='punct'>「<a href=\"#~絕經\">絕經</a>」、</span><span class='punct'>「<a href=\"#~調經\">調經</a>」、</span><span class='punct'>「<a href=\"#~經血\">經血</a></span><a href=\"#~不\">不</a><span class='punct'><a href=\"#~調\">調</a>」。</span>"
+          ],
+          "def": "<a href=\"#~指\">指</a><span class='punct'><a href=\"#~月經\">月經</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~經世濟民\">經世濟民</a>」、</span><span class='punct'>「<a href=\"#~經天緯地\">經天緯地</a>」、</span><span class='punct'>「<a href=\"#~經商\">經商</a>」、</span><span class='punct'>「<a href=\"#~經理\">經理</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~治理\">治理</a>；</span><span class='punct'><a href=\"#~經營\">經營</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~經年累月\">經年累月</a>」、</span><span class='punct'>「<a href=\"#~經\">經</a></span><a href=\"#~研究\">研究</a><span class='punct'><a href=\"#~決定\">決定</a>」、</span><span class='punct'>「<a href=\"#~不經一事，不長一智\">不經一事，不長一智</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~經過\">經過</a>；</span><span class='punct'><a href=\"#~經歷\">經歷</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~久\">久</a></span><a href=\"#~經\">經</a><span class='punct'><a href=\"#~考驗\">考驗</a>」、</span><span class='punct'>「<a href=\"#~經\">經</a></span><a href=\"#~得\">得</a><a href=\"#~住\">住</a><span class='punct'><a href=\"#~挫折\">挫折</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~忍受\">忍受</a>；</span><span class='punct'><a href=\"#~承受\">承受</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~經度\">經度</a>」。</span>"
+          ],
+          "def": "<a href=\"#~地理\">地理</a><a href=\"#~學\">學</a><a href=\"#~稱\">稱</a><a href=\"#~地表\">地表</a><a href=\"#~上\">上</a><a href=\"#~假想\">假想</a><a href=\"#~的\">的</a><a href=\"#~通過\">通過</a><a href=\"#~地球\">地球</a><a href=\"#~南北極\">南北極</a><a href=\"#~而\">而</a><a href=\"#~與\">與</a><a href=\"#~赤道\">赤道</a><a href=\"#~垂直\">垂直</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~線\">線</a>，</span><a href=\"#~稱\">稱</a><a href=\"#~作\">作</a><span class='punct'><a href=\"#~經線\">經線</a>。</span><a href=\"#~在\">在</a><a href=\"#~本初\">本初</a><a href=\"#~子午線\">子午線</a><a href=\"#~以\">以</a><a href=\"#~東\">東</a><a href=\"#~的\">的</a><a href=\"#~稱\">稱</a><span class='punct'><a href=\"#~東經\">東經</a>，</span><a href=\"#~以\">以</a><a href=\"#~西\">西</a><a href=\"#~的\">的</a><a href=\"#~稱\">稱</a><span class='punct'><a href=\"#~西經\">西經</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~經絡\">經絡</a>」、</span><span class='punct'>「<a href=\"#~經脈\">經脈</a>」、</span><span class='punct'>「<a href=\"#~血\">血</a></span><a href=\"#~不\">不</a><a href=\"#~循\">循</a><span class='punct'><a href=\"#~經\">經</a>」。</span>"
+          ],
+          "def": "<a href=\"#~中醫\">中醫</a><a href=\"#~指\">指</a><a href=\"#~人體\">人體</a><a href=\"#~內\">內</a><a href=\"#~氣血\">氣血</a><a href=\"#~運行\">運行</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~通路\">通路</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~古代\">古代</a><a href=\"#~圖書\">圖書</a><a href=\"#~四部\">四部</a><span class='punct'>（<a href=\"#~經\">經</a>、</span><span class='punct'><a href=\"#~史\">史</a>、</span><span class='punct'><a href=\"#~子\">子</a>、</span><a href=\"#~集\">集</a>）​<a href=\"#~分類\">分類</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~國中\">國中</a></span><a href=\"#~九\">九</a><a href=\"#~經\">經</a><a href=\"#~九\">九</a><a href=\"#~緯\">緯</a>（<span class='punct'>《<a href=\"#~周\">周</a></span><a href=\"#~禮\">禮</a>‧<a href=\"#~冬\">冬</a><a href=\"#~官\">官</a><a href=\"#~考\">考</a><a href=\"#~工\">工</a><a href=\"#~記\">記</a>‧<span class='punct'><a href=\"#~匠人\">匠人</a>》</span>）​」。"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><a href=\"#~南北\">南北</a><a href=\"#~方向\">方向</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~道路\">道路</a>；</span><a href=\"#~泛指\">泛指</a><span class='punct'><a href=\"#~道路\">道路</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~遂\">遂</a></span><a href=\"#~經\">經</a><a href=\"#~其\">其</a><a href=\"#~頸\">頸</a><a href=\"#~於\">於</a><a href=\"#~樹\">樹</a><span class='punct'><a href=\"#~枝\">枝</a>，</span><a href=\"#~自\">自</a><a href=\"#~奮\">奮</a><a href=\"#~絕\">絕</a><a href=\"#~脰\">脰</a><a href=\"#~而\">而</a><a href=\"#~死\">死</a>（<span class='punct'>《<a href=\"#~史記\">史記</a></span>‧<a href=\"#~卷\">卷</a><a href=\"#~八\">八</a><a href=\"#~十\">十</a><a href=\"#~二\">二</a>‧<a href=\"#~田\">田</a><a href=\"#~單列\">單列</a><span class='punct'><a href=\"#~傳\">傳</a>》</span>）​」。"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~上吊\">上吊</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "alt": "经",
+      "id": "1031240000",
+      "pinyin": "jīng",
+      "bopomofo": "ㄐㄧㄥ"
+    },
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~經紗\">經紗</a>」、</span><span class='punct'>「<a href=\"#~經線\">經線</a>」。</span>"
+          ],
+          "def": "陸⃝<a href=\"#~把\">把</a><a href=\"#~紡\">紡</a><a href=\"#~好\">好</a><a href=\"#~的\">的</a><a href=\"#~紗\">紗</a><a href=\"#~或\">或</a><a href=\"#~線\">線</a><a href=\"#~繃\">繃</a><span class='punct'><a href=\"#~起來\">起來</a>，</span><a href=\"#~來回\">來回</a><span class='punct'><a href=\"#~梳理\">梳理</a>，</span><a href=\"#~捲\">捲</a><a href=\"#~成\">成</a><a href=\"#~軸\">軸</a><a href=\"#~使\">使</a><a href=\"#~成為\">成為</a><a href=\"#~織\">織</a><a href=\"#~機\">機</a><a href=\"#~上\">上</a><a href=\"#~的\">的</a><a href=\"#~經紗\">經紗</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~經線\">經線</a>。</span>"
+        }
+      ],
+      "alt": "经",
+      "id": "1031240000",
+      "pinyin": "jīng<br>陸⃝jìng",
+      "bopomofo": "ㄐㄧㄥ<br>陸⃝ㄐㄧㄥˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "livre canonique",
+      "classique",
+      "constant",
+      "régulier",
+      "longitude",
+      "passer par",
+      "supporter",
+      "subir",
+      "gérer"
+    ],
+    "Deutsch": [
+      "über, via; durch, mittels, per  (Präp)​"
+    ],
+    "English": [
+      "surname Jing",
+      "classics",
+      "sacred book",
+      "scripture",
+      "to pass through",
+      "to undergo",
+      "to bear",
+      "to endure",
+      "warp (textile)​",
+      "longitude",
+      "menstruation",
+      "channel (TCM)​",
+      "abbr. for economics <a href=\"#~經濟\">經濟</a>|经济[jing1 ji4]"
+    ]
+  },
+  "xrefs": []
+}

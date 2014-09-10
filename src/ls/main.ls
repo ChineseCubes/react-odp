@@ -23,7 +23,7 @@ console.log "dpcm: #dpcm"
 audio = $ \audio .get!0
 
 data <- Data.getPresentation mp
-Data.buildSyntaxTreeFromNotes data
+Data.buildSyntaxTreeFromNotes data, mp.setup.path
 
 settings-button = React.renderComponent do
   CUBEBooks.SettingsButton!

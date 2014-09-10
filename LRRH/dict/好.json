@@ -1,0 +1,135 @@
+{
+  "non_radical_stroke_count": 3,
+  "title": "好",
+  "radical": "<a href=\"#~女\">女</a>",
+  "stroke_count": 6,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~美好\">美好</a>」、</span><span class='punct'>「<a href=\"#~完好\">完好</a>」、</span><span class='punct'>「<a href=\"#~花好月圓\">花好月圓</a>」。</span>"
+          ],
+          "def": "<a href=\"#~美\">美</a><a href=\"#~善\">善</a><span class='punct'><a href=\"#~的\">的</a>；</span><a href=\"#~理想\">理想</a><a href=\"#~的\">的</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~壞\">壞</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~交好\">交好</a>」、</span><span class='punct'>「<a href=\"#~友好\">友好</a>」、</span><span class='punct'>「<a href=\"#~好朋友\">好朋友</a>」。</span>"
+          ],
+          "def": "<a href=\"#~互相\">互相</a><span class='punct'><a href=\"#~親愛\">親愛</a>、</span><span class='punct'><a href=\"#~友善\">友善</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~改\">改</a></span><span class='punct'><a href=\"#~好\">好</a>」、</span><span class='punct'>「<a href=\"#~修好\">修好</a></span><span class='punct'><a href=\"#~了\">了</a>」、</span><span class='punct'>「<a href=\"#~病\">病</a></span><a href=\"#~好\">好</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "<a href=\"#~變\">變</a><a href=\"#~得\">得</a><a href=\"#~令\">令</a><a href=\"#~人\">人</a><span class='punct'><a href=\"#~滿意\">滿意</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~飯\">飯</a></span><a href=\"#~煮\">煮</a><a href=\"#~好\">好</a><span class='punct'><a href=\"#~了\">了</a>」、</span><span class='punct'>「<a href=\"#~事情\">事情</a></span><a href=\"#~做\">做</a><a href=\"#~好\">好</a><span class='punct'><a href=\"#~了\">了</a>」、</span><span class='punct'>「<a href=\"#~衣服\">衣服</a></span><a href=\"#~穿\">穿</a><a href=\"#~好\">好</a><span class='punct'><a href=\"#~了\">了</a>」、</span><span class='punct'>「<a href=\"#~頭髮\">頭髮</a></span><a href=\"#~梳\">梳</a><a href=\"#~好\">好</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~完成\">完成</a>；</span><span class='punct'><a href=\"#~結束\">結束</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~這\">這</a></span><a href=\"#~事\">事</a><a href=\"#~好\">好</a><span class='punct'><a href=\"#~辦\">辦</a>」、</span><span class='punct'>「<a href=\"#~這\">這</a></span><a href=\"#~人\">人</a><a href=\"#~好\">好</a><span class='punct'><a href=\"#~相處\">相處</a>」、</span><span class='punct'>「<a href=\"#~這\">這</a></span><a href=\"#~問題\">問題</a><a href=\"#~好\">好</a><span class='punct'><a href=\"#~解決\">解決</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~容易\">容易</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~好\">好</a></span><span class='punct'><a href=\"#~熱\">熱</a>」、</span><span class='punct'>「<a href=\"#~好\">好</a></span><a href=\"#~想\">想</a><span class='punct'><a href=\"#~你\">你</a>」、</span><span class='punct'>「<a href=\"#~好\">好</a></span><a href=\"#~多\">多</a><span class='punct'><a href=\"#~個\">個</a>」、</span><span class='punct'>「<a href=\"#~好\">好</a></span><span class='punct'><a href=\"#~半天\">半天</a>」。</span>"
+          ],
+          "def": "<a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~很\">很</a>」、</span><span class='punct'>「<a href=\"#~十分\">十分</a>」，</span><a href=\"#~表示\">表示</a><a href=\"#~程度\">程度</a><span class='punct'><a href=\"#~深\">深</a>、</span><a href=\"#~數量\">數量</a><span class='punct'><a href=\"#~多\">多</a>、</span><a href=\"#~時間\">時間</a><span class='punct'><a href=\"#~長\">長</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~快\">快</a></span><span class='punct'><a href=\"#~睡\">睡</a>，</span><a href=\"#~明天\">明天</a><a href=\"#~好\">好</a><a href=\"#~早點\">早點</a><span class='punct'><a href=\"#~上學\">上學</a>」、</span><span class='punct'>「<a href=\"#~請\">請</a></span><a href=\"#~告訴\">告訴</a><a href=\"#~我\">我</a><a href=\"#~你\">你</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~住處\">住處</a>，</span><a href=\"#~我\">我</a><a href=\"#~好\">好</a><a href=\"#~去\">去</a><a href=\"#~找\">找</a><span class='punct'><a href=\"#~你\">你</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~以便\">以便</a>；</span><span class='punct'><a href=\"#~便於\">便於</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~無\">無</a></span><a href=\"#~話\">話</a><span class='punct'><a href=\"#~好說\">好說</a>」、</span><span class='punct'>「<a href=\"#~只好\">只好</a></span><span class='punct'><a href=\"#~如此\">如此</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~能夠\">能夠</a>；</span><span class='punct'><a href=\"#~應該\">應該</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~好聽\">好聽</a>」、</span><span class='punct'>「<a href=\"#~好看\">好看</a>」。</span>"
+          ],
+          "def": "<a href=\"#~置於\">置於</a><a href=\"#~動詞\">動詞</a><span class='punct'><a href=\"#~之前\">之前</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~效果\">效果</a><span class='punct'><a href=\"#~好\">好</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~嘆詞\">嘆詞</a>：</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~好\">好</a>！</span><a href=\"#~這\">這</a><a href=\"#~正\">正</a><a href=\"#~合\">合</a><a href=\"#~我\">我</a><span class='punct'><a href=\"#~意\">意</a>」、</span><span class='punct'>「<a href=\"#~好\">好</a>！</span><a href=\"#~就\">就</a><a href=\"#~這麼\">這麼</a><span class='punct'><a href=\"#~做\">做</a>」。</span>"
+          ],
+          "def": "(1)​<a href=\"#~表示\">表示</a><a href=\"#~稱賞\">稱賞</a><a href=\"#~或許\">或許</a><span class='punct'><a href=\"#~可\">可</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~好\">好</a></span><span class='punct'><a href=\"#~了\">了</a>！</span><a href=\"#~我\">我</a><a href=\"#~不想\">不想</a><span class='punct'><a href=\"#~聽\">聽</a>」。</span>"
+          ],
+          "def": "(2)​<a href=\"#~表示\">表示</a><a href=\"#~責怪\">責怪</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~不滿\">不滿</a>。</span>"
+        }
+      ],
+      "id": "1008830000",
+      "pinyin": "hǎo",
+      "bopomofo": "ㄏㄠˇ"
+    },
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~好學\">好學</a></span><a href=\"#~不\">不</a><span class='punct'><a href=\"#~倦\">倦</a>」、</span><span class='punct'>「<a href=\"#~好逸惡勞\">好逸惡勞</a>」、</span><span class='punct'>「<a href=\"#~好高騖遠\">好高騖遠</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~愛\">愛</a>；</span><a href=\"#~喜歡\">喜歡</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~惡\">惡</a></span>（ㄨˋ　wù）​」<a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~嗜好\">嗜好</a>」、</span><span class='punct'>「<a href=\"#~癖好\">癖好</a>」、</span><span class='punct'>「<a href=\"#~偏好\">偏好</a>」、</span><span class='punct'>「<a href=\"#~投其所好\">投其所好</a>」。</span>"
+          ],
+          "def": "<a href=\"#~心\">心</a><a href=\"#~中\">中</a><a href=\"#~所\">所</a><a href=\"#~喜愛\">喜愛</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~事物\">事物</a>。</span>"
+        }
+      ],
+      "id": "1008830000",
+      "pinyin": "hào",
+      "bopomofo": "ㄏㄠˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "bien",
+      "bon",
+      "agréable",
+      "très",
+      "beaucoup",
+      "(après un verbe, indique l'achèvement de l'action)​",
+      "se porter bien",
+      "aller bien",
+      "avoir une inclination pour"
+    ],
+    "Deutsch": [
+      "gut, ordentlich, gründlich  (Adj)​"
+    ],
+    "English": [
+      "good",
+      "well",
+      "proper",
+      "good to",
+      "easy to",
+      "very",
+      "so",
+      "(suffix indicating completion or readiness)​",
+      "(of an unmarried couple)​ to be close",
+      "to be keen on each other",
+      "to be fond of",
+      "to have a tendency to",
+      "to be prone to"
+    ]
+  },
+  "xrefs": []
+}

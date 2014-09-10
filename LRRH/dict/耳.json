@@ -1,0 +1,63 @@
+{
+  "non_radical_stroke_count": 0,
+  "title": "耳",
+  "radical": "<a href=\"#~耳\">耳</a>",
+  "stroke_count": 6,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~耳垢\">耳垢</a>」、</span><span class='punct'>「<a href=\"#~耳聰目明\">耳聰目明</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~耳朵\">耳朵</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~木耳\">木耳</a>」、</span><span class='punct'>「<a href=\"#~銀耳\">銀耳</a>」。</span>"
+          ],
+          "def": "<a href=\"#~外形\">外形</a><a href=\"#~像\">像</a><a href=\"#~耳朵\">耳朵</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~東西\">東西</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~耳房\">耳房</a>」、</span><span class='punct'>「<a href=\"#~耳\">耳</a></span><span class='punct'><a href=\"#~門\">門</a>」。</span>"
+          ],
+          "def": "<a href=\"#~位置\">位置</a><a href=\"#~在\">在</a><a href=\"#~兩側\">兩側</a><span class='punct'><a href=\"#~的\">的</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~技\">技</a></span><a href=\"#~止\">止</a><a href=\"#~此\">此</a><a href=\"#~耳\">耳</a><span class='punct'>（<a href=\"#~唐\">唐</a></span>‧<a href=\"#~柳\">柳</a><a href=\"#~宗\">宗</a><a href=\"#~元\">元</a><span class='punct'>《<a href=\"#~三戒\">三戒</a></span>‧<a href=\"#~黔\">黔</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~驢\">驢</a>》</span>）​」、<span class='punct'>「<a href=\"#~前言\">前言</a></span><a href=\"#~戲\">戲</a><a href=\"#~之\">之</a><a href=\"#~耳\">耳</a>（<span class='punct'>《<a href=\"#~論語\">論語</a></span>‧<a href=\"#~陽\">陽</a><span class='punct'><a href=\"#~貨\">貨</a>》</span>）​」。"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~助詞\">助詞</a>。</span><a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~句\">句</a><span class='punct'><a href=\"#~末\">末</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~限止\">限止</a><a href=\"#~語氣\">語氣</a><span class='punct'><a href=\"#~等\">等</a>，</span><a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~而已\">而已</a>」、</span><span class='punct'>「<a href=\"#~罷了\">罷了</a>」。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~二\">二</a><a href=\"#~一\">一</a><a href=\"#~四部\">四部</a><a href=\"#~首\">首</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span>"
+        }
+      ],
+      "id": "1032640000",
+      "pinyin": "ěr",
+      "bopomofo": "ㄦˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "oreille",
+      "anse",
+      "(finale)​",
+      "128e radical"
+    ],
+    "Deutsch": [
+      "Ohr",
+      "Radikal Nr. 128 = Ohr (Sprachw)​"
+    ],
+    "English": [
+      "ear",
+      "handle (archaeology)​",
+      "and that is all (classical Chinese)​"
+    ]
+  },
+  "xrefs": []
+}

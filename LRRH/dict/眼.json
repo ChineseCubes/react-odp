@@ -1,0 +1,76 @@
+{
+  "non_radical_stroke_count": 6,
+  "title": "眼",
+  "radical": "<a href=\"#~目\">目</a>",
+  "stroke_count": 11,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~眨眼\">眨眼</a>」、</span><span class='punct'>「<a href=\"#~瞪眼\">瞪眼</a>」、</span><span class='punct'>「<a href=\"#~眼明手快\">眼明手快</a>」、</span><span class='punct'>「<a href=\"#~橫眉\">橫眉</a></span><a href=\"#~豎\">豎</a><span class='punct'><a href=\"#~眼\">眼</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~眼睛\">眼睛</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~網眼\">網眼</a></span><span class='punct'><a href=\"#~兒\">兒</a>」、</span><span class='punct'>「<a href=\"#~鼻子\">鼻子</a></span><a href=\"#~眼\">眼</a><span class='punct'><a href=\"#~兒\">兒</a>」、</span><span class='punct'>「<a href=\"#~耳朵眼兒\">耳朵眼兒</a>」、</span><span class='punct'>「<a href=\"#~窗戶\">窗戶</a></span><a href=\"#~眼\">眼</a><span class='punct'><a href=\"#~兒\">兒</a>」。</span>"
+          ],
+          "def": "<a href=\"#~小\">小</a><span class='punct'><a href=\"#~窟窿\">窟窿</a>；</span><a href=\"#~小\">小</a><span class='punct'><a href=\"#~洞\">洞</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~一塊\">一塊</a></span><a href=\"#~活\">活</a><a href=\"#~棋\">棋</a><a href=\"#~至少\">至少</a><a href=\"#~得\">得</a><a href=\"#~有\">有</a><a href=\"#~兩\">兩</a><a href=\"#~個\">個</a><a href=\"#~真\">真</a><span class='punct'><a href=\"#~眼\">眼</a>」。</span>"
+          ],
+          "def": "<a href=\"#~圍棋\">圍棋</a><span class='punct'><a href=\"#~術語\">術語</a>。</span><a href=\"#~指\">指</a><a href=\"#~由\">由</a><a href=\"#~同\">同</a><a href=\"#~色\">色</a><a href=\"#~棋子\">棋子</a><a href=\"#~圍\">圍</a><a href=\"#~住\">住</a><a href=\"#~的\">的</a><a href=\"#~不\">不</a><a href=\"#~相連\">相連</a><a href=\"#~的\">的</a><a href=\"#~兩\">兩</a><a href=\"#~個\">個</a><a href=\"#~或\">或</a><a href=\"#~兩\">兩</a><a href=\"#~個\">個</a><a href=\"#~以上\">以上</a><span class='punct'><a href=\"#~空位\">空位</a>，</span><a href=\"#~對方\">對方</a><a href=\"#~非\">非</a><a href=\"#~因\">因</a><a href=\"#~特殊\">特殊</a><a href=\"#~情況\">情況</a><a href=\"#~不能\">不能</a><a href=\"#~在\">在</a><a href=\"#~其中\">其中</a><span class='punct'><a href=\"#~下子\">下子</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~獨具隻眼\">獨具隻眼</a>」、</span><span class='punct'>「<a href=\"#~慧眼識英雄\">慧眼識英雄</a>」、</span><span class='punct'>「<a href=\"#~眼淺\">眼淺</a>」、</span><span class='punct'>「<a href=\"#~眼高手低\">眼高手低</a>」。</span>"
+          ],
+          "def": "<a href=\"#~指\">指</a><a href=\"#~識別\">識別</a><span class='punct'><a href=\"#~能力\">能力</a>；</span><span class='punct'><a href=\"#~眼光\">眼光</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~節骨眼\">節骨眼</a></span><span class='punct'><a href=\"#~兒\">兒</a>」、</span><span class='punct'>「<a href=\"#~詩\">詩</a></span><span class='punct'><a href=\"#~眼\">眼</a>」、</span><span class='punct'>「<a href=\"#~文\">文</a></span><span class='punct'><a href=\"#~眼\">眼</a>」。</span>"
+          ],
+          "def": "<a href=\"#~指事\">指事</a><a href=\"#~物\">物</a><a href=\"#~的\">的</a><a href=\"#~關鍵\">關鍵</a><a href=\"#~或\">或</a><a href=\"#~文章\">文章</a><a href=\"#~的\">的</a><a href=\"#~精要\">精要</a><span class='punct'><a href=\"#~處\">處</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~板眼\">板眼</a>」、</span><span class='punct'>「<a href=\"#~一\">一</a></span><a href=\"#~板\">板</a><a href=\"#~三\">三</a><span class='punct'><a href=\"#~眼\">眼</a>」。</span>"
+          ],
+          "def": "<a href=\"#~戲曲\">戲曲</a><a href=\"#~中\">中</a><a href=\"#~一\">一</a><a href=\"#~拍\">拍</a><a href=\"#~音樂\">音樂</a><a href=\"#~再\">再</a><a href=\"#~分\">分</a><a href=\"#~的\">的</a><a href=\"#~小\">小</a><span class='punct'><a href=\"#~拍\">拍</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~一眼井\">一眼井</a>」、</span><span class='punct'>「<a href=\"#~一眼\">一眼</a></span><span class='punct'><a href=\"#~清泉\">清泉</a>」、</span><span class='punct'>「<a href=\"#~窯洞\">窯洞</a></span><a href=\"#~兩\">兩</a><span class='punct'><a href=\"#~眼\">眼</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~量詞\">量詞</a>。</span><a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><span class='punct'><a href=\"#~井\">井</a>、</span><a href=\"#~泉水\">泉水</a><a href=\"#~或\">或</a><a href=\"#~窯洞\">窯洞</a><span class='punct'><a href=\"#~等\">等</a>。</span>"
+        }
+      ],
+      "id": "1027730000",
+      "pinyin": "yǎn",
+      "bopomofo": "ㄧㄢˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "oeil",
+      "regard",
+      "trou",
+      "chas"
+    ],
+    "Deutsch": [
+      "Auge  (Zähl)​"
+    ],
+    "English": [
+      "eye",
+      "small hole",
+      "crux (of a matter)​",
+      "CL:<a href=\"#~隻\">隻</a>|<a href=\"#~只\">只</a>[zhi1],<a href=\"#~雙\">雙</a>|双[shuang1]",
+      "classifier for big hollow things (wells, stoves, pots etc)​"
+    ]
+  },
+  "xrefs": []
+}

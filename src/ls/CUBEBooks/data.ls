@@ -86,9 +86,17 @@ utils =
     name:      r.0
   unslash: ->
     "#{it.replace /\/$/ ''}"
+  camelFromHyphenated : ->
+    it
+      .split '-'
+      .map (v, i) ->
+        | i is 0  => v
+        | otherwise =>"#{v.slice(0, 1)toUpperCase!}#{v.slice(1)}"
+    .join ''
   getMasterPage: (path, done) ->
-    {attrs}:mp <- $.getJSON "#{utils.unslash path}/masterpage.json"
-    # patch it
+    path = utils.unslash path
+    $.getJSON "#path/masterpage.json" -> done utils.patchMasterPage it, path
+  patchMasterPage: ({attrs}:mp, path) ->
     width  = parseInt attrs['FO:PAGE-WIDTH'],  10
     height = parseInt attrs['FO:PAGE-HEIGHT'], 10
     orientation = attrs['STYLE:PRINT-ORIENTATION']
@@ -101,7 +109,7 @@ utils =
       width:  width
       height: height
       total-pages: attrs['TOTAL-PAGES']
-    done mp <<< master-page
+    mp <<< master-page
   getPresentation: ({setup}:master-page, done) ->
     path = utils.unslash setup.path
     pages = []
@@ -129,7 +137,7 @@ utils =
     utils.transform data, (attrs = {}, node-name, parents) ->
       new-attrs = style: {}
       for k, v of attrs
-        name = ODP.camelFromHyphenated utils.splitNamespace(k)name
+        name = utils.camelFromHyphenated utils.splitNamespace(k)name
         switch
         | name is 'pageWidth'  => new-attrs.width       = v
         | name is 'pageHeight' => new-attrs.height      = v
@@ -144,19 +152,21 @@ utils =
       children: if not node.children then [] else
         for child in node.children
           utils.transform child, onNode, parents.concat [node.name]
-  traverse: (node, onNode = null, parents = []) ->
+  traverse: (node, onNode, parents = []) ->
+    return if not onNode
     onNode node, parents
+    return if not node.children
     for child in node.children
       utils.traverse child, onNode, parents.concat [node.name]
   getSegmentations: (text, done)->
     done(utils.data[text] or Node!)
-  askMoeDict: (str, done) ->
+  askDict: (str, path, done) ->
     counter = 0
-    result = {}
+    result = []
     tagless = utils.strip
     # XXX: should sort surrogates
     for let i from 0 til str.length
-      moe <- $.getJSON "www.moedict.tw/~#{str[i]}.json"
+      moe <- $.getJSON "#path/dict/#{encodeURI str[i]}.json"
       result[+i] =
         zh_TW:   tagless moe.title
         zh_CN:   tagless(moe.heteronyms.0.alt or moe.title)
@@ -179,7 +189,7 @@ utils =
         ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
       | otherwise => it
     tmp.textContent or tmp.innerText or ''
-  buildSyntaxTreeFromNotes: (node) ->
+  buildSyntaxTreeFromNotes: (node, path) ->
     tagless = utils.strip
     keys   = []
     values = []
@@ -224,13 +234,12 @@ utils =
           key = r.0
           child = keywords[r.0]
           let key, child
-            moe <- utils.askMoeDict key
+            moe <- utils.askDict key, path
             if key.length is 1
               child.children.0 <<< moe.0{pinyin, zh_TW, zh_CN}
             else
               for i from 0 til key.length
                 continue if not moe[i]
-                console.log moe[i]{pinyin, zh_TW, zh_CN}
                 en = moe[i]English
                 child.children[i]
                   ..definition = en.join ', '

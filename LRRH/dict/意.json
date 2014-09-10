@@ -1,0 +1,80 @@
+{
+  "non_radical_stroke_count": 9,
+  "title": "意",
+  "radical": "<a href=\"#~心\">心</a>",
+  "stroke_count": 13,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~文章\">文章</a></span><span class='punct'><a href=\"#~大意\">大意</a>」、</span><span class='punct'>「<a href=\"#~詞不達意\">詞不達意</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~意思\">意思</a>；</span><a href=\"#~語言\">語言</a><a href=\"#~文字\">文字</a><a href=\"#~表達\">表達</a><a href=\"#~的\">的</a><a href=\"#~思想\">思想</a><span class='punct'><a href=\"#~內容\">內容</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~意\">意</a></span><a href=\"#~足\">足</a><a href=\"#~心\">心</a><span class='punct'><a href=\"#~滿\">滿</a>」、</span><span class='punct'>「<a href=\"#~稱心如意\">稱心如意</a>」、</span><span class='punct'>「<a href=\"#~意圖\">意圖</a></span><span class='punct'><a href=\"#~不軌\">不軌</a>」、</span><span class='punct'>「<a href=\"#~他\">他</a></span><a href=\"#~有意\">有意</a><a href=\"#~跨足\">跨足</a><a href=\"#~汽車\">汽車</a><span class='punct'><a href=\"#~業\">業</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~願望\">願望</a>；</span><span class='punct'><a href=\"#~心思\">心思</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~古意盎然\">古意盎然</a>」、</span><span class='punct'>「<a href=\"#~醉意\">醉意</a></span><span class='punct'><a href=\"#~十足\">十足</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~趣味\">趣味</a>；</span><a href=\"#~情\">情</a><span class='punct'><a href=\"#~韻\">韻</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~郎\">郎</a></span><a href=\"#~情\">情</a><a href=\"#~妹\">妹</a><span class='punct'><a href=\"#~意\">意</a>」、</span><span class='punct'>「<a href=\"#~情投意合\">情投意合</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~情感\">情感</a>；</span><span class='punct'><a href=\"#~情意\">情意</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~意外\">意外</a>」、</span><span class='punct'>「<a href=\"#~出乎意料\">出乎意料</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~料想\">料想</a>；</span><span class='punct'><a href=\"#~猜測\">猜測</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~意\">意</a></span><a href=\"#~在\">在</a><a href=\"#~筆\">筆</a><span class='punct'><a href=\"#~先\">先</a>」、</span><span class='punct'>「<a href=\"#~意\">意</a></span><a href=\"#~到\">到</a><a href=\"#~筆\">筆</a><span class='punct'><a href=\"#~隨\">隨</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~念頭\">念頭</a>；</span><span class='punct'><a href=\"#~想法\">想法</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1014000000",
+      "pinyin": "yì",
+      "bopomofo": "ㄧˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "sens",
+      "intention",
+      "désir"
+    ],
+    "Deutsch": [
+      "Idee, Meinung  (S)​",
+      "Wunsch, Begehr, Verlangen "
+    ],
+    "English": [
+      "Italy",
+      "Italian",
+      "abbr. for <a href=\"#~意\">意</a><a href=\"#~大\">大</a><a href=\"#~利\">利</a>[Yi4 da4 li4]",
+      "idea",
+      "meaning",
+      "thought",
+      "to think",
+      "wish",
+      "desire",
+      "intention",
+      "to expect",
+      "to anticipate"
+    ]
+  },
+  "xrefs": []
+}

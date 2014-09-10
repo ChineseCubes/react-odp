@@ -1,13 +1,6 @@
 {isArray, isString, isNumber, filter, map, mapValues, cloneDeep} = _
 
-camelFromHyphenated = ->
-  it
-    .split '-'
-    .map (v, i) ->
-      | i is 0  => v
-      | otherwise =>"#{v.slice(0, 1)toUpperCase!}#{v.slice(1)}"
-    .join ''
-renderProps = -> default-components[camelFromHyphenated it.data.name]? it
+renderProps = -> default-components[Data.camelFromHyphenated it.data.name]? it
 doTextareaVerticalAlign = ->
   return if not it?attrs?style?textarea-vertical-align
   style= it.attrs.style
@@ -132,6 +125,5 @@ default-components =
 (this.ODP ?= {}) <<< do
   DrawMixin: DrawMixin
   components: default-components
-  camelFromHyphenated: camelFromHyphenated
   renderProps: renderProps
 

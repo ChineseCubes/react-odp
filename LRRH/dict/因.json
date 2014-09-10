@@ -1,0 +1,72 @@
+{
+  "non_radical_stroke_count": 3,
+  "title": "因",
+  "radical": "<a href=\"#~囗\">囗</a>",
+  "stroke_count": 6,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~原因\">原因</a>」、</span><span class='punct'>「<a href=\"#~因素\">因素</a>」、</span><span class='punct'>「<a href=\"#~因果\">因果</a></span><span class='punct'><a href=\"#~循環\">循環</a>」、</span><span class='punct'>「<a href=\"#~事出有因\">事出有因</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~原由\">原由</a>；</span><a href=\"#~緣故\">緣故</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~果\">果</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~因襲\">因襲</a>」、</span><span class='punct'>「<a href=\"#~因循苟且\">因循苟且</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~承襲\">承襲</a>；</span><span class='punct'><a href=\"#~沿襲\">沿襲</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~介詞\">介詞</a>：</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~因\">因</a></span><a href=\"#~公\">公</a><span class='punct'><a href=\"#~殉職\">殉職</a>」、</span><span class='punct'>「<a href=\"#~因\">因</a></span><a href=\"#~故\">故</a><span class='punct'><a href=\"#~缺席\">缺席</a>」、</span><span class='punct'>「<a href=\"#~因\">因</a></span><a href=\"#~雨\">雨</a><span class='punct'><a href=\"#~改期\">改期</a>」。</span>"
+          ],
+          "def": "(1)​<a href=\"#~引進\">引進</a><a href=\"#~動作\">動作</a><a href=\"#~行為\">行為</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~原因\">原因</a>，</span><a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~因為\">因為</a>」。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~因材施教\">因材施教</a>」、</span><span class='punct'>「<a href=\"#~因地制宜\">因地制宜</a>」。</span>"
+          ],
+          "def": "(2)​<a href=\"#~引進\">引進</a><a href=\"#~動作\">動作</a><a href=\"#~行為\">行為</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~憑藉\">憑藉</a>，</span><a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~根據\">根據</a>」。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~因\">因</a></span><a href=\"#~他\">他</a><a href=\"#~今天\">今天</a><a href=\"#~太\">太</a><span class='punct'><a href=\"#~忙\">忙</a>，</span><a href=\"#~所以\">所以</a><a href=\"#~忘\">忘</a><a href=\"#~了\">了</a><a href=\"#~這個\">這個</a><span class='punct'><a href=\"#~約會\">約會</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~連詞\">連詞</a>。</span><a href=\"#~連接\">連接</a><span class='punct'><a href=\"#~分句\">分句</a>，</span><a href=\"#~表示\">表示</a><span class='punct'><a href=\"#~原因\">原因</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1007260000",
+      "pinyin": "yīn",
+      "bopomofo": "ㄧㄣ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "cause",
+      "raison",
+      "à cause de",
+      "selon"
+    ],
+    "Deutsch": [
+      "Grund, Ursache  (S)​",
+      "folgen, fortführen  (V, Lit)​",
+      "aufgrund, nach, gemäß  (Konj)​",
+      "weil, wegen, infolge  (Konj)​",
+      "Yin  (Eig, Fam)​"
+    ],
+    "English": [
+      "cause",
+      "reason",
+      "because"
+    ]
+  },
+  "xrefs": []
+}

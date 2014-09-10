@@ -1,0 +1,66 @@
+{
+  "non_radical_stroke_count": 0,
+  "title": "已",
+  "radical": "<a href=\"#~己\">己</a>",
+  "stroke_count": 3,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~雀躍\">雀躍</a></span><span class='punct'><a href=\"#~不已\">不已</a>」、</span><span class='punct'>「<a href=\"#~唏噓\">唏噓</a></span><span class='punct'><a href=\"#~不已\">不已</a>」、</span><span class='punct'>「<a href=\"#~言\">言</a></span><a href=\"#~猶\">猶</a><a href=\"#~未\">未</a><span class='punct'><a href=\"#~已\">已</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~停止\">停止</a>；</span><span class='punct'><a href=\"#~完畢\">完畢</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~已婚\">已婚</a>」、</span><span class='punct'>「<a href=\"#~已故\">已故</a>」、</span><span class='punct'>「<a href=\"#~已\">已</a></span><a href=\"#~無\">無</a><span class='punct'><a href=\"#~大礙\">大礙</a>」、</span><span class='punct'>「<a href=\"#~早已\">早已</a></span><a href=\"#~等候\">等候</a><span class='punct'><a href=\"#~多時\">多時</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~已經\">已經</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~不為已甚\">不為已甚</a>」。</span>"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~太\">太</a>；</span><span class='punct'><a href=\"#~過\">過</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~一陣\">一陣</a></span><span class='punct'><a href=\"#~天搖地動\">天搖地動</a>，</span><a href=\"#~已\">已</a><a href=\"#~而\">而</a><a href=\"#~復\">復</a><span class='punct'><a href=\"#~如初\">如初</a>」。</span>"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~隨後\">隨後</a>；</span><span class='punct'><a href=\"#~不久\">不久</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~不\">不</a></span><a href=\"#~鳴\">鳴</a><span class='punct'><a href=\"#~則已\">則已</a>，</span><span class='punct'><a href=\"#~一鳴驚人\">一鳴驚人</a>」。</span>"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'><a href=\"#~算了\">算了</a>；</span><span class='punct'><a href=\"#~罷了\">罷了</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1011550000",
+      "pinyin": "yǐ",
+      "bopomofo": "ㄧˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "cesser",
+      "finir",
+      "déjà"
+    ],
+    "Deutsch": [
+      "schon, allzu, danach, bereits ",
+      "Yi  (Eig, Fam)​"
+    ],
+    "English": [
+      "already",
+      "to stop",
+      "then",
+      "afterwards"
+    ]
+  },
+  "xrefs": []
+}

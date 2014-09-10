@@ -1,0 +1,71 @@
+{
+  "non_radical_stroke_count": 4,
+  "title": "穿",
+  "radical": "<a href=\"#~穴\">穴</a>",
+  "stroke_count": 9,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~水滴石穿\">水滴石穿</a>」、</span><span class='punct'>「<a href=\"#~穿\">穿</a></span><a href=\"#~個\">個</a><a href=\"#~耳洞\">耳洞</a><a href=\"#~戴\">戴</a><span class='punct'><a href=\"#~耳環\">耳環</a>」、</span><span class='punct'>「<a href=\"#~在\">在</a></span><a href=\"#~冰\">冰</a><a href=\"#~層\">層</a><a href=\"#~上\">上</a><a href=\"#~穿\">穿</a><a href=\"#~個\">個</a><a href=\"#~窟窿\">窟窿</a><a href=\"#~捕\">捕</a><span class='punct'><a href=\"#~魚\">魚</a>」。</span>"
+          ],
+          "def": "<span class='punct'>（<a href=\"#~用\">用</a></span><span class='punct'><a href=\"#~鑿\">鑿</a>、</span><span class='punct'><a href=\"#~鑽\">鑽</a>、</span><a href=\"#~刺\">刺</a><a href=\"#~等\">等</a><a href=\"#~辦法\">辦法</a>）​<a href=\"#~使\">使</a><a href=\"#~形成\">形成</a><span class='punct'><a href=\"#~孔洞\">孔洞</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~穿梭\">穿梭</a>」、</span><span class='punct'>「<a href=\"#~穿針引線\">穿針引線</a>」、</span><span class='punct'>「<a href=\"#~穿\">穿</a></span><a href=\"#~過\">過</a><a href=\"#~小\">小</a><span class='punct'><a href=\"#~巷\">巷</a>」、</span><span class='punct'>「<a href=\"#~橫\">橫</a></span><a href=\"#~穿\">穿</a><span class='punct'><a href=\"#~馬路\">馬路</a>」。</span>"
+          ],
+          "def": "<span class='punct'>（<a href=\"#~從\">從</a></span><span class='punct'><a href=\"#~洞\">洞</a>、</span><span class='punct'><a href=\"#~縫隙\">縫隙</a>、</span><a href=\"#~空地\">空地</a><a href=\"#~等\">等</a>）​<span class='punct'><a href=\"#~通過\">通過</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~貫穿\">貫穿</a>」、</span><span class='punct'>「<a href=\"#~穿\">穿</a></span><a href=\"#~了\">了</a><a href=\"#~一\">一</a><a href=\"#~掛\">掛</a><span class='punct'><a href=\"#~佛珠\">佛珠</a>」。</span>"
+          ],
+          "def": "<a href=\"#~用\">用</a><span class='punct'><a href=\"#~繩子\">繩子</a>、</span><a href=\"#~竹籤\">竹籤</a><a href=\"#~等\">等</a><a href=\"#~通過\">通過</a><a href=\"#~物體\">物體</a><a href=\"#~使\">使</a><a href=\"#~連貫\">連貫</a><a href=\"#~到\">到</a><span class='punct'><a href=\"#~一起\">一起</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~穿\">穿</a></span><a href=\"#~衣\">衣</a><a href=\"#~戴\">戴</a><span class='punct'><a href=\"#~帽\">帽</a>」、</span><span class='punct'>「<a href=\"#~穿著\">穿著</a></span><a href=\"#~一身\">一身</a><span class='punct'><a href=\"#~西裝\">西裝</a>」、</span><span class='punct'>「<a href=\"#~穿\">穿</a></span><span class='punct'><a href=\"#~鞋\">鞋</a>」。</span>"
+          ],
+          "def": "<a href=\"#~把\">把</a><span class='punct'><a href=\"#~衣服\">衣服</a>、</span><span class='punct'><a href=\"#~鞋\">鞋</a>、</span><a href=\"#~襪\">襪</a><a href=\"#~等\">等</a><a href=\"#~套\">套</a><a href=\"#~在\">在</a><a href=\"#~身體\">身體</a><span class='punct'><a href=\"#~上\">上</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~看穿\">看穿</a>」、</span><span class='punct'>「<a href=\"#~說穿\">說穿</a>」、</span><span class='punct'>「<a href=\"#~揭穿\">揭穿</a>」、</span><span class='punct'>「<a href=\"#~戳穿\">戳穿</a>」。</span>"
+          ],
+          "def": "<a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~某\">某</a><a href=\"#~些\">些</a><a href=\"#~動詞\">動詞</a><span class='punct'><a href=\"#~後\">後</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~澈底\">澈底</a><span class='punct'><a href=\"#~顯露\">顯露</a>。</span>"
+        }
+      ],
+      "id": "1029570000",
+      "pinyin": "chuān",
+      "bopomofo": "ㄔㄨㄢ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "percer",
+      "pénétrer",
+      "passer par",
+      "traverser",
+      "s'habiller",
+      "vêtir",
+      "porter"
+    ],
+    "Deutsch": [
+      "tragen, anziehen, anhaben (Kleidung)​ "
+    ],
+    "English": [
+      "to bore through",
+      "to pierce",
+      "to perforate",
+      "to penetrate",
+      "to pass through",
+      "to dress",
+      "to wear",
+      "to put on",
+      "to thread"
+    ]
+  },
+  "xrefs": []
+}

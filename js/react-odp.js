@@ -1,19 +1,9 @@
 (function(){
-  var isArray, isString, isNumber, filter, map, mapValues, cloneDeep, camelFromHyphenated, renderProps, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents, ref$;
+  var isArray, isString, isNumber, filter, map, mapValues, cloneDeep, renderProps, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents, ref$;
   isArray = _.isArray, isString = _.isString, isNumber = _.isNumber, filter = _.filter, map = _.map, mapValues = _.mapValues, cloneDeep = _.cloneDeep;
-  camelFromHyphenated = function(it){
-    return it.split('-').map(function(v, i){
-      switch (false) {
-      case i !== 0:
-        return v;
-      default:
-        return v.slice(0, 1).toUpperCase() + "" + v.slice(1);
-      }
-    }).join('');
-  };
   renderProps = function(it){
     var key$;
-    return typeof defaultComponents[key$ = camelFromHyphenated(it.data.name)] === 'function' ? defaultComponents[key$](it) : void 8;
+    return typeof defaultComponents[key$ = Data.camelFromHyphenated(it.data.name)] === 'function' ? defaultComponents[key$](it) : void 8;
   };
   doTextareaVerticalAlign = function(it){
     var ref$, ref1$, style, i$;
@@ -234,7 +224,6 @@
     : this.ODP = {}, {
     DrawMixin: DrawMixin,
     components: defaultComponents,
-    camelFromHyphenated: camelFromHyphenated,
     renderProps: renderProps
   });
   function import$(obj, src){

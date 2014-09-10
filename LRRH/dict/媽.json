@@ -1,0 +1,55 @@
+{
+  "non_radical_stroke_count": 10,
+  "title": "媽",
+  "radical": "<a href=\"#~女\">女</a>",
+  "stroke_count": 13,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~爸\">爸</a></span><span class='punct'><a href=\"#~媽\">媽</a>」、</span><span class='punct'>「<a href=\"#~媽媽\">媽媽</a>」、</span><span class='punct'>「<a href=\"#~我\">我</a></span><a href=\"#~媽\">媽</a><a href=\"#~是\">是</a><a href=\"#~個\">個</a><span class='punct'><a href=\"#~老師\">老師</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~母親\">母親</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~舅媽\">舅媽</a>」、</span><span class='punct'>「<a href=\"#~姑媽\">姑媽</a>」、</span><span class='punct'>「<a href=\"#~大姨媽\">大姨媽</a>」。</span>"
+          ],
+          "def": "<a href=\"#~稱呼\">稱呼</a><a href=\"#~與\">與</a><a href=\"#~母親\">母親</a><a href=\"#~同輩\">同輩</a><a href=\"#~的\">的</a><a href=\"#~女性\">女性</a><span class='punct'><a href=\"#~親屬\">親屬</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~張\">張</a></span><span class='punct'><a href=\"#~媽媽\">媽媽</a>」、</span><span class='punct'>「<a href=\"#~王\">王</a></span><span class='punct'><a href=\"#~媽媽\">媽媽</a>」。</span>"
+          ],
+          "def": "<a href=\"#~尊稱\">尊稱</a><a href=\"#~年長\">年長</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~婦女\">婦女</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~李\">李</a></span><span class='punct'><a href=\"#~媽\">媽</a>」、</span><span class='punct'>「<a href=\"#~奶媽\">奶媽</a>」。</span>"
+          ],
+          "def": "<a href=\"#~舊時\">舊時</a><a href=\"#~對\">對</a><a href=\"#~年長\">年長</a><a href=\"#~的\">的</a><a href=\"#~女僕\">女僕</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~稱呼\">稱呼</a>。</span><a href=\"#~同\">同</a><span class='punct'>「<a href=\"#~嬤\">嬤</a>」。</span>"
+        }
+      ],
+      "alt": "妈",
+      "id": "1009580000",
+      "pinyin": "mā",
+      "bopomofo": "ㄇㄚ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "maman",
+      "mère"
+    ],
+    "Deutsch": [
+      "Mama, Mutter  (S)​"
+    ],
+    "English": [
+      "ma",
+      "mom",
+      "mother"
+    ]
+  },
+  "xrefs": []
+}

@@ -1,0 +1,47 @@
+{
+  "non_radical_stroke_count": 15,
+  "title": "獵",
+  "radical": "<a href=\"#~犬\">犬</a>",
+  "stroke_count": 18,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~獵戶\">獵戶</a>」、</span><span class='punct'>「<a href=\"#~狩獵\">狩獵</a>」、</span><span class='punct'>「<a href=\"#~獵槍\">獵槍</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~打獵\">打獵</a>；</span><a href=\"#~捕捉\">捕捉</a><span class='punct'><a href=\"#~禽獸\">禽獸</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~獵取\">獵取</a>」、</span><span class='punct'>「<a href=\"#~獵奇\">獵奇</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~搜尋\">搜尋</a>；</span><span class='punct'><a href=\"#~追求\">追求</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~北風\">北風</a></span><span class='punct'><a href=\"#~獵獵\">獵獵</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~擬聲詞\">擬聲詞</a>。</span><a href=\"#~模擬\">模擬</a><a href=\"#~風\">風</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~聲音\">聲音</a>。</span>"
+        }
+      ],
+      "alt": "猎",
+      "id": "1025450000",
+      "pinyin": "liè",
+      "bopomofo": "ㄌㄧㄝˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "chasser"
+    ],
+    "Deutsch": [
+      "Jagdwesen, Jagd  (S)​",
+      "jagen  (V)​"
+    ],
+    "English": [
+      "hunting"
+    ]
+  },
+  "xrefs": []
+}

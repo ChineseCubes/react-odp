@@ -1,0 +1,35 @@
+{
+  "non_radical_stroke_count": 8,
+  "title": "睛",
+  "radical": "<a href=\"#~目\">目</a>",
+  "stroke_count": 13,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~目不轉睛\">目不轉睛</a>」、</span><span class='punct'>「<a href=\"#~定睛\">定睛</a></span><span class='punct'><a href=\"#~細看\">細看</a>」、</span><span class='punct'>「<a href=\"#~畫龍點睛\">畫龍點睛</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~眼珠\">眼珠</a>。</span>"
+        }
+      ],
+      "id": "1027780000",
+      "pinyin": "jīng",
+      "bopomofo": "ㄐㄧㄥ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "oeil",
+      "globe oculaire"
+    ],
+    "Deutsch": [
+      "Augapfel  (S)​"
+    ],
+    "English": [
+      "eye",
+      "eyeball"
+    ]
+  },
+  "xrefs": []
+}

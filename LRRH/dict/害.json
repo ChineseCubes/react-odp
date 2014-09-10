@@ -1,0 +1,90 @@
+{
+  "non_radical_stroke_count": 7,
+  "title": "害",
+  "radical": "<a href=\"#~宀\">宀</a>",
+  "stroke_count": 10,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~災害\">災害</a>」、</span><span class='punct'>「<a href=\"#~損害\">損害</a>」、</span><span class='punct'>「<a href=\"#~蟲害\">蟲害</a>」、</span><span class='punct'>「<a href=\"#~菸\">菸</a></span><span class='punct'><a href=\"#~害\">害</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~災禍\">災禍</a>；</span><span class='punct'><a href=\"#~破壞\">破壞</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~利害\">利害</a>」、</span><span class='punct'>「<a href=\"#~百\">百</a></span><a href=\"#~害\">害</a><a href=\"#~無\">無</a><a href=\"#~一\">一</a><span class='punct'><a href=\"#~利\">利</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~壞處\">壞處</a>；</span><a href=\"#~缺點\">缺點</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~利\">利</a>」、</span><span class='punct'>「<a href=\"#~益\">益</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~害蟲\">害蟲</a>」、</span><span class='punct'>「<a href=\"#~害鳥\">害鳥</a>」、</span><span class='punct'>「<a href=\"#~害處\">害處</a>」。</span>"
+          ],
+          "def": "<a href=\"#~無益\">無益</a><span class='punct'><a href=\"#~的\">的</a>；</span><a href=\"#~有害\">有害</a><a href=\"#~的\">的</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~益\">益</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~被害\">被害</a>」、</span><span class='punct'>「<a href=\"#~殺害\">殺害</a>」、</span><span class='punct'>「<a href=\"#~謀害\">謀害</a>」、</span><span class='punct'>「<a href=\"#~謀財害命\">謀財害命</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~殺\">殺</a>；</span><span class='punct'><a href=\"#~傷\">傷</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~妨害\">妨害</a>」、</span><span class='punct'>「<a href=\"#~害\">害</a></span><span class='punct'><a href=\"#~人\">人</a>」、</span><span class='punct'>「<a href=\"#~害群之馬\">害群之馬</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~損傷\">損傷</a>；</span><span class='punct'><a href=\"#~危及\">危及</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~害怕\">害怕</a>」、</span><span class='punct'>「<a href=\"#~害羞\">害羞</a>」、</span><span class='punct'>「<a href=\"#~害臊\">害臊</a>」。</span>"
+          ],
+          "def": "<a href=\"#~感\">感</a><a href=\"#~到\">到</a><span class='punct'>（<a href=\"#~恐懼\">恐懼</a>、</span><a href=\"#~不安\">不安</a><a href=\"#~等\">等</a><a href=\"#~情緒\">情緒</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~害\">害</a></span><a href=\"#~他\">他</a><span class='punct'><a href=\"#~傷心\">傷心</a>」、</span><span class='punct'>「<a href=\"#~害\">害</a></span><a href=\"#~我\">我</a><a href=\"#~白\">白</a><a href=\"#~忙\">忙</a><span class='punct'><a href=\"#~一陣\">一陣</a>」。</span>"
+          ],
+          "def": "<a href=\"#~使\">使</a><a href=\"#~人\">人</a><span class='punct'><a href=\"#~受害\">受害</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~害病\">害病</a>」、</span><span class='punct'>「<a href=\"#~害\">害</a></span><span class='punct'><a href=\"#~相思\">相思</a>」、</span><span class='punct'>「<a href=\"#~害眼\">害眼</a></span><span class='punct'><a href=\"#~疾\">疾</a>」。</span>"
+          ],
+          "def": "<a href=\"#~感染\">感染</a><span class='punct'>（<a href=\"#~病痛\">病痛</a></span>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~要害\">要害</a>」。</span>"
+          ],
+          "def": "<a href=\"#~關鍵\">關鍵</a><span class='punct'><a href=\"#~處\">處</a>。</span>"
+        }
+      ],
+      "id": "1010250000",
+      "pinyin": "hài",
+      "bopomofo": "ㄏㄞˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "nuisible",
+      "mal",
+      "dommage",
+      "nuire à",
+      "tuer",
+      "assassiner"
+    ],
+    "Deutsch": [
+      "schädigen, Unheil  (S)​"
+    ],
+    "English": [
+      "to do harm to",
+      "to cause trouble to",
+      "harm",
+      "evil",
+      "calamity"
+    ]
+  },
+  "xrefs": []
+}

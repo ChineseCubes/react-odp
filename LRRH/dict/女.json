@@ -1,0 +1,72 @@
+{
+  "non_radical_stroke_count": 0,
+  "title": "女",
+  "radical": "<a href=\"#~女\">女</a>",
+  "stroke_count": 3,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~才女\">才女</a>」、</span><span class='punct'>「<a href=\"#~淑女\">淑女</a>」、</span><span class='punct'>「<a href=\"#~女中豪傑\">女中豪傑</a>」、</span><span class='punct'>「<a href=\"#~男女\">男女</a></span><span class='punct'><a href=\"#~平等\">平等</a>」。</span>"
+          ],
+          "def": "<a href=\"#~女性\">女性</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~男\">男</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~女校\">女校</a>」、</span><span class='punct'>「<a href=\"#~女權\">女權</a>」、</span><span class='punct'>「<a href=\"#~女強人\">女強人</a>」。</span>"
+          ],
+          "def": "<a href=\"#~女性\">女性</a><span class='punct'><a href=\"#~的\">的</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~生兒育女\">生兒育女</a>」、</span><span class='punct'>「<a href=\"#~她\">她</a></span><a href=\"#~是\">是</a><a href=\"#~家\">家</a><a href=\"#~中的\">中的</a><span class='punct'><a href=\"#~次女\">次女</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~女兒\">女兒</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~星宿\">星宿</a><span class='punct'><a href=\"#~名\">名</a>。</span><a href=\"#~二十八星宿\">二十八星宿</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span><a href=\"#~參見\">參見</a><span class='punct'>【<a href=\"#~二十八星宿\">二十八星宿</a></span>】。"
+        },
+        {
+          "def": "<a href=\"#~二\">二</a><a href=\"#~一\">一</a><a href=\"#~四部\">四部</a><a href=\"#~首\">首</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span>"
+        }
+      ],
+      "id": "1008770000",
+      "pinyin": "nǚ",
+      "bopomofo": "ㄋㄩˇ"
+    },
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~以\">以</a></span><a href=\"#~女\">女</a><span class='punct'><a href=\"#~女人\">女人</a>」。</span>"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~書\">書</a>〉</span><span class='punct'>（<a href=\"#~將\">將</a></span><a href=\"#~女兒\">女兒</a>）​<a href=\"#~嫁\">嫁</a><a href=\"#~給\">給</a><span class='punct'><a href=\"#~他人\">他人</a>。</span>"
+        }
+      ],
+      "id": "1008770000",
+      "pinyin": "nǜ",
+      "bopomofo": "ㄋㄩˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "femme",
+      "dame",
+      "fille",
+      "féminin"
+    ],
+    "Deutsch": [
+      "Frau, weiblich (S)​",
+      "Radikal Nr. 38 = Frau, weiblich, Tochter (S)​",
+      "Ru  (Eig, Fam)​"
+    ],
+    "English": [
+      "female",
+      "woman",
+      "daughter",
+      "archaic variant of <a href=\"#~汝\">汝</a>[ru3]"
+    ]
+  },
+  "xrefs": []
+}

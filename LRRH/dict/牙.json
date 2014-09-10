@@ -1,0 +1,60 @@
+{
+  "non_radical_stroke_count": 0,
+  "title": "牙",
+  "radical": "<a href=\"#~牙\">牙</a>",
+  "stroke_count": 4,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~門牙\">門牙</a>」、</span><span class='punct'>「<a href=\"#~虎口拔牙\">虎口拔牙</a>」、</span><span class='punct'>「<a href=\"#~青面獠牙\">青面獠牙</a>」、</span><span class='punct'>「<a href=\"#~小孩\">小孩</a></span><a href=\"#~要\">要</a><a href=\"#~換牙\">換牙</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "<a href=\"#~人和\">人和</a><a href=\"#~動物\">動物</a><a href=\"#~口腔\">口腔</a><span class='punct'><a href=\"#~內\">內</a>，</span><a href=\"#~用以\">用以</a><a href=\"#~咬\">咬</a><a href=\"#~切\">切</a><a href=\"#~食物\">食物</a><a href=\"#~的\">的</a><a href=\"#~骨質\">骨質</a><span class='punct'><a href=\"#~組織\">組織</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~牙雕\">牙雕</a>」、</span><span class='punct'>「<a href=\"#~牙\">牙</a></span><span class='punct'><a href=\"#~筷\">筷</a>」、</span><span class='punct'>「<a href=\"#~牙\">牙</a></span><span class='punct'><a href=\"#~章\">章</a>」。</span>"
+          ],
+          "def": "<a href=\"#~特指\">特指</a><span class='punct'><a href=\"#~象牙\">象牙</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~牙輪\">牙輪</a>」、</span><span class='punct'>「<a href=\"#~牙子\">牙子</a>」。</span>"
+          ],
+          "def": "<a href=\"#~形狀\">形狀</a><a href=\"#~像\">像</a><a href=\"#~牙齒\">牙齒</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~東西\">東西</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~牙行\">牙行</a>」、</span><span class='punct'>「<a href=\"#~牙\">牙</a></span><span class='punct'><a href=\"#~婆\">婆</a>」、</span><span class='punct'>「<a href=\"#~牙\">牙</a></span><span class='punct'><a href=\"#~儈\">儈</a>」。</span>"
+          ],
+          "def": "<a href=\"#~舊時\">舊時</a><a href=\"#~介紹\">介紹</a><a href=\"#~買賣\">買賣</a><a href=\"#~從中\">從中</a><a href=\"#~獲得\">獲得</a><a href=\"#~佣金\">佣金</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~人\">人</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~二\">二</a><a href=\"#~一\">一</a><a href=\"#~四部\">四部</a><a href=\"#~首\">首</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span>"
+        }
+      ],
+      "id": "1024850000",
+      "pinyin": "yá",
+      "bopomofo": "ㄧㄚˊ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "dent"
+    ],
+    "Deutsch": [
+      "Zahn  (S)​",
+      "Zahnarzt  (S)​",
+      "Zahnfleisch  (S)​",
+      "Ya  (Eig, Fam)​",
+      "Radikal Nr. 92 = Eckzahn, Zahn, Zähne "
+    ],
+    "English": [
+      "tooth",
+      "ivory",
+      "CL:<a href=\"#~顆\">顆</a>|颗[ke1]"
+    ]
+  },
+  "xrefs": []
+}
