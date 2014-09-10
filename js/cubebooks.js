@@ -1,6 +1,13 @@
 (function(){
-  var isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, utils, ref$, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Stroker, Sentence;
-  isArray = _.isArray, isString = _.isString, flatten = _.flatten, max = _.max, min = _.min, map = _.map, zipObject = _.zipObject;
+  var require, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, utils, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Stroker, Sentence;
+  require == null && (require = (function(packages){
+    return function(it){
+      return packages[it];
+    };
+  }.call(this, {
+    lodash: _
+  })));
+  ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, flatten = ref$.flatten, max = ref$.max, min = ref$.min, map = ref$.map, zipObject = ref$.zipObject;
   slice = Array.prototype.slice;
   shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
   masterPage = {
@@ -206,8 +213,9 @@
       });
     },
     getPresentation: function(masterPage, done){
-      var setup, pages, counter, gotOne, i$, to$, results$ = [];
+      var setup, path, pages, counter, gotOne, i$, to$, results$ = [];
       setup = masterPage.setup;
+      path = utils.unslash(setup.path);
       pages = [];
       counter = 0;
       gotOne = function(data, i){
@@ -233,47 +241,44 @@
       }
       return results$;
       function fn$(i){
-        return utils.getPageJSON(utils.unslash(setup.path) + "/page" + i + ".json", function(it){
-          return gotOne(it, i - 1);
+        return $.getJSON(path + "/page" + i + ".json", function(data){
+          return gotOne(utils.patchPageJSON(data, path), i - 1);
         });
       }
     },
-    getPageJSON: function(path, done){
+    patchPageJSON: function(data, path){
       var propNames;
+      path == null && (path = '');
       propNames = ['name', 'x', 'y', 'width', 'height', 'href', 'data', 'onClick'];
-      $.getJSON(path, function(data){
-        var ref$, dir;
-        data.children = data.children.concat(masterPage.children);
-        ref$ = /(.*\/)?(.*)\.json/.exec(path) || [void 8, ''], dir = ref$[1];
-        return done(utils.transform(data, function(attrs, nodeName, parents){
-          var newAttrs, k, v, name, x$;
-          attrs == null && (attrs = {});
-          newAttrs = {
-            style: {}
-          };
-          for (k in attrs) {
-            v = attrs[k];
-            name = ODP.camelFromHyphenated(utils.splitNamespace(k).name);
-            switch (false) {
-            case name !== 'pageWidth':
-              newAttrs.width = v;
-              break;
-            case name !== 'pageHeight':
-              newAttrs.height = v;
-              break;
-            case !in$(name, propNames):
-              newAttrs[name] = v;
-              break;
-            default:
-              newAttrs.style[name] = v;
-            }
+      data.children = data.children.concat(masterPage.children);
+      return utils.transform(data, function(attrs, nodeName, parents){
+        var newAttrs, k, v, name, x$;
+        attrs == null && (attrs = {});
+        newAttrs = {
+          style: {}
+        };
+        for (k in attrs) {
+          v = attrs[k];
+          name = ODP.camelFromHyphenated(utils.splitNamespace(k).name);
+          switch (false) {
+          case name !== 'pageWidth':
+            newAttrs.width = v;
+            break;
+          case name !== 'pageHeight':
+            newAttrs.height = v;
+            break;
+          case !in$(name, propNames):
+            newAttrs[name] = v;
+            break;
+          default:
+            newAttrs.style[name] = v;
           }
-          x$ = newAttrs;
-          if (newAttrs.href) {
-            x$.href = dir + "" + newAttrs.href;
-          }
-          return x$;
-        }));
+        }
+        x$ = newAttrs;
+        if (newAttrs.href) {
+          x$.href = path + "/" + newAttrs.href;
+        }
+        return x$;
       });
     },
     transform: function(node, onNode, parents){
@@ -446,6 +451,9 @@
   import$((ref$ = this.Data) != null
     ? ref$
     : this.Data = {}, utils);
+  if (typeof module != 'undefined' && module !== null) {
+    module.exports = this.Data;
+  }
   isNaN = _.isNaN;
   ref$ = React.DOM, a = ref$.a, div = ref$.div, i = ref$.i, nav = ref$.nav, span = ref$.span;
   AudioControl = React.createClass({

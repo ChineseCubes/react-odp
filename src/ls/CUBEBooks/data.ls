@@ -1,4 +1,5 @@
-{isArray, isString, flatten, max, min, map, zipObject} = _
+require ?= let packages = lodash: _ => -> packages[it]
+{isArray, isString, flatten, max, min, map, zipObject} = require \lodash
 slice = Array::slice
 
 shadow = '0 0 5px 5px rgba(0,0,0,0.1);'
@@ -102,6 +103,7 @@ utils =
       total-pages: attrs['TOTAL-PAGES']
     done mp <<< master-page
   getPresentation: ({setup}:master-page, done) ->
+    path = utils.unslash setup.path
     pages = []
     counter = 0
     got-one = (data, i) ->
@@ -119,13 +121,12 @@ utils =
             height: \21cm
           children:  pages
     for let i from 1 to setup.total-pages
-      utils.getPageJSON "#{utils.unslash setup.path}/page#i.json", -> got-one it, i - 1
-  getPageJSON: !(path, done) ->
+      data <- $.getJSON "#path/page#i.json"
+      got-one utils.patchPageJSON(data, path), i - 1
+  patchPageJSON: (data, path = '') ->
     prop-names = <[name x y width height href data onClick]>
-    data <- $.getJSON path
     data.children = data.children.concat master-page.children
-    [, dir] = /(.*\/)?(.*)\.json/exec(path) or [, '']
-    done utils.transform data, (attrs = {}, node-name, parents) ->
+    utils.transform data, (attrs = {}, node-name, parents) ->
       new-attrs = style: {}
       for k, v of attrs
         name = ODP.camelFromHyphenated utils.splitNamespace(k)name
@@ -135,7 +136,7 @@ utils =
         | name in prop-names   => new-attrs[name]       = v
         | otherwise            => new-attrs.style[name] = v
       new-attrs
-        ..href = "#dir#{new-attrs.href}" if new-attrs.href
+        ..href = "#path/#{new-attrs.href}" if new-attrs.href
   transform: (node, onNode = null, parents = []) ->
     utils.splitNamespace(node.name) <<< do
       text:      node.text
@@ -245,4 +246,5 @@ utils =
     utils.data = zipObject keys, values
 
 (this.Data ?= {}) <<< utils
+module?exports = this.Data
 

@@ -23,6 +23,7 @@
     "gulp-livescript": "^0.2.1",
     "gulp-stylus": "^0.1.0",
     "gulp-util": "^2.2.20",
+    "lodash": "^2.4.1",
     "main-bower-files": "^1.0.2",
     "nib": "^1.0.2"
   }
