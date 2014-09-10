@@ -1,0 +1,54 @@
+{
+  "non_radical_stroke_count": 5,
+  "title": "象",
+  "radical": "<a href=\"#~豕\">豕</a>",
+  "stroke_count": 12,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "def": "<a href=\"#~哺乳動物\">哺乳動物</a><span class='punct'><a href=\"#~名\">名</a>。</span><a href=\"#~陸地\">陸地</a><a href=\"#~上體\">上體</a><a href=\"#~型\">型</a><a href=\"#~最\">最</a><a href=\"#~大\">大</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~哺乳動物\">哺乳動物</a>。</span><a href=\"#~皮\">皮</a><a href=\"#~厚\">厚</a><a href=\"#~毛\">毛</a><span class='punct'><a href=\"#~稀\">稀</a>，</span><a href=\"#~腿\">腿</a><a href=\"#~粗\">粗</a><a href=\"#~如\">如</a><span class='punct'><a href=\"#~柱\">柱</a>，</span><a href=\"#~鼻\">鼻</a><span class='punct'><a href=\"#~長\">長</a>，</span><a href=\"#~呈\">呈</a><a href=\"#~筒\">筒</a><span class='punct'><a href=\"#~狀\">狀</a>，</span><a href=\"#~能\">能</a><a href=\"#~垂\">垂</a><a href=\"#~到\">到</a><a href=\"#~地面\">地面</a><a href=\"#~並\">並</a><a href=\"#~可以\">可以</a><a href=\"#~伸\">伸</a><span class='punct'><a href=\"#~捲\">捲</a>，</span><a href=\"#~雄\">雄</a><a href=\"#~象\">象</a><a href=\"#~和\">和</a><a href=\"#~非洲\">非洲</a><a href=\"#~象\">象</a><a href=\"#~中的\">中的</a><a href=\"#~雌\">雌</a><a href=\"#~象\">象</a><a href=\"#~有\">有</a><a href=\"#~一對\">一對</a><a href=\"#~粗\">粗</a><a href=\"#~長\">長</a><a href=\"#~的\">的</a><a href=\"#~牙\">牙</a><a href=\"#~伸出\">伸出</a><span class='punct'><a href=\"#~口外\">口外</a>。</span><a href=\"#~食\">食</a><span class='punct'><a href=\"#~青草\">青草</a>、</span><a href=\"#~嫩葉\">嫩葉</a><span class='punct'><a href=\"#~等\">等</a>。</span><a href=\"#~經\">經</a><a href=\"#~馴化\">馴化</a><a href=\"#~可\">可</a><a href=\"#~供\">供</a><span class='punct'><a href=\"#~役使\">役使</a>。</span><a href=\"#~通稱\">通稱</a><span class='punct'>「<a href=\"#~大象\">大象</a>」。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~天象\">天象</a>」、</span><span class='punct'>「<a href=\"#~印象\">印象</a>」、</span><span class='punct'>「<a href=\"#~氣象萬千\">氣象萬千</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~形狀\">形狀</a>；</span><a href=\"#~樣\">樣</a><span class='punct'><a href=\"#~子\">子</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~因\">因</a></span><a href=\"#~勢\">勢</a><span class='punct'><a href=\"#~象形\">象形</a>」、</span><span class='punct'>「<a href=\"#~象\">象</a></span><span class='punct'><a href=\"#~聲\">聲</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~模仿\">模仿</a>；</span><span class='punct'><a href=\"#~仿效\">仿效</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1039140000",
+      "pinyin": "xiàng",
+      "bopomofo": "ㄒㄧㄤˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "éléphant",
+      "forme",
+      "image",
+      "aspect"
+    ],
+    "Deutsch": [
+      "Elefanten ",
+      "gleichen, ähnlich sein "
+    ],
+    "English": [
+      "elephant",
+      "CL:<a href=\"#~隻\">隻</a>|<a href=\"#~只\">只</a>[zhi1]",
+      "shape",
+      "form",
+      "appearance",
+      "to imitate"
+    ]
+  },
+  "xrefs": []
+}

@@ -1,0 +1,200 @@
+{
+  "non_radical_stroke_count": 4,
+  "title": "開",
+  "radical": "<a href=\"#~門\">門</a>",
+  "stroke_count": 12,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~門\">門</a></span><span class='punct'><a href=\"#~開\">開</a>」、</span><span class='punct'>「<a href=\"#~開\">開</a></span><span class='punct'><a href=\"#~抽屜\">抽屜</a>」、</span><span class='punct'>「<a href=\"#~開\">開</a></span><span class='punct'><a href=\"#~鎖\">鎖</a>」、</span><span class='punct'>「<a href=\"#~開卷\">開卷</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~打開\">打開</a>；</span><a href=\"#~使\">使</a><a href=\"#~閉合\">閉合</a><a href=\"#~的\">的</a><a href=\"#~東西\">東西</a><a href=\"#~張\">張</a><a href=\"#~開\">開</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~關\">關</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開凍\">開凍</a>」。</span>"
+          ],
+          "def": "<span class='punct'>（<a href=\"#~凍結\">凍結</a></span><a href=\"#~的\">的</a><a href=\"#~東西\">東西</a>）​<span class='punct'><a href=\"#~融化\">融化</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開禁\">開禁</a>」、</span><span class='punct'>「<a href=\"#~開戒\">開戒</a>」、</span><span class='punct'>「<a href=\"#~開葷\">開葷</a>」。</span>"
+          ],
+          "def": "<a href=\"#~解除\">解除</a><span class='punct'>（<a href=\"#~禁令\">禁令</a>、</span><a href=\"#~限制\">限制</a><a href=\"#~等\">等</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開除\">開除</a>」、</span><span class='punct'>「<a href=\"#~開釋\">開釋</a></span><span class='punct'><a href=\"#~無辜\">無辜</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~除去\">除去</a>；</span><span class='punct'><a href=\"#~釋放\">釋放</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~水\">水</a></span><a href=\"#~開\">開</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "<span class='punct'>（<a href=\"#~液體\">液體</a></span>）​<span class='punct'><a href=\"#~沸騰\">沸騰</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開荒\">開荒</a>」、</span><span class='punct'>「<a href=\"#~開路先鋒\">開路先鋒</a>」、</span><span class='punct'>「<a href=\"#~開山\">開山</a></span><a href=\"#~闢\">闢</a><span class='punct'><a href=\"#~嶺\">嶺</a>」、</span><span class='punct'>「<a href=\"#~闢\">闢</a></span><a href=\"#~土\">土</a><a href=\"#~開\">開</a><span class='punct'><a href=\"#~疆\">疆</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~開闢\">開闢</a>；</span><span class='punct'><a href=\"#~開拓\">開拓</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開\">開</a></span><span class='punct'><a href=\"#~公司\">公司</a>」、</span><span class='punct'>「<a href=\"#~陳\">陳</a></span><a href=\"#~教授\">教授</a><a href=\"#~新\">新</a><a href=\"#~開\">開</a><a href=\"#~了\">了</a><a href=\"#~兩\">兩</a><a href=\"#~門\">門</a><span class='punct'><a href=\"#~課\">課</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~開創\">開創</a>；</span><span class='punct'><a href=\"#~設置\">設置</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開春\">開春</a>」、</span><span class='punct'>「<a href=\"#~開學\">開學</a>」、</span><span class='punct'>「<a href=\"#~開工\">開工</a>」、</span><span class='punct'>「<a href=\"#~開演\">開演</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~起始\">起始</a>；</span><span class='punct'><a href=\"#~開始\">開始</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開會\">開會</a>」、</span><span class='punct'>「<a href=\"#~開\">開</a></span><span class='punct'><a href=\"#~運動會\">運動會</a>」、</span><span class='punct'>「<a href=\"#~開\">開</a></span><span class='punct'><a href=\"#~聯歡會\">聯歡會</a>」。</span>"
+          ],
+          "def": "<a href=\"#~舉行\">舉行</a><span class='punct'>（<a href=\"#~會議\">會議</a></span><a href=\"#~等\">等</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開車\">開車</a>」、</span><span class='punct'>「<a href=\"#~開炮\">開炮</a>」、</span><span class='punct'>「<a href=\"#~開\">開</a></span><span class='punct'><a href=\"#~飛機\">飛機</a>」、</span><span class='punct'>「<a href=\"#~開機\">開機</a></span><span class='punct'><a href=\"#~器\">器</a>」。</span>"
+          ],
+          "def": "<a href=\"#~發動\">發動</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~操縱\">操縱</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開拔\">開拔</a>」、</span><span class='punct'>「<a href=\"#~開赴\">開赴</a>」、</span><span class='punct'>「<a href=\"#~隊伍\">隊伍</a></span><a href=\"#~都\">都</a><a href=\"#~開\">開</a><a href=\"#~走\">走</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "<span class='punct'>（<a href=\"#~隊伍\">隊伍</a></span>）​<span class='punct'><a href=\"#~出發\">出發</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~孔雀開屏\">孔雀開屏</a>」、</span><span class='punct'>「<a href=\"#~鞋帶\">鞋帶</a></span><a href=\"#~開\">開</a><span class='punct'><a href=\"#~了\">了</a>」、</span><span class='punct'>「<a href=\"#~開裂\">開裂</a>」、</span><span class='punct'>「<a href=\"#~雲開日出\">雲開日出</a>」。</span>"
+          ],
+          "def": "<span class='punct'>（<a href=\"#~合攏\">合攏</a></span><a href=\"#~或\">或</a><a href=\"#~連接\">連接</a><a href=\"#~的\">的</a><a href=\"#~東西\">東西</a>）​<span class='punct'><a href=\"#~分離\">分離</a>；</span><a href=\"#~散\">散</a><span class='punct'><a href=\"#~開\">開</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開\">開</a></span><span class='punct'><a href=\"#~單據\">單據</a>」、</span><span class='punct'>「<a href=\"#~開帳\">開帳</a></span><span class='punct'><a href=\"#~單\">單</a>」、</span><span class='punct'>「<a href=\"#~開\">開</a></span><span class='punct'><a href=\"#~藥方\">藥方</a>」、</span><span class='punct'>「<a href=\"#~開價\">開價</a></span><a href=\"#~太\">太</a><span class='punct'><a href=\"#~高\">高</a>」。</span>"
+          ],
+          "def": "<a href=\"#~開列\">開列</a><span class='punct'>（<a href=\"#~多\">多</a></span><a href=\"#~指\">指</a><a href=\"#~分\">分</a><a href=\"#~項目\">項目</a><a href=\"#~寫\">寫</a><a href=\"#~出\">出</a>）​；<a href=\"#~標\">標</a><a href=\"#~出\">出</a><span class='punct'>（<a href=\"#~價錢\">價錢</a></span>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~開銷\">開銷</a>」、</span><span class='punct'>「<a href=\"#~開支\">開支</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~支付\">支付</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~三七\">三七</a></span><a href=\"#~開\">開</a><span class='punct'>（<a href=\"#~三\">三</a></span><a href=\"#~份\">份</a><a href=\"#~對\">對</a><a href=\"#~七\">七</a><a href=\"#~份\">份</a>）​」。"
+          ],
+          "def": "<a href=\"#~指\">指</a><a href=\"#~按\">按</a><a href=\"#~一定\">一定</a><a href=\"#~比例\">比例</a><span class='punct'><a href=\"#~分開\">分開</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~動詞\">動詞</a><span class='punct'><a href=\"#~後\">後</a>：</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~把門\">把門</a></span><span class='punct'><a href=\"#~推開\">推開</a>」、</span><span class='punct'>「<a href=\"#~請\">請</a></span><a href=\"#~別\">別</a><a href=\"#~走\">走</a><span class='punct'><a href=\"#~開\">開</a>」。</span>"
+          ],
+          "def": "(1)​<a href=\"#~表示\">表示</a><a href=\"#~分開\">分開</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~離開\">離開</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~把\">把</a></span><a href=\"#~畫卷\">畫卷</a><span class='punct'><a href=\"#~打開\">打開</a>」、</span><span class='punct'>「<a href=\"#~傳染病\">傳染病</a></span><a href=\"#~蔓延\">蔓延</a><a href=\"#~開\">開</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "(2)​<a href=\"#~表示\">表示</a><a href=\"#~展開\">展開</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~擴大\">擴大</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~想得開\">想得開</a>」、</span><span class='punct'>「<a href=\"#~問題\">問題</a></span><a href=\"#~說開\">說開</a><a href=\"#~了\">了</a><a href=\"#~也\">也</a><a href=\"#~就\">就</a><a href=\"#~解決\">解決</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "(3)​<a href=\"#~表示\">表示</a><span class='punct'><a href=\"#~明白\">明白</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~笑\">笑</a></span><a href=\"#~開\">開</a><span class='punct'><a href=\"#~了\">了</a>」、</span><span class='punct'>「<a href=\"#~小\">小</a></span><a href=\"#~紅\">紅</a><a href=\"#~起\">起</a><span class='punct'><a href=\"#~個頭\">個頭</a>，</span><a href=\"#~大家\">大家</a><a href=\"#~就\">就</a><a href=\"#~談開\">談開</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "(4)​<a href=\"#~表示\">表示</a><a href=\"#~開始\">開始</a><a href=\"#~並\">並</a><span class='punct'><a href=\"#~繼續\">繼續</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~書架\">書架</a></span><a href=\"#~太\">太</a><span class='punct'><a href=\"#~小\">小</a>，</span><a href=\"#~書\">書</a><a href=\"#~擺\">擺</a><a href=\"#~不\">不</a><span class='punct'><a href=\"#~開\">開</a>」、</span><span class='punct'>「<a href=\"#~來人\">來人</a></span><a href=\"#~不\">不</a><span class='punct'><a href=\"#~多\">多</a>，</span><a href=\"#~這\">這</a><a href=\"#~屋\">屋</a><a href=\"#~裡\">裡</a><a href=\"#~坐\">坐</a><a href=\"#~得\">得</a><span class='punct'><a href=\"#~開\">開</a>」。</span>"
+          ],
+          "def": "(5)​<a href=\"#~表示\">表示</a><a href=\"#~容\">容</a><a href=\"#~得\">得</a><span class='punct'><a href=\"#~下\">下</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~量詞\">量詞</a>：</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~對開\">對開</a>」、</span>「4<span class='punct'><a href=\"#~開\">開</a>」、</span>「16<a href=\"#~開\">開</a><span class='punct'><a href=\"#~紙\">紙</a>」。</span>"
+          ],
+          "def": "(1)​<a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><a href=\"#~紙張\">紙張</a><a href=\"#~尺寸\">尺寸</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~大小\">大小</a>，</span><a href=\"#~即\">即</a><a href=\"#~整\">整</a><a href=\"#~張\">張</a><a href=\"#~紙\">紙</a><a href=\"#~的\">的</a><a href=\"#~若干\">若干</a><a href=\"#~分\">分</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~這\">這</a></span><a href=\"#~只\">只</a><a href=\"#~金\">金</a><a href=\"#~戒\">戒</a><a href=\"#~僅\">僅</a>18<span class='punct'><a href=\"#~開\">開</a>」。</span>"
+          ],
+          "def": "(2)​<a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><a href=\"#~黃金\">黃金</a><a href=\"#~中\">中</a><a href=\"#~含\">含</a><a href=\"#~純金\">純金</a><a href=\"#~量\">量</a>（24<a href=\"#~開\">開</a><a href=\"#~為\">為</a><a href=\"#~純金\">純金</a>）​，<a href=\"#~一般\">一般</a><a href=\"#~也\">也</a><a href=\"#~寫作\">寫作</a>K。<span class='punct'>（<a href=\"#~英\">英</a></span>karat，<a href=\"#~簡稱\">簡稱</a>k）​"
+        },
+        {
+          "def": "(3)​<a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><a href=\"#~熱力\">熱力</a><a href=\"#~學\">學</a><a href=\"#~上\">上</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~溫度\">溫度</a>，</span><a href=\"#~開爾文\">開爾文</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~簡稱\">簡稱</a>，</span><a href=\"#~符號\">符號</a><a href=\"#~是\">是</a>K。<a href=\"#~為\">為</a><a href=\"#~紀念\">紀念</a><a href=\"#~英\">英</a><a href=\"#~國\">國</a><a href=\"#~物理學\">物理學</a><a href=\"#~家\">家</a><a href=\"#~湯\">湯</a><a href=\"#~姆\">姆</a><a href=\"#~森\">森</a><span class='punct'>（<a href=\"#~被\">被</a></span><a href=\"#~授予\">授予</a><a href=\"#~開爾文\">開爾文</a><a href=\"#~男爵\">男爵</a>）​<a href=\"#~而\">而</a><span class='punct'><a href=\"#~命名\">命名</a>。</span><span class='punct'>（<a href=\"#~開爾文\">開爾文</a>，</span><a href=\"#~英\">英</a>Kelvin）​"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~煮\">煮</a></span><a href=\"#~餃子\">餃子</a><a href=\"#~有\">有</a><a href=\"#~三\">三</a><a href=\"#~開\">開</a><a href=\"#~兒\">兒</a><a href=\"#~就\">就</a><a href=\"#~行\">行</a><span class='punct'><a href=\"#~了\">了</a>」。</span>"
+          ],
+          "def": "(4)​陸⃝〈<span class='punct'><a href=\"#~口\">口</a>〉</span><a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><a href=\"#~水\">水</a><a href=\"#~沸騰\">沸騰</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~次數\">次數</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "alt": "开",
+      "id": "1043760000",
+      "pinyin": "kāi",
+      "bopomofo": "ㄎㄞ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "ouvrir",
+      "frayer",
+      "percer",
+      "s'épanouir",
+      "mettre en marche",
+      "démarrer",
+      "fonder",
+      "établir",
+      "commencer",
+      "débuter",
+      "tenir",
+      "organiser",
+      "bouillir"
+    ],
+    "Deutsch": [
+      "(ab)​fahren  (V)​",
+      "(Party)​ veranstalten, stattfinden  (V)​",
+      "ausfertigen, ausstellen (Scheck, Rechnung, Rezept)​  (V)​",
+      "öffnen, losfahren, starten  (V)​",
+      "Kai  (Eig, Fam)​"
+    ],
+    "English": [
+      "to open",
+      "to start",
+      "to turn on",
+      "to boil",
+      "to write out (a prescription, check, invoice etc)​",
+      "to operate (vehicle)​",
+      "abbr. for <a href=\"#~開爾文\">開爾文</a>|开尔<a href=\"#~文\">文</a> degrees Kelvin"
+    ]
+  },
+  "xrefs": []
+}

@@ -1,0 +1,64 @@
+{
+  "non_radical_stroke_count": 7,
+  "title": "裡",
+  "radical": "<a href=\"#~衣\">衣</a>",
+  "stroke_count": 13,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~棉襖\">棉襖</a></span><a href=\"#~裡\">裡</a><span class='punct'><a href=\"#~兒\">兒</a>」、</span><span class='punct'>「<a href=\"#~布\">布</a></span><a href=\"#~裡\">裡</a><a href=\"#~兒\">兒</a><a href=\"#~和\">和</a><a href=\"#~布\">布</a><a href=\"#~面\">面</a><span class='punct'><a href=\"#~兒\">兒</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~裡子\">裡子</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~裡屋\">裡屋</a>」、</span><span class='punct'>「<a href=\"#~村\">村</a></span><span class='punct'><a href=\"#~裡\">裡</a>」、</span><span class='punct'>「<a href=\"#~往\">往</a></span><a href=\"#~裡\">裡</a><span class='punct'><a href=\"#~走\">走</a>」、</span><span class='punct'>「<a href=\"#~裡通外國\">裡通外國</a>」。</span>"
+          ],
+          "def": "<a href=\"#~一定\">一定</a><a href=\"#~界限\">界限</a><span class='punct'><a href=\"#~以內\">以內</a>；</span><a href=\"#~內\">內</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~外\">外</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        }
+      ],
+      "alt": "<a href=\"#~里\">里</a>",
+      "id": "1037320000",
+      "pinyin": "lǐ",
+      "bopomofo": "ㄌㄧˇ"
+    },
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~屋子\">屋子</a></span><span class='punct'><a href=\"#~裡\">裡</a>」、</span><span class='punct'>「<a href=\"#~寒假\">寒假</a></span><span class='punct'><a href=\"#~裡\">裡</a>」、</span><span class='punct'>「<a href=\"#~話裡有話\">話裡有話</a>」、</span><span class='punct'>「<a href=\"#~往\">往</a></span><a href=\"#~好\">好</a><a href=\"#~裡\">裡</a><span class='punct'><a href=\"#~想\">想</a>」。</span>"
+          ],
+          "def": "<a href=\"#~附\">附</a><a href=\"#~在\">在</a><a href=\"#~某\">某</a><a href=\"#~些\">些</a><a href=\"#~名詞\">名詞</a><a href=\"#~和\">和</a><a href=\"#~某\">某</a><a href=\"#~些\">些</a><a href=\"#~單\">單</a><a href=\"#~音節\">音節</a><a href=\"#~形容詞\">形容詞</a><a href=\"#~等\">等</a><span class='punct'><a href=\"#~後面\">後面</a>，</span><a href=\"#~表示\">表示</a><span class='punct'><a href=\"#~處所\">處所</a>、</span><span class='punct'><a href=\"#~時間\">時間</a>、</span><span class='punct'><a href=\"#~範圍\">範圍</a>、</span><a href=\"#~方向\">方向</a><span class='punct'><a href=\"#~等\">等</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~糊裡糊塗\">糊裡糊塗</a>」、</span><span class='punct'>「<a href=\"#~劈\">劈</a></span><a href=\"#~裡\">裡</a><a href=\"#~啪\">啪</a><span class='punct'><a href=\"#~啦\">啦</a>」、</span><span class='punct'>「<a href=\"#~嘰裡呱啦\">嘰裡呱啦</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~詞綴\">詞綴</a>。</span><a href=\"#~附\">附</a><a href=\"#~在\">在</a><a href=\"#~某\">某</a><a href=\"#~些\">些</a><a href=\"#~四\">四</a><a href=\"#~音節\">音節</a><a href=\"#~詞\">詞</a><span class='punct'>（<a href=\"#~多\">多</a></span><a href=\"#~為\">為</a><span class='punct'><a href=\"#~形容詞\">形容詞</a>、</span><a href=\"#~擬聲詞\">擬聲詞</a>）​<a href=\"#~的\">的</a><a href=\"#~第一\">第一</a><a href=\"#~個\">個</a><a href=\"#~音節\">音節</a><span class='punct'><a href=\"#~後邊\">後邊</a>，</span><a href=\"#~起\">起</a><a href=\"#~襯字\">襯字</a><span class='punct'><a href=\"#~作用\">作用</a>。</span>"
+        }
+      ],
+      "alt": "<a href=\"#~里\">里</a>",
+      "id": "1037320000",
+      "pinyin": "lǐ<br>陸⃝li",
+      "bopomofo": "ㄌㄧˇ<br>陸⃝˙ㄌㄧ"
+    }
+  ],
+  "translation": {
+    "Deutsch": [
+      "Ausstattung, Innenausstattung, Interior (S)​",
+      "Chinesische Meile (ca. 500 Meter)​ (S)​",
+      "in, innen (V)​",
+      "Li (Eig)​"
+    ],
+    "English": [
+      "lining",
+      "interior",
+      "inside",
+      "internal",
+      "also written <a href=\"#~裏\">裏</a>|<a href=\"#~里\">里</a>[li3]"
+    ]
+  },
+  "xrefs": []
+}

@@ -1,0 +1,45 @@
+{
+  "non_radical_stroke_count": 18,
+  "title": "歡",
+  "radical": "<a href=\"#~欠\">欠</a>",
+  "stroke_count": 22,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~歡笑\">歡笑</a>」、</span><span class='punct'>「<a href=\"#~歡聲雷動\">歡聲雷動</a>」、</span><span class='punct'>「<a href=\"#~悲歡離合\">悲歡離合</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~高興\">高興</a>；</span><span class='punct'><a href=\"#~喜悅\">喜悅</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~另\">另</a></span><a href=\"#~有\">有</a><a href=\"#~所\">所</a><span class='punct'><a href=\"#~歡\">歡</a>」、</span><span class='punct'>「<a href=\"#~願\">願</a></span><a href=\"#~作\">作</a><span class='punct'><a href=\"#~比目魚\">比目魚</a>，</span><a href=\"#~隨\">隨</a><a href=\"#~歡\">歡</a><a href=\"#~千里\">千里</a><span class='punct'><a href=\"#~遊\">遊</a>」。</span>"
+          ],
+          "def": "<a href=\"#~古代\">古代</a><a href=\"#~相愛\">相愛</a><a href=\"#~男女\">男女</a><a href=\"#~間\">間</a><a href=\"#~的\">的</a><a href=\"#~互\">互</a><span class='punct'><a href=\"#~稱\">稱</a>；</span><a href=\"#~今\">今</a><a href=\"#~泛指\">泛指</a><a href=\"#~喜愛\">喜愛</a><a href=\"#~或\">或</a><a href=\"#~與\">與</a><a href=\"#~之\">之</a><a href=\"#~有\">有</a><a href=\"#~戀情\">戀情</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~人\">人</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~歡實\">歡實</a></span>（˙ㄕ　shi）​」、<span class='punct'>「<a href=\"#~孩子\">孩子</a></span><a href=\"#~們\">們</a><a href=\"#~鬧\">鬧</a><a href=\"#~得\">得</a><a href=\"#~真\">真</a><span class='punct'><a href=\"#~歡\">歡</a>」。</span>"
+          ],
+          "def": "陸⃝〈<span class='punct'><a href=\"#~口\">口</a>〉</span><span class='punct'><a href=\"#~活躍\">活躍</a>；</span><span class='punct'><a href=\"#~帶勁\">帶勁</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "alt": "欢",
+      "id": "1020650000",
+      "pinyin": "huān",
+      "bopomofo": "ㄏㄨㄢ"
+    }
+  ],
+  "translation": {
+    "English": [
+      "joyous",
+      "happy",
+      "pleased"
+    ]
+  },
+  "xrefs": []
+}

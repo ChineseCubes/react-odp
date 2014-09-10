@@ -1,0 +1,82 @@
+{
+  "non_radical_stroke_count": 6,
+  "title": "洗",
+  "radical": "<a href=\"#~水\">水</a>",
+  "stroke_count": 9,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~洗\">洗</a></span><span class='punct'><a href=\"#~臉\">臉</a>」、</span><span class='punct'>「<a href=\"#~洗\">洗</a></span><span class='punct'><a href=\"#~衣\">衣</a>」、</span><span class='punct'>「<a href=\"#~乾洗\">乾洗</a>」、</span><span class='punct'>「<a href=\"#~洗耳恭聽\">洗耳恭聽</a>」。</span>"
+          ],
+          "def": "<a href=\"#~用\">用</a><a href=\"#~水\">水</a><a href=\"#~或\">或</a><a href=\"#~其他\">其他</a><a href=\"#~溶劑\">溶劑</a><a href=\"#~除掉\">除掉</a><span class='punct'><a href=\"#~汙垢\">汙垢</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~捧\">捧</a></span><a href=\"#~洗\">洗</a><a href=\"#~侍\">侍</a><span class='punct'><a href=\"#~立\">立</a>」、</span><span class='punct'>「<a href=\"#~筆\">筆</a></span><span class='punct'><a href=\"#~洗\">洗</a>」。</span>"
+          ],
+          "def": "<a href=\"#~古代\">古代</a><a href=\"#~盥洗\">盥洗</a><a href=\"#~用\">用</a><a href=\"#~的\">的</a><a href=\"#~銅\">銅</a><a href=\"#~製\">製</a><span class='punct'><a href=\"#~器皿\">器皿</a>，</span><a href=\"#~形狀\">形狀</a><a href=\"#~像\">像</a><a href=\"#~淺\">淺</a><span class='punct'><a href=\"#~盆\">盆</a>；</span><a href=\"#~泛指\">泛指</a><a href=\"#~形狀\">形狀</a><a href=\"#~像\">像</a><a href=\"#~洗\">洗</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~器皿\">器皿</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~洗冤\">洗冤</a>」、</span><span class='punct'>「<a href=\"#~洗\">洗</a></span><span class='punct'><a href=\"#~恥\">恥</a>」、</span><span class='punct'>「<a href=\"#~洗雪\">洗雪</a>」、</span><span class='punct'>「<a href=\"#~洗\">洗</a></span><a href=\"#~掉\">掉</a><a href=\"#~剛才\">剛才</a><a href=\"#~奏\">奏</a><a href=\"#~的\">的</a><a href=\"#~那\">那</a><a href=\"#~段\">段</a><span class='punct'><a href=\"#~曲子\">曲子</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~清除\">清除</a>；</span><span class='punct'><a href=\"#~除掉\">除掉</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~洗劫\">洗劫</a>」、</span><span class='punct'>「<a href=\"#~血洗\">血洗</a>」。</span>"
+          ],
+          "def": "<a href=\"#~像\">像</a><a href=\"#~洗\">洗</a><a href=\"#~過\">過</a><a href=\"#~一樣\">一樣</a><a href=\"#~地\">地</a><a href=\"#~搶\">搶</a><a href=\"#~盡\">盡</a><a href=\"#~或\">或</a><a href=\"#~殺\">殺</a><span class='punct'><a href=\"#~光\">光</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~洗\">洗</a></span><span class='punct'><a href=\"#~膠卷\">膠卷</a>」、</span><span class='punct'>「<a href=\"#~洗\">洗</a></span><span class='punct'><a href=\"#~相片\">相片</a>」。</span>"
+          ],
+          "def": "<a href=\"#~印製\">印製</a><a href=\"#~照片\">照片</a><a href=\"#~時\">時</a><span class='punct'><a href=\"#~顯影\">顯影</a>、</span><span class='punct'><a href=\"#~定影\">定影</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~受洗\">受洗</a>」、</span><span class='punct'>「<a href=\"#~領洗\">領洗</a>」。</span>"
+          ],
+          "def": "<a href=\"#~基督教\">基督教</a><a href=\"#~接納\">接納</a><a href=\"#~教徒\">教徒</a><a href=\"#~入教\">入教</a><a href=\"#~時\">時</a><a href=\"#~舉行\">舉行</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~儀式\">儀式</a>，</span><a href=\"#~把\">把</a><a href=\"#~水\">水</a><a href=\"#~滴\">滴</a><a href=\"#~在\">在</a><a href=\"#~受洗\">受洗</a><a href=\"#~者\">者</a><a href=\"#~的\">的</a><a href=\"#~額\">額</a><a href=\"#~上\">上</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~頭上\">頭上</a>，</span><a href=\"#~或\">或</a><a href=\"#~引\">引</a><a href=\"#~領受\">領受</a><a href=\"#~洗\">洗</a><a href=\"#~者\">者</a><a href=\"#~全身\">全身</a><a href=\"#~或\">或</a><a href=\"#~半\">半</a><a href=\"#~身\">身</a><a href=\"#~浸\">浸</a><a href=\"#~在\">在</a><a href=\"#~水\">水</a><span class='punct'><a href=\"#~中\">中</a>，</span><a href=\"#~象徵\">象徵</a><a href=\"#~洗\">洗</a><a href=\"#~掉\">掉</a><a href=\"#~過去\">過去</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~罪惡\">罪惡</a>。</span>"
+        }
+      ],
+      "id": "1021930000",
+      "pinyin": "xǐ",
+      "bopomofo": "ㄒㄧˇ"
+    },
+    {
+      "definitions": [
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~參見\">參見</a><span class='punct'>【<a href=\"#~洗馬\">洗馬</a></span>】。"
+        }
+      ],
+      "id": "1021930000",
+      "pinyin": "xiǎn",
+      "bopomofo": "ㄒㄧㄢˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "laver",
+      "massacrer",
+      "développer (une photo)​"
+    ],
+    "Deutsch": [
+      "waschen, spülen, reinigen  (V)​",
+      "die Füße waschen ",
+      "Getränke klären "
+    ],
+    "English": [
+      "to wash",
+      "to bathe",
+      "to develop (photo)​"
+    ]
+  },
+  "xrefs": []
+}

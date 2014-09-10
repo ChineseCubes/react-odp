@@ -1,0 +1,55 @@
+{
+  "non_radical_stroke_count": 0,
+  "title": "己",
+  "radical": "<a href=\"#~己\">己</a>",
+  "stroke_count": 3,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~克己\">克己</a></span><a href=\"#~復\">復</a><span class='punct'><a href=\"#~禮\">禮</a>」、</span><span class='punct'>「<a href=\"#~己\">己</a></span><a href=\"#~立\">立</a><a href=\"#~立\">立</a><span class='punct'><a href=\"#~人\">人</a>」、</span><span class='punct'>「<a href=\"#~求人\">求人</a></span><a href=\"#~不如\">不如</a><a href=\"#~求\">求</a><span class='punct'><a href=\"#~己\">己</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~自稱\">自稱</a>，</span><a href=\"#~猶自\">猶自</a><span class='punct'><a href=\"#~己\">己</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~天干\">天干</a><a href=\"#~第\">第</a><a href=\"#~六\">六</a><span class='punct'><a href=\"#~位\">位</a>。</span><a href=\"#~也\">也</a><a href=\"#~用來\">用來</a><a href=\"#~表示\">表示</a><a href=\"#~順序\">順序</a><a href=\"#~或\">或</a><a href=\"#~等級\">等級</a><a href=\"#~的\">的</a><a href=\"#~第\">第</a><a href=\"#~六\">六</a><span class='punct'><a href=\"#~位\">位</a>。</span><a href=\"#~參見\">參見</a><span class='punct'>【<a href=\"#~天干\">天干</a></span>】。"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~二\">二</a><a href=\"#~一\">一</a><a href=\"#~四部\">四部</a><a href=\"#~首\">首</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span>"
+        }
+      ],
+      "id": "1011540000",
+      "pinyin": "jǐ",
+      "bopomofo": "ㄐㄧˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "soi-même",
+      "personnel",
+      "privé",
+      "égoïste",
+      "sixième",
+      "49e radical"
+    ],
+    "Deutsch": [
+      "der sechste der zehn \"Himmelsstämme\" des chinesischen Kalenders (S)​",
+      "Hexyl, Hexyl-Gruppe (S, Chem)​",
+      "selber, selbst, sich, persönlich (Adj)​",
+      "Radikal Nr. 49 = selbst, persönlich, eigen (Varianten: <a href=\"#~巳\">巳</a>, <a href=\"#~已\">已</a>)​"
+    ],
+    "English": [
+      "self",
+      "oneself",
+      "sixth of the ten Heavenly Stems <a href=\"#~十\">十</a><a href=\"#~天干\">天干</a>[shi2 tian1 gan1]",
+      "sixth in order",
+      "letter \"F\" or roman \"VI\" in list \"A, B, C\", or \"I, II, III\" etc",
+      "hexa"
+    ]
+  },
+  "xrefs": []
+}

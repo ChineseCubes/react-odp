@@ -1,0 +1,68 @@
+{
+  "non_radical_stroke_count": 4,
+  "title": "集",
+  "radical": "<a href=\"#~隹\">隹</a>",
+  "stroke_count": 12,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~聚集\">聚集</a>」、</span><span class='punct'>「<a href=\"#~集會\">集會</a>」、</span><span class='punct'>「<a href=\"#~集合\">集合</a>」、</span><span class='punct'>「<a href=\"#~集腋成裘\">集腋成裘</a>」。</span>"
+          ],
+          "def": "<a href=\"#~聚\">聚</a><a href=\"#~在\">在</a><span class='punct'><a href=\"#~一起\">一起</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~文集\">文集</a>」、</span><span class='punct'>「<a href=\"#~圖\">圖</a></span><span class='punct'><a href=\"#~集\">集</a>」、</span><span class='punct'>「<a href=\"#~總集\">總集</a>」、</span><span class='punct'>「<a href=\"#~選集\">選集</a>」。</span>"
+          ],
+          "def": "<a href=\"#~匯集\">匯集</a><a href=\"#~許多\">許多</a><a href=\"#~單\">單</a><a href=\"#~篇\">篇</a><a href=\"#~著作\">著作</a><a href=\"#~或\">或</a><a href=\"#~單\">單</a><a href=\"#~幅\">幅</a><a href=\"#~作品\">作品</a><a href=\"#~而\">而</a><a href=\"#~成\">成</a><a href=\"#~的\">的</a><a href=\"#~書\">書</a><span class='punct'><a href=\"#~冊\">冊</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~拿\">拿</a></span><a href=\"#~到\">到</a><a href=\"#~集\">集</a><a href=\"#~上去\">上去</a><span class='punct'><a href=\"#~賣\">賣</a>」、</span><span class='punct'>「<a href=\"#~趕集\">趕集</a>」、</span><span class='punct'>「<a href=\"#~集日\">集日</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~集市\">集市</a>，</span><a href=\"#~定期\">定期</a><a href=\"#~或\">或</a><a href=\"#~臨時\">臨時</a><a href=\"#~聚\">聚</a><a href=\"#~在\">在</a><a href=\"#~一起\">一起</a><a href=\"#~進行\">進行</a><a href=\"#~商品\">商品</a><a href=\"#~交易\">交易</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~場所\">場所</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~古代\">古代</a><a href=\"#~圖書\">圖書</a><a href=\"#~四部\">四部</a><span class='punct'>（<a href=\"#~經\">經</a>、</span><span class='punct'><a href=\"#~史\">史</a>、</span><span class='punct'><a href=\"#~子\">子</a>、</span><a href=\"#~集\">集</a>）​<a href=\"#~分類\">分類</a><a href=\"#~之\">之</a><span class='punct'><a href=\"#~一\">一</a>。</span>"
+        },
+        {
+          "def": "<a href=\"#~集合\">集合</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~簡稱\">簡稱</a>。</span><a href=\"#~數學\">數學</a><a href=\"#~上\">上</a><a href=\"#~指\">指</a><a href=\"#~具有\">具有</a><a href=\"#~共同\">共同</a><a href=\"#~屬性\">屬性</a><a href=\"#~的\">的</a><a href=\"#~事物\">事物</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~統稱\">統稱</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~上\">上</a></span><span class='punct'><a href=\"#~集\">集</a>」、</span><span class='punct'>「<a href=\"#~最後\">最後</a></span><a href=\"#~一\">一</a><span class='punct'><a href=\"#~集\">集</a>」、</span><span class='punct'>「<a href=\"#~全\">全</a></span><a href=\"#~書\">書</a><a href=\"#~共\">共</a>12<span class='punct'><a href=\"#~集\">集</a>」、</span>「30<a href=\"#~集資\">集資</a><a href=\"#~料\">料</a><span class='punct'><a href=\"#~片\">片</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~量詞\">量詞</a>。</span><a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><a href=\"#~某\">某</a><a href=\"#~些\">些</a><span class='punct'><a href=\"#~書籍\">書籍</a>、</span><a href=\"#~影\">影</a><a href=\"#~視\">視</a><a href=\"#~片\">片</a><a href=\"#~等\">等</a><a href=\"#~因\">因</a><a href=\"#~篇幅\">篇幅</a><a href=\"#~較\">較</a><a href=\"#~大\">大</a><a href=\"#~而\">而</a><a href=\"#~分成\">分成</a><a href=\"#~的\">的</a><a href=\"#~相對\">相對</a><a href=\"#~獨立\">獨立</a><span class='punct'><a href=\"#~部分\">部分</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1044550000",
+      "pinyin": "jí",
+      "bopomofo": "ㄐㄧˊ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "rassembler",
+      "réunir",
+      "collection",
+      "tome",
+      "épisode"
+    ],
+    "Deutsch": [
+      "Band (einer Bücherreihe)​ ",
+      "sammeln, Sammlung  (S)​"
+    ],
+    "English": [
+      "to gather",
+      "to collect",
+      "collected works",
+      "classifier for sections of a TV series etc: episode"
+    ]
+  },
+  "xrefs": []
+}

@@ -1,0 +1,73 @@
+{
+  "non_radical_stroke_count": 13,
+  "title": "戲",
+  "radical": "<a href=\"#~戈\">戈</a>",
+  "stroke_count": 17,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~遊戲\">遊戲</a>」、</span><span class='punct'>「<a href=\"#~嬉戲\">嬉戲</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~玩耍\">玩耍</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~戲耍\">戲耍</a>」、</span><span class='punct'>「<a href=\"#~戲弄\">戲弄</a>」。</span>"
+          ],
+          "def": "<a href=\"#~嘲笑\">嘲笑</a><span class='punct'><a href=\"#~捉弄\">捉弄</a>；</span><span class='punct'><a href=\"#~開玩笑\">開玩笑</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~演戲\">演戲</a>」、</span><span class='punct'>「<a href=\"#~馬戲\">馬戲</a>」、</span><span class='punct'>「<a href=\"#~傀儡戲\">傀儡戲</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~戲劇\">戲劇</a>。</span><a href=\"#~一\">一</a><a href=\"#~種\">種</a><a href=\"#~透過\">透過</a><span class='punct'><a href=\"#~演員\">演員</a>、</span><a href=\"#~舞\">舞</a><span class='punct'><a href=\"#~者\">者</a>、</span><a href=\"#~戲\">戲</a><a href=\"#~偶\">偶</a><span class='punct'><a href=\"#~等\">等</a>，</span><a href=\"#~以\">以</a><span class='punct'><a href=\"#~動作\">動作</a>、</span><a href=\"#~歌舞\">歌舞</a><a href=\"#~或\">或</a><a href=\"#~對白\">對白</a><a href=\"#~等\">等</a><span class='punct'><a href=\"#~方式\">方式</a>，</span><a href=\"#~將\">將</a><a href=\"#~故事\">故事</a><a href=\"#~或\">或</a><a href=\"#~某\">某</a><a href=\"#~種\">種</a><a href=\"#~情節\">情節</a><a href=\"#~表達\">表達</a><a href=\"#~出來\">出來</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~表演\">表演</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "alt": "戏",
+      "id": "1014840000",
+      "pinyin": "xì",
+      "bopomofo": "ㄒㄧˋ"
+    },
+    {
+      "definitions": [
+        {
+          "def": "<a href=\"#~參見\">參見</a><span class='punct'>【<a href=\"#~於戲\">於戲</a></span>】。"
+        }
+      ],
+      "alt": "戏",
+      "id": "1014840000",
+      "pinyin": "hū",
+      "bopomofo": "ㄏㄨ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "pièce de théâtre",
+      "spectacle",
+      "s'amuser avec",
+      "jouer"
+    ],
+    "Deutsch": [
+      "Akt  (S, Kunst)​",
+      "Drama  (S)​",
+      "Schauspiel  (S)​",
+      "Theaterstück  (S)​",
+      "scherzen, einen Spaß machen, sich über jdn lustig machen  (V)​",
+      "spielen  (V)​",
+      "Xi  (Eig, Fam)​"
+    ],
+    "English": [
+      "trick",
+      "drama",
+      "play",
+      "show",
+      "CL:<a href=\"#~出\">出</a>[chu1],<a href=\"#~場\">場</a>|场[chang3],<a href=\"#~臺\">臺</a>|<a href=\"#~台\">台</a>[tai2]"
+    ]
+  },
+  "xrefs": []
+}

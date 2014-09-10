@@ -1,0 +1,157 @@
+{
+  "non_radical_stroke_count": 3,
+  "title": "起",
+  "radical": "<a href=\"#~走\">走</a>",
+  "stroke_count": 10,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~起床\">起床</a>」、</span><span class='punct'>「<a href=\"#~起立\">起立</a>」、</span><span class='punct'>「<a href=\"#~拍\">拍</a></span><a href=\"#~案\">案</a><a href=\"#~而\">而</a><span class='punct'><a href=\"#~起\">起</a>」。</span>"
+          ],
+          "def": "<a href=\"#~由\">由</a><a href=\"#~躺\">躺</a><a href=\"#~而\">而</a><span class='punct'><a href=\"#~坐\">坐</a>；</span><a href=\"#~由\">由</a><a href=\"#~坐\">坐</a><a href=\"#~而\">而</a><span class='punct'><a href=\"#~站\">站</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~此起彼落\">此起彼落</a>」、</span><span class='punct'>「<a href=\"#~風起雲湧\">風起雲湧</a>」、</span><span class='punct'>「<a href=\"#~狼煙\">狼煙</a></span><span class='punct'><a href=\"#~四起\">四起</a>」。</span>"
+          ],
+          "def": "<a href=\"#~從\">從</a><a href=\"#~下\">下</a><a href=\"#~向上\">向上</a><span class='punct'><a href=\"#~升\">升</a>；</span><a href=\"#~生\">生</a><a href=\"#~起\">起</a><span class='punct'>（<a href=\"#~與\">與</a></span><span class='punct'>「<a href=\"#~伏\">伏</a>」</span><a href=\"#~相對\">相對</a>）​。"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~起\">起</a></span><span class='punct'><a href=\"#~繭子\">繭子</a>」、</span><span class='punct'>「<a href=\"#~起\">起</a></span><span class='punct'><a href=\"#~痱子\">痱子</a>」。</span>"
+          ],
+          "def": "〈<span class='punct'><a href=\"#~口\">口</a>〉</span><span class='punct'>（<a href=\"#~皮膚\">皮膚</a></span><a href=\"#~上\">上</a>）​<a href=\"#~長\">長</a><span class='punct'><a href=\"#~出\">出</a>；</span><a href=\"#~生\">生</a><span class='punct'><a href=\"#~出\">出</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~起疑\">起疑</a>」、</span><span class='punct'>「<a href=\"#~禍起蕭牆\">禍起蕭牆</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~產生\">產生</a>；</span><span class='punct'><a href=\"#~發生\">發生</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~起義\">起義</a>」、</span><span class='punct'>「<a href=\"#~發起\">發起</a>」、</span><span class='punct'>「<a href=\"#~揭竿而起\">揭竿而起</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~興起\">興起</a>；</span><span class='punct'><a href=\"#~發動\">發動</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~白手起家\">白手起家</a>」、</span><span class='punct'>「<a href=\"#~起\">起</a></span><a href=\"#~了\">了</a><a href=\"#~三\">三</a><a href=\"#~棟\">棟</a><span class='punct'><a href=\"#~樓\">樓</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~建立\">建立</a>；</span><span class='punct'><a href=\"#~興建\">興建</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~起筆\">起筆</a>」、</span><span class='punct'>「<a href=\"#~起點\">起點</a>」、</span><span class='punct'>「<a href=\"#~從\">從</a></span><a href=\"#~今天\">今天</a><span class='punct'><a href=\"#~起\">起</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~開始\">開始</a>；</span><span class='punct'><a href=\"#~開端\">開端</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~起草\">起草</a>」、</span><span class='punct'>「<a href=\"#~起\">起</a></span><span class='punct'><a href=\"#~號\">號</a>」、</span><span class='punct'>「<a href=\"#~起名\">起名</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~擬定\">擬定</a>；</span><a href=\"#~擬\">擬</a><span class='punct'><a href=\"#~寫\">寫</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~起\">起</a></span><span class='punct'><a href=\"#~釘子\">釘子</a>」、</span><span class='punct'>「<a href=\"#~起獲\">起獲</a>」、</span><span class='punct'>「<a href=\"#~起贓\">起贓</a>」。</span>"
+          ],
+          "def": "<a href=\"#~把\">把</a><a href=\"#~嵌\">嵌</a><span class='punct'><a href=\"#~入\">入</a>、</span><a href=\"#~收藏\">收藏</a><a href=\"#~的\">的</a><a href=\"#~或\">或</a><a href=\"#~積存\">積存</a><a href=\"#~在\">在</a><a href=\"#~裡面\">裡面</a><a href=\"#~的\">的</a><a href=\"#~東西\">東西</a><a href=\"#~弄\">弄</a><span class='punct'><a href=\"#~出來\">出來</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~起用\">起用</a>」、</span><span class='punct'>「<a href=\"#~東山再起\">東山再起</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~出仕\">出仕</a>；</span><a href=\"#~舉\">舉</a><span class='punct'><a href=\"#~用\">用</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~一病不起\">一病不起</a>」、</span><span class='punct'>「<a href=\"#~起死回生\">起死回生</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~康復\">康復</a>；</span><span class='punct'><a href=\"#~痊癒\">痊癒</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~起\">起</a></span><span class='punct'><a href=\"#~車牌\">車牌</a>」、</span><span class='punct'>「<a href=\"#~起\">起</a></span><span class='punct'><a href=\"#~護照\">護照</a>」。</span>"
+          ],
+          "def": "陸⃝<span class='punct'><a href=\"#~領取\">領取</a>；</span><a href=\"#~辦理\">辦理</a><span class='punct'>（<a href=\"#~票證\">票證</a></span>）​。"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~量詞\">量詞</a>：</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~兩\">兩</a></span><a href=\"#~起事\">起事</a><span class='punct'><a href=\"#~故\">故</a>」、</span><span class='punct'>「<a href=\"#~幾\">幾</a></span><a href=\"#~起\">起</a><span class='punct'><a href=\"#~刑事案件\">刑事案件</a>」。</span>"
+          ],
+          "def": "(1)​<a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><a href=\"#~消極\">消極</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~事情\">事情</a>，</span><a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~次\">次</a>」、</span><span class='punct'>「<a href=\"#~件\">件</a>」。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~參觀\">參觀</a></span><a href=\"#~的\">的</a><a href=\"#~人\">人</a><a href=\"#~一起\">一起</a><a href=\"#~接\">接</a><a href=\"#~一起\">一起</a><a href=\"#~地\">地</a><a href=\"#~走\">走</a><span class='punct'><a href=\"#~來\">來</a>」、</span><span class='punct'>「<a href=\"#~來\">來</a></span><a href=\"#~了\">了</a><a href=\"#~兩\">兩</a><span class='punct'><a href=\"#~起貨\">起貨</a>」。</span>"
+          ],
+          "def": "(2)​<a href=\"#~用\">用</a><a href=\"#~於\">於</a><a href=\"#~計算\">計算</a><a href=\"#~人\">人</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~貨\">貨</a>，</span><a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~群\">群</a>」、</span><span class='punct'>「<a href=\"#~批\">批</a>」。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~助詞\">助詞</a>：</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~挑\">挑</a></span><a href=\"#~起\">起</a><span class='punct'><a href=\"#~擔子\">擔子</a>」、</span><span class='punct'>「<a href=\"#~抬\">抬</a></span><a href=\"#~起\">起</a><span class='punct'><a href=\"#~桌子\">桌子</a>」。</span>"
+          ],
+          "def": "(1)​<a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~動詞\">動詞</a><span class='punct'><a href=\"#~後\">後</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~動作\">動作</a><a href=\"#~由\">由</a><a href=\"#~下\">下</a><span class='punct'><a href=\"#~向上\">向上</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~禁得起\">禁得起</a>」、</span><span class='punct'>「<a href=\"#~買\">買</a></span><span class='punct'><a href=\"#~不起\">不起</a>」、</span><span class='punct'>「<a href=\"#~稱\">稱</a></span><a href=\"#~得\">得</a><span class='punct'><a href=\"#~起\">起</a>」。</span>"
+          ],
+          "def": "(2)​<a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~動詞\">動詞</a><span class='punct'><a href=\"#~後\">後</a>，</span><a href=\"#~與\">與</a><span class='punct'>「<a href=\"#~得\">得</a>」</span>（<span class='punct'>「<a href=\"#~不\">不</a>」</span>）​<span class='punct'><a href=\"#~配合\">配合</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~力\">力</a><a href=\"#~能\">能</a><span class='punct'>（<a href=\"#~不能\">不能</a></span>）​<span class='punct'><a href=\"#~勝任\">勝任</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~提起\">提起</a></span><a href=\"#~過\">過</a><a href=\"#~這\">這</a><a href=\"#~件\">件</a><span class='punct'><a href=\"#~事\">事</a>」、</span><span class='punct'>「<a href=\"#~想\">想</a></span><a href=\"#~起\">起</a><a href=\"#~過\">過</a><span class='punct'><a href=\"#~你\">你</a>」、</span><span class='punct'>「<a href=\"#~問\">問</a></span><a href=\"#~起\">起</a><span class='punct'><a href=\"#~根由\">根由</a>」。</span>"
+          ],
+          "def": "(3)​<a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~動詞\">動詞</a><span class='punct'><a href=\"#~後\">後</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~動作\">動作</a><a href=\"#~涉及\">涉及</a><a href=\"#~的\">的</a><span class='punct'><a href=\"#~對象\">對象</a>，</span><a href=\"#~相當於\">相當於</a><span class='punct'>「<a href=\"#~及\">及</a>」</span><a href=\"#~或\">或</a><span class='punct'>「<a href=\"#~到\">到</a>」。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~寺廟\">寺廟</a></span><a href=\"#~裡\">裡</a><a href=\"#~響\">響</a><a href=\"#~起\">起</a><a href=\"#~了\">了</a><a href=\"#~鐘\">鐘</a><span class='punct'><a href=\"#~聲\">聲</a>」。</span>"
+          ],
+          "def": "(4)​<a href=\"#~用\">用</a><a href=\"#~在\">在</a><a href=\"#~動詞\">動詞</a><span class='punct'><a href=\"#~後\">後</a>，</span><a href=\"#~表示\">表示</a><a href=\"#~動作\">動作</a><span class='punct'><a href=\"#~開始\">開始</a>。</span>"
+        }
+      ],
+      "id": "1039920000",
+      "pinyin": "qǐ",
+      "bopomofo": "ㄑㄧˇ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "augmenter",
+      "soulever",
+      "se lever"
+    ],
+    "Deutsch": [
+      "aufsteigen, aufstehen  (V)​"
+    ],
+    "English": [
+      "to rise",
+      "to raise",
+      "to get up",
+      "to set out",
+      "to start",
+      "to appear",
+      "to launch",
+      "to initiate (action)​",
+      "to draft",
+      "to establish",
+      "to get (from a depot or counter)​",
+      "verb suffix, to start",
+      "(before place or time)​ starting from",
+      "classifier for occurrences or unpredictable events: case, instance",
+      "classifier for groups: batch, group"
+    ]
+  },
+  "xrefs": []
+}

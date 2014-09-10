@@ -1,0 +1,53 @@
+{
+  "non_radical_stroke_count": 7,
+  "title": "救",
+  "radical": "<a href=\"#~攴\">攴</a>",
+  "stroke_count": 11,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~救難\">救難</a>」、</span><span class='punct'>「<a href=\"#~救災\">救災</a>」、</span><span class='punct'>「<a href=\"#~救火\">救火</a>」、</span><span class='punct'>「<a href=\"#~救急\">救急</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~阻止\">阻止</a>；</span><span class='punct'><a href=\"#~消除\">消除</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~拯救\">拯救</a>」、</span><span class='punct'>「<a href=\"#~援救\">援救</a>」、</span><span class='punct'>「<a href=\"#~營救\">營救</a>」、</span><span class='punct'>「<a href=\"#~挽救\">挽救</a>」。</span>"
+          ],
+          "def": "<a href=\"#~給予\">給予</a><span class='punct'><a href=\"#~援助\">援助</a>；</span><a href=\"#~使\">使</a><a href=\"#~脫離\">脫離</a><a href=\"#~災難\">災難</a><a href=\"#~或\">或</a><span class='punct'><a href=\"#~危險\">危險</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~急救\">急救</a>」、</span><span class='punct'>「<a href=\"#~救護\">救護</a>」、</span><span class='punct'>「<a href=\"#~無\">無</a></span><a href=\"#~藥\">藥</a><a href=\"#~可\">可</a><span class='punct'><a href=\"#~救\">救</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~治療\">治療</a>。</span>"
+        }
+      ],
+      "id": "1017250000",
+      "pinyin": "jiù",
+      "bopomofo": "ㄐㄧㄡˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "sauver",
+      "secourir",
+      "assister",
+      "aider"
+    ],
+    "Deutsch": [
+      "fördern, assistieren ",
+      "retten ",
+      "sichern, einsparen ",
+      "Jiu  (Eig, Fam)​"
+    ],
+    "English": [
+      "to save",
+      "to assist",
+      "to rescue"
+    ]
+  },
+  "xrefs": []
+}

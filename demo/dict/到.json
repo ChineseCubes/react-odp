@@ -1,0 +1,60 @@
+{
+  "non_radical_stroke_count": 6,
+  "title": "到",
+  "radical": "<a href=\"#~刀\">刀</a>",
+  "stroke_count": 8,
+  "heteronyms": [
+    {
+      "definitions": [
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~到\">到</a></span><span class='punct'><a href=\"#~站\">站</a>」、</span><span class='punct'>「<a href=\"#~到達\">到達</a>」、</span><span class='punct'>「<a href=\"#~貨\">貨</a></span><a href=\"#~到\">到</a><span class='punct'><a href=\"#~付款\">付款</a>」、</span><span class='punct'>「<a href=\"#~從\">從</a></span><a href=\"#~早\">早</a><a href=\"#~到\">到</a><span class='punct'><a href=\"#~晚\">晚</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~到達\">到達</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~到\">到</a></span><a href=\"#~飯店\">飯店</a><span class='punct'><a href=\"#~去\">去</a>」、</span><span class='punct'>「<a href=\"#~到\">到</a></span><a href=\"#~東\">東</a><a href=\"#~港\">港</a><a href=\"#~搭\">搭</a><span class='punct'><a href=\"#~船\">船</a>」。</span>"
+          ],
+          "def": "<span class='punct'><a href=\"#~往\">往</a>。</span>"
+        },
+        {
+          "example": [
+            "例⃝<span class='punct'>「<a href=\"#~得\">得</a></span><span class='punct'><a href=\"#~到\">到</a>」、</span><span class='punct'>「<a href=\"#~做\">做</a></span><a href=\"#~不\">不</a><span class='punct'><a href=\"#~到\">到</a>」、</span><span class='punct'>「<a href=\"#~辦\">辦</a></span><a href=\"#~得\">得</a><span class='punct'><a href=\"#~到\">到</a>」、</span><span class='punct'>「<a href=\"#~說到做到\">說到做到</a>」。</span>"
+          ],
+          "def": "<a href=\"#~表示\">表示</a><a href=\"#~有\">有</a><span class='punct'><a href=\"#~結果\">結果</a>。</span>"
+        },
+        {
+          "def": "<span class='punct'><a href=\"#~姓\">姓</a>。</span>"
+        }
+      ],
+      "id": "1003480000",
+      "pinyin": "dào",
+      "bopomofo": "ㄉㄠˋ"
+    }
+  ],
+  "translation": {
+    "francais": [
+      "à",
+      "jusqu'à",
+      "arriver",
+      "parvenir",
+      "atteindre",
+      "aller à"
+    ],
+    "Deutsch": [
+      "ankommen, eintreffen  (V)​",
+      "bis, zu  (V)​",
+      "sich an einen Ort begeben  (V)​"
+    ],
+    "English": [
+      "to (a place)​",
+      "until (a time)​",
+      "up to",
+      "to go",
+      "to arrive",
+      "(verb complement denoting completion or result of an action)​"
+    ]
+  },
+  "xrefs": []
+}
