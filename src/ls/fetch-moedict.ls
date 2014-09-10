@@ -18,7 +18,6 @@ for c in Array::slice.call chars
   fetched.push c
   let c
     err, res, body <- request "https://www.moedict.tw/~#c.json"
-    data = JSON.parse body
     return if err or res.statusCode isnt 200
     process.stdout.write c
-    fs.writeFileSync "#dir/#c.json", JSON.stringify(data, null, 2)
+    fs.writeFileSync "#dir/#c.json", body
