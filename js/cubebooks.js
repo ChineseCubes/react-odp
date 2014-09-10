@@ -159,7 +159,17 @@
   punctuations = {
     '，': o([c('', '，')], 'comma'),
     '。': o([c('', '。')], 'full stop'),
-    '？': o([c('', '？')], 'question mark')
+    '？': o([c('', '？')], 'question mark'),
+    '！': o([c('', '！')], 'exciamation mark'),
+    '「': o([c('', '「')], 'quotation mark'),
+    '」': o([c('', '」')], 'quotation mark'),
+    '、': o([c('', '、')], 'enumeration comma'),
+    '‧': o([c('', '‧')], 'middle dot'),
+    '《': o([c('', '《')], 'title mark'),
+    '》': o([c('', '》')], 'middle dot'),
+    '…': o([c('', '…')], 'ellipsis'),
+    '～': o([c('', '～')], 'wavy dash'),
+    '　': o([c('', '　')], 'space')
   };
   utils = {
     splitNamespace: function(it){
@@ -299,17 +309,28 @@
     getSegmentations: function(text, done){
       return done(utils.data[text] || Node());
     },
-    askMoeDict: function(ch, done){
-      return $.getJSON("www.moedict.tw/~" + ch + ".json", function(moe){
-        var tagless;
-        tagless = utils.strip;
-        return done({
-          zh_TW: tagless(moe.title),
-          zh_CN: tagless(moe.heteronyms[0].alt || moe.title),
-          pinyin: tagless(moe.heteronyms[0].pinyin),
-          English: tagless(moe.translation.English).split(/,\w*?/)
+    askMoeDict: function(str, done){
+      var counter, result, tagless, i$, to$, results$ = [];
+      counter = 0;
+      result = {};
+      tagless = utils.strip;
+      for (i$ = 0, to$ = str.length; i$ < to$; ++i$) {
+        results$.push((fn$.call(this, i$)));
+      }
+      return results$;
+      function fn$(i){
+        return $.getJSON("www.moedict.tw/~" + str[i] + ".json", function(moe){
+          result[+i] = {
+            zh_TW: tagless(moe.title),
+            zh_CN: tagless(moe.heteronyms[0].alt || moe.title),
+            pinyin: tagless(moe.heteronyms[0].pinyin),
+            English: tagless(moe.translation.English).split(/,\w*?/)
+          };
+          if (++counter === str.length) {
+            return done(result);
+          }
         });
-      });
+      }
     },
     strip: function(it){
       var tmp, dom;
@@ -334,10 +355,10 @@
       keys = [];
       values = [];
       idx = 0;
-      keywords = {};
+      keywords = import$({}, punctuations);
       re = null;
       utils.traverse(node, function(node, parents){
-        var ref$, ks, x$, s, str, r, def, en, shortest, i, c;
+        var ref$, ks, x$, s, str, r, key, child;
         if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
           return;
         }
@@ -349,40 +370,70 @@
           ks.sort(function(a, b){
             return b.traditional.length - a.traditional.length;
           });
-          return re = new RegExp(ks.map(function(it){
-            keywords[it.traditional] = it;
+          re = ks.map(function(it){
+            var str, en, shortest, children;
+            str = it.traditional;
+            en = tagless(it.translation).split(/\//);
+            shortest = slice.call(en).sort(function(a, b){
+              return a.length - b.length;
+            })[0];
+            children = slice.call(str);
+            keywords[it.traditional] = Node(children.map(children.length === 1
+              ? function(it){
+                return Char('', it);
+              }
+              : function(it){
+                return Node([Char('', it)]);
+              }), en.join(', '), shortest);
             return it.traditional;
-          }).join('|'));
+          });
+          return re = new RegExp(Object.keys(punctuations).concat(re).join('|'));
         } else {
           x$ = s = values[idx];
           x$.short = node.text;
           x$.definition = node.text;
           str = keys[idx] + "";
           while (r = re.exec(str)) {
-            str = str.replace(r[0], '');
-            def = keywords[r[0]];
-            en = tagless(def.translation).split(/\//);
-            shortest = slice.call(en).sort(fn$)[0];
-            console.log(shortest);
-            s.children.push(Node((fn1$()), en.join(', '), shortest));
+            key = r[0];
+            child = keywords[r[0]];
+            (fn$.call(this, key, child));
+            s.children.push(child);
+            str = str.replace(key, '');
           }
           return ++idx;
         }
-        function fn$(a, b){
-          return a.length - b.length;
-        }
-        function fn1$(){
-          var i$, to$, results$ = [];
-          for (i$ = 0, to$ = r[0].length; i$ < to$; ++i$) {
-            i = i$;
-            c = Char('', r[0][i]);
-            utils.askMoeDict(r[0][i], fn$);
-            results$.push(c);
-          }
-          return results$;
-          function fn$(data){
-            return import$(c, data);
-          }
+        function fn$(key, child){
+          utils.askMoeDict(key, function(moe){
+            var ref$, ref1$, i$, to$, i, en, x$, results$ = [];
+            if (key.length === 1) {
+              return ref1$ = child.children[0], ref1$.pinyin = (ref$ = moe[0]).pinyin, ref1$.zh_TW = ref$.zh_TW, ref1$.zh_CN = ref$.zh_CN, ref1$;
+            } else {
+              for (i$ = 0, to$ = key.length; i$ < to$; ++i$) {
+                i = i$;
+                if (!moe[i]) {
+                  continue;
+                }
+                console.log({
+                  pinyin: (ref$ = moe[i]).pinyin,
+                  zh_TW: ref$.zh_TW,
+                  zh_CN: ref$.zh_CN
+                });
+                en = moe[i].English;
+                x$ = child.children[i];
+                x$.definition = en.join(', ');
+                x$.short = en.sort(fn$)[0];
+                ref1$ = x$.children[0];
+                ref1$.pinyin = (ref$ = moe[i]).pinyin;
+                ref1$.zh_TW = ref$.zh_TW;
+                ref1$.zh_CN = ref$.zh_CN;
+                results$.push(x$);
+              }
+              return results$;
+            }
+            function fn$(a, b){
+              return a.length - b.length;
+            }
+          });
         }
       });
       if (keys.length !== idx) {

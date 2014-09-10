@@ -66,6 +66,17 @@ punctuations =
   '，': o [c '' '，'] 'comma'
   '。': o [c '' '。'] 'full stop'
   '？': o [c '' '？'] 'question mark'
+  '！': o [c '' '！'] 'exciamation mark'
+  '「': o [c '' '「'] 'quotation mark'
+  '」': o [c '' '」'] 'quotation mark'
+  '、': o [c '' '、'] 'enumeration comma'
+  '‧':  o [c '' '‧']  'middle dot'
+  '《': o [c '' '《'] 'title mark'
+  '》': o [c '' '》'] 'middle dot'
+  '…':  o [c '' '…']  'ellipsis'
+  '～': o [c '' '～'] 'wavy dash'
+  '　': o [c '' '　'] 'space'
+
 
 utils =
   splitNamespace: ->
@@ -138,14 +149,20 @@ utils =
       utils.traverse child, onNode, parents.concat [node.name]
   getSegmentations: (text, done)->
     done(utils.data[text] or Node!)
-  askMoeDict: (ch, done) ->
-    moe <- $.getJSON "www.moedict.tw/~#ch.json"
+  askMoeDict: (str, done) ->
+    counter = 0
+    result = {}
     tagless = utils.strip
-    done do
-      zh_TW:   tagless moe.title
-      zh_CN:   tagless(moe.heteronyms.0.alt or moe.title)
-      pinyin:  tagless moe.heteronyms.0.pinyin
-      English: tagless(moe.translation.English)split /,\w*?/
+    # XXX: should sort surrogates
+    for let i from 0 til str.length
+      moe <- $.getJSON "www.moedict.tw/~#{str[i]}.json"
+      result[+i] =
+        zh_TW:   tagless moe.title
+        zh_CN:   tagless(moe.heteronyms.0.alt or moe.title)
+        pinyin:  tagless moe.heteronyms.0.pinyin
+        English: tagless(moe.translation.English)split /,\w*?/
+      if ++counter is str.length
+        done result
   strip: ->
     tmp = document.createElement 'span'
     tmp.innerHTML = switch
@@ -166,7 +183,7 @@ utils =
     keys   = []
     values = []
     idx = 0
-    keywords = {}
+    keywords = {} <<< punctuations
     re = null
     utils.traverse node, (node, parents) ->
       return if not node.text and not node.attrs?data
@@ -178,11 +195,23 @@ utils =
         # prepare the RegExp for segmentation
         ks = slice.call node.attrs.data
         ks.sort (a, b) -> b.traditional.length - a.traditional.length
-        re := new RegExp(ks.map ->
+        re := ks.map ->
+          str = it.traditional
+          en = tagless it.translation .split /\//
+          shortest = slice.call(en)sort((a, b) -> a.length - b.length)0
+          children = slice.call str
           # use `map` as `each`
-          keywords[it.traditional] = it
+          # FIXME: too much
+          keywords[it.traditional] =
+            Node do
+              children.map if children.length is 1
+                -> Char '', it
+              else
+                -> Node [Char '', it]
+              en.join ', '
+              shortest
           it.traditional
-        .join '|')
+        re := new RegExp Object.keys(punctuations)concat(re)join '|'
       else
         # fill the translation,
         (s = values[idx])
@@ -191,23 +220,23 @@ utils =
         # and segment the sentence
         str = "#{keys[idx]}"
         while r = re.exec str
-          str .= replace r.0, ''
-          def = keywords[r.0]
-          en = tagless def.translation .split /\//
-          shortest = slice.call(en)sort((a, b) -> a.length - b.length)0
-          console.log shortest
-          # XXX: should sort surrogates
-          s.children.push do
-            Node do
-              for i from 0 til r.0.length
-                c = Char '', r.0[i]
-                do
-                  data <- utils.askMoeDict r.0[i]
-                  c <<< data
-                c
-              en.join ', '
-              shortest
-
+          key = r.0
+          child = keywords[r.0]
+          let key, child
+            moe <- utils.askMoeDict key
+            if key.length is 1
+              child.children.0 <<< moe.0{pinyin, zh_TW, zh_CN}
+            else
+              for i from 0 til key.length
+                continue if not moe[i]
+                console.log moe[i]{pinyin, zh_TW, zh_CN}
+                en = moe[i]English
+                child.children[i]
+                  ..definition = en.join ', '
+                  ..short = en.sort((a, b) -> a.length - b.length)0
+                  ..children.0 <<< moe[i]{pinyin, zh_TW, zh_CN}
+          s.children.push child
+          str = str.replace key, ''
         ++idx
     # TODO: deal with punctuation marks
     if keys.length isnt idx
