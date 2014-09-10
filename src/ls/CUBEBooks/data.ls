@@ -136,8 +136,6 @@ utils =
     onNode node, parents
     for child in node.children
       utils.traverse child, onNode, parents.concat [node.name]
-  #Character: Character
-  #Node: Node
   getSegmentations: (text, done)->
     done(utils.data[text] or Node!)
   askMoeDict: (ch, done) ->
@@ -164,6 +162,7 @@ utils =
       | otherwise => it
     tmp.textContent or tmp.innerText or ''
   buildSyntaxTreeFromNotes: (node) ->
+    tagless = utils.strip
     keys   = []
     values = []
     idx = 0
@@ -174,12 +173,7 @@ utils =
       if parents.2 isnt 'notes'
         # prepare the root Node of this sentence
         keys.push node.text
-        values.push Node do
-          ''
-          []
-          ''
-          for i from 0 til node.text.length
-            Node '', [], '', [Char '', node.text[i]]
+        values.push Node '', [], ''
       else if node.attrs.data
         # prepare the RegExp for segmentation
         ks = slice.call node.attrs.data
@@ -191,15 +185,30 @@ utils =
         .join '|')
       else
         # fill the translation,
-        values[idx]
+        (s = values[idx])
           ..en = node.text
           ..definition = node.text
         # and segment the sentence
         str = "#{keys[idx]}"
-        #console.log re
         while r = re.exec str
           str .= replace r.0, ''
-          #console.log str, r.0, keywords[r.0]
+          def = keywords[r.0]
+          en = tagless def.translation .split /\//
+          shortest = slice.call(en)sort((a, b) -> a.length - b.length)0
+          console.log shortest
+          # XXX: should sort surrogates
+          s.children.push do
+            Node do
+              shortest
+              []
+              en.join ', '
+              for i from 0 til r.0.length
+                c = Char '', r.0[i]
+                do
+                  data <- utils.askMoeDict r.0[i]
+                  c <<< data
+                c
+
         ++idx
     # TODO: deal with punctuation marks
     if keys.length isnt idx

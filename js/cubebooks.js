@@ -329,27 +329,21 @@
       return tmp.textContent || tmp.innerText || '';
     },
     buildSyntaxTreeFromNotes: function(node){
-      var keys, values, idx, keywords, re;
+      var tagless, keys, values, idx, keywords, re;
+      tagless = utils.strip;
       keys = [];
       values = [];
       idx = 0;
       keywords = {};
       re = null;
       utils.traverse(node, function(node, parents){
-        var ref$, i, ks, x$, str, r;
+        var ref$, ks, x$, s, str, r, def, en, shortest, i, c;
         if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
           return;
         }
         if (parents[2] !== 'notes') {
           keys.push(node.text);
-          return values.push(Node('', [], '', (function(){
-            var i$, to$, results$ = [];
-            for (i$ = 0, to$ = node.text.length; i$ < to$; ++i$) {
-              i = i$;
-              results$.push(Node('', [], '', [Char('', node.text[i])]));
-            }
-            return results$;
-          }())));
+          return values.push(Node('', [], ''));
         } else if (node.attrs.data) {
           ks = slice.call(node.attrs.data);
           ks.sort(function(a, b){
@@ -360,14 +354,35 @@
             return it.traditional;
           }).join('|'));
         } else {
-          x$ = values[idx];
+          x$ = s = values[idx];
           x$.en = node.text;
           x$.definition = node.text;
           str = keys[idx] + "";
           while (r = re.exec(str)) {
             str = str.replace(r[0], '');
+            def = keywords[r[0]];
+            en = tagless(def.translation).split(/\//);
+            shortest = slice.call(en).sort(fn$)[0];
+            console.log(shortest);
+            s.children.push(Node(shortest, [], en.join(', '), (fn1$())));
           }
           return ++idx;
+        }
+        function fn$(a, b){
+          return a.length - b.length;
+        }
+        function fn1$(){
+          var i$, to$, results$ = [];
+          for (i$ = 0, to$ = r[0].length; i$ < to$; ++i$) {
+            i = i$;
+            c = Char('', r[0][i]);
+            utils.askMoeDict(r[0][i], fn$);
+            results$.push(c);
+          }
+          return results$;
+          function fn$(data){
+            return import$(c, data);
+          }
         }
       });
       if (keys.length !== idx) {
