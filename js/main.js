@@ -69,6 +69,7 @@
                 }));
               case !(data.name === 'span' && data.text):
                 text = props.data.text;
+                delete props.data.text;
                 attrs.onClick = function(){
                   return Data.getSegmentations(text, function(seg){
                     var sentence;
@@ -81,7 +82,13 @@
                     return $('#control').modal('show');
                   });
                 };
-                return ODP.components.span(props);
+                return ODP.components.span(props, ReactVTT.IsolatedCue({
+                  target: config.path + "/audio.vtt",
+                  match: text,
+                  currentTime: function(){
+                    return audio.currentTime;
+                  }
+                }));
               default:
                 return ODP.renderProps(props);
               }

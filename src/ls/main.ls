@@ -63,7 +63,7 @@ viewer = React.renderComponent do
           CUBEBooks.AudioControl element: audio
       | data.name is 'span' and data.text
         text = props.data.text
-        #delete props.data.text
+        delete props.data.text
         attrs.onClick = ->
           seg <- Data.getSegmentations text
           sentence = React.renderComponent do
@@ -73,10 +73,10 @@ viewer = React.renderComponent do
           $ '#control' .modal 'show'
         ODP.components.span do
           props
-          #ReactVTT.IsolatedCue do
-          #  target: "#{config.path}/demo.vtt"
-          #  match: text
-          #  currentTime: -> audio.current-time
+          ReactVTT.IsolatedCue do
+            target: "#{config.path}/audio.vtt"
+            match: text
+            currentTime: -> audio.current-time
       | otherwise => ODP.renderProps props
   $(\#wrap)get!0
 
