@@ -229,7 +229,7 @@ Sentence = React.createClass do
               className: 'definition'
               focus.definition
         nav do
-          className: 'pinyin-en'
+          className: 'display-mode'
           span className: 'aligner'
           a do
             className: "ui toggle basic button chinese #{if @state.pinyin then \active else ''}"

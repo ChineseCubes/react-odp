@@ -782,7 +782,7 @@
           className: 'definition'
         }, focus.definition)
       ]) : void 8, nav({
-        className: 'pinyin-en'
+        className: 'display-mode'
       }, span({
         className: 'aligner'
       }), a({

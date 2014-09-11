@@ -43,7 +43,7 @@ transform(v)
         margin-left 1rem
       .word-class
         margin-left 0.5rem
-      .pinyin-en
+      .display-mode
         position absolute
         right 0
         top 0
@@ -74,20 +74,25 @@ transform(v)
           position absolute
           left 0
           right 0
-          font-size  0.9rem
-          min-height 0.9rem
+          margin-top  0.2rem
+          font-size   0.9rem
+          line-height 1rem
+          min-height  1rem
           text-align center
           color rgba(#000,1)
         .actions
           //display none
           position absolute
-          top -3.5rem
+          top -3rem
           left 50%
           text-align center
           padding 0
           .menu
-            background-color #666
+            position relative
+            z-index 3
             border-radius 0.3rem
+            .button
+              box-shadow none
             &.single
               width 3rem
               margin-left -1.5rem
@@ -96,16 +101,17 @@ transform(v)
               margin-left -4.5rem
             &:before
               position absolute
-              left -0.5rem
+              margin-left -0.5rem
+              left 50%
               bottom -0.5rem
               content ""
-              width  1rem
-              height 1rem
-              background-color #666
-              transform rotate(45deg)
-            .buttons
-              position relative
-              z-index 3
+              width  0
+              height 0
+              border-style solid
+              border-width 0.5rem 0.5rem 0 0.5rem
+              border-color #5c6166 transparent transparent transparent
+            //.buttons
+            //  position relative
       &.characters
         display inline-block
         position relative
@@ -123,9 +129,12 @@ transform(v)
           color #FFF
           border-radius 0.5rem
         .pronounciation
+          margin 0
+          padding 0
           font-weight normal
-          font-size  0.75rem
-          min-height 0.75rem
+          font-size   0.75rem
+          line-height 1rem
+          min-height  1rem
           font-family "American Typewriter", monospace
           text-align center
           color rgba(#000, 0.5)
