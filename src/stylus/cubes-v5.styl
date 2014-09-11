@@ -77,7 +77,7 @@ transform(v)
           margin-top  0.2rem
           font-size   0.9rem
           line-height 1rem
-          min-height  1rem
+          min-height  1.5rem
           text-align center
           color rgba(#000,1)
         .actions
@@ -92,6 +92,7 @@ transform(v)
             z-index 3
             border-radius 0.3rem
             .button
+              border none
               box-shadow none
             &.single
               width 3rem
@@ -103,7 +104,7 @@ transform(v)
               position absolute
               margin-left -0.5rem
               left 50%
-              bottom -0.5rem
+              top 99% // for the strange rounding in Chrome
               content ""
               width  0
               height 0
