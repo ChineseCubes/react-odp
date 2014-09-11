@@ -295,8 +295,8 @@ small {
   margin-left: -1.5rem;
 }
 #control .playground .comp.word .actions .menu.multiple {
-  width: 9rem;
-  margin-left: -4.5rem;
+  width: 6rem;
+  margin-left: -3rem;
 }
 #control .playground .comp.word .actions .menu:before {
   position: absolute;

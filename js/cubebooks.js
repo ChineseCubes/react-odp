@@ -589,14 +589,18 @@
       return div({
         className: 'actions'
       }, div({
-        className: 'menu single'
+        className: 'menu multiple'
       }, div({
         className: 'ui buttons'
       }, this.transferPropsTo(div({
         className: 'ui icon button black write'
       }, i({
         className: 'icon pencil'
-      }))))));
+      }))), div({
+        className: 'ui icon button black split'
+      }, i({
+        className: 'icon cut'
+      })))));
     }
   });
   SettingsButton = React.createClass({
@@ -683,9 +687,11 @@
       return a({
         className: "item " + name + " " + (actived ? 'active' : ''),
         onClick: function(){
-          this$.focus(null);
+          var depth;
+          depth = this$.DEPTH[name];
+          this$.focus(depth === 0 ? this$.refs[0] : null);
           return this$.setState({
-            depth: this$.DEPTH[name]
+            depth: depth
           });
         }
       }, name);
@@ -720,8 +726,9 @@
       });
     },
     render: function(){
-      var data, focus, c, this$ = this;
+      var data, words, focus, c, this$ = this;
       data = this.props.data;
+      words = data.childrenOfDepth(this.state.depth);
       return div({
         className: 'playground'
       }, div({
@@ -730,8 +737,8 @@
         className: 'aligner'
       }), (function(){
         var i$, results$ = [];
-        for (i$ in data.childrenOfDepth(this.state.depth)) {
-          results$.push((fn$.call(this, i$, data.childrenOfDepth(this.state.depth)[i$])));
+        for (i$ in words) {
+          results$.push((fn$.call(this, i$, words[i$])));
         }
         return results$;
         function fn$(i, word){
@@ -792,14 +799,14 @@
             pinyin: !this$.state.pinyin
           });
         }
-      }, '拼'), a({
+      }, '拼'), this.state.depth === 0 ? a({
         className: "ui toggle basic button chinese " + (this.state.meaning ? 'active' : ''),
         onClick: function(){
           return this$.setState({
             meaning: !this$.state.meaning
           });
         }
-      }, 'En'))));
+      }, 'En') : void 8)));
     }
   });
   import$((ref$ = this.CUBEBooks) != null

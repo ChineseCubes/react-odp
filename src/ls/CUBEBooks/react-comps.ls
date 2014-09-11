@@ -90,7 +90,7 @@ ActionMenu = React.createClass do
     div do
       className: 'actions'
       div do
-        className: 'menu single'
+        className: 'menu multiple'
         div do
           className: 'ui buttons'
           #div do
@@ -99,9 +99,9 @@ ActionMenu = React.createClass do
           @transferPropsTo div do
             className: 'ui icon button black write'
             i className: 'icon pencil'
-          #div do
-          #  className: 'ui icon button black split'
-          #  i className: 'icon cut'
+          div do
+            className: 'ui icon button black split'
+            i className: 'icon cut'
 
 SettingsButton = React.createClass do
   displayName: 'CUBE.SettingsButton'
@@ -159,8 +159,9 @@ Sentence = React.createClass do
     a do
       className: "item #name #{if actived then 'active' else ''}"
       onClick: ~>
-        @focus null
-        @setState depth: @DEPTH[name]
+        depth = @DEPTH[name]
+        @focus if depth is 0 then @refs.0 else null
+        @setState depth: depth
       name
   toggleMode: ->
     @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
@@ -178,13 +179,14 @@ Sentence = React.createClass do
     $settings.animate height: if $settings.height! isnt 0 then 0 else 48
   render: ->
     data = @props.data
+    words = data.childrenOfDepth @state.depth
     div do
       className: 'playground'
       div do
         className: 'comp sentence'
         div className: 'aligner'
         #XXX: who decide the depth?
-        for let i, word of data.childrenOfDepth @state.depth
+        for let i, word of words
           Word do
             key: i
             ref: i
@@ -235,7 +237,7 @@ Sentence = React.createClass do
             className: "ui toggle basic button chinese #{if @state.pinyin then \active else ''}"
             onClick: ~> @setState pinyin: !@state.pinyin
             \拼
-          a do
+          if @state.depth is 0 then a do
             className: "ui toggle basic button chinese #{if @state.meaning then \active else ''}"
             onClick: ~> @setState meaning: !@state.meaning
             \En
