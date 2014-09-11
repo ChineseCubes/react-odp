@@ -83,7 +83,12 @@ class Dict
     tagless = utils.strip
     # XXX: should sort surrogates
     moe <~ $.getJSON "#path/dict.json"
-    for c of moe => moe[c]en .= map (tagless)
+    for c of moe
+      moe[c]
+        ..zh_TW  = tagless moe[c]zh_TW
+        ..zh_CN  = tagless moe[c]zh_CN
+        ..pinyin = tagless moe[c]pinyin
+        ..en .= map (tagless)
     @data = moe
     done? this
   get: ->

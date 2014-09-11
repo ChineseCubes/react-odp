@@ -185,9 +185,13 @@
       var tagless, this$ = this instanceof ctor$ ? this : new ctor$;
       tagless = utils.strip;
       $.getJSON(path + "/dict.json", function(moe){
-        var c, ref$;
+        var c, x$;
         for (c in moe) {
-          (ref$ = moe[c]).en = ref$.en.map(tagless);
+          x$ = moe[c];
+          x$.zh_TW = tagless(moe[c].zh_TW);
+          x$.zh_CN = tagless(moe[c].zh_CN);
+          x$.pinyin = tagless(moe[c].pinyin);
+          x$.en = x$.en.map(tagless);
         }
         this$.data = moe;
         return typeof done === 'function' ? done(this$) : void 8;
