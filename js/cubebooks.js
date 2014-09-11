@@ -673,17 +673,19 @@
       var ref$;
       if (this.props.data.short !== props.data.short) {
         this.setState({
-          focus: (ref$ = getInitialState()).focus,
+          focus: (ref$ = this.getInitialState()).focus,
           depth: ref$.depth
         });
         return $(this.refs.settings.getDOMNode()).height(0);
       }
     },
     componentWillUpdate: function(props, state){
-      if (this.state.depth !== state.depth) {
-        return state.focus = state.depth === 0 ? 0 : null;
-      } else if (this.state.focus === state.focus) {
-        return state.focus = null;
+      if (this.props.data.short === props.data.short) {
+        if (this.state.depth !== state.depth) {
+          return state.focus = state.depth === 0 ? 0 : null;
+        } else if (this.state.focus === state.focus) {
+          return state.focus = null;
+        }
       }
     },
     renderDepthButton: function(name){

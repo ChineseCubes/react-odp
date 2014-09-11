@@ -148,13 +148,14 @@ Sentence = React.createClass do
     depth: 0
   componentWillReceiveProps: (props) ->
     if @props.data.short isnt props.data.short
-      @setState getInitialState!{focus, depth}
+      @setState @getInitialState!{focus, depth}
       $(@refs.settings.getDOMNode!)height 0
   componentWillUpdate: (props, state) ->
-    if @state.depth isnt state.depth
-      state.focus = if state.depth is 0 then 0 else null
-    else if @state.focus is state.focus
-      state.focus = null
+    if @props.data.short is props.data.short
+      if @state.depth isnt state.depth
+        state.focus = if state.depth is 0 then 0 else null
+      else if @state.focus is state.focus
+        state.focus = null
   renderDepthButton: (name) ->
     actived = @state.depth is @DEPTH[name]
     a do
