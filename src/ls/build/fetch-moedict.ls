@@ -1,6 +1,6 @@
 #!/usr/bin/lsc
 require! <[fs request]>
-{unique, omit, sortBy} = require \lodash
+{unique, omit} = require \lodash
 stringify = require \json-stable-stringify
 Data      = require '../CUBEBooks/data'
 
