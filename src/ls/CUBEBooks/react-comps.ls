@@ -237,7 +237,7 @@ Sentence = React.createClass do
             className: "ui toggle basic button chinese #{if @state.pinyin then \active else ''}"
             onClick: ~> @setState pinyin: !@state.pinyin
             \拼
-          if @state.depth is 0 then a do
+          if @state.depth isnt 0 then a do
             className: "ui toggle basic button chinese #{if @state.meaning then \active else ''}"
             onClick: ~> @setState meaning: !@state.meaning
             \En

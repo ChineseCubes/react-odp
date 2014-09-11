@@ -799,7 +799,7 @@
             pinyin: !this$.state.pinyin
           });
         }
-      }, '拼'), this.state.depth === 0 ? a({
+      }, '拼'), this.state.depth !== 0 ? a({
         className: "ui toggle basic button chinese " + (this.state.meaning ? 'active' : ''),
         onClick: function(){
           return this$.setState({
