@@ -760,22 +760,6 @@
       }, div({
         className: 'ui borderless menu'
       }, div({
-        className: 'left menu'
-      }, a({
-        className: "item toggle chinese " + (this.state.pinyin ? 'active' : ''),
-        onClick: function(){
-          return this$.setState({
-            pinyin: !this$.state.pinyin
-          });
-        }
-      }, 'Pinyin'), a({
-        className: "item toggle chinese " + (this.state.meaning ? 'active' : ''),
-        onClick: function(){
-          return this$.setState({
-            meaning: !this$.state.meaning
-          });
-        }
-      }, 'English')), div({
         className: 'right menu'
       }, this.renderDepthButton('sentence'), this.renderDepthButton('words'), this.renderDepthButton('characters'), a({
         className: 'item toggle chinese',
@@ -795,7 +779,25 @@
         }.call(this)).join('')), span({
           className: 'definition'
         }, focus.definition)
-      ]) : void 8));
+      ]) : void 8, nav({
+        className: 'pinyin-en'
+      }, span({
+        className: 'aligner'
+      }), a({
+        className: "ui toggle basic button chinese " + (this.state.pinyin ? 'active' : ''),
+        onClick: function(){
+          return this$.setState({
+            pinyin: !this$.state.pinyin
+          });
+        }
+      }, '拼'), a({
+        className: "ui toggle basic button chinese " + (this.state.meaning ? 'active' : ''),
+        onClick: function(){
+          return this$.setState({
+            meaning: !this$.state.meaning
+          });
+        }
+      }, 'En'))));
     }
   });
   import$((ref$ = this.CUBEBooks) != null

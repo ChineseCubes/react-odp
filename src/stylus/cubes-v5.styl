@@ -29,11 +29,13 @@ transform(v)
       .menu
         border-radius 0
     .entry
+      position relative
       background white
       border-bottom-left-radius  5px
       border-bottom-right-radius 5px
       min-height 2rem
       padding 1rem
+      padding-right 6rem
       font-size 1rem
       text-align left
       .definition
@@ -41,11 +43,25 @@ transform(v)
         margin-left 1rem
       .word-class
         margin-left 0.5rem
+      .pinyin-en
+        position absolute
+        right 0
+        top 0
+        bottom 0
+        .aligner
+          vertical-align middle
+          display inline-block
+          height 100%
+        .button
+          vertical-align middle
+          box-shadow none
+          padding 0.5rem
+          margin-right 0.5rem
     .comp
       &.sentence
         position relative
         margin-bottom 0.9rem // match the height of meaning
-        padding 3rem 1rem
+        padding 4rem 1rem
       &.word
         position relative
         cursor pointer

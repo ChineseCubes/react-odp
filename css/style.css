@@ -214,11 +214,13 @@ small {
   border-radius: 0;
 }
 #control .playground .entry {
+  position: relative;
   background: #fff;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   min-height: 2rem;
   padding: 1rem;
+  padding-right: 6rem;
   font-size: 1rem;
   text-align: left;
 }
@@ -229,10 +231,28 @@ small {
 #control .playground .entry .word-class {
   margin-left: 0.5rem;
 }
+#control .playground .entry .pinyin-en {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+#control .playground .entry .pinyin-en .aligner {
+  vertical-align: middle;
+  display: inline-block;
+  height: 100%;
+}
+#control .playground .entry .pinyin-en .button {
+  vertical-align: middle;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
 #control .playground .comp.sentence {
   position: relative;
   margin-bottom: 0.9rem;
-  padding: 3rem 1rem;
+  padding: 4rem 1rem;
 }
 #control .playground .comp.word {
   position: relative;

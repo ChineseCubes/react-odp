@@ -195,16 +195,6 @@ Sentence = React.createClass do
         div do
           className: 'ui borderless menu'
           div do
-            className: 'left menu'
-            a do
-              className: "item toggle chinese #{if @state.pinyin then \active else ''}"
-              onClick: ~> @setState pinyin: !@state.pinyin
-              \Pinyin
-            a do
-              className: "item toggle chinese #{if @state.meaning then \active else ''}"
-              onClick: ~> @setState meaning: !@state.meaning
-              \English
-          div do
             className: 'right menu'
             @renderDepthButton 'sentence'
             @renderDepthButton 'words'
@@ -231,6 +221,17 @@ Sentence = React.createClass do
             span do
               className: 'definition'
               focus.definition
+        nav do
+          className: 'pinyin-en'
+          span className: 'aligner'
+          a do
+            className: "ui toggle basic button chinese #{if @state.pinyin then \active else ''}"
+            onClick: ~> @setState pinyin: !@state.pinyin
+            \拼
+          a do
+            className: "ui toggle basic button chinese #{if @state.meaning then \active else ''}"
+            onClick: ~> @setState meaning: !@state.meaning
+            \En
 
 (this.CUBEBooks ?= {}) <<< do
   AudioControl: AudioControl
