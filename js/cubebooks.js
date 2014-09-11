@@ -547,11 +547,7 @@
         data: null,
         mode: 'zh_TW',
         pinyin: false,
-        meaning: false
-      };
-    },
-    getInitialState: function(){
-      return {
+        meaning: false,
         menu: false
       };
     },
@@ -561,7 +557,7 @@
       cs = data.flatten();
       return div({
         className: 'comp word'
-      }, this.state.menu ? ActionMenu({
+      }, this.props.menu ? ActionMenu({
         onClick: function(it){
           return this$.props.onMenuClick(it);
         }
@@ -669,20 +665,25 @@
       return {
         pinyin: this.props.pinyin,
         meaning: this.props.meaning,
-        focus: null,
+        focus: 0,
         depth: 0
       };
     },
-    componentDidMount: function(){
-      return this.focus(this.refs[0], true);
-    },
     componentWillReceiveProps: function(props){
+      var ref$;
       if (this.props.data.short !== props.data.short) {
         this.setState({
-          depth: this.getInitialState().depth
+          focus: (ref$ = getInitialState()).focus,
+          depth: ref$.depth
         });
-        this.focus(this.refs[0], true);
         return $(this.refs.settings.getDOMNode()).height(0);
+      }
+    },
+    componentWillUpdate: function(props, state){
+      if (this.state.depth !== state.depth) {
+        return state.focus = state.depth === 0 ? 0 : null;
+      } else if (this.state.focus === state.focus) {
+        return state.focus = null;
       }
     },
     renderDepthButton: function(name){
@@ -691,11 +692,8 @@
       return a({
         className: "item " + name + " " + (actived ? 'active' : ''),
         onClick: function(){
-          var depth;
-          depth = this$.DEPTH[name];
-          this$.focus(depth === 0 ? this$.refs[0] : null);
           return this$.setState({
-            depth: depth
+            depth: this$.DEPTH[name]
           });
         }
       }, name);
@@ -703,23 +701,6 @@
     toggleMode: function(){
       return this.setProps({
         mode: this.props.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
-      });
-    },
-    focus: function(comp, force){
-      var ref$;
-      if ((ref$ = this.state.focus) != null) {
-        ref$.setState({
-          menu: false
-        });
-      }
-      comp = !force ? comp === this.state.focus ? null : comp : comp;
-      if (comp != null) {
-        comp.setState({
-          menu: true
-        });
-      }
-      return this.setState({
-        focus: comp
       });
     },
     toggleSettings: function(){
@@ -753,9 +734,12 @@
             data: word,
             mode: this.props.mode,
             pinyin: this.state.pinyin,
-            meaning: this.state.meaning,
+            meaning: this.state.depth !== 0 && this.state.meaning,
+            menu: this.state.focus === +i,
             onClick: function(){
-              return this$.focus(this$.refs[i]);
+              return this$.setState({
+                focus: +i
+              });
             },
             onMenuClick: function(){
               return this$.refs.stroker.play();
@@ -779,7 +763,7 @@
         onClick: this.toggleMode
       }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), div({
         className: 'entry'
-      }, this.state.focus ? (focus = this.state.focus.props.data, [
+      }, this.state.focus !== null ? (focus = words[this.state.focus], [
         span({
           className: 'ui black label'
         }, (function(){

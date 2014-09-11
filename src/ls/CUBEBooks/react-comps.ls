@@ -62,14 +62,13 @@ Word = React.createClass do
     mode:    'zh_TW'
     pinyin:  off
     meaning: off
-  getInitialState: ->
     menu:    off
   render: ->
     data = @props.data
     cs = data.flatten!
     div do
       className: 'comp word'
-      if @state.menu
+      if @props.menu
         ActionMenu onClick: ~> @props.onMenuClick it
       div do
         className: 'characters'
@@ -145,35 +144,26 @@ Sentence = React.createClass do
   getInitialState: ->
     pinyin: @props.pinyin
     meaning: @props.meaning
-    focus: null
+    focus: 0
     depth: 0
-  componentDidMount: ->
-    @focus @refs.0, true
   componentWillReceiveProps: (props) ->
     if @props.data.short isnt props.data.short
-      @setState @getInitialState!{depth}
-      @focus @refs.0, true
+      @setState getInitialState!{focus, depth}
       $(@refs.settings.getDOMNode!)height 0
+  componentWillUpdate: (props, state) ->
+    if @state.depth isnt state.depth
+      state.focus = if state.depth is 0 then 0 else null
+    else if @state.focus is state.focus
+      state.focus = null
   renderDepthButton: (name) ->
     actived = @state.depth is @DEPTH[name]
     a do
       className: "item #name #{if actived then 'active' else ''}"
       onClick: ~>
-        depth = @DEPTH[name]
-        @focus if depth is 0 then @refs.0 else null
-        @setState depth: depth
+        @setState depth: @DEPTH[name]
       name
   toggleMode: ->
     @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
-  focus: (comp, force) ->
-    @state.focus?setState menu: off
-    comp =
-      if not force
-        if comp is @state.focus then null else comp
-      else
-        comp
-    comp?setState menu: on
-    @setState focus: comp
   toggleSettings: ->
     $settings = $ @refs.settings.getDOMNode!
     $settings.animate height: if $settings.height! isnt 0 then 0 else 48
@@ -193,8 +183,9 @@ Sentence = React.createClass do
             data: word
             mode: @props.mode
             pinyin: @state.pinyin
-            meaning: @state.meaning
-            onClick: ~> @focus @refs[i]
+            meaning: @state.depth isnt 0 and @state.meaning
+            menu: @state.focus is +i
+            onClick: ~> @setState focus: +i
             onMenuClick: ~> @refs.stroker.play!
         Stroker ref: 'stroker'
       nav do
@@ -214,8 +205,8 @@ Sentence = React.createClass do
               if @props.mode is 'zh_TW' then 'T' else 'S'
       div do
         className: 'entry'
-        if @state.focus
-          focus = @state.focus.props.data
+        if @state.focus isnt null
+          focus = words[@state.focus]
           * span do
               className: 'ui black label'
               (for c in focus.flatten! => c[@props.mode])join ''
