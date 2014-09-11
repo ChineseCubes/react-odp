@@ -23,7 +23,7 @@ console.log "dpcm: #dpcm"
 audio = $ \audio .get!0
 
 data <- Data.getPresentation mp
-Data.buildSyntaxTreeFromNotes data, mp.setup.path
+segs <- Data.Segmentations data, mp.setup.path
 
 settings-button = React.renderComponent do
   CUBEBooks.SettingsButton!
@@ -52,9 +52,8 @@ viewer = React.renderComponent do
         text = props.data.text
         delete props.data.text
         attrs.onClick = ->
-          seg <- Data.getSegmentations text
           sentence = React.renderComponent do
-            CUBEBooks.Sentence data: seg
+            CUBEBooks.Sentence data: segs.get text
             $ '#control > .content' .get!0
           settings-button.setProps onClick: sentence.toggleSettings
           $ '#control' .modal 'show'

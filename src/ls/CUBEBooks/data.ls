@@ -78,6 +78,77 @@ punctuations =
   '～': o [c '' '～'] 'wavy dash'
   '　': o [c '' '　'] 'space'
 
+class Dict
+  (path, done) ~>
+    tagless = utils.strip
+    # XXX: should sort surrogates
+    moe <~ $.getJSON "#path/dict.json"
+    for c of moe => moe[c]en .= map (tagless)
+    @data = moe
+    done? this
+  get: ->
+    @data[it]
+
+class Segmentations
+  (node, path, done) ~>
+    dict <~ Dict path
+    tagless = utils.strip
+    keys   = []
+    values = []
+    idx = 0
+    keywords = {} <<< punctuations
+    re = null
+    utils.traverse node, (node, parents) ->
+      return if not node.text and not node.attrs?data
+      if parents.2 isnt 'notes'
+        # prepare the root Node of this sentence
+        keys.push node.text
+        values.push Node!
+      else if node.attrs.data
+        # prepare the RegExp for segmentation
+        ks = slice.call node.attrs.data
+        ks.sort (a, b) -> b.traditional.length - a.traditional.length
+        re := ks.map ->
+          str = it.traditional
+          en = tagless it.translation .split /\//
+          shortest = slice.call(en)sort((a, b) -> a.length - b.length)0
+          children = slice.call str
+          # use `map` as `each`
+          # FIXME: too much
+          keywords[it.traditional] =
+            Node do
+              children.map ->
+                moe = dict.get it
+                if children.length is 1
+                  Char moe?pinyin, (moe?zh_TW or it), moe?zh_CN
+                else
+                  en = slice.call moe.en
+                  Node do
+                    [Char moe?pinyin, (moe?zh_TW or it), moe?zh_CN]
+                    en.join ', '
+                    en.sort((a, b) -> a.length - b.length)0
+              en.join ', '
+              shortest
+          it.traditional
+        re := new RegExp Object.keys(punctuations)concat(re)join '|'
+      else
+        # fill the translation,
+        (s = values[idx])
+          ..short = node.text
+          ..definition = node.text
+        # and segment the sentence
+        str = "#{keys[idx]}"
+        while r = re.exec str
+          s.children.push keywords[r.0]
+          str = str.replace r.0, ''
+        ++idx
+    if keys.length isnt idx
+      console.warn 'the translations of sentences are not match'
+      console.log keys, values
+    @data = zipObject keys, values
+    done? this
+  get: ->
+    @data[it]
 
 utils =
   splitNamespace: ->
@@ -158,22 +229,6 @@ utils =
     return if not node.children
     for child in node.children
       utils.traverse child, onNode, parents.concat [node.name]
-  getSegmentations: (text, done)->
-    done(utils.data[text] or Node!)
-  askDict: (str, path, done) ->
-    counter = 0
-    result = []
-    tagless = utils.strip
-    # XXX: should sort surrogates
-    for let i from 0 til str.length
-      moe <- $.getJSON "#path/dict/#{encodeURI str[i]}.json"
-      result[+i] =
-        zh_TW:   tagless moe.title
-        zh_CN:   tagless(moe.heteronyms.0.alt or moe.title)
-        pinyin:  tagless moe.heteronyms.0.pinyin
-        English: tagless(moe.translation.English)split /,\w*?/
-      if ++counter is str.length
-        done result
   strip: ->
     tmp = document.createElement 'span'
     tmp.innerHTML = switch
@@ -189,70 +244,7 @@ utils =
         ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
       | otherwise => it
     tmp.textContent or tmp.innerText or ''
-  buildSyntaxTreeFromNotes: (node, path) ->
-    tagless = utils.strip
-    keys   = []
-    values = []
-    idx = 0
-    keywords = {} <<< punctuations
-    re = null
-    utils.traverse node, (node, parents) ->
-      return if not node.text and not node.attrs?data
-      if parents.2 isnt 'notes'
-        # prepare the root Node of this sentence
-        keys.push node.text
-        values.push Node!
-      else if node.attrs.data
-        # prepare the RegExp for segmentation
-        ks = slice.call node.attrs.data
-        ks.sort (a, b) -> b.traditional.length - a.traditional.length
-        re := ks.map ->
-          str = it.traditional
-          en = tagless it.translation .split /\//
-          shortest = slice.call(en)sort((a, b) -> a.length - b.length)0
-          children = slice.call str
-          # use `map` as `each`
-          # FIXME: too much
-          keywords[it.traditional] =
-            Node do
-              children.map if children.length is 1
-                -> Char '', it
-              else
-                -> Node [Char '', it]
-              en.join ', '
-              shortest
-          it.traditional
-        re := new RegExp Object.keys(punctuations)concat(re)join '|'
-      else
-        # fill the translation,
-        (s = values[idx])
-          ..short = node.text
-          ..definition = node.text
-        # and segment the sentence
-        str = "#{keys[idx]}"
-        while r = re.exec str
-          key = r.0
-          child = keywords[r.0]
-          let key, child
-            moe <- utils.askDict key, path
-            if key.length is 1
-              child.children.0 <<< moe.0{pinyin, zh_TW, zh_CN}
-            else
-              for i from 0 til key.length
-                continue if not moe[i]
-                en = moe[i]English
-                child.children[i]
-                  ..definition = en.join ', '
-                  ..short = en.sort((a, b) -> a.length - b.length)0
-                  ..children.0 <<< moe[i]{pinyin, zh_TW, zh_CN}
-          s.children.push child
-          str = str.replace key, ''
-        ++idx
-    # TODO: deal with punctuation marks
-    if keys.length isnt idx
-      console.warn 'the translations of sentences are not match'
-      console.log keys, values
-    utils.data = zipObject keys, values
+  Segmentations: Segmentations
 
 (this.Data ?= {}) <<< utils
 module?exports = this.Data

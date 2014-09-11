@@ -1,5 +1,5 @@
 (function(){
-  var require, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, utils, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Stroker, Sentence;
+  var require, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, utils, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Stroker, Sentence;
   require == null && (require = (function(packages){
     return function(it){
       return packages[it];
@@ -178,6 +178,102 @@
     '～': o([c('', '～')], 'wavy dash'),
     '　': o([c('', '　')], 'space')
   };
+  Dict = (function(){
+    Dict.displayName = 'Dict';
+    var prototype = Dict.prototype, constructor = Dict;
+    function Dict(path, done){
+      var tagless, this$ = this instanceof ctor$ ? this : new ctor$;
+      tagless = utils.strip;
+      $.getJSON(path + "/dict.json", function(moe){
+        var c, ref$;
+        for (c in moe) {
+          (ref$ = moe[c]).en = ref$.en.map(tagless);
+        }
+        this$.data = moe;
+        return typeof done === 'function' ? done(this$) : void 8;
+      });
+      return this$;
+    } function ctor$(){} ctor$.prototype = prototype;
+    prototype.get = function(it){
+      return this.data[it];
+    };
+    return Dict;
+  }());
+  Segmentations = (function(){
+    Segmentations.displayName = 'Segmentations';
+    var prototype = Segmentations.prototype, constructor = Segmentations;
+    function Segmentations(node, path, done){
+      var this$ = this instanceof ctor$ ? this : new ctor$;
+      Dict(path, function(dict){
+        var tagless, keys, values, idx, keywords, re;
+        tagless = utils.strip;
+        keys = [];
+        values = [];
+        idx = 0;
+        keywords = import$({}, punctuations);
+        re = null;
+        utils.traverse(node, function(node, parents){
+          var ref$, ks, x$, s, str, r;
+          if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
+            return;
+          }
+          if (parents[2] !== 'notes') {
+            keys.push(node.text);
+            return values.push(Node());
+          } else if (node.attrs.data) {
+            ks = slice.call(node.attrs.data);
+            ks.sort(function(a, b){
+              return b.traditional.length - a.traditional.length;
+            });
+            re = ks.map(function(it){
+              var str, en, shortest, children;
+              str = it.traditional;
+              en = tagless(it.translation).split(/\//);
+              shortest = slice.call(en).sort(function(a, b){
+                return a.length - b.length;
+              })[0];
+              children = slice.call(str);
+              keywords[it.traditional] = Node(children.map(function(it){
+                var moe, en;
+                moe = dict.get(it);
+                if (children.length === 1) {
+                  return Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe.zh_TW : void 8) || it, moe != null ? moe.zh_CN : void 8);
+                } else {
+                  en = slice.call(moe.en);
+                  return Node([Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe.zh_TW : void 8) || it, moe != null ? moe.zh_CN : void 8)], en.join(', '), en.sort(function(a, b){
+                    return a.length - b.length;
+                  })[0]);
+                }
+              }), en.join(', '), shortest);
+              return it.traditional;
+            });
+            return re = new RegExp(Object.keys(punctuations).concat(re).join('|'));
+          } else {
+            x$ = s = values[idx];
+            x$.short = node.text;
+            x$.definition = node.text;
+            str = keys[idx] + "";
+            while (r = re.exec(str)) {
+              s.children.push(keywords[r[0]]);
+              str = str.replace(r[0], '');
+            }
+            return ++idx;
+          }
+        });
+        if (keys.length !== idx) {
+          console.warn('the translations of sentences are not match');
+          console.log(keys, values);
+        }
+        this$.data = zipObject(keys, values);
+        return typeof done === 'function' ? done(this$) : void 8;
+      });
+      return this$;
+    } function ctor$(){} ctor$.prototype = prototype;
+    prototype.get = function(it){
+      return this.data[it];
+    };
+    return Segmentations;
+  }());
   utils = {
     splitNamespace: function(it){
       var r;
@@ -330,32 +426,6 @@
       }
       return results$;
     },
-    getSegmentations: function(text, done){
-      return done(utils.data[text] || Node());
-    },
-    askDict: function(str, path, done){
-      var counter, result, tagless, i$, to$, results$ = [];
-      counter = 0;
-      result = [];
-      tagless = utils.strip;
-      for (i$ = 0, to$ = str.length; i$ < to$; ++i$) {
-        results$.push((fn$.call(this, i$)));
-      }
-      return results$;
-      function fn$(i){
-        return $.getJSON(path + "/dict/" + encodeURI(str[i]) + ".json", function(moe){
-          result[+i] = {
-            zh_TW: tagless(moe.title),
-            zh_CN: tagless(moe.heteronyms[0].alt || moe.title),
-            pinyin: tagless(moe.heteronyms[0].pinyin),
-            English: tagless(moe.translation.English).split(/,\w*?/)
-          };
-          if (++counter === str.length) {
-            return done(result);
-          }
-        });
-      }
-    },
     strip: function(it){
       var tmp, dom;
       tmp = document.createElement('span');
@@ -373,94 +443,7 @@
       }());
       return tmp.textContent || tmp.innerText || '';
     },
-    buildSyntaxTreeFromNotes: function(node, path){
-      var tagless, keys, values, idx, keywords, re;
-      tagless = utils.strip;
-      keys = [];
-      values = [];
-      idx = 0;
-      keywords = import$({}, punctuations);
-      re = null;
-      utils.traverse(node, function(node, parents){
-        var ref$, ks, x$, s, str, r, key, child;
-        if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
-          return;
-        }
-        if (parents[2] !== 'notes') {
-          keys.push(node.text);
-          return values.push(Node());
-        } else if (node.attrs.data) {
-          ks = slice.call(node.attrs.data);
-          ks.sort(function(a, b){
-            return b.traditional.length - a.traditional.length;
-          });
-          re = ks.map(function(it){
-            var str, en, shortest, children;
-            str = it.traditional;
-            en = tagless(it.translation).split(/\//);
-            shortest = slice.call(en).sort(function(a, b){
-              return a.length - b.length;
-            })[0];
-            children = slice.call(str);
-            keywords[it.traditional] = Node(children.map(children.length === 1
-              ? function(it){
-                return Char('', it);
-              }
-              : function(it){
-                return Node([Char('', it)]);
-              }), en.join(', '), shortest);
-            return it.traditional;
-          });
-          return re = new RegExp(Object.keys(punctuations).concat(re).join('|'));
-        } else {
-          x$ = s = values[idx];
-          x$.short = node.text;
-          x$.definition = node.text;
-          str = keys[idx] + "";
-          while (r = re.exec(str)) {
-            key = r[0];
-            child = keywords[r[0]];
-            (fn$.call(this, key, child));
-            s.children.push(child);
-            str = str.replace(key, '');
-          }
-          return ++idx;
-        }
-        function fn$(key, child){
-          utils.askDict(key, path, function(moe){
-            var ref$, ref1$, i$, to$, i, en, x$, results$ = [];
-            if (key.length === 1) {
-              return ref1$ = child.children[0], ref1$.pinyin = (ref$ = moe[0]).pinyin, ref1$.zh_TW = ref$.zh_TW, ref1$.zh_CN = ref$.zh_CN, ref1$;
-            } else {
-              for (i$ = 0, to$ = key.length; i$ < to$; ++i$) {
-                i = i$;
-                if (!moe[i]) {
-                  continue;
-                }
-                en = moe[i].English;
-                x$ = child.children[i];
-                x$.definition = en.join(', ');
-                x$.short = en.sort(fn$)[0];
-                ref1$ = x$.children[0];
-                ref1$.pinyin = (ref$ = moe[i]).pinyin;
-                ref1$.zh_TW = ref$.zh_TW;
-                ref1$.zh_CN = ref$.zh_CN;
-                results$.push(x$);
-              }
-              return results$;
-            }
-            function fn$(a, b){
-              return a.length - b.length;
-            }
-          });
-        }
-      });
-      if (keys.length !== idx) {
-        console.warn('the translations of sentences are not match');
-        console.log(keys, values);
-      }
-      return utils.data = zipObject(keys, values);
-    }
+    Segmentations: Segmentations
   };
   import$((ref$ = this.Data) != null
     ? ref$
