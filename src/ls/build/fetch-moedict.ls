@@ -1,11 +1,23 @@
+#!/usr/bin/lsc
 require! <[fs request]>
-{unique, omit} = require \lodash
-Data = require './CUBEBooks/data'
+{unique, omit, sortBy} = require \lodash
+stringify = require \json-stable-stringify
+Data      = require '../CUBEBooks/data'
 
-path = Data.unslash (process.argv.2 or '../../demo')
+if not process.argv.2
+  [,filename] = /.*\/(.*)/exec process.argv.1
+  console.log "Usage: #filename <path>"
+  process.exit 0
+
+path = Data.unslash process.argv.2
+path-master = "#path/masterpage.json"
+
+if not fs.existsSync path-master
+  console.error "masterpage.json not found"
+  process.exit 1
 
 chars = ''
-{setup}:mp = Data.patchMasterPage require "#path/masterpage.json"
+{setup}:mp = Data.patchMasterPage require path-master
 for i from 1 to setup.total-pages
   page = Data.patchPageJSON require "#path/page#i.json"
   Data.traverse page, ->
@@ -24,5 +36,6 @@ for let c in chars
     pinyin: moe.heteronyms.0.pinyin
     en:     moe.translation.English.join(\,)split(/,\w*?/)
   if ++counter is chars.length
+    process.stdout.write "\n"
     result = omit fetched, (!)
-    fs.writeFileSync "#path/dict.json", JSON.stringify(result, , 2)
+    fs.writeFileSync "#path/dict.json", stringify(result, space: 2)
