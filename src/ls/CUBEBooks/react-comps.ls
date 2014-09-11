@@ -147,9 +147,12 @@ Sentence = React.createClass do
     meaning: @props.meaning
     focus: null
     depth: 0
+  componentDidMount: ->
+    @focus @refs.0, true
   componentWillReceiveProps: (props) ->
     if @props.data.short isnt props.data.short
-      @setState @getInitialState!{focus, depth}
+      @setState @getInitialState!{depth}
+      @focus @refs.0, true
       $(@refs.settings.getDOMNode!)height 0
   renderDepthButton: (name) ->
     actived = @state.depth is @DEPTH[name]
@@ -161,9 +164,13 @@ Sentence = React.createClass do
       name
   toggleMode: ->
     @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
-  focus: ->
+  focus: (comp, force) ->
     @state.focus?setState menu: off
-    comp = if it is @state.focus then null else it
+    comp =
+      if not force
+        if comp is @state.focus then null else comp
+      else
+        comp
     comp?setState menu: on
     @setState focus: comp
   toggleSettings: ->

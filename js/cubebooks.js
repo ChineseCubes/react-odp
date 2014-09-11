@@ -665,13 +665,15 @@
         depth: 0
       };
     },
+    componentDidMount: function(){
+      return this.focus(this.refs[0], true);
+    },
     componentWillReceiveProps: function(props){
-      var ref$;
       if (this.props.data.short !== props.data.short) {
         this.setState({
-          focus: (ref$ = this.getInitialState()).focus,
-          depth: ref$.depth
+          depth: this.getInitialState().depth
         });
+        this.focus(this.refs[0], true);
         return $(this.refs.settings.getDOMNode()).height(0);
       }
     },
@@ -693,14 +695,14 @@
         mode: this.props.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
       });
     },
-    focus: function(it){
-      var ref$, comp;
+    focus: function(comp, force){
+      var ref$;
       if ((ref$ = this.state.focus) != null) {
         ref$.setState({
           menu: false
         });
       }
-      comp = it === this.state.focus ? null : it;
+      comp = !force ? comp === this.state.focus ? null : comp : comp;
       if (comp != null) {
         comp.setState({
           menu: true
