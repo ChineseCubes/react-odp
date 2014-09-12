@@ -27,8 +27,6 @@ audio = React.renderComponent do
   CUBEBooks.RangedAudio src: "#{setup.path}/audio.mp3"
   $ \#audio .get!0
 
-#audio.playRange start: 0, end: 1
-
 settings-button = React.renderComponent do
   CUBEBooks.SettingsButton!
   $ '#settings' .get!0
@@ -51,7 +49,11 @@ viewer = React.renderComponent do
         delete attrs.onClick
         ODP.components.image do
           props
-          CUBEBooks.AudioControl element: audio.getDOMNode!
+          CUBEBooks.AudioControl do
+            audio: audio
+            range:
+              start: 0.176
+              end: 3.376
       | data.name is 'span' and data.text
         text = props.data.text
         delete props.data.text

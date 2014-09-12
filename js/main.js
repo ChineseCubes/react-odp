@@ -47,7 +47,11 @@
                   delete attrs.href;
                   delete attrs.onClick;
                   return ODP.components.image(props, CUBEBooks.AudioControl({
-                    element: audio.getDOMNode()
+                    audio: audio,
+                    range: {
+                      start: 0.176,
+                      end: 3.376
+                    }
                   }));
                 case !(data.name === 'span' && data.text):
                   text = props.data.text;

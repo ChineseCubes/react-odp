@@ -37,25 +37,25 @@ RangedAudio = React.createClass do
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
   getDefaultProps: ->
-    element: null
+    audio: null
+    range:
+      start: 0
+      end:   0
   getInitialState: ->
     playing: false
   componentWillMount: ->
-    @props.element
+    @props.audio.getDOMNode!
       ..pause!
       ..addEventListener "play"  @onChange
       ..addEventListener "pause" @onChange
       ..addEventListener "ended" @onChange
   componentWillUnmount: ->
-    @props.element
+    @props.audio.getDOMNode!
       ..removeEventListener "play"  @onChange
       ..removeEventListener "pause" @onChange
       ..removeEventListener "ended" @onChange
   time: ->
-    @props.element?currentTime or 0
-  toggle: ->
-    e = @props.element
-    if e.paused then e.play! else e.pause!
+    @props.audio?getDOMNode.currentTime or 0
   onChange: ->
     @setState playing: not @props.element.paused
   render: ->
@@ -64,7 +64,7 @@ AudioControl = React.createClass do
       style:
         width:  '100%'
         height: '100%'
-      onClick: @toggle
+      onClick: ~> @props.audio?playRange @props.range
 
 Character = React.createClass do
   displayName: 'CUBE.Character'

@@ -517,7 +517,11 @@
     displayName: 'CUBEBooks.AudioControl',
     getDefaultProps: function(){
       return {
-        element: null
+        audio: null,
+        range: {
+          start: 0,
+          end: 0
+        }
       };
     },
     getInitialState: function(){
@@ -527,7 +531,7 @@
     },
     componentWillMount: function(){
       var x$;
-      x$ = this.props.element;
+      x$ = this.props.audio.getDOMNode();
       x$.pause();
       x$.addEventListener("play", this.onChange);
       x$.addEventListener("pause", this.onChange);
@@ -536,7 +540,7 @@
     },
     componentWillUnmount: function(){
       var x$;
-      x$ = this.props.element;
+      x$ = this.props.audio.getDOMNode();
       x$.removeEventListener("play", this.onChange);
       x$.removeEventListener("pause", this.onChange);
       x$.removeEventListener("ended", this.onChange);
@@ -544,16 +548,7 @@
     },
     time: function(){
       var ref$;
-      return ((ref$ = this.props.element) != null ? ref$.currentTime : void 8) || 0;
-    },
-    toggle: function(){
-      var e;
-      e = this.props.element;
-      if (e.paused) {
-        return e.play();
-      } else {
-        return e.pause();
-      }
+      return ((ref$ = this.props.audio) != null ? ref$.getDOMNode.currentTime : void 8) || 0;
     },
     onChange: function(){
       return this.setState({
@@ -561,13 +556,17 @@
       });
     },
     render: function(){
+      var this$ = this;
       return div({
         className: "audio-control" + (this.state.playing ? ' playing' : ''),
         style: {
           width: '100%',
           height: '100%'
         },
-        onClick: this.toggle
+        onClick: function(){
+          var ref$;
+          return (ref$ = this$.props.audio) != null ? ref$.playRange(this$.props.range) : void 8;
+        }
       });
     }
   });
