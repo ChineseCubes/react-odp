@@ -44,27 +44,32 @@ AudioControl = React.createClass do
   getInitialState: ->
     playing: false
   componentWillMount: ->
-    @props.audio.getDOMNode!
+    @props.audio?getDOMNode!
       ..pause!
       ..addEventListener "play"  @onChange
       ..addEventListener "pause" @onChange
       ..addEventListener "ended" @onChange
   componentWillUnmount: ->
-    @props.audio.getDOMNode!
+    @props.audio?getDOMNode!
       ..removeEventListener "play"  @onChange
       ..removeEventListener "pause" @onChange
       ..removeEventListener "ended" @onChange
   time: ->
     @props.audio?getDOMNode.currentTime or 0
   onChange: ->
-    @setState playing: not @props.element.paused
+    @setState playing: not @props.audio?getDOMNode!paused
   render: ->
     div do
       className: "audio-control#{if @state.playing then ' playing' else ''}"
       style:
         width:  '100%'
         height: '100%'
-      onClick: ~> @props.audio?playRange @props.range
+      onClick: ~>
+        audio = @props.audio?getDOMNode!
+        if not audio.paused
+          audio.pause!
+        else
+          @props.audio?playRange @props.range
 
 Character = React.createClass do
   displayName: 'CUBE.Character'

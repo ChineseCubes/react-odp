@@ -530,8 +530,8 @@
       };
     },
     componentWillMount: function(){
-      var x$;
-      x$ = this.props.audio.getDOMNode();
+      var x$, ref$;
+      x$ = (ref$ = this.props.audio) != null ? ref$.getDOMNode() : void 8;
       x$.pause();
       x$.addEventListener("play", this.onChange);
       x$.addEventListener("pause", this.onChange);
@@ -539,8 +539,8 @@
       return x$;
     },
     componentWillUnmount: function(){
-      var x$;
-      x$ = this.props.audio.getDOMNode();
+      var x$, ref$;
+      x$ = (ref$ = this.props.audio) != null ? ref$.getDOMNode() : void 8;
       x$.removeEventListener("play", this.onChange);
       x$.removeEventListener("pause", this.onChange);
       x$.removeEventListener("ended", this.onChange);
@@ -551,8 +551,9 @@
       return ((ref$ = this.props.audio) != null ? ref$.getDOMNode.currentTime : void 8) || 0;
     },
     onChange: function(){
+      var ref$;
       return this.setState({
-        playing: !this.props.element.paused
+        playing: !((ref$ = this.props.audio) != null && ref$.getDOMNode().paused)
       });
     },
     render: function(){
@@ -564,8 +565,13 @@
           height: '100%'
         },
         onClick: function(){
-          var ref$;
-          return (ref$ = this$.props.audio) != null ? ref$.playRange(this$.props.range) : void 8;
+          var audio, ref$;
+          audio = (ref$ = this$.props.audio) != null ? ref$.getDOMNode() : void 8;
+          if (!audio.paused) {
+            return audio.pause();
+          } else {
+            return (ref$ = this$.props.audio) != null ? ref$.playRange(this$.props.range) : void 8;
+          }
         }
       });
     }
