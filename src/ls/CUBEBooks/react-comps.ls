@@ -1,77 +1,30 @@
 {isNaN} = _
-{a, audio, source, div, i, nav, span} = React.DOM
-
-RangedAudio = React.createClass do
-  displayName: \CUBEBooks.RangedAudio
-  getDefaultProps: ->
-    src: ''
-  getInitialState: ->
-    duration: 0
-  componentDidMount: ->
-    @state.duration = @refs.audio.getDOMNode!duration
-  playRange: ({start = 0, end = @state.duration}) ->
-    if start > end
-      start = 0
-      end = @state.duration
-    audio = @refs.audio.getDOMNode!
-    do-it = ~>
-      if @interval then clearInterval @interval
-      @interval = setInterval do
-        ~>
-          if audio.currentTime >= end
-            audio
-              ..pause!
-            clearInterval @interval
-            @interval = null
-        50
-      audio
-        ..currentTime = start
-        ..play!
-    if audio.readyState is 4_HAVE_ENOUGH_DATA
-      do-it!
-    else
-      audio.addEventListener \canplay do-it
-  render: ->
-    @transferPropsTo audio do
-      ref: \audio
-      source src: @props.src
+{a, div, i, nav, span} = React.DOM
 
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
   getDefaultProps: ->
     audio: null
-    range:
-      start: 0
-      end:   0
   getInitialState: ->
     playing: false
   componentWillMount: ->
-    @props.audio?getDOMNode!
-      ..pause!
-      ..addEventListener "play"  @onChange
-      ..addEventListener "pause" @onChange
-      ..addEventListener "ended" @onChange
+    @props.audio
+      ..on \play  @onPlay
+      ..on \pause @onStop
+      ..on \end   @onStop
   componentWillUnmount: ->
-    @props.audio?getDOMNode!
-      ..removeEventListener "play"  @onChange
-      ..removeEventListener "pause" @onChange
-      ..removeEventListener "ended" @onChange
-  time: ->
-    @props.audio?getDOMNode.currentTime or 0
-  onChange: ->
-    @setState playing: not @props.audio?getDOMNode!paused
+    @props.audio
+      ..off \play  @onPlay
+      ..off \pause @onStop
+      ..off \end   @onStop
+  onPlay: -> @setState playing: true
+  onStop: -> @setState playing: false
   render: ->
-    div do
+    @transferPropsTo div do
       className: "audio-control#{if @state.playing then ' playing' else ''}"
       style:
         width:  '100%'
         height: '100%'
-      onClick: ~>
-        audio = @props.audio?getDOMNode!
-        if not audio.paused
-          audio.pause!
-        else
-          @props.audio?playRange @props.range
 
 Character = React.createClass do
   displayName: 'CUBE.Character'
@@ -275,7 +228,6 @@ Sentence = React.createClass do
             \En
 
 (this.CUBEBooks ?= {}) <<< do
-  RangedAudio:  RangedAudio
   AudioControl: AudioControl
   SettingsButton: SettingsButton
   Character: Character

@@ -1,3 +1,5 @@
+{zipObject} = _
+
 <- window.requestAnimationFrame
 <- $
 {setup}:mp <- Data.getMasterPage './LRRH/'
@@ -24,9 +26,8 @@ data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
 vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt"
 
-audio = React.renderComponent do
-  CUBEBooks.RangedAudio src: "#{setup.path}/audio.mp3"
-  $ \#audio .get!0
+ranges = for cue in vtt.cues
+  [cue.startTime * 1000, (cue.endTime - cue.startTime) * 1000]
 
 settings-button = React.renderComponent do
   CUBEBooks.SettingsButton!
@@ -38,7 +39,12 @@ if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
   data.children.0.attrs.y = 0
   forced-dpcm = 0.98
 # XXX: should not share information this way
-play-range = start: Infinity, end: -Infinity
+audio = new Howl urls: ["#{setup.path}/audio.mp3"]
+counter = 0
+ranges = []
+sprite = {}
+current-sprite = null
+audio.on \end -> current-sprite := null
 viewer = React.renderComponent do
   ODP.components.presentation do
     scale: forced-dpcm or resize dpcm
@@ -50,13 +56,23 @@ viewer = React.renderComponent do
       | data.name is 'image' and attrs.name is 'activity'
         delete attrs.href
         delete attrs.onClick
-        range = play-range
-        play-range := start: Infinity, end: -Infinity
+        onClick = let counter
+          range = start: Infinity, end: -Infinity
+          while r = ranges.pop!
+            range
+              ..start = r.start if r.start < range.start
+              ..end   = r.end   if r.end   > range.end
+          sprite[counter] =
+            [range.start * 1000, (range.end - range.start) * 1000]
+          ->
+            current-sprite := sprite[counter]
+            audio.play(counter)
+        ++counter
         ODP.components.image do
           props
           CUBEBooks.AudioControl do
             audio: audio
-            range: range
+            onClick: onClick
       | data.name is 'span' and data.text
         text = props.data.text
         delete props.data.text
@@ -68,20 +84,23 @@ viewer = React.renderComponent do
           $ '#control' .modal 'show'
         for cue in vtt.cues
           if cue.text is text
-            start = cue.startTime
-            end   = cue.endTime
-            play-range
-              ..start = start if play-range.start > start
-              ..end   = end   if play-range.end   < end
+            ranges.push do
+              start: cue.startTime
+              end:   cue.endTime
             break
         ODP.components.span do
           props
           ReactVTT.IsolatedCue do
             target: "#{setup.path}/audio.vtt"
             match: text
-            currentTime: -> audio.getDOMNode!current-time
+            currentTime: ->
+              if current-sprite
+                current-sprite.0 / 1000 + audio.pos!
+              else
+                0
       | otherwise => ODP.renderProps props
   $(\#wrap)get!0
+  -> audio.sprite sprite
 
 if forced-dpcm
   $.fn.modal = ->
