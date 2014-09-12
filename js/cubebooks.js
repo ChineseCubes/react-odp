@@ -1,5 +1,5 @@
 (function(){
-  var require, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, utils, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Stroker, Sentence;
+  var require, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, utils, isNaN, a, audio, source, div, i, nav, span, RangedAudio, AudioControl, Character, Word, ActionMenu, SettingsButton, Stroker, Sentence;
   require == null && (require = (function(packages){
     return function(it){
       return packages[it];
@@ -456,7 +456,63 @@
     module.exports = this.Data;
   }
   isNaN = _.isNaN;
-  ref$ = React.DOM, a = ref$.a, div = ref$.div, i = ref$.i, nav = ref$.nav, span = ref$.span;
+  ref$ = React.DOM, a = ref$.a, audio = ref$.audio, source = ref$.source, div = ref$.div, i = ref$.i, nav = ref$.nav, span = ref$.span;
+  RangedAudio = React.createClass({
+    displayName: 'CUBEBooks.RangedAudio',
+    getDefaultProps: function(){
+      return {
+        src: ''
+      };
+    },
+    getInitialState: function(){
+      return {
+        duration: 0
+      };
+    },
+    componentDidMount: function(){
+      return this.state.duration = this.refs.audio.getDOMNode().duration;
+    },
+    playRange: function(arg$){
+      var start, ref$, end, audio, doIt;
+      start = (ref$ = arg$.start) != null ? ref$ : 0, end = (ref$ = arg$.end) != null
+        ? ref$
+        : this.state.duration;
+      audio = this.refs.audio.getDOMNode();
+      doIt = function(){
+        var x$;
+        if (this.onTimeUpdated) {
+          audio.removeEventListener('timeupdate', this.onTimeUpdated);
+        }
+        this.onTimeUpdated = function(){
+          var x$;
+          console.log(end);
+          if (audio.currentTime >= end) {
+            x$ = audio;
+            x$.pause();
+            x$.removeEventListener('timeupdate', this.onTimeUpdated);
+            return this.onTimeUpdated = null;
+          }
+        };
+        x$ = audio;
+        x$.currentTime = start;
+        x$.play();
+        x$.addEventListener('timeupdate', this.onTimeUpdated);
+        return x$;
+      };
+      if (audio.readyState === 4) {
+        return doIt();
+      } else {
+        return audio.addEventListener('canplay', doIt);
+      }
+    },
+    render: function(){
+      return this.transferPropsTo(audio({
+        ref: 'audio'
+      }, source({
+        src: this.props.src
+      })));
+    }
+  });
   AudioControl = React.createClass({
     displayName: 'CUBEBooks.AudioControl',
     getDefaultProps: function(){
@@ -802,6 +858,7 @@
   import$((ref$ = this.CUBEBooks) != null
     ? ref$
     : this.CUBEBooks = {}, {
+    RangedAudio: RangedAudio,
     AudioControl: AudioControl,
     SettingsButton: SettingsButton,
     Character: Character,

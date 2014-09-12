@@ -2,7 +2,7 @@
   window.requestAnimationFrame(function(){
     return $(function(){
       return Data.getMasterPage('./LRRH/', function(mp){
-        var setup, resize, dots, dpcm, audio;
+        var setup, resize, dots, dpcm;
         setup = mp.setup;
         resize = function(dpcm){
           var ratio, pxWidth, pxHeight, width, height;
@@ -22,10 +22,12 @@
         }), $('#detector').get()[0]);
         dpcm = dots.state.x;
         console.log("dpcm: " + dpcm);
-        audio = $('audio').get()[0];
         return Data.getPresentation(mp, function(data){
-          return Data.Segmentations(data, mp.setup.path, function(segs){
-            var settingsButton, page, forcedDpcm, viewer;
+          return Data.Segmentations(data, setup.path, function(segs){
+            var audio, settingsButton, page, forcedDpcm, viewer;
+            audio = React.renderComponent(CUBEBooks.RangedAudio({
+              src: setup.path + "/audio.mp3"
+            }), $('#audio').get()[0]);
             settingsButton = React.renderComponent(CUBEBooks.SettingsButton(), $('#settings').get()[0]);
             if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
               page = RegExp.$1;
@@ -45,7 +47,7 @@
                   delete attrs.href;
                   delete attrs.onClick;
                   return ODP.components.image(props, CUBEBooks.AudioControl({
-                    element: audio
+                    element: audio.getDOMNode()
                   }));
                 case !(data.name === 'span' && data.text):
                   text = props.data.text;
@@ -64,7 +66,7 @@
                     target: setup.path + "/audio.vtt",
                     match: text,
                     currentTime: function(){
-                      return audio.currentTime;
+                      return audio.getDOMNode().currentTime;
                     }
                   }));
                 default:

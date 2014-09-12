@@ -20,10 +20,14 @@ dots = React.renderComponent do
 dpcm = dots.state.x
 console.log "dpcm: #dpcm"
 
-audio = $ \audio .get!0
-
 data <- Data.getPresentation mp
-segs <- Data.Segmentations data, mp.setup.path
+segs <- Data.Segmentations data, setup.path
+
+audio = React.renderComponent do
+  CUBEBooks.RangedAudio src: "#{setup.path}/audio.mp3"
+  $ \#audio .get!0
+
+#audio.playRange start: 0, end: 1
 
 settings-button = React.renderComponent do
   CUBEBooks.SettingsButton!
@@ -47,7 +51,7 @@ viewer = React.renderComponent do
         delete attrs.onClick
         ODP.components.image do
           props
-          CUBEBooks.AudioControl element: audio
+          CUBEBooks.AudioControl element: audio.getDOMNode!
       | data.name is 'span' and data.text
         text = props.data.text
         delete props.data.text
@@ -62,7 +66,7 @@ viewer = React.renderComponent do
           ReactVTT.IsolatedCue do
             target: "#{setup.path}/audio.vtt"
             match: text
-            currentTime: -> audio.current-time
+            currentTime: -> audio.getDOMNode!current-time
       | otherwise => ODP.renderProps props
   $(\#wrap)get!0
 

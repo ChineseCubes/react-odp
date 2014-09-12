@@ -1,5 +1,38 @@
 {isNaN} = _
-{a, div, i, nav, span} = React.DOM
+{a, audio, source, div, i, nav, span} = React.DOM
+
+RangedAudio = React.createClass do
+  displayName: \CUBEBooks.RangedAudio
+  getDefaultProps: ->
+    src: ''
+  getInitialState: ->
+    duration: 0
+  componentDidMount: ->
+    @state.duration = @refs.audio.getDOMNode!duration
+  playRange: ({start = 0, end = @state.duration}) ->
+    audio = @refs.audio.getDOMNode!
+    do-it = ->
+      if @onTimeUpdated
+        audio.removeEventListener \timeupdate @onTimeUpdated
+      @onTimeUpdated = ->
+        console.log end
+        if audio.currentTime >= end
+          audio
+            ..pause!
+            ..removeEventListener \timeupdate @onTimeUpdated
+          @onTimeUpdated = null
+      audio
+        ..currentTime = start
+        ..play!
+        ..addEventListener \timeupdate @onTimeUpdated
+    if audio.readyState is 4_HAVE_ENOUGH_DATA
+      do-it!
+    else
+      audio.addEventListener \canplay do-it
+  render: ->
+    @transferPropsTo audio do
+      ref: \audio
+      source src: @props.src
 
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
@@ -235,9 +268,10 @@ Sentence = React.createClass do
             \En
 
 (this.CUBEBooks ?= {}) <<< do
+  RangedAudio:  RangedAudio
   AudioControl: AudioControl
   SettingsButton: SettingsButton
   Character: Character
-  Word: Word
-  Sentence: Sentence
+  Word:      Word
+  Sentence:  Sentence
 
