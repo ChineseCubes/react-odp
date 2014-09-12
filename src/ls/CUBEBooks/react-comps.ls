@@ -10,21 +10,23 @@ RangedAudio = React.createClass do
   componentDidMount: ->
     @state.duration = @refs.audio.getDOMNode!duration
   playRange: ({start = 0, end = @state.duration}) ->
+    if start > end
+      start = 0
+      end = @state.duration
     audio = @refs.audio.getDOMNode!
-    do-it = ->
-      if @onTimeUpdated
-        audio.removeEventListener \timeupdate @onTimeUpdated
-      @onTimeUpdated = ->
-        console.log end
-        if audio.currentTime >= end
-          audio
-            ..pause!
-            ..removeEventListener \timeupdate @onTimeUpdated
-          @onTimeUpdated = null
+    do-it = ~>
+      if @interval then clearInterval @interval
+      @interval = setInterval do
+        ~>
+          if audio.currentTime >= end
+            audio
+              ..pause!
+            clearInterval @interval
+            @interval = null
+        50
       audio
         ..currentTime = start
         ..play!
-        ..addEventListener \timeupdate @onTimeUpdated
     if audio.readyState is 4_HAVE_ENOUGH_DATA
       do-it!
     else

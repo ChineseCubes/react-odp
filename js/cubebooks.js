@@ -473,30 +473,32 @@
       return this.state.duration = this.refs.audio.getDOMNode().duration;
     },
     playRange: function(arg$){
-      var start, ref$, end, audio, doIt;
+      var start, ref$, end, audio, doIt, this$ = this;
       start = (ref$ = arg$.start) != null ? ref$ : 0, end = (ref$ = arg$.end) != null
         ? ref$
         : this.state.duration;
+      if (start > end) {
+        start = 0;
+        end = this.state.duration;
+      }
       audio = this.refs.audio.getDOMNode();
       doIt = function(){
         var x$;
-        if (this.onTimeUpdated) {
-          audio.removeEventListener('timeupdate', this.onTimeUpdated);
+        if (this$.interval) {
+          clearInterval(this$.interval);
         }
-        this.onTimeUpdated = function(){
+        this$.interval = setInterval(function(){
           var x$;
-          console.log(end);
           if (audio.currentTime >= end) {
             x$ = audio;
             x$.pause();
-            x$.removeEventListener('timeupdate', this.onTimeUpdated);
-            return this.onTimeUpdated = null;
+            clearInterval(this$.interval);
+            return this$.interval = null;
           }
-        };
+        }, 50);
         x$ = audio;
         x$.currentTime = start;
         x$.play();
-        x$.addEventListener('timeupdate', this.onTimeUpdated);
         return x$;
       };
       if (audio.readyState === 4) {

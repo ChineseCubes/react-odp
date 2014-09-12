@@ -22,6 +22,7 @@ console.log "dpcm: #dpcm"
 
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
+vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt"
 
 audio = React.renderComponent do
   CUBEBooks.RangedAudio src: "#{setup.path}/audio.mp3"
@@ -36,6 +37,8 @@ if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
   data.children = [data.children[ ($('#wrap').data('page') || page) - 1 ]]
   data.children.0.attrs.y = 0
   forced-dpcm = 0.98
+# XXX: should not share information this way
+play-range = start: Infinity, end: -Infinity
 viewer = React.renderComponent do
   ODP.components.presentation do
     scale: forced-dpcm or resize dpcm
@@ -47,13 +50,13 @@ viewer = React.renderComponent do
       | data.name is 'image' and attrs.name is 'activity'
         delete attrs.href
         delete attrs.onClick
+        range = play-range
+        play-range := start: Infinity, end: -Infinity
         ODP.components.image do
           props
           CUBEBooks.AudioControl do
             audio: audio
-            range:
-              start: 0.176
-              end: 3.376
+            range: range
       | data.name is 'span' and data.text
         text = props.data.text
         delete props.data.text
@@ -63,6 +66,14 @@ viewer = React.renderComponent do
             $ '#control > .content' .get!0
           settings-button.setProps onClick: sentence.toggleSettings
           $ '#control' .modal 'show'
+        for cue in vtt.cues
+          if cue.text is text
+            start = cue.startTime
+            end   = cue.endTime
+            play-range
+              ..start = start if play-range.start > start
+              ..end   = end   if play-range.end   < end
+            break
         ODP.components.span do
           props
           ReactVTT.IsolatedCue do
