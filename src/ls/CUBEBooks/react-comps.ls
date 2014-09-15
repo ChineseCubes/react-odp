@@ -66,20 +66,21 @@ Word = React.createClass do
     pinyin:  off
     meaning: off
     menu:    off
-    cut:     false
+    onChildClick: -> ...
   getInitialState: ->
-    cut: @props.expended
+    menu: @props.menu
+    cut:  false
   render: ->
     data = @props.data
     div do
       className: 'comp word'
-      if @props.menu
+      onClick: ~> @props.onChildClick this if not @state.cut
+      if @state.menu
         ActionMenu do
-          onStroke: -> ...
+          onStroke: ~> ...
           onCut:    ~> @setState cut: !@state.cut
       div do
         className: 'children'
-        onClick: if not @state.cut then @props.onClick else undefined
         if not @state.cut
           for let i, c of data.flatten!
             Character do
@@ -94,6 +95,7 @@ Word = React.createClass do
               data: c
               mode: @props.mode
               pinyin: @props.pinyin
+              onChildClick: ~> @props.onChildClick it
       div do
         className: 'meaning'
         if @props.meaning then data.short else ''
@@ -112,11 +114,15 @@ ActionMenu = React.createClass do
           #  i className: 'icon volume up'
           div do
             className: 'ui icon button black write'
-            onClick: ~> @props.onStroke.call this, it
+            onClick: ~>
+              it.stopPropagation!
+              @props.onStroke.call this, it
             i className: 'icon pencil'
           div do
             className: 'ui icon button black split'
-            onClick: ~> @props.onCut.call this, it
+            onClick: ~>
+              it.stopPropagation!
+              @props.onCut.call this, it
             i className: 'icon cut'
 
 SettingsButton = React.createClass do
@@ -161,7 +167,7 @@ Sentence = React.createClass do
   getInitialState: ->
     pinyin: @props.pinyin
     meaning: @props.meaning
-    focus: 0
+    focus: this
     depth: 0
   componentWillReceiveProps: (props) ->
     if @props.data.short isnt props.data.short
@@ -170,7 +176,7 @@ Sentence = React.createClass do
   componentWillUpdate: (props, state) ->
     if @props.data.short is props.data.short
       if @state.depth isnt state.depth
-        state.focus = if state.depth is 0 then 0 else null
+        state.focus = if state.depth is 0 then this else null
       else if @state.pinyin isnt state.pinyin
         console.log 'pinyin toggled'
       else if @state.meaning isnt state.meaning
@@ -206,9 +212,11 @@ Sentence = React.createClass do
             mode: @props.mode
             pinyin: @state.pinyin
             meaning: @state.depth isnt 0 and @state.meaning
-            menu: @state.focus is +i
-            onClick: ~> @setState focus: +i
-            onMenuClick: ~> @refs.stroker.play!
+            #onClick: ~> @setState focus: +i
+            onChildClick: (comp) ~>
+              comp.setState menu: on if @props.focus isnt comp
+              @props.focus?setState menu: off
+              @setState focus: comp
         Stroker ref: 'stroker'
       nav do
         ref: 'settings'
@@ -228,10 +236,10 @@ Sentence = React.createClass do
       div do
         className: 'entry'
         if @state.focus isnt null
-          focus = words[@state.focus]
+          focus = @state.focus.props.data
           * span do
               className: 'ui black label'
-              (for c in focus.flatten! => c[@props.mode])join ''
+              focus.flatten!map(~> it[@props.mode])join ''
             # XXX: hide word classes for now
             #span do
             #  className: 'word-class'
@@ -256,7 +264,7 @@ Sentence = React.createClass do
                   if not @state.focus
                     data.flatten!
                   else
-                    words[@state.focus]flatten!
+                    @state.focus.props.data.flatten!
                 text = (for c in text => c[@props.mode])join ''
                 lang = switch @props.mode
                   | \zh_TW => \zh-TW
@@ -278,7 +286,7 @@ Sentence = React.createClass do
                   if not @state.focus
                     data.short
                   else
-                    words[@state.focus]short
+                    @state.focus.props.data.short
                 u = new utt text
                   ..lang = \en-US
                   ..volume = 1.0

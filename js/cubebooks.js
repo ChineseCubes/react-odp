@@ -552,20 +552,28 @@
         pinyin: false,
         meaning: false,
         menu: false,
-        cut: false
+        onChildClick: function(){
+          throw Error('unimplemented');
+        }
       };
     },
     getInitialState: function(){
       return {
-        cut: this.props.expended
+        menu: this.props.menu,
+        cut: false
       };
     },
     render: function(){
       var data, this$ = this;
       data = this.props.data;
       return div({
-        className: 'comp word'
-      }, this.props.menu ? ActionMenu({
+        className: 'comp word',
+        onClick: function(){
+          if (!this$.state.cut) {
+            return this$.props.onChildClick(this$);
+          }
+        }
+      }, this.state.menu ? ActionMenu({
         onStroke: function(){
           throw Error('unimplemented');
         },
@@ -575,8 +583,7 @@
           });
         }
       }) : void 8, div({
-        className: 'children',
-        onClick: !this.state.cut ? this.props.onClick : undefined
+        className: 'children'
       }, !this.state.cut
         ? (function(){
           var i$, results$ = [];
@@ -600,11 +607,15 @@
           }
           return results$;
           function fn$(i, c){
+            var this$ = this;
             return Word({
               key: i,
               data: c,
               mode: this.props.mode,
-              pinyin: this.props.pinyin
+              pinyin: this.props.pinyin,
+              onChildClick: function(it){
+                return this$.props.onChildClick(it);
+              }
             });
           }
         }.call(this))), div({
@@ -625,6 +636,7 @@
       }, div({
         className: 'ui icon button black write',
         onClick: function(it){
+          it.stopPropagation();
           return this$.props.onStroke.call(this$, it);
         }
       }, i({
@@ -632,6 +644,7 @@
       })), div({
         className: 'ui icon button black split',
         onClick: function(it){
+          it.stopPropagation();
           return this$.props.onCut.call(this$, it);
         }
       }, i({
@@ -701,7 +714,7 @@
       return {
         pinyin: this.props.pinyin,
         meaning: this.props.meaning,
-        focus: 0,
+        focus: this,
         depth: 0
       };
     },
@@ -718,7 +731,7 @@
     componentWillUpdate: function(props, state){
       if (this.props.data.short === props.data.short) {
         if (this.state.depth !== state.depth) {
-          return state.focus = state.depth === 0 ? 0 : null;
+          return state.focus = state.depth === 0 ? this : null;
         } else if (this.state.pinyin !== state.pinyin) {
           return console.log('pinyin toggled');
         } else if (this.state.meaning !== state.meaning) {
@@ -753,7 +766,7 @@
       });
     },
     render: function(){
-      var data, words, focus, c, this$ = this;
+      var data, words, focus, this$ = this;
       data = this.props.data;
       words = data.childrenOfDepth(this.state.depth);
       return div({
@@ -777,14 +790,21 @@
             mode: this.props.mode,
             pinyin: this.state.pinyin,
             meaning: this.state.depth !== 0 && this.state.meaning,
-            menu: this.state.focus === +i,
-            onClick: function(){
+            onChildClick: function(comp){
+              var ref$;
+              if (this$.props.focus !== comp) {
+                comp.setState({
+                  menu: true
+                });
+              }
+              if ((ref$ = this$.props.focus) != null) {
+                ref$.setState({
+                  menu: false
+                });
+              }
               return this$.setState({
-                focus: +i
+                focus: comp
               });
-            },
-            onMenuClick: function(){
-              return this$.refs.stroker.play();
             }
           });
         }
@@ -805,17 +825,12 @@
         onClick: this.toggleMode
       }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), div({
         className: 'entry'
-      }, this.state.focus !== null ? (focus = words[this.state.focus], [
+      }, this.state.focus !== null ? (focus = this.state.focus.props.data, [
         span({
           className: 'ui black label'
-        }, (function(){
-          var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = focus.flatten()).length; i$ < len$; ++i$) {
-            c = ref$[i$];
-            results$.push(c[this.props.mode]);
-          }
-          return results$;
-        }.call(this)).join('')), span({
+        }, focus.flatten().map(function(it){
+          return it[this$.props.mode];
+        }).join('')), span({
           className: 'definition'
         }, focus.definition)
       ]) : void 8, nav({
@@ -832,7 +847,7 @@
               utt = window.SpeechSynthesisUtterance;
               text = !this$.state.focus
                 ? data.flatten()
-                : words[this$.state.focus].flatten();
+                : this$.state.focus.props.data.flatten();
               text = (function(){
                 var i$, ref$, len$, results$ = [];
                 for (i$ = 0, len$ = (ref$ = text).length; i$ < len$; ++i$) {
@@ -870,7 +885,7 @@
               utt = window.SpeechSynthesisUtterance;
               text = !this$.state.focus
                 ? data.short
-                : words[this$.state.focus].short;
+                : this$.state.focus.props.data.short;
               x$ = u = new utt(text);
               x$.lang = 'en-US';
               x$.volume = 1.0;
