@@ -4,6 +4,7 @@
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
   getDefaultProps: ->
+    id: 0
     audio: null
   getInitialState: ->
     playing: false
@@ -20,11 +21,20 @@ AudioControl = React.createClass do
   onPlay: -> @setState playing: true
   onStop: -> @setState playing: false
   render: ->
-    @transferPropsTo div do
+    div do
       className: "audio-control#{if @state.playing then ' playing' else ''}"
       style:
         width:  '100%'
         height: '100%'
+      onClick: ~>
+        if not @state.playing
+          @props.audio
+            #..pos 0, @props.id # not work
+            ..stop @props.id # reset pos
+            ..play @props.id
+        else
+          @props.audio.pause! # pause every sprites
+        @props.onClick.call this, it
 
 Character = React.createClass do
   displayName: 'CUBE.Character'

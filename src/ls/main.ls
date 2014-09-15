@@ -56,7 +56,7 @@ viewer = React.renderComponent do
       | data.name is 'image' and attrs.name is 'activity'
         delete attrs.href
         delete attrs.onClick
-        onClick = let counter
+        comp = let counter
           range = start: Infinity, end: -Infinity
           while r = ranges.pop!
             range
@@ -64,15 +64,14 @@ viewer = React.renderComponent do
               ..end   = r.end   if r.end   > range.end
           sprite[counter] =
             [range.start * 1000, (range.end - range.start) * 1000]
-          ->
-            current-sprite := sprite[counter]
-            audio.play(counter)
+          ODP.components.image do
+            props
+            CUBEBooks.AudioControl do
+              id: counter
+              audio: audio
+              onClick: -> current-sprite := sprite[counter]
         ++counter
-        ODP.components.image do
-          props
-          CUBEBooks.AudioControl do
-            audio: audio
-            onClick: onClick
+        comp
       | data.name is 'span' and data.text
         text = props.data.text
         delete props.data.text

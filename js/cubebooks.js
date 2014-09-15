@@ -461,6 +461,7 @@
     displayName: 'CUBEBooks.AudioControl',
     getDefaultProps: function(){
       return {
+        id: 0,
         audio: null
       };
     },
@@ -496,13 +497,25 @@
       });
     },
     render: function(){
-      return this.transferPropsTo(div({
+      var this$ = this;
+      return div({
         className: "audio-control" + (this.state.playing ? ' playing' : ''),
         style: {
           width: '100%',
           height: '100%'
+        },
+        onClick: function(it){
+          var x$;
+          if (!this$.state.playing) {
+            x$ = this$.props.audio;
+            x$.stop(this$.props.id);
+            x$.play(this$.props.id);
+          } else {
+            this$.props.audio.pause();
+          }
+          return this$.props.onClick.call(this$, it);
         }
-      }));
+      });
     }
   });
   Character = React.createClass({

@@ -55,14 +55,14 @@
                 scale: forcedDpcm || resize(dpcm),
                 data: data,
                 renderProps: function(props){
-                  var data, attrs, onClick, text, i$, ref$, len$, cue;
+                  var data, attrs, comp, text, i$, ref$, len$, cue;
                   data = props.data;
                   attrs = data.attrs;
                   switch (false) {
                   case !(data.name === 'image' && attrs.name === 'activity'):
                     delete attrs.href;
                     delete attrs.onClick;
-                    onClick = (function(counter){
+                    comp = (function(counter){
                       var range, r, x$;
                       range = {
                         start: Infinity,
@@ -78,16 +78,16 @@
                         }
                       }
                       sprite[counter] = [range.start * 1000, (range.end - range.start) * 1000];
-                      return function(){
-                        currentSprite = sprite[counter];
-                        return audio.play(counter);
-                      };
+                      return ODP.components.image(props, CUBEBooks.AudioControl({
+                        id: counter,
+                        audio: audio,
+                        onClick: function(){
+                          return currentSprite = sprite[counter];
+                        }
+                      }));
                     }.call(this, counter));
                     ++counter;
-                    return ODP.components.image(props, CUBEBooks.AudioControl({
-                      audio: audio,
-                      onClick: onClick
-                    }));
+                    return comp;
                   case !(data.name === 'span' && data.text):
                     text = props.data.text;
                     delete props.data.text;
