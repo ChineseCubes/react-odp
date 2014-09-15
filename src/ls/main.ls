@@ -20,7 +20,7 @@ dots = React.renderComponent do
   DotsDetector unit: \cm
   $ \#detector .get!0
 dpcm = dots.state.x
-console.log "dpcm: #dpcm"
+#console.log "dpcm: #dpcm"
 
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path

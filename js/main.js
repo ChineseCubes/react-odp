@@ -23,7 +23,7 @@
           unit: 'cm'
         }), $('#detector').get()[0]);
         dpcm = dots.state.x;
-        console.log("dpcm: " + dpcm);
+        // console.log("dpcm: " + dpcm);
         return Data.getPresentation(mp, function(data){
           return Data.Segmentations(data, setup.path, function(segs){
             return ReactVTT.parse(setup.path + "/audio.vtt", function(vtt){
