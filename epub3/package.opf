@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" version="3.0" xml:lang="en" unique-identifier="pub-id" prefix="rendition: http://www.idpf.org/vocab/rendition/#">
 <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <dc:title id="title">Medley Demo</dc:title>
+    <dc:title id="title">Little Red Cap Demo</dc:title>
     <dc:creator id="creator">Audrey Tang</dc:creator>
     <dc:language>zh-Hant</dc:language>
-    <dc:identifier id="pub-id">MedleyDemo</dc:identifier>
+    <dc:identifier id="pub-id">LittleRedCapDemo</dc:identifier>
     <meta property="dcterms:modified">2014-09-09T01:11:11Z</meta>
     <dc:date>2014-07-12</dc:date>
     <dc:publisher>Audrey Tang</dc:publisher>
