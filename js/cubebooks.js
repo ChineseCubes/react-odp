@@ -686,6 +686,10 @@
       if (this.props.data.short === props.data.short) {
         if (this.state.depth !== state.depth) {
           return state.focus = state.depth === 0 ? 0 : null;
+        } else if (this.state.pinyin !== state.pinyin) {
+          return console.log('pinyin toggled');
+        } else if (this.state.meaning !== state.meaning) {
+          return console.log('translation toggled');
         } else if (this.state.focus === state.focus) {
           return state.focus = null;
         }
@@ -788,6 +792,37 @@
       }), a({
         className: "ui toggle basic button chinese " + (this.state.pinyin ? 'active' : ''),
         onClick: function(){
+          var syn, utt, text, c, lang, x$, u;
+          if (!this$.state.pinyin) {
+            try {
+              syn = window.speechSynthesis;
+              utt = window.SpeechSynthesisUtterance;
+              text = !this$.state.focus
+                ? data.flatten()
+                : words[this$.state.focus].flatten();
+              text = (function(){
+                var i$, ref$, len$, results$ = [];
+                for (i$ = 0, len$ = (ref$ = text).length; i$ < len$; ++i$) {
+                  c = ref$[i$];
+                  results$.push(c[this.props.mode]);
+                }
+                return results$;
+              }.call(this$)).join('');
+              lang = (function(){
+                switch (this.props.mode) {
+                case 'zh_TW':
+                  return 'zh-TW';
+                case 'zh_CN':
+                  return 'zh-CN';
+                }
+              }.call(this$));
+              x$ = u = new utt(text);
+              x$.lang = lang;
+              x$.volume = 1.0;
+              x$.rate = 1.0;
+              syn.speak(u);
+            } catch (e$) {}
+          }
           return this$.setState({
             pinyin: !this$.state.pinyin
           });
@@ -795,6 +830,21 @@
       }, '拼'), this.state.depth !== 0 ? a({
         className: "ui toggle basic button chinese " + (this.state.meaning ? 'active' : ''),
         onClick: function(){
+          var syn, utt, text, x$, u;
+          if (!this$.state.meaning) {
+            try {
+              syn = window.speechSynthesis;
+              utt = window.SpeechSynthesisUtterance;
+              text = !this$.state.focus
+                ? data.short
+                : words[this$.state.focus].short;
+              x$ = u = new utt(text);
+              x$.lang = 'en-US';
+              x$.volume = 1.0;
+              x$.rate = 1.0;
+              syn.speak(u);
+            } catch (e$) {}
+          }
           return this$.setState({
             meaning: !this$.state.meaning
           });

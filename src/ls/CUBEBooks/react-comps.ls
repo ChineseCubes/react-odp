@@ -157,6 +157,10 @@ Sentence = React.createClass do
     if @props.data.short is props.data.short
       if @state.depth isnt state.depth
         state.focus = if state.depth is 0 then 0 else null
+      else if @state.pinyin isnt state.pinyin
+        console.log 'pinyin toggled'
+      else if @state.meaning isnt state.meaning
+        console.log 'translation toggled'
       else if @state.focus is state.focus
         state.focus = null
   renderDepthButton: (name) ->
@@ -230,11 +234,43 @@ Sentence = React.createClass do
           span className: 'aligner'
           a do
             className: "ui toggle basic button chinese #{if @state.pinyin then \active else ''}"
-            onClick: ~> @setState pinyin: !@state.pinyin
+            onClick: ~>
+              if not @state.pinyin then try
+                syn = window.speechSynthesis
+                utt = window.SpeechSynthesisUtterance
+                text =
+                  if not @state.focus
+                    data.flatten!
+                  else
+                    words[@state.focus]flatten!
+                text = (for c in text => c[@props.mode])join ''
+                lang = switch @props.mode
+                  | \zh_TW => \zh-TW
+                  | \zh_CN => \zh-CN
+                u = new utt text
+                  ..lang = lang
+                  ..volume = 1.0
+                  ..rate = 1.0
+                syn.speak u
+              @setState pinyin: !@state.pinyin
             \拼
           if @state.depth isnt 0 then a do
             className: "ui toggle basic button chinese #{if @state.meaning then \active else ''}"
-            onClick: ~> @setState meaning: !@state.meaning
+            onClick: ~>
+              if not @state.meaning then try
+                syn = window.speechSynthesis
+                utt = window.SpeechSynthesisUtterance
+                text =
+                  if not @state.focus
+                    data.short
+                  else
+                    words[@state.focus]short
+                u = new utt text
+                  ..lang = \en-US
+                  ..volume = 1.0
+                  ..rate = 1.0
+                syn.speak u
+              @setState meaning: !@state.meaning
             \En
 
 (this.CUBEBooks ?= {}) <<< do
