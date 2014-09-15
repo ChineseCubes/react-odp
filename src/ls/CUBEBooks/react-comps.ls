@@ -66,22 +66,34 @@ Word = React.createClass do
     pinyin:  off
     meaning: off
     menu:    off
+    cut:     false
+  getInitialState: ->
+    cut: @props.expended
   render: ->
     data = @props.data
-    cs = data.flatten!
     div do
       className: 'comp word'
       if @props.menu
-        ActionMenu onClick: ~> @props.onMenuClick it
+        ActionMenu do
+          onStroke: -> ...
+          onCut:    ~> @setState cut: !@state.cut
       div do
-        className: 'characters'
-        onClick: @props.onClick
-        for let i, c of cs
-          Character do
-            key: i
-            data: c
-            mode: @props.mode
-            pinyin: @props.pinyin
+        className: 'children'
+        onClick: if not @state.cut then @props.onClick else undefined
+        if not @state.cut
+          for let i, c of data.flatten!
+            Character do
+              key: i
+              data: c
+              mode: @props.mode
+              pinyin: @props.pinyin
+        else
+          for let i, c of data.children
+            Word do
+              key: i
+              data: c
+              mode: @props.mode
+              pinyin: @props.pinyin
       div do
         className: 'meaning'
         if @props.meaning then data.short else ''
@@ -98,11 +110,13 @@ ActionMenu = React.createClass do
           #div do
           #  className: 'ui icon button black listen'
           #  i className: 'icon volume up'
-          @transferPropsTo div do
+          div do
             className: 'ui icon button black write'
+            onClick: ~> @props.onStroke.call this, it
             i className: 'icon pencil'
           div do
             className: 'ui icon button black split'
+            onClick: ~> @props.onCut.call this, it
             i className: 'icon cut'
 
 SettingsButton = React.createClass do

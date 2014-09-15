@@ -551,37 +551,63 @@
         mode: 'zh_TW',
         pinyin: false,
         meaning: false,
-        menu: false
+        menu: false,
+        cut: false
+      };
+    },
+    getInitialState: function(){
+      return {
+        cut: this.props.expended
       };
     },
     render: function(){
-      var data, cs, this$ = this;
+      var data, this$ = this;
       data = this.props.data;
-      cs = data.flatten();
       return div({
         className: 'comp word'
       }, this.props.menu ? ActionMenu({
-        onClick: function(it){
-          return this$.props.onMenuClick(it);
-        }
-      }) : void 8, div({
-        className: 'characters',
-        onClick: this.props.onClick
-      }, (function(){
-        var i$, results$ = [];
-        for (i$ in cs) {
-          results$.push((fn$.call(this, i$, cs[i$])));
-        }
-        return results$;
-        function fn$(i, c){
-          return Character({
-            key: i,
-            data: c,
-            mode: this.props.mode,
-            pinyin: this.props.pinyin
+        onStroke: function(){
+          throw Error('unimplemented');
+        },
+        onCut: function(){
+          return this$.setState({
+            cut: !this$.state.cut
           });
         }
-      }.call(this))), div({
+      }) : void 8, div({
+        className: 'children',
+        onClick: !this.state.cut ? this.props.onClick : undefined
+      }, !this.state.cut
+        ? (function(){
+          var i$, results$ = [];
+          for (i$ in data.flatten()) {
+            results$.push((fn$.call(this, i$, data.flatten()[i$])));
+          }
+          return results$;
+          function fn$(i, c){
+            return Character({
+              key: i,
+              data: c,
+              mode: this.props.mode,
+              pinyin: this.props.pinyin
+            });
+          }
+        }.call(this))
+        : (function(){
+          var i$, results$ = [];
+          for (i$ in data.children) {
+            results$.push((fn$.call(this, i$, data.children[i$])));
+          }
+          return results$;
+          function fn$(i, c){
+            return Word({
+              key: i,
+              data: c,
+              mode: this.props.mode,
+              pinyin: this.props.pinyin
+            });
+          }
+        }.call(this))), div({
         className: 'meaning'
       }, this.props.meaning ? data.short : ''));
     }
@@ -589,18 +615,25 @@
   ActionMenu = React.createClass({
     displayName: 'CUBE.ActionMenu',
     render: function(){
+      var this$ = this;
       return div({
         className: 'actions'
       }, div({
         className: 'menu multiple'
       }, div({
         className: 'ui buttons'
-      }, this.transferPropsTo(div({
-        className: 'ui icon button black write'
+      }, div({
+        className: 'ui icon button black write',
+        onClick: function(it){
+          return this$.props.onStroke.call(this$, it);
+        }
       }, i({
         className: 'icon pencil'
-      }))), div({
-        className: 'ui icon button black split'
+      })), div({
+        className: 'ui icon button black split',
+        onClick: function(it){
+          return this$.props.onCut.call(this$, it);
+        }
       }, i({
         className: 'icon cut'
       })))));
