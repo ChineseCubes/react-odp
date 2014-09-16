@@ -20,7 +20,7 @@ dots = React.renderComponent do
   DotsDetector unit: \cm
   $ \#detector .get!0
 dpcm = dots.state.x
-console.log "dpcm: #dpcm"
+#console.log "dpcm: #dpcm"
 
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
@@ -35,9 +35,13 @@ settings-button = React.renderComponent do
 
 if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
   page = RegExp.$1
-  data.children = [data.children[ ($('#wrap').data('page') || page) - 1 ]]
-  data.children.0.attrs.y = 0
   forced-dpcm = 0.98
+  forced-page-index = ($('#wrap').data('page') || page) - 1
+  for child, idx in data.children
+    if idx is forced-page-index
+      child.attrs.y = 0
+    else
+      child.attrs.style.display = \none
 # XXX: should not share information this way
 audio = new Howl urls: ["#{setup.path}/audio.mp3"]
 counter = 0
@@ -107,6 +111,6 @@ if forced-dpcm
     @css marginTop: \-200px, opacity: 0.9
     $('#wrap').css \opacity 0.5
     @on \click \.close ~> $('#wrap').css \opacity 1 @fadeOut \fast
-    $('#wrap').one \click ~> $('#wrap').css \opacity 1 @fastOut \fast
+    $('#wrap').one \click ~> $('#wrap').css \opacity 1 @fadeOut \fast
 else
   $ window .resize -> viewer.setProps scale: resize dpcm

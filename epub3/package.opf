@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" version="3.0" xml:lang="en" unique-identifier="pub-id" prefix="rendition: http://www.idpf.org/vocab/rendition/#">
 <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <dc:title id="title">Medley Demo</dc:title>
+    <dc:title id="title">Little Red Cap Demo</dc:title>
     <dc:creator id="creator">Audrey Tang</dc:creator>
     <dc:language>zh-Hant</dc:language>
-    <dc:identifier id="pub-id">MedleyDemo</dc:identifier>
-    <meta property="dcterms:modified">2014-09-09T01:11:11Z</meta>
+    <dc:identifier id="pub-id">LittleRedCapDemo</dc:identifier>
+    <meta property="dcterms:modified">2014-09-16T01:11:11Z</meta>
     <dc:date>2014-07-12</dc:date>
     <dc:publisher>Audrey Tang</dc:publisher>
     <dc:contributor id="contrib1">Audrey Tang</dc:contributor>
@@ -33,6 +33,16 @@
            id="page7" media-type="application/xhtml+xml" />
      <item href="page8.xhtml" properties="scripted"
            id="page8" media-type="application/xhtml+xml" />
+     <item href="page9.xhtml" properties="scripted"
+           id="page9" media-type="application/xhtml+xml" />
+     <item href="page10.xhtml" properties="scripted"
+           id="page10" media-type="application/xhtml+xml" />
+     <item href="page11.xhtml" properties="scripted"
+           id="page11" media-type="application/xhtml+xml" />
+     <item href="page12.xhtml" properties="scripted"
+           id="page12" media-type="application/xhtml+xml" />
+     <item href="page13.xhtml" properties="scripted"
+           id="page13" media-type="application/xhtml+xml" />
 
      <item href="images/bg.jpg"
            id="images-bg-jpg" media-type="image/jpeg" />
@@ -54,88 +64,67 @@
            id="images-loader-small-inverted-gif" media-type="image/gif" />
      <item href="images/loader-small.gif"
            id="images-loader-small-gif" media-type="image/gif" />
-     <item href="demo/demo.mp3"
-           id="demo-demo-mp3" media-type="audio/mpeg" />
-     <item href="demo/demo.vtt"
-           id="demo-demo-vtt" media-type="text/vtt" />
-     <item href="demo/masterpage.json"
-           id="demo-masterpage-json" media-type="application/json" />
-     <item href="demo/page1.json"
-           id="demo-page1-json" media-type="application/json" />
-     <item href="demo/page10.json"
-           id="demo-page10-json" media-type="application/json" />
-     <item href="demo/page11.json"
-           id="demo-page11-json" media-type="application/json" />
-     <item href="demo/page12.json"
-           id="demo-page12-json" media-type="application/json" />
-     <item href="demo/page13.json"
-           id="demo-page13-json" media-type="application/json" />
-     <item href="demo/page2.json"
-           id="demo-page2-json" media-type="application/json" />
-     <item href="demo/page3.json"
-           id="demo-page3-json" media-type="application/json" />
-     <item href="demo/page4.json"
-           id="demo-page4-json" media-type="application/json" />
-     <item href="demo/page5.json"
-           id="demo-page5-json" media-type="application/json" />
-     <item href="demo/page6.json"
-           id="demo-page6-json" media-type="application/json" />
-     <item href="demo/page7.json"
-           id="demo-page7-json" media-type="application/json" />
-     <item href="demo/page8.json"
-           id="demo-page8-json" media-type="application/json" />
-     <item href="demo/page9.json"
-           id="demo-page9-json" media-type="application/json" />
-     <item href="demo/Pictures/10000000000001C6000001851C1CBBA8.png"
-           id="demo-Pictures-10000000000001C6000001851C1CBBA8-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000001FD000001F6B021CFF9.png"
-           id="demo-Pictures-10000000000001FD000001F6B021CFF9-png" media-type="image/png" />
-     <item href="demo/Pictures/100000000000040000000233C0AAA25C.png"
-           id="demo-Pictures-100000000000040000000233C0AAA25C-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004000000028D1363ACA4.png"
-           id="demo-Pictures-10000000000004000000028D1363ACA4-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004000000028D5E67407A.png"
-           id="demo-Pictures-10000000000004000000028D5E67407A-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004000000028DDF5F115E.png"
-           id="demo-Pictures-10000000000004000000028DDF5F115E-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004000000028DDF76C268.png"
-           id="demo-Pictures-10000000000004000000028DDF76C268-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004000000028E164E1EF1.png"
-           id="demo-Pictures-10000000000004000000028E164E1EF1-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004000000030049461F08.png"
-           id="demo-Pictures-10000000000004000000030049461F08-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029E28715915.png"
-           id="demo-Pictures-10000000000004220000029E28715915-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029E66A68F8F.png"
-           id="demo-Pictures-10000000000004220000029E66A68F8F-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029E69EE8363.png"
-           id="demo-Pictures-10000000000004220000029E69EE8363-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029E8AB062C6.png"
-           id="demo-Pictures-10000000000004220000029E8AB062C6-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029EB1D591A0.png"
-           id="demo-Pictures-10000000000004220000029EB1D591A0-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029EB3B071A9.png"
-           id="demo-Pictures-10000000000004220000029EB3B071A9-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029EBC4DAE5C.png"
-           id="demo-Pictures-10000000000004220000029EBC4DAE5C-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029EC4683541.png"
-           id="demo-Pictures-10000000000004220000029EC4683541-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029EDB7A338D.png"
-           id="demo-Pictures-10000000000004220000029EDB7A338D-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029EDD5C3665.png"
-           id="demo-Pictures-10000000000004220000029EDD5C3665-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029EDF6AA120.png"
-           id="demo-Pictures-10000000000004220000029EDF6AA120-png" media-type="image/png" />
-     <item href="demo/Pictures/10000000000004220000029EF4818457.png"
-           id="demo-Pictures-10000000000004220000029EF4818457-png" media-type="image/png" />
-     <item href="demo/Pictures/1000020100000022000000223520C9AB.png"
-           id="demo-Pictures-1000020100000022000000223520C9AB-png" media-type="image/png" />
-     <item href="demo/Pictures/home.png"
-           id="demo-Pictures-home-png" media-type="image/png" />
-     <item href="demo/Pictures/pause.png"
-           id="demo-Pictures-pause-png" media-type="image/png" />
-     <item href="demo/Pictures/play.png"
-           id="demo-Pictures-play-png" media-type="image/png" />
+     <item href="LRRH/audio.mp3"
+           id="LRRH-audio-mp3" media-type="audio/mpeg" />
+     <item href="LRRH/audio.vtt"
+           id="LRRH-audio-vtt" media-type="text/vtt" />
+     <item href="LRRH/dict.json"
+           id="LRRH-dict-json" media-type="application/json" />
+     <item href="LRRH/masterpage.json"
+           id="LRRH-masterpage-json" media-type="application/json" />
+     <item href="LRRH/page1.json"
+           id="LRRH-page1-json" media-type="application/json" />
+     <item href="LRRH/page10.json"
+           id="LRRH-page10-json" media-type="application/json" />
+     <item href="LRRH/page11.json"
+           id="LRRH-page11-json" media-type="application/json" />
+     <item href="LRRH/page12.json"
+           id="LRRH-page12-json" media-type="application/json" />
+     <item href="LRRH/page13.json"
+           id="LRRH-page13-json" media-type="application/json" />
+     <item href="LRRH/page2.json"
+           id="LRRH-page2-json" media-type="application/json" />
+     <item href="LRRH/page3.json"
+           id="LRRH-page3-json" media-type="application/json" />
+     <item href="LRRH/page4.json"
+           id="LRRH-page4-json" media-type="application/json" />
+     <item href="LRRH/page5.json"
+           id="LRRH-page5-json" media-type="application/json" />
+     <item href="LRRH/page6.json"
+           id="LRRH-page6-json" media-type="application/json" />
+     <item href="LRRH/page7.json"
+           id="LRRH-page7-json" media-type="application/json" />
+     <item href="LRRH/page8.json"
+           id="LRRH-page8-json" media-type="application/json" />
+     <item href="LRRH/page9.json"
+           id="LRRH-page9-json" media-type="application/json" />
+     <item href="LRRH/Pictures/10000000000004000000030049461F08.png"
+           id="LRRH-Pictures-10000000000004000000030049461F08-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029E28715915.png"
+           id="LRRH-Pictures-10000000000004220000029E28715915-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029E66A68F8F.png"
+           id="LRRH-Pictures-10000000000004220000029E66A68F8F-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029E69EE8363.png"
+           id="LRRH-Pictures-10000000000004220000029E69EE8363-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029E8AB062C6.png"
+           id="LRRH-Pictures-10000000000004220000029E8AB062C6-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029EB1D591A0.png"
+           id="LRRH-Pictures-10000000000004220000029EB1D591A0-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029EB3B071A9.png"
+           id="LRRH-Pictures-10000000000004220000029EB3B071A9-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029EBC4DAE5C.png"
+           id="LRRH-Pictures-10000000000004220000029EBC4DAE5C-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029EC4683541.png"
+           id="LRRH-Pictures-10000000000004220000029EC4683541-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029EDB7A338D.png"
+           id="LRRH-Pictures-10000000000004220000029EDB7A338D-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029EDD5C3665.png"
+           id="LRRH-Pictures-10000000000004220000029EDD5C3665-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029EDF6AA120.png"
+           id="LRRH-Pictures-10000000000004220000029EDF6AA120-png" media-type="image/png" />
+     <item href="LRRH/Pictures/10000000000004220000029EF4818457.png"
+           id="LRRH-Pictures-10000000000004220000029EF4818457-png" media-type="image/png" />
+
      <item href="css/reset.css"
            id="css-reset-css" media-type="text/css" />
      <item href="css/style.css"
@@ -190,5 +179,10 @@
     <itemref idref="page6" linear="yes"/>
     <itemref idref="page7" linear="yes"/>
     <itemref idref="page8" linear="yes"/>
+    <itemref idref="page9" linear="yes"/>
+    <itemref idref="page10" linear="yes"/>
+    <itemref idref="page11" linear="yes"/>
+    <itemref idref="page12" linear="yes"/>
+    <itemref idref="page13" linear="yes"/>
 </spine>
 </package>

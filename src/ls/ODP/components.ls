@@ -55,6 +55,7 @@ DrawMixin =
   render: ->
     return if not data = @props.data
     attrs = data.attrs
+    return React.DOM.div {} if attrs?style?display is \none and attrs.href
     style =
       left:   attrs?x      or \auto
       top:    attrs?y      or \auto

@@ -23,11 +23,10 @@
           unit: 'cm'
         }), $('#detector').get()[0]);
         dpcm = dots.state.x;
-        console.log("dpcm: " + dpcm);
         return Data.getPresentation(mp, function(data){
           return Data.Segmentations(data, setup.path, function(segs){
             return ReactVTT.parse(setup.path + "/audio.vtt", function(vtt){
-              var ranges, res$, i$, ref$, len$, cue, settingsButton, page, forcedDpcm, audio, counter, sprite, currentSprite, viewer;
+              var ranges, res$, i$, ref$, len$, cue, settingsButton, page, forcedDpcm, forcedPageIndex, idx, child, audio, counter, sprite, currentSprite, viewer;
               res$ = [];
               for (i$ = 0, len$ = (ref$ = vtt.cues).length; i$ < len$; ++i$) {
                 cue = ref$[i$];
@@ -37,9 +36,17 @@
               settingsButton = React.renderComponent(CUBEBooks.SettingsButton(), $('#settings').get()[0]);
               if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
                 page = RegExp.$1;
-                data.children = [data.children[($('#wrap').data('page') || page) - 1]];
-                data.children[0].attrs.y = 0;
                 forcedDpcm = 0.98;
+                forcedPageIndex = ($('#wrap').data('page') || page) - 1;
+                for (i$ = 0, len$ = (ref$ = data.children).length; i$ < len$; ++i$) {
+                  idx = i$;
+                  child = ref$[i$];
+                  if (idx === forcedPageIndex) {
+                    child.attrs.y = 0;
+                  } else {
+                    child.attrs.style.display = 'none';
+                  }
+                }
               }
               audio = new Howl({
                 urls: [setup.path + "/audio.mp3"]
@@ -144,7 +151,7 @@
                     return $('#wrap').css('opacity', 1, this$.fadeOut('fast'));
                   });
                   return $('#wrap').one('click', function(){
-                    return $('#wrap').css('opacity', 1, this$.fastOut('fast'));
+                    return $('#wrap').css('opacity', 1, this$.fadeOut('fast'));
                   });
                 };
               } else {

@@ -115,11 +115,14 @@
       return this.applyMiddlewares(data);
     },
     render: function(){
-      var data, attrs, style, props, key, attr, childPropsList, res$, i$, children;
+      var data, attrs, ref$, style, props, key, attr, childPropsList, res$, i$, children;
       if (!(data = this.props.data)) {
         return;
       }
       attrs = data.attrs;
+      if ((attrs != null ? (ref$ = attrs.style) != null ? ref$.display : void 8 : void 8) === 'none' && attrs.href) {
+        return React.DOM.div({});
+      }
       style = {
         left: (attrs != null ? attrs.x : void 8) || 'auto',
         top: (attrs != null ? attrs.y : void 8) || 'auto',
