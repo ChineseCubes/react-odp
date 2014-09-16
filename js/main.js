@@ -97,7 +97,9 @@
                         data: segs.get(text)
                       }), $('#control > .content').get()[0]);
                       settingsButton.setProps({
-                        onClick: sentence.toggleSettings
+                        onClick: function(){
+                          throw Error('unimplemented');
+                        }
                       });
                       return $('#control').modal('show');
                     };

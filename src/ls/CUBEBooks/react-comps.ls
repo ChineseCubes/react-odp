@@ -80,7 +80,7 @@ Word = React.createClass do
           onStroke: ~> ...
           onCut:    ~> @setState cut: !@state.cut
       div do
-        className: 'children'
+        className: 'characters'
         if not @state.cut
           for let i, c of data.flatten!
             Character do
@@ -154,10 +154,10 @@ Stroker = React.createClass do
       className: 'strokes'
 
 Sentence = React.createClass do
-  DEPTH:
-    sentence:   0
-    words:      1
-    characters: Infinity
+  #DEPTH:
+  #  sentence:   0
+  #  words:      1
+  #  characters: Infinity
   displayName: 'CUBE.Sentence'
   getDefaultProps: ->
     data:    null
@@ -167,12 +167,16 @@ Sentence = React.createClass do
   getInitialState: ->
     pinyin: @props.pinyin
     meaning: @props.meaning
-    focus: this
+    focus: null
     depth: 0
   componentWillReceiveProps: (props) ->
     if @props.data.short isnt props.data.short
       @setState @getInitialState!{focus, depth}
       $(@refs.settings.getDOMNode!)height 0
+  componentDidMount: ->
+    if not @state.focus
+      @refs.0.setState menu: on
+      @setState focus: @refs.0
   componentWillUpdate: (props, state) ->
     if @props.data.short is props.data.short
       if @state.depth isnt state.depth
@@ -183,18 +187,18 @@ Sentence = React.createClass do
         console.log 'translation toggled'
       else if @state.focus is state.focus
         state.focus = null
-  renderDepthButton: (name) ->
-    actived = @state.depth is @DEPTH[name]
-    a do
-      className: "item #name #{if actived then 'active' else ''}"
-      onClick: ~>
-        @setState depth: @DEPTH[name]
-      name
+  #renderDepthButton: (name) ->
+  #  actived = @state.depth is @DEPTH[name]
+  #  a do
+  #    className: "item #name #{if actived then 'active' else ''}"
+  #    onClick: ~>
+  #      @setState depth: @DEPTH[name]
+  #    name
   toggleMode: ->
     @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
-  toggleSettings: ->
-    $settings = $ @refs.settings.getDOMNode!
-    $settings.animate height: if $settings.height! isnt 0 then 0 else 48
+  #toggleSettings: ->
+  #  $settings = $ @refs.settings.getDOMNode!
+  #  $settings.animate height: if $settings.height! isnt 0 then 0 else 48
   render: ->
     data = @props.data
     words = data.childrenOfDepth @state.depth
@@ -212,27 +216,26 @@ Sentence = React.createClass do
             mode: @props.mode
             pinyin: @state.pinyin
             meaning: @state.depth isnt 0 and @state.meaning
-            #onClick: ~> @setState focus: +i
             onChildClick: (comp) ~>
-              comp.setState menu: on if @props.focus isnt comp
-              @props.focus?setState menu: off
+              comp.setState menu: on if @state.focus isnt comp
+              @state.focus?setState menu: off
               @setState focus: comp
         Stroker ref: 'stroker'
-      nav do
-        ref: 'settings'
-        className: 'navbar'
-        style: height: 0
-        div do
-          className: 'ui borderless menu'
-          div do
-            className: 'right menu'
-            @renderDepthButton 'sentence'
-            @renderDepthButton 'words'
-            @renderDepthButton 'characters'
-            a do
-              className: 'item toggle chinese'
-              onClick: @toggleMode
-              if @props.mode is 'zh_TW' then 'T' else 'S'
+      #nav do
+      #  ref: 'settings'
+      #  className: 'navbar'
+      #  style: height: 0
+      #  div do
+      #    className: 'ui borderless menu'
+      #    div do
+      #      className: 'right menu'
+      #      @renderDepthButton 'sentence'
+      #      @renderDepthButton 'words'
+      #      @renderDepthButton 'characters'
+      #      a do
+      #        className: 'item toggle chinese'
+      #        onClick: @toggleMode
+      #        if @props.mode is 'zh_TW' then 'T' else 'S'
       div do
         className: 'entry'
         if @state.focus isnt null

@@ -259,7 +259,10 @@ small {
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
-  margin: 0.5rem;
+  margin-right: 1rem;
+}
+#control .playground .comp.word:last-child {
+  margin-right: 0;
 }
 #control .playground .comp.word .meaning {
   position: absolute;

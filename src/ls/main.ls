@@ -79,7 +79,7 @@ viewer = React.renderComponent do
           sentence = React.renderComponent do
             CUBEBooks.Sentence data: segs.get text
             $ '#control > .content' .get!0
-          settings-button.setProps onClick: sentence.toggleSettings
+          settings-button.setProps onClick: -> ...
           $ '#control' .modal \show
         for cue in vtt.cues
           if cue.text is text

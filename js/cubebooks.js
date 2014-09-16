@@ -583,7 +583,7 @@
           });
         }
       }) : void 8, div({
-        className: 'children'
+        className: 'characters'
       }, !this.state.cut
         ? (function(){
           var i$, results$ = [];
@@ -696,11 +696,6 @@
     }
   });
   Sentence = React.createClass({
-    DEPTH: {
-      sentence: 0,
-      words: 1,
-      characters: Infinity
-    },
     displayName: 'CUBE.Sentence',
     getDefaultProps: function(){
       return {
@@ -714,7 +709,7 @@
       return {
         pinyin: this.props.pinyin,
         meaning: this.props.meaning,
-        focus: this,
+        focus: null,
         depth: 0
       };
     },
@@ -726,6 +721,16 @@
           depth: ref$.depth
         });
         return $(this.refs.settings.getDOMNode()).height(0);
+      }
+    },
+    componentDidMount: function(){
+      if (!this.state.focus) {
+        this.refs[0].setState({
+          menu: true
+        });
+        return this.setState({
+          focus: this.refs[0]
+        });
       }
     },
     componentWillUpdate: function(props, state){
@@ -741,28 +746,9 @@
         }
       }
     },
-    renderDepthButton: function(name){
-      var actived, this$ = this;
-      actived = this.state.depth === this.DEPTH[name];
-      return a({
-        className: "item " + name + " " + (actived ? 'active' : ''),
-        onClick: function(){
-          return this$.setState({
-            depth: this$.DEPTH[name]
-          });
-        }
-      }, name);
-    },
     toggleMode: function(){
       return this.setProps({
         mode: this.props.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
-      });
-    },
-    toggleSettings: function(){
-      var $settings;
-      $settings = $(this.refs.settings.getDOMNode());
-      return $settings.animate({
-        height: $settings.height() !== 0 ? 0 : 48
       });
     },
     render: function(){
@@ -792,12 +778,12 @@
             meaning: this.state.depth !== 0 && this.state.meaning,
             onChildClick: function(comp){
               var ref$;
-              if (this$.props.focus !== comp) {
+              if (this$.state.focus !== comp) {
                 comp.setState({
                   menu: true
                 });
               }
-              if ((ref$ = this$.props.focus) != null) {
+              if ((ref$ = this$.state.focus) != null) {
                 ref$.setState({
                   menu: false
                 });
@@ -810,20 +796,7 @@
         }
       }.call(this)), Stroker({
         ref: 'stroker'
-      })), nav({
-        ref: 'settings',
-        className: 'navbar',
-        style: {
-          height: 0
-        }
-      }, div({
-        className: 'ui borderless menu'
-      }, div({
-        className: 'right menu'
-      }, this.renderDepthButton('sentence'), this.renderDepthButton('words'), this.renderDepthButton('characters'), a({
-        className: 'item toggle chinese',
-        onClick: this.toggleMode
-      }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), div({
+      })), div({
         className: 'entry'
       }, this.state.focus !== null ? (focus = this.state.focus.props.data, [
         span({
