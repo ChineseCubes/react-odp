@@ -39097,7 +39097,7 @@ $(document)
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -39536,7 +39536,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -40170,7 +40170,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -40441,7 +40441,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -41180,7 +41180,7 @@ $.fn.form.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -41906,7 +41906,7 @@ $.fn.state.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -42679,7 +42679,7 @@ $.fn.chatroom = function(parameters) {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -43029,7 +43029,7 @@ $.fn.checkbox.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -43622,7 +43622,7 @@ $.fn.dimmer.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -44629,7 +44629,7 @@ $.extend( $.easing, {
  * http://github.com/semantic-org/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -45082,23 +45082,16 @@ $.fn.modal = function(parameters) {
           }
         },
 
-
         cacheSizes: function() {
-          var
-            modalHeight = $module.outerHeight()
-          ;
-          if(modalHeight !== 0) {
-            module.cache = {
-              pageHeight    : $(document).outerHeight(),
-              height        : modalHeight + settings.offset,
-              contextHeight : (settings.context == 'body')
-                ? $(window).height()
-                : $dimmable.height()
-            };
-            module.debug('Caching modal and container sizes', module.cache);
-          }
+          module.cache = {
+            pageHeight    : $body.outerHeight(),
+            height        : $module.outerHeight() + settings.offset,
+            contextHeight : (settings.context == 'body')
+              ? $(window).height()
+              : $dimmable.height()
+          };
+          module.debug('Caching modal and container sizes', module.cache);
         },
-
 
         can: {
           fit: function() {
@@ -45415,7 +45408,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -45959,7 +45952,7 @@ $.fn.nag.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -46801,7 +46794,7 @@ $.fn.popup.settings = {
     var html = '';
     if(typeof text !== undefined) {
       if(typeof text.title !== undefined && text.title) {
-        html += '<div class="header">' + text.title + '</div>';
+        html += '<div class="header">' + text.title + '</div class="header">';
       }
       if(typeof text.content !== undefined && text.content) {
         html += '<div class="content">' + text.content + '</div>';
@@ -46827,7 +46820,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -47235,7 +47228,7 @@ $.fn.rating.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -48001,7 +47994,7 @@ $.fn.search.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -48788,7 +48781,7 @@ $.fn.shape.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -49302,7 +49295,7 @@ $.fn.sidebar.settings = {
  * # Semantic - Tab
  * http://github.com/jlukic/semantic-ui/
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -50014,7 +50007,7 @@ $.fn.sidebar.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -51288,7 +51281,7 @@ $.fn.video.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -51727,7 +51720,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -52361,7 +52354,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -52632,7 +52625,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -53371,7 +53364,7 @@ $.fn.form.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -54097,7 +54090,7 @@ $.fn.state.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -54870,7 +54863,7 @@ $.fn.chatroom = function(parameters) {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -55220,7 +55213,7 @@ $.fn.checkbox.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -55813,7 +55806,7 @@ $.fn.dimmer.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -56820,7 +56813,7 @@ $.extend( $.easing, {
  * http://github.com/semantic-org/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -57273,23 +57266,16 @@ $.fn.modal = function(parameters) {
           }
         },
 
-
         cacheSizes: function() {
-          var
-            modalHeight = $module.outerHeight()
-          ;
-          if(modalHeight !== 0) {
-            module.cache = {
-              pageHeight    : $(document).outerHeight(),
-              height        : modalHeight + settings.offset,
-              contextHeight : (settings.context == 'body')
-                ? $(window).height()
-                : $dimmable.height()
-            };
-            module.debug('Caching modal and container sizes', module.cache);
-          }
+          module.cache = {
+            pageHeight    : $body.outerHeight(),
+            height        : $module.outerHeight() + settings.offset,
+            contextHeight : (settings.context == 'body')
+              ? $(window).height()
+              : $dimmable.height()
+          };
+          module.debug('Caching modal and container sizes', module.cache);
         },
-
 
         can: {
           fit: function() {
@@ -57606,7 +57592,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -58150,7 +58136,7 @@ $.fn.nag.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -58992,7 +58978,7 @@ $.fn.popup.settings = {
     var html = '';
     if(typeof text !== undefined) {
       if(typeof text.title !== undefined && text.title) {
-        html += '<div class="header">' + text.title + '</div>';
+        html += '<div class="header">' + text.title + '</div class="header">';
       }
       if(typeof text.content !== undefined && text.content) {
         html += '<div class="content">' + text.content + '</div>';
@@ -59018,7 +59004,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -59426,7 +59412,7 @@ $.fn.rating.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -60192,7 +60178,7 @@ $.fn.search.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -60979,7 +60965,7 @@ $.fn.shape.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -61493,7 +61479,7 @@ $.fn.sidebar.settings = {
  * # Semantic - Tab
  * http://github.com/jlukic/semantic-ui/
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -62205,7 +62191,7 @@ $.fn.sidebar.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -63479,7 +63465,7 @@ $.fn.video.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -63918,7 +63904,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -64552,7 +64538,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -64823,7 +64809,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -65562,7 +65548,7 @@ $.fn.form.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -66288,7 +66274,7 @@ $.fn.state.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -67061,7 +67047,7 @@ $.fn.chatroom = function(parameters) {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -67411,7 +67397,7 @@ $.fn.checkbox.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -68004,7 +67990,7 @@ $.fn.dimmer.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -69011,7 +68997,7 @@ $.extend( $.easing, {
  * http://github.com/semantic-org/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -69464,23 +69450,16 @@ $.fn.modal = function(parameters) {
           }
         },
 
-
         cacheSizes: function() {
-          var
-            modalHeight = $module.outerHeight()
-          ;
-          if(modalHeight !== 0) {
-            module.cache = {
-              pageHeight    : $(document).outerHeight(),
-              height        : modalHeight + settings.offset,
-              contextHeight : (settings.context == 'body')
-                ? $(window).height()
-                : $dimmable.height()
-            };
-            module.debug('Caching modal and container sizes', module.cache);
-          }
+          module.cache = {
+            pageHeight    : $body.outerHeight(),
+            height        : $module.outerHeight() + settings.offset,
+            contextHeight : (settings.context == 'body')
+              ? $(window).height()
+              : $dimmable.height()
+          };
+          module.debug('Caching modal and container sizes', module.cache);
         },
-
 
         can: {
           fit: function() {
@@ -69797,7 +69776,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -70341,7 +70320,7 @@ $.fn.nag.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -71183,7 +71162,7 @@ $.fn.popup.settings = {
     var html = '';
     if(typeof text !== undefined) {
       if(typeof text.title !== undefined && text.title) {
-        html += '<div class="header">' + text.title + '</div>';
+        html += '<div class="header">' + text.title + '</div class="header">';
       }
       if(typeof text.content !== undefined && text.content) {
         html += '<div class="content">' + text.content + '</div>';
@@ -71209,7 +71188,7 @@ $.extend( $.easing, {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -71617,7 +71596,7 @@ $.fn.rating.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -72383,7 +72362,7 @@ $.fn.search.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -73170,7 +73149,7 @@ $.fn.shape.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -73684,7 +73663,7 @@ $.fn.sidebar.settings = {
  * # Semantic - Tab
  * http://github.com/jlukic/semantic-ui/
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -74396,7 +74375,7 @@ $.fn.sidebar.settings = {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *

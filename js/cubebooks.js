@@ -562,7 +562,7 @@
               cut: false
             });
           }
-          return comp != null ? comp.props.onChildClick(comp) : void 8;
+          return comp != null ? comp.click() : void 8;
         }
       }, i({
         className: 'repeat icon'
@@ -589,6 +589,9 @@
         cut: false
       };
     },
+    click: function(){
+      return this.props.onChildClick(this);
+    },
     render: function(){
       var data, this$ = this;
       data = this.props.data;
@@ -596,7 +599,7 @@
         className: 'comp word',
         onClick: function(){
           if (!this$.state.cut) {
-            return this$.props.onChildClick(this$);
+            return this$.click();
           }
         }
       }, this.state.menu ? ActionMenu({
@@ -642,7 +645,7 @@
           function fn$(i, c){
             var this$ = this;
             return Word({
-              key: i,
+              key: c.short,
               data: c,
               mode: this.props.mode,
               pinyin: this.props.pinyin,
@@ -753,28 +756,21 @@
       return {
         pinyin: this.props.pinyin,
         meaning: this.props.meaning,
-        focus: null,
-        depth: 0
+        focus: null
       };
     },
     componentWillReceiveProps: function(props){
       var ref$;
       if (this.props.data.short !== props.data.short) {
-        this.setState({
+        return this.setState({
           focus: (ref$ = this.getInitialState()).focus,
           depth: ref$.depth
         });
-        return $(this.refs.settings.getDOMNode()).height(0);
       }
     },
     componentDidMount: function(){
       if (!this.state.focus) {
-        this.refs[0].setState({
-          menu: true
-        });
-        return this.setState({
-          focus: this.refs[0]
-        });
+        return this.refs[0].click();
       }
     },
     componentWillUpdate: function(props, state){
@@ -790,6 +786,11 @@
         }
       }
     },
+    componentDidUpdate: function(props, state){
+      if (this.props.data.short !== props.data.short) {
+        return this.refs[0].click();
+      }
+    },
     toggleMode: function(){
       return this.setProps({
         mode: this.props.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
@@ -798,7 +799,7 @@
     render: function(){
       var data, words, focus, this$ = this;
       data = this.props.data;
-      words = data.childrenOfDepth(this.state.depth);
+      words = data.childrenOfDepth(0);
       return div({
         className: 'playground'
       }, div({
@@ -812,7 +813,7 @@
         function fn$(i, word){
           var this$ = this;
           return Word({
-            key: i,
+            key: word.short,
             ref: i,
             data: word,
             mode: this.props.mode,
@@ -820,19 +821,26 @@
             meaning: this.state.depth !== 0 && this.state.meaning,
             onChildClick: function(comp){
               var ref$;
-              if (this$.state.focus !== comp) {
+              if (this$.state.focus === comp) {
+                comp.setState({
+                  menu: false
+                });
+                return this$.setState({
+                  focus: null
+                });
+              } else {
+                if ((ref$ = this$.state.focus) != null) {
+                  ref$.setState({
+                    menu: false
+                  });
+                }
                 comp.setState({
                   menu: true
                 });
-              }
-              if ((ref$ = this$.state.focus) != null) {
-                ref$.setState({
-                  menu: false
+                return this$.setState({
+                  focus: comp
                 });
               }
-              return this$.setState({
-                focus: comp
-              });
             }
           });
         }

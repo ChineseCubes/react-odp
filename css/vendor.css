@@ -182,6 +182,7 @@ p a {
 
 .masthead.segment {
   background-image: url(images/bg.jpg);
+  -webkit-background-size: cover;
   background-size: cover;
   margin: 0em;
   padding-top: 4rem;
@@ -253,6 +254,7 @@ p a {
   }
 
   .masthead.segment {
+    -webkit-background-size: auto;
     background-size: auto;
   }
 
@@ -298,7 +300,7 @@ p a {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -364,7 +366,7 @@ p a {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -411,39 +413,24 @@ p a {
     Standard Inputs
 ---------------------*/
 .ui.form textarea,
-.ui.form input[type="color"],
-.ui.form input[type="date"],
-.ui.form input[type="datetime"],
-.ui.form input[type="datetime-local"],
-.ui.form input[type="email"],
-.ui.form input[type="month"],
-.ui.form input[type="number"],
-.ui.form input[type="password"],
-.ui.form input[type="range"],
-.ui.form input[type="search"],
-.ui.form input[type="tel"],
 .ui.form input[type="text"],
-.ui.form input[type="time"],
+.ui.form input[type="email"],
+.ui.form input[type="date"],
+.ui.form input[type="password"],
+.ui.form input[type="number"],
 .ui.form input[type="url"],
-.ui.form input[type="week"],
+.ui.form input[type="tel"],
 .ui.form .ui.input {
   width: 100%;
 }
 .ui.form textarea,
-.ui.form input[type="color"],
-.ui.form input[type="date"],
-.ui.form input[type="datetime"],
-.ui.form input[type="datetime-local"],
-.ui.form input[type="email"],
-.ui.form input[type="month"],
-.ui.form input[type="number"],
-.ui.form input[type="password"],
-.ui.form input[type="search"],
-.ui.form input[type="tel"],
 .ui.form input[type="text"],
-.ui.form input[type="time"],
+.ui.form input[type="email"],
+.ui.form input[type="date"],
+.ui.form input[type="password"],
+.ui.form input[type="number"],
 .ui.form input[type="url"],
-.ui.form input[type="week"] {
+.ui.form input[type="tel"] {
   margin: 0em;
   padding: 0.65em 1em;
   font-size: 1em;
@@ -518,20 +505,14 @@ p a {
 /*--------------------
         Focus
 ---------------------*/
-.ui.form input[type="color"]:focus,
-.ui.form input[type="date"]:focus,
-.ui.form input[type="datetime"]:focus,
-.ui.form input[type="datetime-local"]:focus,
-.ui.form input[type="email"]:focus,
-.ui.form input[type="month"]:focus,
-.ui.form input[type="number"]:focus,
-.ui.form input[type="password"]:focus,
-.ui.form input[type="search"]:focus,
-.ui.form input[type="tel"]:focus,
 .ui.form input[type="text"]:focus,
-.ui.form input[type="time"]:focus,
+.ui.form input[type="email"]:focus,
+.ui.form input[type="date"]:focus,
+.ui.form input[type="password"]:focus,
+.ui.form input[type="number"]:focus,
 .ui.form input[type="url"]:focus,
-.ui.form input[type="week"]:focus .ui.form textarea:focus {
+.ui.form input[type="tel"]:focus,
+.ui.form textarea:focus {
   color: rgba(0, 0, 0, 0.85);
   border-color: rgba(0, 0, 0, 0.2);
   border-bottom-left-radius: 0;
@@ -567,35 +548,21 @@ p a {
   color: #FFFFFF;
 }
 .ui.form .fields.error .field textarea,
-.ui.form .fields.error .field input[type="color"],
-.ui.form .fields.error .field input[type="date"],
-.ui.form .fields.error .field input[type="datetime"],
-.ui.form .fields.error .field input[type="datetime-local"],
-.ui.form .fields.error .field input[type="email"],
-.ui.form .fields.error .field input[type="month"],
-.ui.form .fields.error .field input[type="number"],
-.ui.form .fields.error .field input[type="password"],
-.ui.form .fields.error .field input[type="search"],
-.ui.form .fields.error .field input[type="tel"],
 .ui.form .fields.error .field input[type="text"],
-.ui.form .fields.error .field input[type="time"],
+.ui.form .fields.error .field input[type="email"],
+.ui.form .fields.error .field input[type="date"],
+.ui.form .fields.error .field input[type="password"],
+.ui.form .fields.error .field input[type="number"],
 .ui.form .fields.error .field input[type="url"],
-.ui.form .fields.error .field input[type="week"],
+.ui.form .fields.error .field input[type="tel"],
 .ui.form .field.error textarea,
-.ui.form .field.error input[type="color"],
-.ui.form .field.error input[type="date"],
-.ui.form .field.error input[type="datetime"],
-.ui.form .field.error input[type="datetime-local"],
-.ui.form .field.error input[type="email"],
-.ui.form .field.error input[type="month"],
-.ui.form .field.error input[type="number"],
-.ui.form .field.error input[type="password"],
-.ui.form .field.error input[type="search"],
-.ui.form .field.error input[type="tel"],
 .ui.form .field.error input[type="text"],
-.ui.form .field.error input[type="time"],
+.ui.form .field.error input[type="email"],
+.ui.form .field.error input[type="date"],
+.ui.form .field.error input[type="password"],
+.ui.form .field.error input[type="number"],
 .ui.form .field.error input[type="url"],
-.ui.form .field.error input[type="week"] {
+.ui.form .field.error input[type="tel"] {
   background-color: #FFFAFA;
   border-color: #E7BEBE;
   border-left: none;
@@ -607,20 +574,13 @@ p a {
   box-shadow: 0.3em 0em 0em 0em #D95C5C inset;
 }
 .ui.form .field.error textarea:focus,
-.ui.form .field.error input[type="color"]:focus,
-.ui.form .field.error input[type="date"]:focus,
-.ui.form .field.error input[type="datetime"]:focus,
-.ui.form .field.error input[type="datetime-local"]:focus,
-.ui.form .field.error input[type="email"]:focus,
-.ui.form .field.error input[type="month"]:focus,
-.ui.form .field.error input[type="number"]:focus,
-.ui.form .field.error input[type="password"]:focus,
-.ui.form .field.error input[type="search"]:focus,
-.ui.form .field.error input[type="tel"]:focus,
 .ui.form .field.error input[type="text"]:focus,
-.ui.form .field.error input[type="time"]:focus,
+.ui.form .field.error input[type="email"]:focus,
+.ui.form .field.error input[type="date"]:focus,
+.ui.form .field.error input[type="password"]:focus,
+.ui.form .field.error input[type="number"]:focus,
 .ui.form .field.error input[type="url"]:focus,
-.ui.form .field.error input[type="week"]:focus {
+.ui.form .field.error input[type="tel"]:focus {
   border-color: #ff5050;
   color: #ff5050;
   -webkit-appearance: none;
@@ -762,20 +722,13 @@ p a {
   color: #FFFFFF;
 }
 .ui.inverted.form .field.error textarea,
-.ui.inverted.form .field.error input[type="color"],
-.ui.inverted.form .field.error input[type="date"],
-.ui.inverted.form .field.error input[type="datetime"],
-.ui.inverted.form .field.error input[type="datetime-local"],
-.ui.inverted.form .field.error input[type="email"],
-.ui.inverted.form .field.error input[type="month"],
-.ui.inverted.form .field.error input[type="number"],
-.ui.inverted.form .field.error input[type="password"],
-.ui.inverted.form .field.error input[type="search"],
-.ui.inverted.form .field.error input[type="tel"],
 .ui.inverted.form .field.error input[type="text"],
-.ui.inverted.form .field.error input[type="time"],
+.ui.inverted.form .field.error input[type="email"],
+.ui.inverted.form .field.error input[type="date"],
+.ui.inverted.form .field.error input[type="password"],
+.ui.inverted.form .field.error input[type="number"],
 .ui.inverted.form .field.error input[type="url"],
-.ui.inverted.form .field.error input[type="week"] {
+.ui.inverted.form .field.error input[type="tel"] {
   background-color: #FFCCCC;
 }
 .ui.inverted.form .ui.checkbox label {
@@ -984,20 +937,13 @@ p a {
   font-size: 0.875em;
 }
 .ui.small.form textarea,
-.ui.small.form input[type="color"],
-.ui.small.form input[type="date"],
-.ui.small.form input[type="datetime"],
-.ui.small.form input[type="datetime-local"],
-.ui.small.form input[type="email"],
-.ui.small.form input[type="month"],
-.ui.small.form input[type="number"],
-.ui.small.form input[type="password"],
-.ui.small.form input[type="search"],
-.ui.small.form input[type="tel"],
 .ui.small.form input[type="text"],
-.ui.small.form input[type="time"],
+.ui.small.form input[type="email"],
+.ui.small.form input[type="date"],
+.ui.small.form input[type="password"],
+.ui.small.form input[type="number"],
 .ui.small.form input[type="url"],
-.ui.small.form input[type="week"],
+.ui.small.form input[type="tel"],
 .ui.small.form label {
   font-size: 1em;
 }
@@ -1011,7 +957,7 @@ p a {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -1764,7 +1710,7 @@ body > .ui.grid {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -3168,7 +3114,7 @@ body > .ui.grid {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -3425,7 +3371,7 @@ body > .ui.grid {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -3692,9 +3638,6 @@ body > .ui.grid {
 /*--------------
   Column Count
 ---------------*/
-.ui.column.table {
-  table-layout: fixed;
-}
 .ui.two.column.table td {
   width: 50%;
 }
@@ -3936,7 +3879,7 @@ body > .ui.grid {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -4733,7 +4676,7 @@ i.massive.basic.icon {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -5909,7 +5852,7 @@ i.massive.basic.icon {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -6064,7 +6007,7 @@ i.massive.basic.icon {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -6361,7 +6304,7 @@ h5.ui.header {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -7780,7 +7723,7 @@ i.massive.icon {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -7927,7 +7870,7 @@ img.ui.image {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -8179,7 +8122,7 @@ img.ui.image {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -8930,7 +8873,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -9083,7 +9026,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -9275,6 +9218,7 @@ a.ui.teal.label:hover:before {
     Striped
 ---------------*/
 .ui.progress.striped .bar {
+  -webkit-background-size: 30px 30px;
   background-size: 30px 30px;
   background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
   background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
@@ -9330,7 +9274,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -9626,7 +9570,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -10003,7 +9947,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -10256,13 +10200,9 @@ a.ui.teal.label:hover:before {
 /*******************************
              Sizes
 *******************************/
-.ui.mini.step,
-.ui.mini.steps .step {
-  font-size: 0.8rem;
-}
 .ui.small.step,
 .ui.small.steps .step {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
 }
 .ui.step,
 .ui.steps .step {
@@ -10270,20 +10210,7 @@ a.ui.teal.label:hover:before {
 }
 .ui.large.step,
 .ui.large.steps .step {
-  font-size: 1.125rem;
-}
-.ui.big.step,
-.ui.big.steps .step {
   font-size: 1.25rem;
-}
-.ui.huge.step,
-.ui.huge.steps .step {
-  font-size: 1.375rem;
-}
-.ui.massive.step,
-.ui.massive.steps .step {
-  font-size: 1.5rem;
-  font-weight: bold;
 }
 
 /*
@@ -10291,7 +10218,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -10440,7 +10367,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -10686,7 +10613,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -11025,7 +10952,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -11184,7 +11111,7 @@ body.ui.dimmed.dimmable > :not(.dimmer){
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -11701,7 +11628,7 @@ body.ui.dimmed.dimmable > :not(.dimmer){
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -11954,7 +11881,7 @@ body.ui.dimmed.dimmable > :not(.dimmer){
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -12073,7 +12000,7 @@ a.ui.nag {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -12285,7 +12212,7 @@ a.ui.nag {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -12415,7 +12342,7 @@ a.ui.nag {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -12625,7 +12552,7 @@ a.ui.nag {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -12762,7 +12689,7 @@ a.ui.nag {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -12949,7 +12876,7 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -13162,25 +13089,21 @@ body.pushed.scrolling.ui.dimmable {
      -moz-animation-name: fadeDownOut;
           animation-name: fadeDownOut;
 }
-/*rtl:ignore renaming*/
 .ui.fade.left.transition.in {
   -webkit-animation-name: fadeLeft;
      -moz-animation-name: fadeLeft;
           animation-name: fadeLeft;
 }
-/*rtl:ignore renaming*/
 .ui.fade.left.transition.out {
   -webkit-animation-name: fadeLeftOut;
      -moz-animation-name: fadeLeftOut;
           animation-name: fadeLeftOut;
 }
-/*rtl:ignore renaming*/
 .ui.fade.right.transition.in {
   -webkit-animation-name: fadeRight;
      -moz-animation-name: fadeRight;
           animation-name: fadeRight;
 }
-/*rtl:ignore renaming*/
 .ui.fade.right.transition.out {
   -webkit-animation-name: fadeRightOut;
      -moz-animation-name: fadeRightOut;
@@ -14231,7 +14154,7 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -14310,11 +14233,11 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Released: April 17 2014
+ * Released: April 17 2013
  */
 /*******************************
             Standard
@@ -14484,11 +14407,11 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Released: May 22, 2014
+ * Released: May 22, 2013
  */
 /*******************************
          Activity Feed
@@ -14612,11 +14535,11 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Released: April 17 2014
+ * Released: April 17 2013
  */
 /*******************************
             Standard
@@ -15169,11 +15092,11 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Released: April 26 2014
+ * Released: April 26 2013
  */
 /*******************************
             List
@@ -15713,11 +15636,11 @@ ol.ui.horizontal.list li:before,
  * # Statistic
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Released: Aug 20, 2014
+ * Released: Aug 20, 2013
  */
 /*******************************
            Statistic
@@ -15742,7 +15665,7 @@ ol.ui.horizontal.list li:before,
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -15808,7 +15731,7 @@ ol.ui.horizontal.list li:before,
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -15855,39 +15778,24 @@ ol.ui.horizontal.list li:before,
     Standard Inputs
 ---------------------*/
 .ui.form textarea,
-.ui.form input[type="color"],
-.ui.form input[type="date"],
-.ui.form input[type="datetime"],
-.ui.form input[type="datetime-local"],
-.ui.form input[type="email"],
-.ui.form input[type="month"],
-.ui.form input[type="number"],
-.ui.form input[type="password"],
-.ui.form input[type="range"],
-.ui.form input[type="search"],
-.ui.form input[type="tel"],
 .ui.form input[type="text"],
-.ui.form input[type="time"],
+.ui.form input[type="email"],
+.ui.form input[type="date"],
+.ui.form input[type="password"],
+.ui.form input[type="number"],
 .ui.form input[type="url"],
-.ui.form input[type="week"],
+.ui.form input[type="tel"],
 .ui.form .ui.input {
   width: 100%;
 }
 .ui.form textarea,
-.ui.form input[type="color"],
-.ui.form input[type="date"],
-.ui.form input[type="datetime"],
-.ui.form input[type="datetime-local"],
-.ui.form input[type="email"],
-.ui.form input[type="month"],
-.ui.form input[type="number"],
-.ui.form input[type="password"],
-.ui.form input[type="search"],
-.ui.form input[type="tel"],
 .ui.form input[type="text"],
-.ui.form input[type="time"],
+.ui.form input[type="email"],
+.ui.form input[type="date"],
+.ui.form input[type="password"],
+.ui.form input[type="number"],
 .ui.form input[type="url"],
-.ui.form input[type="week"] {
+.ui.form input[type="tel"] {
   margin: 0em;
   padding: 0.65em 1em;
   font-size: 1em;
@@ -15962,20 +15870,14 @@ ol.ui.horizontal.list li:before,
 /*--------------------
         Focus
 ---------------------*/
-.ui.form input[type="color"]:focus,
-.ui.form input[type="date"]:focus,
-.ui.form input[type="datetime"]:focus,
-.ui.form input[type="datetime-local"]:focus,
-.ui.form input[type="email"]:focus,
-.ui.form input[type="month"]:focus,
-.ui.form input[type="number"]:focus,
-.ui.form input[type="password"]:focus,
-.ui.form input[type="search"]:focus,
-.ui.form input[type="tel"]:focus,
 .ui.form input[type="text"]:focus,
-.ui.form input[type="time"]:focus,
+.ui.form input[type="email"]:focus,
+.ui.form input[type="date"]:focus,
+.ui.form input[type="password"]:focus,
+.ui.form input[type="number"]:focus,
 .ui.form input[type="url"]:focus,
-.ui.form input[type="week"]:focus .ui.form textarea:focus {
+.ui.form input[type="tel"]:focus,
+.ui.form textarea:focus {
   color: rgba(0, 0, 0, 0.85);
   border-color: rgba(0, 0, 0, 0.2);
   border-bottom-left-radius: 0;
@@ -16011,35 +15913,21 @@ ol.ui.horizontal.list li:before,
   color: #FFFFFF;
 }
 .ui.form .fields.error .field textarea,
-.ui.form .fields.error .field input[type="color"],
-.ui.form .fields.error .field input[type="date"],
-.ui.form .fields.error .field input[type="datetime"],
-.ui.form .fields.error .field input[type="datetime-local"],
-.ui.form .fields.error .field input[type="email"],
-.ui.form .fields.error .field input[type="month"],
-.ui.form .fields.error .field input[type="number"],
-.ui.form .fields.error .field input[type="password"],
-.ui.form .fields.error .field input[type="search"],
-.ui.form .fields.error .field input[type="tel"],
 .ui.form .fields.error .field input[type="text"],
-.ui.form .fields.error .field input[type="time"],
+.ui.form .fields.error .field input[type="email"],
+.ui.form .fields.error .field input[type="date"],
+.ui.form .fields.error .field input[type="password"],
+.ui.form .fields.error .field input[type="number"],
 .ui.form .fields.error .field input[type="url"],
-.ui.form .fields.error .field input[type="week"],
+.ui.form .fields.error .field input[type="tel"],
 .ui.form .field.error textarea,
-.ui.form .field.error input[type="color"],
-.ui.form .field.error input[type="date"],
-.ui.form .field.error input[type="datetime"],
-.ui.form .field.error input[type="datetime-local"],
-.ui.form .field.error input[type="email"],
-.ui.form .field.error input[type="month"],
-.ui.form .field.error input[type="number"],
-.ui.form .field.error input[type="password"],
-.ui.form .field.error input[type="search"],
-.ui.form .field.error input[type="tel"],
 .ui.form .field.error input[type="text"],
-.ui.form .field.error input[type="time"],
+.ui.form .field.error input[type="email"],
+.ui.form .field.error input[type="date"],
+.ui.form .field.error input[type="password"],
+.ui.form .field.error input[type="number"],
 .ui.form .field.error input[type="url"],
-.ui.form .field.error input[type="week"] {
+.ui.form .field.error input[type="tel"] {
   background-color: #FFFAFA;
   border-color: #E7BEBE;
   border-left: none;
@@ -16051,20 +15939,13 @@ ol.ui.horizontal.list li:before,
   box-shadow: 0.3em 0em 0em 0em #D95C5C inset;
 }
 .ui.form .field.error textarea:focus,
-.ui.form .field.error input[type="color"]:focus,
-.ui.form .field.error input[type="date"]:focus,
-.ui.form .field.error input[type="datetime"]:focus,
-.ui.form .field.error input[type="datetime-local"]:focus,
-.ui.form .field.error input[type="email"]:focus,
-.ui.form .field.error input[type="month"]:focus,
-.ui.form .field.error input[type="number"]:focus,
-.ui.form .field.error input[type="password"]:focus,
-.ui.form .field.error input[type="search"]:focus,
-.ui.form .field.error input[type="tel"]:focus,
 .ui.form .field.error input[type="text"]:focus,
-.ui.form .field.error input[type="time"]:focus,
+.ui.form .field.error input[type="email"]:focus,
+.ui.form .field.error input[type="date"]:focus,
+.ui.form .field.error input[type="password"]:focus,
+.ui.form .field.error input[type="number"]:focus,
 .ui.form .field.error input[type="url"]:focus,
-.ui.form .field.error input[type="week"]:focus {
+.ui.form .field.error input[type="tel"]:focus {
   border-color: #ff5050;
   color: #ff5050;
   -webkit-appearance: none;
@@ -16206,20 +16087,13 @@ ol.ui.horizontal.list li:before,
   color: #FFFFFF;
 }
 .ui.inverted.form .field.error textarea,
-.ui.inverted.form .field.error input[type="color"],
-.ui.inverted.form .field.error input[type="date"],
-.ui.inverted.form .field.error input[type="datetime"],
-.ui.inverted.form .field.error input[type="datetime-local"],
-.ui.inverted.form .field.error input[type="email"],
-.ui.inverted.form .field.error input[type="month"],
-.ui.inverted.form .field.error input[type="number"],
-.ui.inverted.form .field.error input[type="password"],
-.ui.inverted.form .field.error input[type="search"],
-.ui.inverted.form .field.error input[type="tel"],
 .ui.inverted.form .field.error input[type="text"],
-.ui.inverted.form .field.error input[type="time"],
+.ui.inverted.form .field.error input[type="email"],
+.ui.inverted.form .field.error input[type="date"],
+.ui.inverted.form .field.error input[type="password"],
+.ui.inverted.form .field.error input[type="number"],
 .ui.inverted.form .field.error input[type="url"],
-.ui.inverted.form .field.error input[type="week"] {
+.ui.inverted.form .field.error input[type="tel"] {
   background-color: #FFCCCC;
 }
 .ui.inverted.form .ui.checkbox label {
@@ -16428,20 +16302,13 @@ ol.ui.horizontal.list li:before,
   font-size: 0.875em;
 }
 .ui.small.form textarea,
-.ui.small.form input[type="color"],
-.ui.small.form input[type="date"],
-.ui.small.form input[type="datetime"],
-.ui.small.form input[type="datetime-local"],
-.ui.small.form input[type="email"],
-.ui.small.form input[type="month"],
-.ui.small.form input[type="number"],
-.ui.small.form input[type="password"],
-.ui.small.form input[type="search"],
-.ui.small.form input[type="tel"],
 .ui.small.form input[type="text"],
-.ui.small.form input[type="time"],
+.ui.small.form input[type="email"],
+.ui.small.form input[type="date"],
+.ui.small.form input[type="password"],
+.ui.small.form input[type="number"],
 .ui.small.form input[type="url"],
-.ui.small.form input[type="week"],
+.ui.small.form input[type="tel"],
 .ui.small.form label {
   font-size: 1em;
 }
@@ -16455,7 +16322,7 @@ ol.ui.horizontal.list li:before,
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -17208,7 +17075,7 @@ body > .ui.grid {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -18612,7 +18479,7 @@ body > .ui.grid {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -18869,7 +18736,7 @@ body > .ui.grid {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -19136,9 +19003,6 @@ body > .ui.grid {
 /*--------------
   Column Count
 ---------------*/
-.ui.column.table {
-  table-layout: fixed;
-}
 .ui.two.column.table td {
   width: 50%;
 }
@@ -19380,7 +19244,7 @@ body > .ui.grid {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -20177,7 +20041,7 @@ i.massive.basic.icon {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -21353,7 +21217,7 @@ i.massive.basic.icon {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -21508,7 +21372,7 @@ i.massive.basic.icon {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -21805,7 +21669,7 @@ h5.ui.header {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -23224,7 +23088,7 @@ i.massive.icon {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -23371,7 +23235,7 @@ img.ui.image {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -23623,7 +23487,7 @@ img.ui.image {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -24374,7 +24238,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -24527,7 +24391,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -24719,6 +24583,7 @@ a.ui.teal.label:hover:before {
     Striped
 ---------------*/
 .ui.progress.striped .bar {
+  -webkit-background-size: 30px 30px;
   background-size: 30px 30px;
   background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
   background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
@@ -24774,7 +24639,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -25070,7 +24935,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -25447,7 +25312,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -25700,13 +25565,9 @@ a.ui.teal.label:hover:before {
 /*******************************
              Sizes
 *******************************/
-.ui.mini.step,
-.ui.mini.steps .step {
-  font-size: 0.8rem;
-}
 .ui.small.step,
 .ui.small.steps .step {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
 }
 .ui.step,
 .ui.steps .step {
@@ -25714,20 +25575,7 @@ a.ui.teal.label:hover:before {
 }
 .ui.large.step,
 .ui.large.steps .step {
-  font-size: 1.125rem;
-}
-.ui.big.step,
-.ui.big.steps .step {
   font-size: 1.25rem;
-}
-.ui.huge.step,
-.ui.huge.steps .step {
-  font-size: 1.375rem;
-}
-.ui.massive.step,
-.ui.massive.steps .step {
-  font-size: 1.5rem;
-  font-weight: bold;
 }
 
 /*
@@ -25735,7 +25583,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -25884,7 +25732,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -26130,7 +25978,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -26469,7 +26317,7 @@ a.ui.teal.label:hover:before {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -26628,7 +26476,7 @@ body.ui.dimmed.dimmable > :not(.dimmer){
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -27145,7 +26993,7 @@ body.ui.dimmed.dimmable > :not(.dimmer){
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -27398,7 +27246,7 @@ body.ui.dimmed.dimmable > :not(.dimmer){
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -27517,7 +27365,7 @@ a.ui.nag {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -27729,7 +27577,7 @@ a.ui.nag {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -27859,7 +27707,7 @@ a.ui.nag {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -28069,7 +27917,7 @@ a.ui.nag {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -28206,7 +28054,7 @@ a.ui.nag {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -28393,7 +28241,7 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -28606,25 +28454,21 @@ body.pushed.scrolling.ui.dimmable {
      -moz-animation-name: fadeDownOut;
           animation-name: fadeDownOut;
 }
-/*rtl:ignore renaming*/
 .ui.fade.left.transition.in {
   -webkit-animation-name: fadeLeft;
      -moz-animation-name: fadeLeft;
           animation-name: fadeLeft;
 }
-/*rtl:ignore renaming*/
 .ui.fade.left.transition.out {
   -webkit-animation-name: fadeLeftOut;
      -moz-animation-name: fadeLeftOut;
           animation-name: fadeLeftOut;
 }
-/*rtl:ignore renaming*/
 .ui.fade.right.transition.in {
   -webkit-animation-name: fadeRight;
      -moz-animation-name: fadeRight;
           animation-name: fadeRight;
 }
-/*rtl:ignore renaming*/
 .ui.fade.right.transition.out {
   -webkit-animation-name: fadeRightOut;
      -moz-animation-name: fadeRightOut;
@@ -29675,7 +29519,7 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -29754,11 +29598,11 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Released: April 17 2014
+ * Released: April 17 2013
  */
 /*******************************
             Standard
@@ -29928,11 +29772,11 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Released: May 22, 2014
+ * Released: May 22, 2013
  */
 /*******************************
          Activity Feed
@@ -30056,11 +29900,11 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Released: April 17 2014
+ * Released: April 17 2013
  */
 /*******************************
             Standard
@@ -30613,11 +30457,11 @@ body.pushed.scrolling.ui.dimmable {
  * http://github.com/jlukic/semantic-ui/
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Released: April 26 2014
+ * Released: April 26 2013
  */
 /*******************************
             List
@@ -31157,11 +31001,11 @@ ol.ui.horizontal.list li:before,
  * # Statistic
  *
  *
- * Copyright 2014 Contributors
+ * Copyright 2013 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Released: Aug 20, 2014
+ * Released: Aug 20, 2013
  */
 /*******************************
            Statistic

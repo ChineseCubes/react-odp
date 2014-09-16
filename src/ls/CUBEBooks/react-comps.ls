@@ -72,7 +72,7 @@ RedoCut = React.createClass do
           console.log 'foobar'
           comp = undo-stack.pop!
           comp?setState cut: false
-          comp?props.onChildClick comp
+          comp?click!
         i className: 'repeat icon'
 
 Word = React.createClass do
@@ -87,11 +87,12 @@ Word = React.createClass do
   getInitialState: ->
     menu: @props.menu
     cut:  false
+  click: -> @props.onChildClick this
   render: ->
     data = @props.data
     div do
       className: 'comp word'
-      onClick: ~> @props.onChildClick this if not @state.cut
+      onClick: ~> @click! if not @state.cut
       if @state.menu
         ActionMenu do
           cut: data.children.length > 1
@@ -114,7 +115,7 @@ Word = React.createClass do
         else
           for let i, c of data.children
             Word do
-              key: i
+              key: c.short
               data: c
               mode: @props.mode
               pinyin: @props.pinyin
@@ -196,15 +197,14 @@ Sentence = React.createClass do
     pinyin: @props.pinyin
     meaning: @props.meaning
     focus: null
-    depth: 0
+    #depth: 0
   componentWillReceiveProps: (props) ->
     if @props.data.short isnt props.data.short
       @setState @getInitialState!{focus, depth}
-      $(@refs.settings.getDOMNode!)height 0
+      #$(@refs.settings.getDOMNode!)height 0
   componentDidMount: ->
     if not @state.focus
-      @refs.0.setState menu: on
-      @setState focus: @refs.0
+      @refs.0.click!
   componentWillUpdate: (props, state) ->
     if @props.data.short is props.data.short
       if @state.depth isnt state.depth
@@ -215,6 +215,9 @@ Sentence = React.createClass do
         console.log 'translation toggled'
       else if @state.focus is state.focus
         state.focus = null
+  componentDidUpdate: (props, state) ->
+    if @props.data.short isnt props.data.short
+      @refs.0.click!
   #renderDepthButton: (name) ->
   #  actived = @state.depth is @DEPTH[name]
   #  a do
@@ -229,7 +232,7 @@ Sentence = React.createClass do
   #  $settings.animate height: if $settings.height! isnt 0 then 0 else 48
   render: ->
     data = @props.data
-    words = data.childrenOfDepth @state.depth
+    words = data.childrenOfDepth 0
     div do
       className: 'playground'
       div do
@@ -237,16 +240,20 @@ Sentence = React.createClass do
         #div className: 'aligner'
         for let i, word of words
           Word do
-            key: i
+            key: word.short
             ref: i
             data: word
             mode: @props.mode
             pinyin: @state.pinyin
             meaning: @state.depth isnt 0 and @state.meaning
             onChildClick: (comp) ~>
-              comp.setState menu: on if @state.focus isnt comp
-              @state.focus?setState menu: off
-              @setState focus: comp
+              if @state.focus is comp
+                comp.setState menu: off
+                @setState focus: null
+              else
+                @state.focus?setState menu: off
+                comp.setState menu: on
+                @setState focus: comp
         #Stroker ref: 'stroker'
       #nav do
       #  ref: 'settings'
