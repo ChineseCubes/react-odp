@@ -647,6 +647,7 @@
               data: c,
               mode: this.props.mode,
               pinyin: this.props.pinyin,
+              meaning: this.props.meaning,
               onChildCut: function(it){
                 return this$.props.onChildCut(it);
               },
@@ -657,7 +658,7 @@
           }
         }.call(this))), div({
         className: 'meaning'
-      }, this.props.meaning ? data.short : ''));
+      }, this.props.meaning && !this.state.cut ? data.short : ''));
     }
   });
   ActionMenu = React.createClass({
@@ -762,11 +763,9 @@
       };
     },
     componentWillReceiveProps: function(props){
-      var ref$;
       if (this.props.data.short !== props.data.short) {
         return this.setState({
-          focus: (ref$ = this.getInitialState()).focus,
-          depth: ref$.depth
+          focus: this.getInitialState().focus
         });
       }
     },
@@ -777,13 +776,12 @@
     },
     componentWillUpdate: function(props, state){
       if (this.props.data.short === props.data.short) {
-        if (this.state.depth !== state.depth) {
-          return state.focus = state.depth === 0 ? this : null;
-        } else if (this.state.pinyin !== state.pinyin) {
+        switch (false) {
+        case this.state.pinyin === state.pinyin:
           return console.log('pinyin toggled');
-        } else if (this.state.meaning !== state.meaning) {
+        case this.state.meaning === state.meaning:
           return console.log('translation toggled');
-        } else if (this.state.focus === state.focus) {
+        case this.state.focus !== state.focus:
           return state.focus = null;
         }
       }
@@ -823,7 +821,7 @@
             data: word,
             mode: this.props.mode,
             pinyin: this.state.pinyin,
-            meaning: this.state.depth !== 0 && this.state.meaning,
+            meaning: this.state.meaning,
             onChildCut: function(comp){
               return this$.state.undo.push(comp);
             },
@@ -916,7 +914,7 @@
             pinyin: !this$.state.pinyin
           });
         }
-      }, '拼'), this.state.depth !== 0 ? a({
+      }, '拼'), this.state.undo.length !== 0 ? a({
         className: "ui toggle basic button chinese " + (this.state.meaning ? 'active' : ''),
         onClick: function(){
           var syn, utt, text, x$, u;

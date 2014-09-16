@@ -116,12 +116,13 @@ Word = React.createClass do
               key: "#{i}-#{c.short}"
               data: c
               mode: @props.mode
-              pinyin: @props.pinyin
+              pinyin:  @props.pinyin
+              meaning: @props.meaning
               onChildCut:   ~> @props.onChildCut it
               onChildClick: ~> @props.onChildClick it
       div do
         className: 'meaning'
-        if @props.meaning then data.short else ''
+        if @props.meaning and not @state.cut then data.short else ''
 
 ActionMenu = React.createClass do
   displayName: 'CUBE.ActionMenu'
@@ -200,21 +201,20 @@ Sentence = React.createClass do
     #depth: 0
   componentWillReceiveProps: (props) ->
     if @props.data.short isnt props.data.short
-      @setState @getInitialState!{focus, depth}
+      @setState @getInitialState!{focus}
       #$(@refs.settings.getDOMNode!)height 0
   componentDidMount: ->
     if not @state.focus
       @refs.0.click!
   componentWillUpdate: (props, state) ->
     if @props.data.short is props.data.short
-      if @state.depth isnt state.depth
-        state.focus = if state.depth is 0 then this else null
-      else if @state.pinyin isnt state.pinyin
-        console.log 'pinyin toggled'
-      else if @state.meaning isnt state.meaning
-        console.log 'translation toggled'
-      else if @state.focus is state.focus
-        state.focus = null
+      switch
+        | @state.pinyin isnt state.pinyin
+          console.log 'pinyin toggled'
+        | @state.meaning isnt state.meaning
+          console.log 'translation toggled'
+        | @state.focus is state.focus
+          state.focus = null
   componentDidUpdate: (props, state) ->
     if @props.data.short isnt props.data.short
       @setState undo: []
@@ -246,7 +246,7 @@ Sentence = React.createClass do
             data: word
             mode: @props.mode
             pinyin: @state.pinyin
-            meaning: @state.depth isnt 0 and @state.meaning
+            meaning: @state.meaning
             onChildCut:   (comp) ~>
               @state.undo.push comp
             onChildClick: (comp) ~>
@@ -322,7 +322,7 @@ Sentence = React.createClass do
                 syn.speak u
               @setState pinyin: !@state.pinyin
             \拼
-          if @state.depth isnt 0 then a do
+          if @state.undo.length isnt 0 then a do
             className: "ui toggle basic button chinese #{if @state.meaning then \active else ''}"
             onClick: ~>
               if not @state.meaning then try
