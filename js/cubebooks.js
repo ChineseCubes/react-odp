@@ -764,9 +764,10 @@
     },
     componentWillReceiveProps: function(props){
       if (this.props.data.short !== props.data.short) {
-        return this.setState({
+        this.setState({
           focus: this.getInitialState().focus
         });
+        return $(this.refs.settings.getDOMNode()).height(0);
       }
     },
     componentDidMount: function(){
@@ -777,6 +778,8 @@
     componentWillUpdate: function(props, state){
       if (this.props.data.short === props.data.short) {
         switch (false) {
+        case this.props.mode === props.mode:
+          return console.log('mode changed');
         case this.state.pinyin === state.pinyin:
           return console.log('pinyin toggled');
         case this.state.meaning === state.meaning:
@@ -799,8 +802,15 @@
         mode: this.props.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
       });
     },
+    toggleSettings: function(){
+      var $settings;
+      $settings = $(this.refs.settings.getDOMNode());
+      return $settings.animate({
+        height: $settings.height() !== 0 ? 0 : 48
+      });
+    },
     render: function(){
-      var data, words, focus, this$ = this;
+      var data, words, focus, actived, this$ = this;
       data = this.props.data;
       words = data.childrenOfDepth(0);
       return div({
@@ -821,7 +831,7 @@
             data: word,
             mode: this.props.mode,
             pinyin: this.state.pinyin,
-            meaning: this.state.meaning,
+            meaning: this.state.meaning && this.state.undo.length !== 0,
             onChildCut: function(comp){
               return this$.state.undo.push(comp);
             },
@@ -850,7 +860,20 @@
             }
           });
         }
-      }.call(this))), RedoCut({
+      }.call(this))), nav({
+        ref: 'settings',
+        className: 'navbar',
+        style: {
+          height: 0
+        }
+      }, div({
+        className: 'ui borderless menu'
+      }, div({
+        className: 'right menu'
+      }, a({
+        className: 'item toggle chinese',
+        onClick: this.toggleMode
+      }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), RedoCut({
         disabled: this.state.undo.length === 0,
         onClick: function(){
           var comp;
@@ -914,8 +937,8 @@
             pinyin: !this$.state.pinyin
           });
         }
-      }, '拼'), this.state.undo.length !== 0 ? a({
-        className: "ui toggle basic button chinese " + (this.state.meaning ? 'active' : ''),
+      }, '拼'), this.state.undo.length !== 0 ? (actived = this.state.meaning ? 'active' : '', a({
+        className: "ui toggle basic button chinese " + actived,
         onClick: function(){
           var syn, utt, text, x$, u;
           if (!this$.state.meaning) {
@@ -936,7 +959,7 @@
             meaning: !this$.state.meaning
           });
         }
-      }, 'En') : void 8)));
+      }, 'En')) : void 8)));
     }
   });
   import$((ref$ = this.CUBEBooks) != null

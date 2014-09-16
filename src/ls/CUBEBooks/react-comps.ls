@@ -183,10 +183,6 @@ Stroker = React.createClass do
       className: 'strokes'
 
 Sentence = React.createClass do
-  #DEPTH:
-  #  sentence:   0
-  #  words:      1
-  #  characters: Infinity
   displayName: 'CUBE.Sentence'
   getDefaultProps: ->
     data:    null
@@ -198,17 +194,18 @@ Sentence = React.createClass do
     meaning: @props.meaning
     focus: null
     undo: []
-    #depth: 0
   componentWillReceiveProps: (props) ->
     if @props.data.short isnt props.data.short
       @setState @getInitialState!{focus}
-      #$(@refs.settings.getDOMNode!)height 0
+      $(@refs.settings.getDOMNode!)height 0
   componentDidMount: ->
     if not @state.focus
       @refs.0.click!
   componentWillUpdate: (props, state) ->
     if @props.data.short is props.data.short
       switch
+        | @props.mode isnt props.mode
+          console.log 'mode changed'
         | @state.pinyin isnt state.pinyin
           console.log 'pinyin toggled'
         | @state.meaning isnt state.meaning
@@ -219,18 +216,11 @@ Sentence = React.createClass do
     if @props.data.short isnt props.data.short
       @setState undo: []
       @refs.0.click!
-  #renderDepthButton: (name) ->
-  #  actived = @state.depth is @DEPTH[name]
-  #  a do
-  #    className: "item #name #{if actived then 'active' else ''}"
-  #    onClick: ~>
-  #      @setState depth: @DEPTH[name]
-  #    name
   toggleMode: ->
     @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
-  #toggleSettings: ->
-  #  $settings = $ @refs.settings.getDOMNode!
-  #  $settings.animate height: if $settings.height! isnt 0 then 0 else 48
+  toggleSettings: ->
+    $settings = $ @refs.settings.getDOMNode!
+    $settings.animate height: if $settings.height! isnt 0 then 0 else 48
   render: ->
     data = @props.data
     words = data.childrenOfDepth 0
@@ -238,7 +228,6 @@ Sentence = React.createClass do
       className: 'playground'
       div do
         className: 'comp sentence'
-        #div className: 'aligner'
         for let i, word of words
           Word do
             key: "#{i}-#{word.short}"
@@ -246,7 +235,7 @@ Sentence = React.createClass do
             data: word
             mode: @props.mode
             pinyin: @state.pinyin
-            meaning: @state.meaning
+            meaning: @state.meaning and @state.undo.length isnt 0
             onChildCut:   (comp) ~>
               @state.undo.push comp
             onChildClick: (comp) ~>
@@ -258,21 +247,18 @@ Sentence = React.createClass do
                 comp.setState menu: on
                 @setState focus: comp
         #Stroker ref: 'stroker'
-      #nav do
-      #  ref: 'settings'
-      #  className: 'navbar'
-      #  style: height: 0
-      #  div do
-      #    className: 'ui borderless menu'
-      #    div do
-      #      className: 'right menu'
-      #      @renderDepthButton 'sentence'
-      #      @renderDepthButton 'words'
-      #      @renderDepthButton 'characters'
-      #      a do
-      #        className: 'item toggle chinese'
-      #        onClick: @toggleMode
-      #        if @props.mode is 'zh_TW' then 'T' else 'S'
+      nav do
+        ref: 'settings'
+        className: 'navbar'
+        style: height: 0
+        div do
+          className: 'ui borderless menu'
+          div do
+            className: 'right menu'
+            a do
+              className: 'item toggle chinese'
+              onClick: @toggleMode
+              if @props.mode is 'zh_TW' then 'T' else 'S'
       RedoCut do
         disabled: @state.undo.length is 0
         onClick: ~>
@@ -322,24 +308,26 @@ Sentence = React.createClass do
                 syn.speak u
               @setState pinyin: !@state.pinyin
             \拼
-          if @state.undo.length isnt 0 then a do
-            className: "ui toggle basic button chinese #{if @state.meaning then \active else ''}"
-            onClick: ~>
-              if not @state.meaning then try
-                syn = window.speechSynthesis
-                utt = window.SpeechSynthesisUtterance
-                text =
-                  if not @state.focus
-                    data.short
-                  else
-                    @state.focus.props.data.short
-                u = new utt text
-                  ..lang = \en-US
-                  ..volume = 1.0
-                  ..rate = 1.0
-                syn.speak u
-              @setState meaning: !@state.meaning
-            \En
+          if @state.undo.length isnt 0
+            actived = if @state.meaning then \active else ''
+            a do
+              className: "ui toggle basic button chinese #actived"
+              onClick: ~>
+                if not @state.meaning then try
+                  syn = window.speechSynthesis
+                  utt = window.SpeechSynthesisUtterance
+                  text =
+                    if not @state.focus
+                      data.short
+                    else
+                      @state.focus.props.data.short
+                  u = new utt text
+                    ..lang = \en-US
+                    ..volume = 1.0
+                    ..rate = 1.0
+                  syn.speak u
+                @setState meaning: !@state.meaning
+              \En
 
 (this.CUBEBooks ?= {}) <<< do
   AudioControl:   AudioControl

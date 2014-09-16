@@ -105,7 +105,7 @@
                       }), $('#control > .content').get()[0]);
                       settingsButton.setProps({
                         onClick: function(){
-                          throw Error('unimplemented');
+                          return sentence.toggleSettings();
                         }
                       });
                       return $('#control').modal('show');
