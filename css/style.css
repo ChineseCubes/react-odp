@@ -254,6 +254,17 @@ small {
   margin-bottom: 0.9rem;
   padding: 4rem 1rem;
 }
+#control .playground .comp.redo-cut {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+#control .playground .comp.redo-cut i {
+  margin: 0;
+}
 #control .playground .comp.word {
   position: relative;
   cursor: pointer;
@@ -312,6 +323,13 @@ small {
   border-style: solid;
   border-width: 0.5rem 0.5rem 0 0.5rem;
   border-color: #5c6166 transparent transparent transparent;
+}
+#control .playground .comp.word .actions .menu i.cut.icon {
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 #control .playground .comp.characters {
   display: inline-block;

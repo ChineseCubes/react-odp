@@ -1,5 +1,5 @@
 (function(){
-  var require, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, utils, isNaN, a, div, i, nav, span, AudioControl, Character, Word, ActionMenu, SettingsButton, Stroker, Sentence;
+  var require, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, utils, isNaN, a, div, i, nav, span, AudioControl, Character, undoStack, RedoCut, Word, ActionMenu, SettingsButton, Stroker, Sentence;
   require == null && (require = (function(packages){
     return function(it){
       return packages[it];
@@ -543,6 +543,32 @@
         }, data.zh_CN));
     }
   });
+  undoStack = [];
+  RedoCut = React.createClass({
+    displayName: 'CUBE.RedoCut',
+    render: function(){
+      var disabled;
+      disabled = undoStack.length === 0;
+      return div({
+        className: 'comp redo-cut ui black icon buttons'
+      }, div({
+        className: "ui button " + (disabled ? 'disabled' : ''),
+        onClick: function(){
+          var comp;
+          console.log('foobar');
+          comp = undoStack.pop();
+          if (comp != null) {
+            comp.setState({
+              cut: false
+            });
+          }
+          return comp != null ? comp.props.onChildClick(comp) : void 8;
+        }
+      }, i({
+        className: 'repeat icon'
+      })));
+    }
+  });
   Word = React.createClass({
     displayName: 'CUBE.Word',
     getDefaultProps: function(){
@@ -574,13 +600,20 @@
           }
         }
       }, this.state.menu ? ActionMenu({
+        cut: data.children.length > 1,
         onStroke: function(){
           throw Error('unimplemented');
         },
         onCut: function(){
-          return this$.setState({
-            cut: !this$.state.cut
+          var nextCut;
+          nextCut = !this$.state.cut;
+          if (nextCut === true) {
+            undoStack.push(this$);
+          }
+          this$.setState({
+            cut: nextCut
           });
+          return this$.props.onChildClick(this$);
         }
       }) : void 8, div({
         className: 'characters'
@@ -625,12 +658,23 @@
   });
   ActionMenu = React.createClass({
     displayName: 'CUBE.ActionMenu',
+    getDefaultProps: function(){
+      return {
+        cut: true,
+        onStroke: function(){
+          throw Error('unimplemented');
+        },
+        onCut: function(){
+          throw Error('unimplemented');
+        }
+      };
+    },
     render: function(){
       var this$ = this;
       return div({
         className: 'actions'
       }, div({
-        className: 'menu multiple'
+        className: "menu " + (this.props.cut ? 'multiple' : 'single')
       }, div({
         className: 'ui buttons'
       }, div({
@@ -641,7 +685,7 @@
         }
       }, i({
         className: 'icon pencil'
-      })), div({
+      })), this.props.cut ? div({
         className: 'ui icon button black split',
         onClick: function(it){
           it.stopPropagation();
@@ -649,7 +693,7 @@
         }
       }, i({
         className: 'icon cut'
-      })))));
+      })) : void 8)));
     }
   });
   SettingsButton = React.createClass({
@@ -759,9 +803,7 @@
         className: 'playground'
       }, div({
         className: 'comp sentence'
-      }, div({
-        className: 'aligner'
-      }), (function(){
+      }, (function(){
         var i$, results$ = [];
         for (i$ in words) {
           results$.push((fn$.call(this, i$, words[i$])));
@@ -794,9 +836,7 @@
             }
           });
         }
-      }.call(this)), Stroker({
-        ref: 'stroker'
-      })), div({
+      }.call(this))), RedoCut(), div({
         className: 'entry'
       }, this.state.focus !== null ? (focus = this.state.focus.props.data, [
         span({
@@ -878,8 +918,6 @@
     : this.CUBEBooks = {}, {
     AudioControl: AudioControl,
     SettingsButton: SettingsButton,
-    Character: Character,
-    Word: Word,
     Sentence: Sentence
   });
   function import$(obj, src){

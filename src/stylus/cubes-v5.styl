@@ -62,6 +62,16 @@ transform(v)
         position relative
         margin-bottom 0.9rem // match the height of meaning
         padding 4rem 1rem
+      &.redo-cut
+        position absolute
+        top 1rem
+        right 2rem
+        //margin auto
+        text-align center
+        padding-left 0
+        padding-right 0
+        i
+          margin 0
       &.word
         position relative
         cursor pointer
@@ -113,6 +123,8 @@ transform(v)
               border-color #5c6166 transparent transparent transparent
             //.buttons
             //  position relative
+            i.cut.icon
+              transform rotate(90deg)
       &.characters
         display inline-block
         position relative

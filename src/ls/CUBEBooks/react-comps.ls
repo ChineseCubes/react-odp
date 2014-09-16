@@ -58,6 +58,23 @@ Character = React.createClass do
           className: 'char zh_CN'
           data.zh_CN
 
+undo-stack = []
+
+RedoCut = React.createClass do
+  displayName: 'CUBE.RedoCut'
+  render: ->
+    disabled = undo-stack.length is 0
+    div do
+      className: 'comp redo-cut ui black icon buttons'
+      div do
+        className: "ui button #{if disabled then 'disabled' else ''}"
+        onClick: ->
+          console.log 'foobar'
+          comp = undo-stack.pop!
+          comp?setState cut: false
+          comp?props.onChildClick comp
+        i className: 'repeat icon'
+
 Word = React.createClass do
   displayName: 'CUBE.Word'
   getDefaultProps: ->
@@ -77,8 +94,14 @@ Word = React.createClass do
       onClick: ~> @props.onChildClick this if not @state.cut
       if @state.menu
         ActionMenu do
+          cut: data.children.length > 1
           onStroke: ~> ...
-          onCut:    ~> @setState cut: !@state.cut
+          onCut:    ~>
+            next-cut = not @state.cut
+            if next-cut is true
+              undo-stack.push this
+            @setState cut: next-cut
+            @props.onChildClick this
       div do
         className: 'characters'
         if not @state.cut
@@ -102,11 +125,15 @@ Word = React.createClass do
 
 ActionMenu = React.createClass do
   displayName: 'CUBE.ActionMenu'
+  getDefaultProps: ->
+    cut: on
+    onStroke: -> ...
+    onCut:    -> ...
   render: ->
     div do
       className: 'actions'
       div do
-        className: 'menu multiple'
+        className: "menu #{if @props.cut then 'multiple' else 'single'}"
         div do
           className: 'ui buttons'
           #div do
@@ -118,12 +145,13 @@ ActionMenu = React.createClass do
               it.stopPropagation!
               @props.onStroke.call this, it
             i className: 'icon pencil'
-          div do
-            className: 'ui icon button black split'
-            onClick: ~>
-              it.stopPropagation!
-              @props.onCut.call this, it
-            i className: 'icon cut'
+          if @props.cut
+            div do
+              className: 'ui icon button black split'
+              onClick: ~>
+                it.stopPropagation!
+                @props.onCut.call this, it
+              i className: 'icon cut'
 
 SettingsButton = React.createClass do
   displayName: 'CUBE.SettingsButton'
@@ -206,8 +234,7 @@ Sentence = React.createClass do
       className: 'playground'
       div do
         className: 'comp sentence'
-        div className: 'aligner'
-        #XXX: who decide the depth?
+        #div className: 'aligner'
         for let i, word of words
           Word do
             key: i
@@ -220,7 +247,7 @@ Sentence = React.createClass do
               comp.setState menu: on if @state.focus isnt comp
               @state.focus?setState menu: off
               @setState focus: comp
-        Stroker ref: 'stroker'
+        #Stroker ref: 'stroker'
       #nav do
       #  ref: 'settings'
       #  className: 'navbar'
@@ -236,6 +263,7 @@ Sentence = React.createClass do
       #        className: 'item toggle chinese'
       #        onClick: @toggleMode
       #        if @props.mode is 'zh_TW' then 'T' else 'S'
+      RedoCut!
       div do
         className: 'entry'
         if @state.focus isnt null
@@ -299,9 +327,7 @@ Sentence = React.createClass do
             \En
 
 (this.CUBEBooks ?= {}) <<< do
-  AudioControl: AudioControl
+  AudioControl:   AudioControl
   SettingsButton: SettingsButton
-  Character: Character
-  Word:      Word
   Sentence:  Sentence
 
