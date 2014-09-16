@@ -1,5 +1,5 @@
 (function(){
-  var require, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, utils, isNaN, a, div, i, nav, span, AudioControl, Character, undoStack, RedoCut, Word, ActionMenu, SettingsButton, Stroker, Sentence;
+  var require, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, utils, isNaN, a, div, i, nav, span, AudioControl, Character, RedoCut, Word, ActionMenu, SettingsButton, Stroker, Sentence;
   require == null && (require = (function(packages){
     return function(it){
       return packages[it];
@@ -543,27 +543,21 @@
         }, data.zh_CN));
     }
   });
-  undoStack = [];
   RedoCut = React.createClass({
     displayName: 'CUBE.RedoCut',
+    getDefaultProps: function(){
+      return {
+        disabled: true
+      };
+    },
     render: function(){
       var disabled;
-      disabled = undoStack.length === 0;
+      disabled = this.props.disabled ? 'disabled' : '';
       return div({
         className: 'comp redo-cut ui black icon buttons'
       }, div({
-        className: "ui button " + (disabled ? 'disabled' : ''),
-        onClick: function(){
-          var comp;
-          console.log('foobar');
-          comp = undoStack.pop();
-          if (comp != null) {
-            comp.setState({
-              cut: false
-            });
-          }
-          return comp != null ? comp.click() : void 8;
-        }
+        className: "ui button " + disabled,
+        onClick: this.props.onClick
       }, i({
         className: 'repeat icon'
       })));
@@ -578,6 +572,9 @@
         pinyin: false,
         meaning: false,
         menu: false,
+        onChildCut: function(){
+          throw Error('unimplemented');
+        },
         onChildClick: function(){
           throw Error('unimplemented');
         }
@@ -608,15 +605,16 @@
           throw Error('unimplemented');
         },
         onCut: function(){
-          var nextCut;
+          var nextCut, x$;
           nextCut = !this$.state.cut;
           if (nextCut === true) {
-            undoStack.push(this$);
+            x$ = this$.props;
+            x$.onChildCut(this$);
+            x$.onChildClick(this$);
           }
-          this$.setState({
+          return this$.setState({
             cut: nextCut
           });
-          return this$.props.onChildClick(this$);
         }
       }) : void 8, div({
         className: 'characters'
@@ -645,10 +643,13 @@
           function fn$(i, c){
             var this$ = this;
             return Word({
-              key: c.short,
+              key: i + "-" + c.short,
               data: c,
               mode: this.props.mode,
               pinyin: this.props.pinyin,
+              onChildCut: function(it){
+                return this$.props.onChildCut(it);
+              },
               onChildClick: function(it){
                 return this$.props.onChildClick(it);
               }
@@ -756,7 +757,8 @@
       return {
         pinyin: this.props.pinyin,
         meaning: this.props.meaning,
-        focus: null
+        focus: null,
+        undo: []
       };
     },
     componentWillReceiveProps: function(props){
@@ -788,6 +790,9 @@
     },
     componentDidUpdate: function(props, state){
       if (this.props.data.short !== props.data.short) {
+        this.setState({
+          undo: []
+        });
         return this.refs[0].click();
       }
     },
@@ -813,12 +818,15 @@
         function fn$(i, word){
           var this$ = this;
           return Word({
-            key: word.short,
+            key: i + "-" + word.short,
             ref: i,
             data: word,
             mode: this.props.mode,
             pinyin: this.state.pinyin,
             meaning: this.state.depth !== 0 && this.state.meaning,
+            onChildCut: function(comp){
+              return this$.state.undo.push(comp);
+            },
             onChildClick: function(comp){
               var ref$;
               if (this$.state.focus === comp) {
@@ -844,7 +852,19 @@
             }
           });
         }
-      }.call(this))), RedoCut(), div({
+      }.call(this))), RedoCut({
+        disabled: this.state.undo.length === 0,
+        onClick: function(){
+          var comp;
+          comp = this$.state.undo.pop();
+          if (comp != null) {
+            comp.setState({
+              cut: false
+            });
+          }
+          return comp != null ? comp.click() : void 8;
+        }
+      }), div({
         className: 'entry'
       }, this.state.focus !== null ? (focus = this.state.focus.props.data, [
         span({

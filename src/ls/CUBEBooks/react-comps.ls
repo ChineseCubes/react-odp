@@ -58,21 +58,17 @@ Character = React.createClass do
           className: 'char zh_CN'
           data.zh_CN
 
-undo-stack = []
-
 RedoCut = React.createClass do
   displayName: 'CUBE.RedoCut'
+  getDefaultProps: ->
+    disabled: true
   render: ->
-    disabled = undo-stack.length is 0
+    disabled = if @props.disabled then 'disabled' else ''
     div do
       className: 'comp redo-cut ui black icon buttons'
       div do
-        className: "ui button #{if disabled then 'disabled' else ''}"
-        onClick: ->
-          console.log 'foobar'
-          comp = undo-stack.pop!
-          comp?setState cut: false
-          comp?click!
+        className: "ui button #disabled"
+        onClick: @props.onClick
         i className: 'repeat icon'
 
 Word = React.createClass do
@@ -83,6 +79,7 @@ Word = React.createClass do
     pinyin:  off
     meaning: off
     menu:    off
+    onChildCut:   -> ...
     onChildClick: -> ...
   getInitialState: ->
     menu: @props.menu
@@ -100,9 +97,10 @@ Word = React.createClass do
           onCut:    ~>
             next-cut = not @state.cut
             if next-cut is true
-              undo-stack.push this
+              @props
+                ..onChildCut this
+                ..onChildClick this
             @setState cut: next-cut
-            @props.onChildClick this
       div do
         className: 'characters'
         if not @state.cut
@@ -115,10 +113,11 @@ Word = React.createClass do
         else
           for let i, c of data.children
             Word do
-              key: c.short
+              key: "#{i}-#{c.short}"
               data: c
               mode: @props.mode
               pinyin: @props.pinyin
+              onChildCut:   ~> @props.onChildCut it
               onChildClick: ~> @props.onChildClick it
       div do
         className: 'meaning'
@@ -197,6 +196,7 @@ Sentence = React.createClass do
     pinyin: @props.pinyin
     meaning: @props.meaning
     focus: null
+    undo: []
     #depth: 0
   componentWillReceiveProps: (props) ->
     if @props.data.short isnt props.data.short
@@ -217,6 +217,7 @@ Sentence = React.createClass do
         state.focus = null
   componentDidUpdate: (props, state) ->
     if @props.data.short isnt props.data.short
+      @setState undo: []
       @refs.0.click!
   #renderDepthButton: (name) ->
   #  actived = @state.depth is @DEPTH[name]
@@ -240,12 +241,14 @@ Sentence = React.createClass do
         #div className: 'aligner'
         for let i, word of words
           Word do
-            key: word.short
+            key: "#{i}-#{word.short}"
             ref: i
             data: word
             mode: @props.mode
             pinyin: @state.pinyin
             meaning: @state.depth isnt 0 and @state.meaning
+            onChildCut:   (comp) ~>
+              @state.undo.push comp
             onChildClick: (comp) ~>
               if @state.focus is comp
                 comp.setState menu: off
@@ -270,7 +273,12 @@ Sentence = React.createClass do
       #        className: 'item toggle chinese'
       #        onClick: @toggleMode
       #        if @props.mode is 'zh_TW' then 'T' else 'S'
-      RedoCut!
+      RedoCut do
+        disabled: @state.undo.length is 0
+        onClick: ~>
+          comp = @state.undo.pop!
+          comp?setState cut: false
+          comp?click!
       div do
         className: 'entry'
         if @state.focus isnt null
