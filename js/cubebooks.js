@@ -873,7 +873,7 @@
       }, a({
         className: 'item toggle chinese',
         onClick: this.toggleMode
-      }, this.props.mode === 'zh_TW' ? 'T' : 'S')))), RedoCut({
+      }, this.props.mode === 'zh_TW' ? '繁' : '简')))), RedoCut({
         disabled: this.state.undo.length === 0,
         onClick: function(){
           var comp;

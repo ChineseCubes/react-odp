@@ -1,7 +1,7 @@
 ``#!/usr/bin/env slimerjs``
 page = require('webpage').create!
 num = phantom.args.0 or 1
-url = 'http://0.0.0.0:8888/?' + num
+url = 'http://0.0.0.0:8080/?' + num
 
 page.onConsoleMessage = (msg) ->
   require! fs
@@ -27,6 +27,6 @@ page.onConsoleMessage = (msg) ->
 
 page.open url, (status) ->
   <- page.evaluate
-  <- setTimeout _, 1000ms
+  <- setTimeout _, 2000ms
   dom = (new DOMParser).parseFromString document.body.innerHTML, 'text/html'
-  console.log (new XMLSerializer).serializeToString(dom.body).replace(//><//g, '>\n<')
+  console.log (new XMLSerializer).serializeToString(dom.body).replace(//><//g, '>\n<').replace(/\s*<script [^<]*livereload[^<]*<\/script>\s*/g, '')

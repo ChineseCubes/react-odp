@@ -2,7 +2,7 @@
 var page, num, url;
 page = require('webpage').create();
 num = phantom.args[0] || 1;
-url = 'http://0.0.0.0:8888/?' + num;
+url = 'http://0.0.0.0:8080/?' + num;
 page.onConsoleMessage = function(msg){
   var fs;
   fs = require('fs');
@@ -14,7 +14,7 @@ page.open(url, function(status){
     return setTimeout(function(){
       var dom;
       dom = (new DOMParser).parseFromString(document.body.innerHTML, 'text/html');
-      return console.log((new XMLSerializer).serializeToString(dom.body).replace(/></g, '>\n<'));
-    }, 1000);
+      return console.log((new XMLSerializer).serializeToString(dom.body).replace(/></g, '>\n<').replace(/\s*<script [^<]*livereload[^<]*<\/script>\s*/g, ''));
+    }, 2000);
   });
 });

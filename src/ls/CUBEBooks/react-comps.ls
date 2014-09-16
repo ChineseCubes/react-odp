@@ -258,7 +258,7 @@ Sentence = React.createClass do
             a do
               className: 'item toggle chinese'
               onClick: @toggleMode
-              if @props.mode is 'zh_TW' then 'T' else 'S'
+              if @props.mode is 'zh_TW' then '繁' else '简'
       RedoCut do
         disabled: @state.undo.length is 0
         onClick: ~>
