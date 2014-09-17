@@ -21,4 +21,4 @@ gen ::
 	slimerjs gen.js 13
 
 ttf ::
-	@perl -Mutf8 -CSD -nE 's/[\x00-\xff]//g; $$_{$$_}++ for split //; END { say for qw[Open("SourceHanSansTW-Regular.otf") Select(0u3000)]; printf qq[SelectMore(0u%04x) #%s\n], $$_, chr $$_ for grep { $$_ > 10000 } map ord, sort keys %_; say for qw[SelectInvert() Clear() Generate("fonts/Noto-subset.ttf")]} ' */dict.json *xhtml | fontforge -script
+	@perl -Mutf8 -CSD -nE 's/[\x00-\xff]//g; $$_{$$_}++ for split //; END { say for qw[Open("SourceHanSansTW-Regular.ttf") Select(0u3000)]; printf qq[SelectMore(0u%04x) #%s\n], $$_, chr $$_ for grep { $$_ > 10000 } map ord, sort keys %_; say for qw[SelectInvert() Clear() Generate("fonts/Noto-subset.ttf")]} ' */dict.json *xhtml | fontforge -script
