@@ -760,13 +760,13 @@
     getDefaultProps: function(){
       return {
         data: null,
-        mode: 'zh_TW',
         pinyin: false,
         meaning: false
       };
     },
     getInitialState: function(){
       return {
+        mode: 'zh_TW',
         pinyin: this.props.pinyin,
         meaning: this.props.meaning,
         focus: null,
@@ -774,7 +774,8 @@
       };
     },
     componentWillReceiveProps: function(props){
-      if (this.props.data.short !== props.data.short) {
+      var ref$;
+      if (((ref$ = this.props.data) != null ? ref$.short : void 8) !== ((ref$ = props.data) != null ? ref$.short : void 8)) {
         this.setState({
           focus: this.getInitialState().focus
         });
@@ -782,14 +783,16 @@
       }
     },
     componentDidMount: function(){
+      var ref$;
       if (!this.state.focus) {
-        return this.refs[0].click();
+        return (ref$ = this.refs[0]) != null ? ref$.click() : void 8;
       }
     },
     componentWillUpdate: function(props, state){
-      if (this.props.data.short === props.data.short) {
+      var ref$;
+      if (((ref$ = this.props.data) != null ? ref$.short : void 8) === ((ref$ = props.data) != null ? ref$.short : void 8)) {
         switch (false) {
-        case this.props.mode === props.mode:
+        case this.state.mode === state.mode:
           return console.log('mode changed');
         case this.state.pinyin === state.pinyin:
           return console.log('pinyin toggled');
@@ -801,7 +804,8 @@
       }
     },
     componentDidUpdate: function(props, state){
-      if (this.props.data.short !== props.data.short) {
+      var ref$;
+      if (((ref$ = this.props.data) != null ? ref$.short : void 8) !== ((ref$ = props.data) != null ? ref$.short : void 8)) {
         this.setState({
           undo: []
         });
@@ -809,8 +813,8 @@
       }
     },
     toggleMode: function(){
-      return this.setProps({
-        mode: this.props.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
+      return this.setState({
+        mode: this.state.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
       });
     },
     toggleSettings: function(){
@@ -823,7 +827,7 @@
     render: function(){
       var data, words, focus, actived, this$ = this;
       data = this.props.data;
-      words = data.childrenOfDepth(0);
+      words = (data != null ? data.childrenOfDepth(0) : void 8) || [];
       return div({
         className: 'playground'
       }, div({
@@ -840,7 +844,7 @@
             key: i + "-" + word.short,
             ref: i,
             data: word,
-            mode: this.props.mode,
+            mode: this.state.mode,
             pinyin: this.state.pinyin,
             meaning: this.state.meaning && this.state.undo.length !== 0,
             onChildCut: function(comp){
@@ -884,7 +888,7 @@
       }, a({
         className: 'item toggle chinese',
         onClick: this.toggleMode
-      }, this.props.mode === 'zh_TW' ? '繁' : '简')))), RedoCut({
+      }, this.state.mode === 'zh_TW' ? '繁' : '简')))), RedoCut({
         disabled: this.state.undo.length === 0,
         onClick: function(){
           var comp;
@@ -902,7 +906,7 @@
         span({
           className: 'ui black label'
         }, focus.flatten().map(function(it){
-          return it[this$.props.mode];
+          return it[this$.state.mode];
         }).join('')), span({
           className: 'definition'
         }, focus.definition)
@@ -925,12 +929,12 @@
                 var i$, ref$, len$, results$ = [];
                 for (i$ = 0, len$ = (ref$ = text).length; i$ < len$; ++i$) {
                   c = ref$[i$];
-                  results$.push(c[this.props.mode]);
+                  results$.push(c[this.state.mode]);
                 }
                 return results$;
               }.call(this$)).join('');
               lang = (function(){
-                switch (this.props.mode) {
+                switch (this.state.mode) {
                 case 'zh_TW':
                   return 'zh-TW';
                 case 'zh_CN':

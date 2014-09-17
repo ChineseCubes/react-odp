@@ -186,25 +186,25 @@ Sentence = React.createClass do
   displayName: 'CUBE.Sentence'
   getDefaultProps: ->
     data:    null
-    mode:    'zh_TW'
     pinyin:  off
     meaning: off
   getInitialState: ->
+    mode:    'zh_TW'
     pinyin: @props.pinyin
     meaning: @props.meaning
     focus: null
     undo: []
   componentWillReceiveProps: (props) ->
-    if @props.data.short isnt props.data.short
+    if @props.data?short isnt props.data?short
       @setState @getInitialState!{focus}
       $(@refs.settings.getDOMNode!)height 0
   componentDidMount: ->
     if not @state.focus
-      @refs.0.click!
+      @refs.0?click!
   componentWillUpdate: (props, state) ->
-    if @props.data.short is props.data.short
+    if @props.data?short is props.data?short
       switch
-        | @props.mode isnt props.mode
+        | @state.mode isnt state.mode
           console.log 'mode changed'
         | @state.pinyin isnt state.pinyin
           console.log 'pinyin toggled'
@@ -213,17 +213,17 @@ Sentence = React.createClass do
         | @state.focus is state.focus
           state.focus = null
   componentDidUpdate: (props, state) ->
-    if @props.data.short isnt props.data.short
+    if @props.data?short isnt props.data?short
       @setState undo: []
       @refs.0.click!
   toggleMode: ->
-    @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
+    @setState mode: if @state.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
   toggleSettings: ->
     $settings = $ @refs.settings.getDOMNode!
     $settings.animate height: if $settings.height! isnt 0 then 0 else 48
   render: ->
     data = @props.data
-    words = data.childrenOfDepth 0
+    words = data?childrenOfDepth(0) or []
     div do
       className: 'playground'
       div do
@@ -233,7 +233,7 @@ Sentence = React.createClass do
             key: "#{i}-#{word.short}"
             ref: i
             data: word
-            mode: @props.mode
+            mode: @state.mode
             pinyin: @state.pinyin
             meaning: @state.meaning and @state.undo.length isnt 0
             onChildCut:   (comp) ~>
@@ -258,7 +258,7 @@ Sentence = React.createClass do
             a do
               className: 'item toggle chinese'
               onClick: @toggleMode
-              if @props.mode is 'zh_TW' then '繁' else '简'
+              if @state.mode is 'zh_TW' then '繁' else '简'
       RedoCut do
         disabled: @state.undo.length is 0
         onClick: ~>
@@ -271,7 +271,7 @@ Sentence = React.createClass do
           focus = @state.focus.props.data
           * span do
               className: 'ui black label'
-              focus.flatten!map(~> it[@props.mode])join ''
+              focus.flatten!map(~> it[@state.mode])join ''
             # XXX: hide word classes for now
             #span do
             #  className: 'word-class'
@@ -297,8 +297,8 @@ Sentence = React.createClass do
                     data.flatten!
                   else
                     @state.focus.props.data.flatten!
-                text = (for c in text => c[@props.mode])join ''
-                lang = switch @props.mode
+                text = (for c in text => c[@state.mode])join ''
+                lang = switch @state.mode
                   | \zh_TW => \zh-TW
                   | \zh_CN => \zh-CN
                 u = new utt text
