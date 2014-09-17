@@ -15,6 +15,10 @@ page.onConsoleMessage = (msg) ->
 @-viewport { width: 1024px; height: 768px; }
 .draw.frame:nth-child(4) { display: none !important }
 .draw.frame:nth-child(5) { left: 1cm !important; top: 0.5cm !important; }
+@font-face {
+  font-family: 'Noto Sans T Chinese';
+  src: url("../fonts/Noto-subset.ttf");
+}
 </style>
 <link rel="stylesheet" type="text/css" href="./css/reset.css" />
 <link rel="stylesheet" type="text/css" href="./css/vendor.css" />
@@ -27,6 +31,6 @@ page.onConsoleMessage = (msg) ->
 
 page.open url, (status) ->
   <- page.evaluate
-  <- setTimeout _, 2000ms
+  <- setTimeout _, 5000ms
   dom = (new DOMParser).parseFromString document.body.innerHTML, 'text/html'
   console.log (new XMLSerializer).serializeToString(dom.body).replace(//><//g, '>\n<').replace(/\s*<script [^<]*livereload[^<]*<\/script>\s*/g, '')

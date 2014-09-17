@@ -5,7 +5,7 @@
     <dc:creator id="creator">Audrey Tang</dc:creator>
     <dc:language>zh-Hant</dc:language>
     <dc:identifier id="pub-id">LittleRedCapDemo</dc:identifier>
-    <meta property="dcterms:modified">2014-09-17T01:11:11Z</meta>
+    <meta property="dcterms:modified">2014-09-18T01:11:11Z</meta>
     <dc:date>2014-07-12</dc:date>
     <dc:publisher>Audrey Tang</dc:publisher>
     <dc:contributor id="contrib1">Audrey Tang</dc:contributor>
@@ -139,6 +139,8 @@
            id="fonts-basic-icons-woff" media-type="application/font-woff" />
      <item href="fonts/cwTeX-Q-KaiZH-subset.ttf"
            id="fonts-cwTeX-Q-KaiZH-subset-ttf" media-type="application/x-font-ttf" />
+     <item href="fonts/Noto-subset.ttf"
+           id="fonts-Noto-subset-ttf" media-type="application/x-font-ttf" />
      <item href="fonts/icons.svg"
            id="fonts-icons-svg" media-type="image/svg+xml" />
      <item href="fonts/icons.ttf"
