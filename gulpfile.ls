@@ -58,7 +58,7 @@ gulp.task \js:app ->
     .pipe connect.reload!
   gulp.src [
     "#{path.src}/ls/CUBEBooks/data.ls"
-    "#{path.src}/ls/CUBEBooks/react-comps.ls"
+    "#{path.src}/ls/CUBEBooks/components.ls"
   ]
     .pipe gulp-concat 'cubebooks.ls'
     .pipe livescript!

@@ -1,4 +1,12 @@
-require ?= let packages = lodash: _ => -> packages[it]
+require ?= let
+  packages =
+    lodash: _
+    fs:
+      readFile: (path, done) ->
+        data <- $.get path, null, _, 'text'
+        done null, data
+  -> packages[it]
+require! fs
 {isArray, isString, flatten, max, min, map, zipObject} = require \lodash
 slice = Array::slice
 
@@ -82,7 +90,8 @@ class Dict
   (path, done) ~>
     tagless = utils.strip
     # XXX: should sort surrogates
-    moe <~ $.getJSON "#path/dict.json"
+    err, data <~ fs.readFile "#path/dict.json"
+    moe = JSON.parse data
     for c of moe
       moe[c]
         ..zh_TW  = tagless moe[c]zh_TW
@@ -171,7 +180,8 @@ utils =
     .join ''
   getMasterPage: (path, done) ->
     path = utils.unslash path
-    $.getJSON "#path/masterpage.json" -> done utils.patchMasterPage it, path
+    fs.readFile "#path/masterpage.json" (err, data) ->
+      done utils.patchMasterPage JSON.parse(data), path
   patchMasterPage: ({attrs}:mp, path) ->
     width  = parseInt attrs['FO:PAGE-WIDTH'],  10
     height = parseInt attrs['FO:PAGE-HEIGHT'], 10
@@ -205,8 +215,8 @@ utils =
             height: \21cm
           children:  pages
     for let i from 1 to setup.total-pages
-      data <- $.getJSON "#path/page#i.json"
-      got-one utils.patchPageJSON(data, path), i - 1
+      err, data <- fs.readFile "#path/page#i.json"
+      got-one utils.patchPageJSON(JSON.parse(data), path), i - 1
   patchPageJSON: (data, path = '') ->
     prop-names = <[name x y width height href data onClick]>
     data.children = data.children.concat master-page.children

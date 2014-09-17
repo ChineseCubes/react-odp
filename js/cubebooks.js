@@ -1,12 +1,22 @@
 (function(){
-  var require, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, utils, isNaN, a, div, i, nav, span, AudioControl, Character, RedoCut, Word, ActionMenu, SettingsButton, Stroker, Sentence;
-  require == null && (require = (function(packages){
+  var require, fs, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, utils, isNaN, a, div, i, nav, span, AudioControl, Character, RedoCut, Word, ActionMenu, SettingsButton, Stroker, Sentence;
+  require == null && (require = (function(){
+    var packages;
+    packages = {
+      lodash: _,
+      fs: {
+        readFile: function(path, done){
+          return $.get(path, null, function(data){
+            return done(null, data);
+          }, 'text');
+        }
+      }
+    };
     return function(it){
       return packages[it];
     };
-  }.call(this, {
-    lodash: _
-  })));
+  }.call(this)));
+  fs = require('fs');
   ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, flatten = ref$.flatten, max = ref$.max, min = ref$.min, map = ref$.map, zipObject = ref$.zipObject;
   slice = Array.prototype.slice;
   shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
@@ -184,8 +194,9 @@
     function Dict(path, done){
       var tagless, this$ = this instanceof ctor$ ? this : new ctor$;
       tagless = utils.strip;
-      $.getJSON(path + "/dict.json", function(moe){
-        var c, x$;
+      fs.readFile(path + "/dict.json", function(err, data){
+        var moe, c, x$;
+        moe = JSON.parse(data);
         for (c in moe) {
           x$ = moe[c];
           x$.zh_TW = tagless(moe[c].zh_TW);
@@ -302,8 +313,8 @@
     },
     getMasterPage: function(path, done){
       path = utils.unslash(path);
-      return $.getJSON(path + "/masterpage.json", function(it){
-        return done(utils.patchMasterPage(it, path));
+      return fs.readFile(path + "/masterpage.json", function(err, data){
+        return done(utils.patchMasterPage(JSON.parse(data), path));
       });
     },
     patchMasterPage: function(mp, path){
@@ -355,8 +366,8 @@
       }
       return results$;
       function fn$(i){
-        return $.getJSON(path + "/page" + i + ".json", function(data){
-          return gotOne(utils.patchPageJSON(data, path), i - 1);
+        return fs.readFile(path + "/page" + i + ".json", function(err, data){
+          return gotOne(utils.patchPageJSON(JSON.parse(data), path), i - 1);
         });
       }
     },
