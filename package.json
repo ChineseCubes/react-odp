@@ -25,6 +25,7 @@
     "gulp-replace": "^0.4.0",
     "gulp-stylus": "^0.1.0",
     "gulp-util": "^2.2.20",
+    "gulp-webpack": "^0.3.0",
     "json-stable-stringify": "^1.0.0",
     "lodash": "^2.4.1",
     "main-bower-files": "^1.0.2",

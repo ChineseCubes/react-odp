@@ -1,14 +1,16 @@
 require! <[gulp gulp-concat gulp-filter gulp-flatten gulp-replace]>
 require! <[bower main-bower-files]>
 connect    = require \gulp-connect
+webpack    = require \gulp-webpack
 gutil      = require \gulp-util
 livescript = require \gulp-livescript
 stylus     = require \gulp-stylus
 jade       = require \gulp-jade
 
 path =
-  src:   './src'
-  build: '.'
+  src:   "#__dirname/src"
+  dest:  "#__dirname/dest"
+  build: __dirname
 
 gulp.task \bower ->
   bower.commands.install!on \end (results) ->
@@ -49,27 +51,16 @@ gulp.task \js:vendor <[bower]> ->
     .pipe gulp.dest "#{path.build}/js"
 
 gulp.task \js:app ->
-  gulp.src [
-    "#{path.src}/ls/ODP/components.ls"
-  ]
-    .pipe gulp-concat 'react-odp.ls'
+  gulp.src ["#{path.src}/ls/**/*.ls", "!#{path.src}/ls/build/*.ls"]
     .pipe livescript!
-    .pipe gulp.dest "#{path.build}/js"
-    .pipe connect.reload!
-  gulp.src [
-    "#{path.src}/ls/CUBEBooks/data.ls"
-    "#{path.src}/ls/CUBEBooks/components.ls"
-  ]
-    .pipe gulp-concat 'cubebooks.ls'
-    .pipe livescript!
-    .pipe gulp.dest "#{path.build}/js"
-    .pipe connect.reload!
-  gulp.src "#{path.src}/ls/react-dots-detector.ls"
-    .pipe livescript!
-    .pipe gulp.dest "#{path.build}/js"
-    .pipe connect.reload!
-  gulp.src "#{path.src}/ls/main.ls"
-    .pipe livescript!
+    .pipe gulp.dest "#{path.dest}/"
+
+gulp.task \webpack <[js:app]> ->
+  gulp.src "#{path.dest}/main.js"
+    .pipe webpack do
+      context: "#{path.dest}/"
+      output:
+        filename: 'build.js'
     .pipe gulp.dest "#{path.build}/js"
     .pipe connect.reload!
 
@@ -106,14 +97,14 @@ gulp.task \html ->
     .pipe gulp.dest path.build
     .pipe connect.reload!
 
-gulp.task \build <[vendor js:app css:app html]>
+gulp.task \build <[vendor webpack css:app html]>
 
 gulp.task \watch <[build]> ->
   gulp
-    ..watch 'bower.json'             <[vendor]>
-    ..watch "#{path.src}/**/*.ls"    <[js:app]>
-    ..watch "#{path.src}/**/*.styl"  <[css:app]>
-    ..watch "#{path.src}/*.jade"     <[html]>
+    ..watch 'bower.json'            <[vendor]>
+    ..watch "#{path.src}/**/*.ls"   <[webpack]>
+    ..watch "#{path.src}/**/*.styl" <[css:app]>
+    ..watch "#{path.src}/*.jade"    <[html]>
 
 gulp.task \server <[watch]> ->
   connect.server do

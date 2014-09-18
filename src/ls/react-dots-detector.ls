@@ -1,3 +1,4 @@
+React = require 'react'
 {div} = React.DOM
 
 DotsDetector = React.createClass do
@@ -31,5 +32,5 @@ DotsDetector = React.createClass do
         width:    "#{@props.scale}#{@props.unit}"
         height:   "#{@props.scale}#{@props.unit}"
 
-this.DotsDetector = DotsDetector
+module.exports = DotsDetector
 

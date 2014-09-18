@@ -1,4 +1,5 @@
-{isNaN} = _
+{isNaN} = require 'lodash'
+React   = require 'react'
 {a, div, i, nav, span} = React.DOM
 
 AudioControl = React.createClass do
@@ -9,11 +10,13 @@ AudioControl = React.createClass do
   getInitialState: ->
     playing: false
   componentWillMount: ->
+    return if not @props.audio
     @props.audio
       ..on \play  @onPlay
       ..on \pause @onStop
       ..on \end   @onStop
   componentWillUnmount: ->
+    return if not @props.audio
     @props.audio
       ..off \play  @onPlay
       ..off \pause @onStop
@@ -27,6 +30,8 @@ AudioControl = React.createClass do
         width:  '100%'
         height: '100%'
       onClick: ~>
+        @props.onClick.call this, it
+        return if not @props.audio
         if not @state.playing
           @props.audio
             #..pos 0, @props.id # not work
@@ -34,7 +39,6 @@ AudioControl = React.createClass do
             ..play @props.id
         else
           @props.audio.pause! # pause every sprites
-        @props.onClick.call this, it
 
 Character = React.createClass do
   displayName: 'CUBE.Character'
@@ -329,8 +333,7 @@ Sentence = React.createClass do
                 @setState meaning: !@state.meaning
               \En
 
-(this.CUBEBooks ?= {}) <<< do
+module.exports =
   AudioControl:   AudioControl
   SettingsButton: SettingsButton
-  Sentence:  Sentence
-
+  Sentence:       Sentence

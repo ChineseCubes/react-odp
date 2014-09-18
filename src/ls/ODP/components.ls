@@ -1,4 +1,6 @@
-{isArray, isString, isNumber, filter, map, mapValues, cloneDeep} = _
+React = require 'react'
+Data  = require '../CUBEBooks/data'
+{isArray, isString, isNumber, filter, map, mapValues, cloneDeep} = require 'lodash'
 
 renderProps = -> default-components[Data.camelFromHyphenated it.data.name]? it
 doTextareaVerticalAlign = ->
@@ -123,8 +125,8 @@ default-components =
     getDefaultProps: ->
       htmlTag: \span
 
-(this.ODP ?= {}) <<< do
-  DrawMixin: DrawMixin
-  components: default-components
+module.exports =
+  DrawMixin:   DrawMixin
+  components:  default-components
   renderProps: renderProps
 
