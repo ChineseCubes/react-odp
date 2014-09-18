@@ -12,7 +12,8 @@
         vtt: null,
         pages: null,
         autoFit: true,
-        dpcm: 37.79527
+        dpcm: 37.79527,
+        showText: true
       };
     },
     getInitialState: function(){
@@ -171,8 +172,16 @@
               this$.setState({
                 text: text
               });
+              this$.setProps({
+                showText: false
+              });
               return $(this$.refs.modal.getDOMNode()).modal({
-                detachable: false
+                detachable: false,
+                onHide: function(){
+                  return this$.setProps({
+                    showText: true
+                  });
+                }
               }).modal('show');
             };
             for (i$ = 0, len$ = (ref$ = this$.props.vtt.cues).length; i$ < len$; ++i$) {
@@ -184,6 +193,9 @@
                 });
                 break;
               }
+            }
+            if (!this$.props.showText) {
+              attrs.style.display = 'none';
             }
             return ODP.components.span(props, ReactVTT.IsolatedCue({
               target: setup.path + "/audio.vtt",

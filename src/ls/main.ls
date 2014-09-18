@@ -12,6 +12,7 @@ Main = React.createClass do
     pages: null
     auto-fit: on
     dpcm: 37.79527
+    show-text: true
   getInitialState: ->
     {setup} = @props.master-page
     audio = new Howl urls: ["#{setup.path}/audio.mp3"]
@@ -109,8 +110,11 @@ Main = React.createClass do
             delete props.data.text
             attrs.onClick = ~>
               @setState text: text
+              @setProps show-text: false
               $ @refs.modal.getDOMNode!
-                .modal detachable: false
+                .modal do
+                  detachable: false
+                  onHide: ~> @setProps show-text: true
                 .modal \show
             for cue in @props.vtt.cues
               if cue.text is text
@@ -118,6 +122,7 @@ Main = React.createClass do
                   start: cue.startTime
                   end:   cue.endTime
                 break
+            attrs.style <<< display: \none if not @props.show-text
             ODP.components.span do
               props
               ReactVTT.IsolatedCue do
