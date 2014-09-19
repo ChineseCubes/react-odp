@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^2.4.1",
-    "react": "^0.11.2",
+    "react": "git://github.com/audreyt/react.git",
     "react-vtt": "^0.1.5",
     "vtt.js": "^0.11.11"
   },

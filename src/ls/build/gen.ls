@@ -24,9 +24,11 @@ content =
       #vtt: vtt
       pages: pages
       auto-fit: off
-#content = (new DOMParser).parseFromString content, 'text/html'
-#content = (new XMLSerializer).serializeToString content
-content .= replace //<(br.*?)>//g, '<$1/>'
+
+{DOMParser, XMLSerializer} = require 'xmldom'
+content = (new DOMParser).parseFromString content, 'text/html'
+content = (new XMLSerializer).serializeToString content
+#content .= replace //<(br.*?)>//g, '<$1/>'
 content .= replace //><//g, '>\n<'
 
 console.log """<?xml version="1.0" encoding="utf-8" ?>
