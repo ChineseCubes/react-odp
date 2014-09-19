@@ -44,6 +44,7 @@ console.log """<?xml version="1.0" encoding="utf-8" ?>
 <link rel="stylesheet" type="text/css" href="./css/style.css" />
 </head>
 <body>
+<div id="detector"></div>
 <div id="wrap">
 #content
 </div>
