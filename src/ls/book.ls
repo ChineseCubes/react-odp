@@ -1,4 +1,5 @@
 React     = require 'react'
+ReactVTT  = require 'react-vtt'
 CUBEBooks = require './CUBEBooks/components'
 ODP       = require './ODP/components'
 
@@ -19,7 +20,9 @@ Book = React.createClass do
   getInitialState: ->
     {setup} = @props.master-page
     audio = try new Howl urls: ["#{setup.path}/audio.mp3"]
-    audio?on \end ~> @state.current-sprite = null
+    if audio
+      require 'react-vtt/css/react-vtt.css'
+      audio.on \end ~> @state.current-sprite = null
     scale: @resize @props.dpcm
     audio: audio
     sprite: {}
@@ -121,7 +124,7 @@ Book = React.createClass do
             attrs.style <<< display: \none if not @props.show-text
             if @props.vtt
               delete props.data.text
-              for cue in @props.vtt?cues or []
+              for cue in @props.vtt.cues
                 if cue.text is text
                   ranges.push do
                     start: cue.startTime

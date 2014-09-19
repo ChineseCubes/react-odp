@@ -2,6 +2,7 @@ React        = require 'react'
 DotsDetector = require './react-dots-detector'
 Data         = require './CUBEBooks/data'
 Book         = require './book'
+ReactVTT     = require 'react-vtt'
 
 <- window.requestAnimationFrame
 <- $
@@ -13,14 +14,14 @@ dots = React.renderComponent do
 {setup}:mp <- Data.getMasterPage './LRRH/'
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
-#vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt"
+vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt"
 
 React.renderComponent do
   Book do
     master-page: mp
     data: data
     segs: segs
-    #vtt: vtt
+    vtt: vtt
     dpcm: dots.state.x
   $ \#wrap .get!0
 

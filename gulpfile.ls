@@ -61,6 +61,12 @@ gulp.task \webpack <[js:app]> ->
       context: "#{path.dest}/"
       output:
         filename: 'build.js'
+      module:
+        loaders:
+          * test: /\.css$/ loader: \style!css
+          ...
+      externals:
+        'vtt.js': \WebVTT
     .pipe gulp.dest "#{path.build}/js"
     .pipe connect.reload!
 
