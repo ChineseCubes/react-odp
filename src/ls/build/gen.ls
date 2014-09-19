@@ -45,7 +45,7 @@ console.log """<?xml version="1.0" encoding="utf-8" ?>
 </head>
 <body>
 <div id="detector"></div>
-<div id="wrap">
+<div id="app">
 #content
 </div>
 <script src="./js/vendor.js"></script>
