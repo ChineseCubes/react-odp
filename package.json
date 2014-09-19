@@ -13,7 +13,6 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^2.4.1",
-    "react": "git://github.com/audreyt/react.git",
     "react-vtt": "^0.1.5",
     "vtt.js": "^0.11.11"
   },
@@ -36,6 +35,7 @@
     "json-stable-stringify": "^1.0.0",
     "main-bower-files": "^1.0.2",
     "nib": "^1.0.2",
+    "react": "^0.11.2",
     "request": "^2.42.0",
     "style-loader": "^0.8.0",
     "xmldom": "^0.1.19"

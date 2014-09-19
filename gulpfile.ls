@@ -36,18 +36,6 @@ gulp.task \js:vendor <[bower]> ->
   gulp.src main-bower-files!
     .pipe gulp-filter <[**/*.js !**/*.min.js]>
     .pipe gulp-concat 'vendor.js'
-    .pipe gulp-replace 'node.innerHTML = html;', """
-      if (document.contentType === "application/xhtml+xml") {
-        var dom = new DOMParser().parseFromString(html, 'text/html');
-        html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\\/body>$/, '');
-      }
-      else if (document.xmlVersion) {
-        var dom = document.implementation.createHTMLDocument('');
-        dom.body.innerHTML = html;
-        html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\\/body>$/, '');
-      }
-      node.innerHTML = html;
-    """
     .pipe gulp.dest "#{path.build}/js"
 
 gulp.task \js:app ->
@@ -67,6 +55,18 @@ gulp.task \webpack <[js:app]> ->
           ...
       externals:
         'vtt.js': \WebVTT
+    .pipe gulp-replace 'node.innerHTML = html;', """
+      if (document.contentType === "application/xhtml+xml") {
+        var dom = new DOMParser().parseFromString(html, 'text/html');
+        html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\\/body>$/, '');
+      }
+      else if (document.xmlVersion) {
+        var dom = document.implementation.createHTMLDocument('');
+        dom.body.innerHTML = html;
+        html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\\/body>$/, '');
+      }
+      node.innerHTML = html;
+    """
     .pipe gulp.dest "#{path.build}/js"
     .pipe connect.reload!
 
