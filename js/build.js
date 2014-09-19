@@ -1840,8 +1840,8 @@
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
-		module.hot.accept("!!/home/caasi/Documents/ChineseCUBES/react-odp/node_modules/css-loader/index.js!/home/caasi/Documents/ChineseCUBES/react-odp/node_modules/react-vtt/css/react-vtt.css", function() {
-			var newContent = require("!!/home/caasi/Documents/ChineseCUBES/react-odp/node_modules/css-loader/index.js!/home/caasi/Documents/ChineseCUBES/react-odp/node_modules/react-vtt/css/react-vtt.css");
+		module.hot.accept("!!/Users/caasi/Documents/ChineseCUBES/react-odp/node_modules/css-loader/index.js!/Users/caasi/Documents/ChineseCUBES/react-odp/node_modules/react-vtt/css/react-vtt.css", function() {
+			var newContent = require("!!/Users/caasi/Documents/ChineseCUBES/react-odp/node_modules/css-loader/index.js!/Users/caasi/Documents/ChineseCUBES/react-odp/node_modules/react-vtt/css/react-vtt.css");
 			if(typeof newContent === 'string') newContent = [module.id, newContent, ''];
 			update(newContent);
 		});
