@@ -721,7 +721,6 @@
 	      pages = [];
 	      counter = 0;
 	      gotOne = function(data, i){
-	        data.attrs.y = i * 21.5 + "cm";
 	        pages.push(data);
 	        counter += 1;
 	        if (counter === setup.totalPages) {

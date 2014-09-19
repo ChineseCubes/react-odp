@@ -1,5 +1,5 @@
 #!/usr/bin/env lsc
-React = require \react
+React = require 'react'
 Data  = require '../CUBEBooks/data'
 Book  = require '../book'
 
@@ -24,6 +24,10 @@ content =
       #vtt: vtt
       pages: pages
       auto-fit: off
+#content = (new DOMParser).parseFromString content, 'text/html'
+#content = (new XMLSerializer).serializeToString content
+content .= replace //<(br.*?)>//g, '<$1/>'
+content .= replace //><//g, '>\n<'
 
 console.log """<?xml version="1.0" encoding="utf-8" ?>
 <html lang="zh-Hant" xml:lang="zh-Hant" xmlns="http://www.w3.org/1999/xhtml">

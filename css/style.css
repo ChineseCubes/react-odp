@@ -23,6 +23,8 @@ body {
   position: absolute;
 }
 .presentation .draw.page {
+  position: relative;
+  margin-bottom: 1% !important;
   background: #fff;
 }
 .presentation .draw.image {

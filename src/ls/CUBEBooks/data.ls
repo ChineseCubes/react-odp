@@ -196,7 +196,6 @@ utils =
     pages = []
     counter = 0
     got-one = (data, i) ->
-      data.attrs.y = "#{i * 21.5}cm"
       pages.push data
       counter += 1
       if counter is setup.total-pages
