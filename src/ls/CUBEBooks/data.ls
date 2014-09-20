@@ -160,6 +160,7 @@ class Segmentations
     @data[it]
 
 utils =
+  punctuations: punctuations
   splitNamespace: ->
     r = it.toLowerCase!split(':')reverse!
     namespace: r.1

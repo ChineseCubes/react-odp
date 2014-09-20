@@ -256,6 +256,18 @@ small {
   margin-bottom: 0.9rem;
   padding: 4rem 1rem;
 }
+.ui.modal.control .playground .comp.sentence .strokes {
+  pointer-events: none;
+}
+.ui.modal.control .playground .comp.sentence .strokes canvas {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
 .ui.modal.control .playground .comp.redo-cut {
   position: absolute;
   top: 1rem;
@@ -406,12 +418,6 @@ small {
 }
 .audio-control.playing {
   background-image: url("../images/pause.png");
-}
-#strokes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #fff;
 }
 @font-face {
   font-family: 'cwTeX Q KaiZH';

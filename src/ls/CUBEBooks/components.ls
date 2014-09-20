@@ -1,5 +1,7 @@
-{isNaN} = require 'lodash'
-React   = require 'react'
+{isNaN}      = require 'lodash'
+React        = require 'react'
+Data         = require './data'
+zhStrokeData = require 'zhStrokeData'
 {a, div, i, nav, span} = React.DOM
 
 AudioControl = React.createClass do
@@ -83,6 +85,7 @@ Word = React.createClass do
     pinyin:  off
     meaning: off
     menu:    off
+    onStroke:     -> ...
     onChildCut:   -> ...
     onChildClick: -> ...
   getInitialState: ->
@@ -97,7 +100,8 @@ Word = React.createClass do
       if @state.menu
         ActionMenu do
           cut: data.children.length > 1
-          onStroke: ~> ...
+          onStroke: ~>
+            @props.onStroke(@props.data.flatten!map (.zh_TW) .join '')
           onCut:    ~>
             next-cut = not @state.cut
             if next-cut is true
@@ -167,20 +171,33 @@ Stroker = React.createClass do
   displayName: 'ZhStrokeData.SpriteStroker'
   getDefaultProps: ->
     path: '../../strokes/'
-    words: '萌'
-  reset: (props) ->
-    props.words .= replace /，|。|？|『|』|「|」|：/g -> ''
-    @stroker =
-      new zh-stroke-data.SpriteStroker props.words, props.path
-    console.log @stroker
+  getInitialState: ->
+    play: no
+    words: null
+    stroker: null
+  componentWillUpdate: (props, state) ->
+    return if not state.words
+    punc = new RegExp Object.keys(Data.punctuations)join('|'), \g
+    state.words .= replace punc, ''
+  componentDidUpdate: (old-props, old-state) ->
     $container = $ @refs.container.getDOMNode!
-    $container
-      .empty!
-      .append @stroker.dom-elemennt
-  play:  -> @stroker.play!
-  pause: -> @stroker.pause it
-  componentDidMount: -> @reset @props
-  componentWillReceiveProps: @reset
+    $container.empty!
+    return if not @state.words or @state.words.length is 0
+    if not @state.stroker or old-state.words isnt @state.words
+      @state.stroker =
+        new zh-stroke-data.SpriteStroker do
+          @state.words
+          url:    @props.path
+          speed:  20000
+          width:  86
+          height: 86
+    $container.append @state.stroker.dom-element
+    console.log @state.play
+    if @state.play
+      @state.play = no
+      @state.stroker
+        #..fastSeek 0 # FIXME
+        ..play!
   render: ->
     div do
       ref: 'container'
@@ -202,6 +219,7 @@ Sentence = React.createClass do
     if @props.data?short isnt props.data?short
       @setState @getInitialState!{focus}
       $(@refs.settings.getDOMNode!)height 0
+      @refs.stroker.setState words: null
   componentDidMount: ->
     if not @state.focus
       @refs.0?click!
@@ -232,6 +250,9 @@ Sentence = React.createClass do
       className: 'playground'
       div do
         className: 'comp sentence'
+        Stroker do
+          key: "stroker"
+          ref: "stroker"
         for let i, word of words
           Word do
             key: "#{i}-#{word.short}"
@@ -240,6 +261,10 @@ Sentence = React.createClass do
             mode: @state.mode
             pinyin: @state.pinyin
             meaning: @state.meaning and @state.undo.length isnt 0
+            onStroke: (text) ~>
+              @refs.stroker.setState do
+                words: text
+                play:  yes
             onChildCut:   (comp) ~>
               @state.undo.push comp
             onChildClick: (comp) ~>
