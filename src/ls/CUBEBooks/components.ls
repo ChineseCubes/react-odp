@@ -99,7 +99,7 @@ Word = React.createClass do
       onClick: ~> @click! if not @state.cut
       if @state.menu
         ActionMenu do
-          cut: data.children.length > 1
+          action: if data.children.length > 1 then \cut else \stroke
           onStroke: ~>
             @props.onStroke(@props.data.flatten!map (.zh_TW) .join '')
           onCut:    ~>
@@ -126,6 +126,7 @@ Word = React.createClass do
               mode: @props.mode
               pinyin:  @props.pinyin
               meaning: @props.meaning
+              onStroke:     ~> @props.onStroke it
               onChildCut:   ~> @props.onChildCut it
               onChildClick: ~> @props.onChildClick it
       div do
@@ -133,34 +134,30 @@ Word = React.createClass do
         if @props.meaning and not @state.cut then data.short else ''
 
 ActionMenu = React.createClass do
+  icon: ->
+    | it is \stroke => \pencil
+    | it is \cut    => \cut
+    | otherwise     => \question
   displayName: 'CUBE.ActionMenu'
   getDefaultProps: ->
-    cut: on
-    onStroke: -> ...
-    onCut:    -> ...
+    action: 'cut'
   render: ->
     div do
       className: 'actions'
       div do
-        className: "menu #{if @props.cut then 'multiple' else 'single'}"
+        className: "menu single"
         div do
           className: 'ui buttons'
           #div do
           #  className: 'ui icon button black listen'
           #  i className: 'icon volume up'
           div do
-            className: 'ui icon button black write'
+            className: 'ui icon button black'
             onClick: ~>
               it.stopPropagation!
-              @props.onStroke.call this, it
-            i className: 'icon pencil'
-          if @props.cut
-            div do
-              className: 'ui icon button black split'
-              onClick: ~>
-                it.stopPropagation!
-                @props.onCut.call this, it
-              i className: 'icon cut'
+              func = "on#{@props.action.0.toUpperCase!}#{@props.action.slice 1}"
+              @props[func].call this, it
+            i className: "icon #{@icon @props.action}"
 
 SettingsButton = React.createClass do
   displayName: 'CUBE.SettingsButton'
@@ -188,9 +185,9 @@ Stroker = React.createClass do
         new zh-stroke-data.SpriteStroker do
           @state.words
           url:    @props.path
-          speed:  20000
-          width:  86
-          height: 86
+          speed:  5000
+          width:  215
+          height: 215
     $container.append @state.stroker.dom-element
     console.log @state.play
     if @state.play

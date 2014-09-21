@@ -1009,7 +1009,7 @@
 	          }
 	        }
 	      }, this.state.menu ? ActionMenu({
-	        cut: data.children.length > 1,
+	        action: data.children.length > 1 ? 'cut' : 'stroke',
 	        onStroke: function(){
 	          return this$.props.onStroke(this$.props.data.flatten().map(function(it){
 	            return it.zh_TW;
@@ -1059,6 +1059,9 @@
 	              mode: this.props.mode,
 	              pinyin: this.props.pinyin,
 	              meaning: this.props.meaning,
+	              onStroke: function(it){
+	                return this$.props.onStroke(it);
+	              },
 	              onChildCut: function(it){
 	                return this$.props.onChildCut(it);
 	              },
@@ -1073,16 +1076,20 @@
 	    }
 	  });
 	  ActionMenu = React.createClass({
+	    icon: function(it){
+	      switch (false) {
+	      case it !== 'stroke':
+	        return 'pencil';
+	      case it !== 'cut':
+	        return 'cut';
+	      default:
+	        return 'question';
+	      }
+	    },
 	    displayName: 'CUBE.ActionMenu',
 	    getDefaultProps: function(){
 	      return {
-	        cut: true,
-	        onStroke: function(){
-	          throw Error('unimplemented');
-	        },
-	        onCut: function(){
-	          throw Error('unimplemented');
-	        }
+	        action: 'cut'
 	      };
 	    },
 	    render: function(){
@@ -1090,26 +1097,20 @@
 	      return div({
 	        className: 'actions'
 	      }, div({
-	        className: "menu " + (this.props.cut ? 'multiple' : 'single')
+	        className: "menu single"
 	      }, div({
 	        className: 'ui buttons'
 	      }, div({
-	        className: 'ui icon button black write',
+	        className: 'ui icon button black',
 	        onClick: function(it){
+	          var func;
 	          it.stopPropagation();
-	          return this$.props.onStroke.call(this$, it);
+	          func = "on" + this$.props.action[0].toUpperCase() + this$.props.action.slice(1);
+	          return this$.props[func].call(this$, it);
 	        }
 	      }, i({
-	        className: 'icon pencil'
-	      })), this.props.cut ? div({
-	        className: 'ui icon button black split',
-	        onClick: function(it){
-	          it.stopPropagation();
-	          return this$.props.onCut.call(this$, it);
-	        }
-	      }, i({
-	        className: 'icon cut'
-	      })) : void 8)));
+	        className: "icon " + this.icon(this.props.action)
+	      })))));
 	    }
 	  });
 	  SettingsButton = React.createClass({
@@ -1152,9 +1153,9 @@
 	      if (!this.state.stroker || oldState.words !== this.state.words) {
 	        this.state.stroker = new zhStrokeData.SpriteStroker(this.state.words, {
 	          url: this.props.path,
-	          speed: 20000,
-	          width: 86,
-	          height: 86
+	          speed: 5000,
+	          width: 215,
+	          height: 215
 	        });
 	      }
 	      $container.append(this.state.stroker.domElement);
