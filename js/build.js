@@ -1131,6 +1131,7 @@
 	    getInitialState: function(){
 	      return {
 	        play: false,
+	        hide: true,
 	        words: null,
 	        stroker: null
 	      };
@@ -1141,7 +1142,10 @@
 	        return;
 	      }
 	      punc = new RegExp(Object.keys(Data.punctuations).join('|'), 'g');
-	      return state.words = state.words.replace(punc, '');
+	      state.words = state.words.replace(punc, '');
+	      if (state.play) {
+	        return state.hide = false;
+	      }
 	    },
 	    componentDidUpdate: function(oldProps, oldState){
 	      var $container, x$;
@@ -1159,7 +1163,6 @@
 	        });
 	      }
 	      $container.append(this.state.stroker.domElement);
-	      console.log(this.state.play);
 	      if (this.state.play) {
 	        this.state.play = false;
 	        x$ = this.state.stroker;
@@ -1168,10 +1171,25 @@
 	      }
 	    },
 	    render: function(){
+	      var this$ = this;
 	      return div({
-	        ref: 'container',
-	        className: 'strokes'
-	      });
+	        className: 'strokes',
+	        style: {
+	          display: !this.state.hide ? 'block' : 'none'
+	        }
+	      }, i({
+	        className: 'close icon link icon',
+	        onClick: function(it){
+	          it.stopImmediatePropagation();
+	          return this$.setState({
+	            hide: true
+	          });
+	        }
+	      }), div({
+	        className: 'grid'
+	      }), div({
+	        ref: 'container'
+	      }));
 	    }
 	  });
 	  Sentence = React.createClass({

@@ -7,6 +7,9 @@ transform(v)
   -webkit-transform v
   transform v
 
+grid-line      = #e0e0e0
+strokes-border = #e05656
+
 .ui.modal.control
   font-family "Noto Sans", "Noto Sans T Chinese", "Noto Sans S Chinese", "微軟正黑體", sans-serif
   .header
@@ -63,18 +66,56 @@ transform(v)
         margin-bottom 0.9rem // match the height of meaning
         padding 4rem 1rem
         .strokes
-          pointer-events none
-          canvas
-            z-index 1
+          position relative
+          z-index 2
+          background white
+          position absolute
+          top 0
+          left 0
+          bottom 0
+          right 0
+          margin auto
+          width  215px
+          height 215px
+          padding 1rem
+          border 4px solid strokes-border
+          border-radius 1.5rem
+          .close.icon.link.icon
             position absolute
-            top 0
-            left 0
-            bottom 0
-            right 0
-            margin auto
+            right -1.2rem
+            top   -1.2rem
+          .grid
+            position absolute
+            top    1rem
+            bottom 1rem
+            left   1rem
+            right  1rem
+            border 1px solid grid-line
+            border-radius 1rem
+            &:before, &:after
+              content ''
+              position absolute
+              top    0
+              bottom 0
+              left   0
+              right  0
+              margin auto
+              border 1px dashed grid-line
+            &:before
+              height 33.33%
+              border-left-width 0
+              border-right-width 0
+            &:after
+              width  33.33%
+              border-top-width 0
+              border-bottom-width 0
+          canvas
+            position absolute
+            left 1rem
+            top  1rem
       &.redo-cut
         position absolute
-        top 1rem
+      top 1rem
         right 2rem
         //margin auto
         text-align center
@@ -109,7 +150,7 @@ transform(v)
           padding 0
           .menu
             position relative
-            z-index 3
+            z-index 1
             border-radius 0.3rem
             .button
               border none

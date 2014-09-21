@@ -170,12 +170,15 @@ Stroker = React.createClass do
     path: '../../strokes/'
   getInitialState: ->
     play: no
+    hide: true
     words: null
     stroker: null
   componentWillUpdate: (props, state) ->
     return if not state.words
     punc = new RegExp Object.keys(Data.punctuations)join('|'), \g
     state.words .= replace punc, ''
+    if state.play
+      state.hide = false
   componentDidUpdate: (old-props, old-state) ->
     $container = $ @refs.container.getDOMNode!
     $container.empty!
@@ -189,7 +192,6 @@ Stroker = React.createClass do
           width:  215
           height: 215
     $container.append @state.stroker.dom-element
-    console.log @state.play
     if @state.play
       @state.play = no
       @state.stroker
@@ -197,8 +199,16 @@ Stroker = React.createClass do
         ..play!
   render: ->
     div do
-      ref: 'container'
       className: 'strokes'
+      style:
+        display: if not @state.hide then 'block' else 'none'
+      i do
+        className: 'close icon link icon'
+        onClick: ~>
+          it.stopImmediatePropagation!
+          @setState hide: true
+      div className: 'grid'
+      div ref: 'container'
 
 Sentence = React.createClass do
   displayName: 'CUBE.Sentence'
