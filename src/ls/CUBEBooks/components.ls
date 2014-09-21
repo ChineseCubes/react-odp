@@ -167,7 +167,7 @@ SettingsButton = React.createClass do
 Stroker = React.createClass do
   displayName: 'ZhStrokeData.SpriteStroker'
   getDefaultProps: ->
-    path: '../../strokes/'
+    path: './strokes/'
   getInitialState: ->
     play: no
     hide: true
