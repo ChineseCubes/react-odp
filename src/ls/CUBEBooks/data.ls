@@ -1,12 +1,7 @@
-require ?= let
-  packages =
-    lodash: _
-    fs:
-      readFile: (path, done) ->
-        data <- $.get path, null, _, 'text'
-        done null, data
-  -> packages[it]
-require! fs
+try require! fs
+fs ?= readFile: (path, done) ->
+  data <- $.get path, null, _, \text
+  done null, data
 {isArray, isString, flatten, max, min, map, zipObject} = require \lodash
 slice = Array::slice
 
@@ -165,6 +160,7 @@ class Segmentations
     @data[it]
 
 utils =
+  punctuations: punctuations
   splitNamespace: ->
     r = it.toLowerCase!split(':')reverse!
     namespace: r.1
@@ -201,7 +197,6 @@ utils =
     pages = []
     counter = 0
     got-one = (data, i) ->
-      data.attrs.y = "#{i * 21.5}cm"
       pages.push data
       counter += 1
       if counter is setup.total-pages
@@ -245,22 +240,22 @@ utils =
     for child in node.children
       utils.traverse child, onNode, parents.concat [node.name]
   strip: ->
-    tmp = document.createElement 'span'
-    tmp.innerHTML = switch
-      | document.contentType is 'application/xhtml+xml'
-        new XMLSerializer!serializeToString(
-          new DOMParser!parseFromString(it, 'text/html').body
-        ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
-      | document.xmlVersion
-        dom = document.implementation.createHTMLDocument ''
-        dom.body.innerHTML = it
-        new XMLSerializer!serializeToString(
-          dom.body
-        ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
-      | otherwise => it
-    tmp.textContent or tmp.innerText or ''
+    it.replace /<.*?>/g -> ''
+    #tmp = document.createElement 'span'
+    #tmp.innerHTML = switch
+    #  | document.contentType is 'application/xhtml+xml'
+    #    new XMLSerializer!serializeToString(
+    #      new DOMParser!parseFromString(it, 'text/html').body
+    #    ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
+    #  | document.xmlVersion
+    #    dom = document.implementation.createHTMLDocument ''
+    #    dom.body.innerHTML = it
+    #    new XMLSerializer!serializeToString(
+    #      dom.body
+    #    ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
+    #  | otherwise => it
+    #tmp.textContent or tmp.innerText or ''
   Segmentations: Segmentations
 
-(this.Data ?= {}) <<< utils
-module?exports = this.Data
+module.exports = utils
 

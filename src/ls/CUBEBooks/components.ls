@@ -1,4 +1,7 @@
-{isNaN} = _
+{isNaN}      = require 'lodash'
+React        = require 'react'
+Data         = require './data'
+zhStrokeData = try require 'zhStrokeData'
 {a, div, i, nav, span} = React.DOM
 
 AudioControl = React.createClass do
@@ -9,11 +12,13 @@ AudioControl = React.createClass do
   getInitialState: ->
     playing: false
   componentWillMount: ->
+    return if not @props.audio
     @props.audio
       ..on \play  @onPlay
       ..on \pause @onStop
       ..on \end   @onStop
   componentWillUnmount: ->
+    return if not @props.audio
     @props.audio
       ..off \play  @onPlay
       ..off \pause @onStop
@@ -27,6 +32,8 @@ AudioControl = React.createClass do
         width:  '100%'
         height: '100%'
       onClick: ~>
+        @props.onClick.call this, it
+        return if not @props.audio
         if not @state.playing
           @props.audio
             #..pos 0, @props.id # not work
@@ -34,7 +41,6 @@ AudioControl = React.createClass do
             ..play @props.id
         else
           @props.audio.pause! # pause every sprites
-        @props.onClick.call this, it
 
 Character = React.createClass do
   displayName: 'CUBE.Character'
@@ -79,6 +85,7 @@ Word = React.createClass do
     pinyin:  off
     meaning: off
     menu:    off
+    onStroke:     -> ...
     onChildCut:   -> ...
     onChildClick: -> ...
   getInitialState: ->
@@ -92,8 +99,9 @@ Word = React.createClass do
       onClick: ~> @click! if not @state.cut
       if @state.menu
         ActionMenu do
-          cut: data.children.length > 1
-          onStroke: ~> ...
+          action: if data.children.length > 1 then \cut else \stroke
+          onStroke: ~>
+            @props.onStroke(@props.data.flatten!map (.zh_TW) .join '')
           onCut:    ~>
             next-cut = not @state.cut
             if next-cut is true
@@ -118,6 +126,7 @@ Word = React.createClass do
               mode: @props.mode
               pinyin:  @props.pinyin
               meaning: @props.meaning
+              onStroke:     ~> @props.onStroke it
               onChildCut:   ~> @props.onChildCut it
               onChildClick: ~> @props.onChildClick it
       div do
@@ -125,34 +134,30 @@ Word = React.createClass do
         if @props.meaning and not @state.cut then data.short else ''
 
 ActionMenu = React.createClass do
+  icon: ->
+    | it is \stroke => \pencil
+    | it is \cut    => \cut
+    | otherwise     => \question
   displayName: 'CUBE.ActionMenu'
   getDefaultProps: ->
-    cut: on
-    onStroke: -> ...
-    onCut:    -> ...
+    action: 'cut'
   render: ->
     div do
       className: 'actions'
       div do
-        className: "menu #{if @props.cut then 'multiple' else 'single'}"
+        className: "menu single"
         div do
           className: 'ui buttons'
           #div do
           #  className: 'ui icon button black listen'
           #  i className: 'icon volume up'
           div do
-            className: 'ui icon button black write'
+            className: 'ui icon button black'
             onClick: ~>
               it.stopPropagation!
-              @props.onStroke.call this, it
-            i className: 'icon pencil'
-          if @props.cut
-            div do
-              className: 'ui icon button black split'
-              onClick: ~>
-                it.stopPropagation!
-                @props.onCut.call this, it
-              i className: 'icon cut'
+              func = "on#{@props.action.0.toUpperCase!}#{@props.action.slice 1}"
+              @props[func].call this, it
+            i className: "icon #{@icon @props.action}"
 
 SettingsButton = React.createClass do
   displayName: 'CUBE.SettingsButton'
@@ -163,48 +168,66 @@ Stroker = React.createClass do
   displayName: 'ZhStrokeData.SpriteStroker'
   getDefaultProps: ->
     path: '../../strokes/'
-    words: '萌'
-  reset: (props) ->
-    props.words .= replace /，|。|？|『|』|「|」|：/g -> ''
-    @stroker =
-      new zh-stroke-data.SpriteStroker props.words, props.path
-    console.log @stroker
+  getInitialState: ->
+    play: no
+    hide: true
+    words: null
+    stroker: null
+  componentWillUpdate: (props, state) ->
+    return if not state.words
+    punc = new RegExp Object.keys(Data.punctuations)join('|'), \g
+    state.words .= replace punc, ''
+  componentDidUpdate: (old-props, old-state) ->
     $container = $ @refs.container.getDOMNode!
-    $container
-      .empty!
-      .append @stroker.dom-elemennt
-  play:  -> @stroker.play!
-  pause: -> @stroker.pause it
-  componentDidMount: -> @reset @props
-  componentWillReceiveProps: @reset
+    $container.empty!
+    return if not @state.words or @state.words.length is 0
+    if not @state.stroker or old-state.words isnt @state.words
+      @state.stroker =
+        new zh-stroke-data.SpriteStroker do
+          @state.words
+          url:    @props.path
+          speed:  5000
+          width:  215
+          height: 215
+    $container.append @state.stroker.dom-element
+    if @state.play
+      @state.play = no
+      @state.stroker
+        #..fastSeek 0 # FIXME
+        ..play!
   render: ->
     div do
-      ref: 'container'
       className: 'strokes'
+      style:
+        display: if not @state.hide then 'block' else 'none'
+      onClick: ~> @setState hide: true
+      div className: 'grid'
+      div ref: 'container'
 
 Sentence = React.createClass do
   displayName: 'CUBE.Sentence'
   getDefaultProps: ->
     data:    null
-    mode:    'zh_TW'
     pinyin:  off
     meaning: off
   getInitialState: ->
+    mode:    'zh_TW'
     pinyin: @props.pinyin
     meaning: @props.meaning
     focus: null
     undo: []
   componentWillReceiveProps: (props) ->
-    if @props.data.short isnt props.data.short
+    if @props.data?short isnt props.data?short
       @setState @getInitialState!{focus}
       $(@refs.settings.getDOMNode!)height 0
+      @refs.stroker.setState words: null
   componentDidMount: ->
     if not @state.focus
-      @refs.0.click!
+      @refs.0?click!
   componentWillUpdate: (props, state) ->
-    if @props.data.short is props.data.short
+    if @props.data?short is props.data?short
       switch
-        | @props.mode isnt props.mode
+        | @state.mode isnt state.mode
           console.log 'mode changed'
         | @state.pinyin isnt state.pinyin
           console.log 'pinyin toggled'
@@ -213,32 +236,49 @@ Sentence = React.createClass do
         | @state.focus is state.focus
           state.focus = null
   componentDidUpdate: (props, state) ->
-    if @props.data.short isnt props.data.short
+    if @props.data?short isnt props.data?short
       @setState undo: []
       @refs.0.click!
   toggleMode: ->
-    @setProps mode: if @props.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
+    @setState mode: if @state.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
   toggleSettings: ->
     $settings = $ @refs.settings.getDOMNode!
     $settings.animate height: if $settings.height! isnt 0 then 0 else 48
   render: ->
     data = @props.data
-    words = data.childrenOfDepth 0
+    words = data?childrenOfDepth(0) or []
     div do
       className: 'playground'
       div do
         className: 'comp sentence'
+        Stroker do
+          key: "stroker"
+          ref: "stroker"
         for let i, word of words
           Word do
             key: "#{i}-#{word.short}"
             ref: i
             data: word
-            mode: @props.mode
+            mode: @state.mode
             pinyin: @state.pinyin
             meaning: @state.meaning and @state.undo.length isnt 0
+            onStroke: (text) ~>
+              stroker = @refs.stroker
+              if stroker.state.hide
+                stroker.setState do
+                  words: text
+                  play:  yes
+                  hide:  false
+              else
+                stroker.setState do
+                  words: null
+                  hide: true
             onChildCut:   (comp) ~>
               @state.undo.push comp
             onChildClick: (comp) ~>
+              @refs.stroker.setState do
+                words: null
+                hide: true
               if @state.focus is comp
                 comp.setState menu: off
                 @setState focus: null
@@ -258,7 +298,7 @@ Sentence = React.createClass do
             a do
               className: 'item toggle chinese'
               onClick: @toggleMode
-              if @props.mode is 'zh_TW' then '繁' else '简'
+              if @state.mode is 'zh_TW' then '繁' else '简'
       RedoCut do
         disabled: @state.undo.length is 0
         onClick: ~>
@@ -271,7 +311,7 @@ Sentence = React.createClass do
           focus = @state.focus.props.data
           * span do
               className: 'ui black label'
-              focus.flatten!map(~> it[@props.mode])join ''
+              focus.flatten!map(~> it[@state.mode])join ''
             # XXX: hide word classes for now
             #span do
             #  className: 'word-class'
@@ -297,8 +337,8 @@ Sentence = React.createClass do
                     data.flatten!
                   else
                     @state.focus.props.data.flatten!
-                text = (for c in text => c[@props.mode])join ''
-                lang = switch @props.mode
+                text = (for c in text => c[@state.mode])join ''
+                lang = switch @state.mode
                   | \zh_TW => \zh-TW
                   | \zh_CN => \zh-CN
                 u = new utt text
@@ -329,8 +369,7 @@ Sentence = React.createClass do
                 @setState meaning: !@state.meaning
               \En
 
-(this.CUBEBooks ?= {}) <<< do
+module.exports =
   AudioControl:   AudioControl
   SettingsButton: SettingsButton
-  Sentence:  Sentence
-
+  Sentence:       Sentence

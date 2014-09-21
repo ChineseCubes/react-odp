@@ -1,12 +1,12 @@
-#!/usr/bin/lsc
+#!/usr/bin/env lsc
 require! <[fs request colors]>
 {filter, unique, omit} = require \lodash
 stringify = require \json-stable-stringify
 Data      = require '../CUBEBooks/data'
 
 if not process.argv.2
-  [,filename] = /.*\/(.*)/exec process.argv.1
-  console.log "Usage: #filename <path>"
+  {1:filename} = /.*\/(.*)/exec process.argv.1
+  console.log "Usage: ./#filename [book path]"
   process.exit 0
 
 path = Data.unslash process.argv.2

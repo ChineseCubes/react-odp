@@ -23,6 +23,8 @@ body {
   position: absolute;
 }
 .presentation .draw.page {
+  position: relative;
+  margin-bottom: 1% !important;
   background: #fff;
 }
 .presentation .draw.image {
@@ -186,34 +188,34 @@ small {
     display: none !important;
   }
 }
-#control {
+.ui.modal.control {
   font-family: "Noto Sans", "Noto Sans T Chinese", "Noto Sans S Chinese", "微軟正黑體", sans-serif;
 }
-#control .header .settings.icon {
+.ui.modal.control .header .settings.icon {
   float: right;
   cursor: pointer;
 }
-#control .content {
+.ui.modal.control .content {
   padding: 0;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-#control .playground {
+.ui.modal.control .playground {
   font-size: 120%;
   text-align: center;
 }
-#control .playground .navbar {
+.ui.modal.control .playground .navbar {
   position: absolute;
   overflow: hidden;
   left: 0;
   top: 1px;
   right: 0;
 }
-#control .playground .navbar .menu {
+.ui.modal.control .playground .navbar .menu {
   -webkit-border-radius: 0;
   border-radius: 0;
 }
-#control .playground .entry {
+.ui.modal.control .playground .entry {
   position: relative;
   background: #fff;
   border-bottom-left-radius: 5px;
@@ -224,58 +226,111 @@ small {
   font-size: 1rem;
   text-align: left;
 }
-#control .playground .entry .definition {
+.ui.modal.control .playground .entry .definition {
   line-height: 2rem;
   margin-left: 1rem;
 }
-#control .playground .entry .word-class {
+.ui.modal.control .playground .entry .word-class {
   margin-left: 0.5rem;
 }
-#control .playground .entry .display-mode {
+.ui.modal.control .playground .entry .display-mode {
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
 }
-#control .playground .entry .display-mode .aligner {
+.ui.modal.control .playground .entry .display-mode .aligner {
   vertical-align: middle;
   display: inline-block;
   height: 100%;
 }
-#control .playground .entry .display-mode .button {
+.ui.modal.control .playground .entry .display-mode .button {
   vertical-align: middle;
   -webkit-box-shadow: none;
   box-shadow: none;
   padding: 0.5rem;
   margin-right: 0.5rem;
 }
-#control .playground .comp.sentence {
+.ui.modal.control .playground .comp.sentence {
   position: relative;
-  margin-bottom: 0.9rem;
   padding: 4rem 1rem;
 }
-#control .playground .comp.redo-cut {
+.ui.modal.control .playground .comp.sentence .strokes {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 215px;
+  height: 215px;
+  padding: 1rem;
+  border: 4px solid #e05656;
+  -webkit-border-radius: 1.5rem;
+  border-radius: 1.5rem;
+}
+.ui.modal.control .playground .comp.sentence .strokes .grid {
   position: absolute;
   top: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  border: 1px solid #e0e0e0;
+  -webkit-border-radius: 1rem;
+  border-radius: 1rem;
+}
+.ui.modal.control .playground .comp.sentence .strokes .grid:before,
+.ui.modal.control .playground .comp.sentence .strokes .grid:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 1px dashed #e0e0e0;
+}
+.ui.modal.control .playground .comp.sentence .strokes .grid:before {
+  height: 33.33%;
+  border-left-width: 0;
+  border-right-width: 0;
+}
+.ui.modal.control .playground .comp.sentence .strokes .grid:after {
+  width: 33.33%;
+  border-top-width: 0;
+  border-bottom-width: 0;
+}
+.ui.modal.control .playground .comp.sentence .strokes canvas {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+}
+.ui.modal.control .playground .comp.redo-cut {
+  position: absolute;
+}
+.ui.modal.control .playground .comp top 1rem {
   right: 2rem;
   text-align: center;
   padding-left: 0;
   padding-right: 0;
 }
-#control .playground .comp.redo-cut i {
+.ui.modal.control .playground .comp top 1rem i {
   margin: 0;
 }
-#control .playground .comp.word {
+.ui.modal.control .playground .comp.word {
   position: relative;
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
   margin-right: 1rem;
 }
-#control .playground .comp.word:last-child {
+.ui.modal.control .playground .comp.word:last-child {
   margin-right: 0;
 }
-#control .playground .comp.word .meaning {
+.ui.modal.control .playground .comp.word .meaning {
   position: absolute;
   left: 0;
   right: 0;
@@ -286,33 +341,33 @@ small {
   text-align: center;
   color: #000;
 }
-#control .playground .comp.word .actions {
+.ui.modal.control .playground .comp.word .actions {
   position: absolute;
   top: -3rem;
   left: 50%;
   text-align: center;
   padding: 0;
 }
-#control .playground .comp.word .actions .menu {
+.ui.modal.control .playground .comp.word .actions .menu {
   position: relative;
-  z-index: 3;
+  z-index: 1;
   -webkit-border-radius: 0.3rem;
   border-radius: 0.3rem;
 }
-#control .playground .comp.word .actions .menu .button {
+.ui.modal.control .playground .comp.word .actions .menu .button {
   border: none;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-#control .playground .comp.word .actions .menu.single {
+.ui.modal.control .playground .comp.word .actions .menu.single {
   width: 3rem;
   margin-left: -1.5rem;
 }
-#control .playground .comp.word .actions .menu.multiple {
+.ui.modal.control .playground .comp.word .actions .menu.multiple {
   width: 6rem;
   margin-left: -3rem;
 }
-#control .playground .comp.word .actions .menu:before {
+.ui.modal.control .playground .comp.word .actions .menu:before {
   position: absolute;
   margin-left: -0.5rem;
   left: 50%;
@@ -324,22 +379,22 @@ small {
   border-width: 0.5rem 0.5rem 0 0.5rem;
   border-color: #5c6166 transparent transparent transparent;
 }
-#control .playground .comp.word .actions .menu i.cut.icon {
+.ui.modal.control .playground .comp.word .actions .menu i.cut.icon {
   -moz-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
 }
-#control .playground .comp.characters {
+.ui.modal.control .playground .comp.characters {
   display: inline-block;
   position: relative;
   cursor: pointer;
 }
-#control .playground .comp.character {
+.ui.modal.control .playground .comp.character {
   display: inline-block;
 }
-#control .playground .comp.character .char {
+.ui.modal.control .playground .comp.character .char {
   text-align: center;
   display: inline-block;
   position: relative;
@@ -351,7 +406,7 @@ small {
   -webkit-border-radius: 0.5rem;
   border-radius: 0.5rem;
 }
-#control .playground .comp.character .pronounciation {
+.ui.modal.control .playground .comp.character .pronounciation {
   margin: 0;
   padding: 0;
   font-weight: normal;
@@ -362,16 +417,16 @@ small {
   text-align: center;
   color: rgba(0,0,0,0.5);
 }
-#control #deck {
+.ui.modal.control #deck {
   width: 100%;
   padding: 1rem;
   text-align: center;
   position: relative;
 }
-#control #deck .word .characters {
+.ui.modal.control #deck .word .characters {
   cursor: pointer;
 }
-#control #subject {
+.ui.modal.control #subject {
   font-size: 1.2rem;
   line-height: 1.5em;
   font-weight: bold;
@@ -380,7 +435,7 @@ small {
   background-color: #ff5453;
   color: #fff;
 }
-#control #actions .congratulations {
+.ui.modal.control #actions .congratulations {
   display: inline-block;
   padding: 1rem;
   background-color: #fff;
@@ -391,7 +446,7 @@ small {
   -webkit-box-shadow: #000 0 0 1px;
   box-shadow: #000 0 0 1px;
 }
-#control #actions .congratulations .button {
+.ui.modal.control #actions .congratulations .button {
   margin: 0 0.1rem;
 }
 .audio-control {
@@ -404,12 +459,6 @@ small {
 }
 .audio-control.playing {
   background-image: url("../images/pause.png");
-}
-#strokes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #fff;
 }
 @font-face {
   font-family: 'cwTeX Q KaiZH';
