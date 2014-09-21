@@ -253,7 +253,6 @@ small {
 }
 .ui.modal.control .playground .comp.sentence {
   position: relative;
-  margin-bottom: 0.9rem;
   padding: 4rem 1rem;
 }
 .ui.modal.control .playground .comp.sentence .strokes {
@@ -272,11 +271,6 @@ small {
   border: 4px solid #e05656;
   -webkit-border-radius: 1.5rem;
   border-radius: 1.5rem;
-}
-.ui.modal.control .playground .comp.sentence .strokes .close.icon.link.icon {
-  position: absolute;
-  right: -1.2rem;
-  top: -1.2rem;
 }
 .ui.modal.control .playground .comp.sentence .strokes .grid {
   position: absolute;

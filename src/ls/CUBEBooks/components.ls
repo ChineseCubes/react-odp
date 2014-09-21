@@ -1,7 +1,7 @@
 {isNaN}      = require 'lodash'
 React        = require 'react'
 Data         = require './data'
-zhStrokeData = require 'zhStrokeData'
+zhStrokeData = try require 'zhStrokeData'
 {a, div, i, nav, span} = React.DOM
 
 AudioControl = React.createClass do
@@ -177,8 +177,6 @@ Stroker = React.createClass do
     return if not state.words
     punc = new RegExp Object.keys(Data.punctuations)join('|'), \g
     state.words .= replace punc, ''
-    if state.play
-      state.hide = false
   componentDidUpdate: (old-props, old-state) ->
     $container = $ @refs.container.getDOMNode!
     $container.empty!
@@ -202,11 +200,7 @@ Stroker = React.createClass do
       className: 'strokes'
       style:
         display: if not @state.hide then 'block' else 'none'
-      i do
-        className: 'close icon link icon'
-        onClick: ~>
-          it.stopImmediatePropagation!
-          @setState hide: true
+      onClick: ~> @setState hide: true
       div className: 'grid'
       div ref: 'container'
 
@@ -269,12 +263,22 @@ Sentence = React.createClass do
             pinyin: @state.pinyin
             meaning: @state.meaning and @state.undo.length isnt 0
             onStroke: (text) ~>
-              @refs.stroker.setState do
-                words: text
-                play:  yes
+              stroker = @refs.stroker
+              if stroker.state.hide
+                stroker.setState do
+                  words: text
+                  play:  yes
+                  hide:  false
+              else
+                stroker.setState do
+                  words: null
+                  hide: true
             onChildCut:   (comp) ~>
               @state.undo.push comp
             onChildClick: (comp) ~>
+              @refs.stroker.setState do
+                words: null
+                hide: true
               if @state.focus is comp
                 comp.setState menu: off
                 @setState focus: null
