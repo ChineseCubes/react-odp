@@ -131,18 +131,16 @@ Book = React.createClass do
                     start: cue.startTime
                     end:   cue.endTime
                   break
-              ODP.components.span do
-                props
-                ReactVTT.IsolatedCue do
-                  target: "#{setup.path}/audio.vtt"
-                  match: text
-                  currentTime: ~>
-                    if @state.current-sprite
-                      @state.current-sprite.0 / 1000 + @state.audio.pos!
-                    else
-                      0
-            else
-              ODP.renderProps props
+            ODP.components.span do
+              props
+              ReactVTT.IsolatedCue do
+                target: "#{setup.path}/audio.vtt"
+                match: text
+                currentTime: ~>
+                  if @state.current-sprite
+                    @state.current-sprite.0 / 1000 + @state.audio.pos!
+                  else
+                    0
           | otherwise => ODP.renderProps props
 
 module.exports = Book

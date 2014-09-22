@@ -1,7 +1,8 @@
 #!/usr/bin/env lsc
-React = require 'react'
-Data  = require '../CUBEBooks/data'
-Book  = require '../book'
+React    = require 'react'
+ReactVTT = require 'react-vtt'
+Data     = require '../CUBEBooks/data'
+Book     = require '../book'
 
 path = process.argv.2
 pages = Array::slice.call process.argv, 3
@@ -13,7 +14,7 @@ if not path or not pages.length
 {setup}:mp <- Data.getMasterPage path
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
-#vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt"
+vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt"
 
 content =
   React.renderComponentToString do
@@ -21,7 +22,7 @@ content =
       master-page: mp
       data: data
       segs: segs
-      #vtt: vtt
+      vtt:  vtt
       pages: pages
       auto-fit: off
 
