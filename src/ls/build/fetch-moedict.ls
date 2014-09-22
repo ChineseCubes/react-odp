@@ -28,6 +28,20 @@ fetched = {}
 chars = unique Array::slice.call(chars)
         |> unique
         |> filter _, (-> 0x4E00 <= it.charCodeAt 0)
+/**
+for c in chars
+  hex = parseInt(c.charCodeAt 0, 10)toString 16
+  console.log """
+    <item href="strokes/#{hex}.json"
+          id="strokes-#{hex}-json" media-type="application/json" />
+  """
+/**/
+/**
+for c in chars
+  hex = parseInt(c.charCodeAt 0, 10)toString 16
+  console.log "cp ../../zh-stroke-data/json/#{hex}.json ./strokes/"
+/**/
+/**/
 for let c in chars
   err, res, body <- request "https://www.moedict.tw/~#c.json"
   fetched[c] = if not err and res.statusCode is 200
@@ -44,3 +58,4 @@ for let c in chars
     process.stdout.write "\n"
     result = omit fetched, (!)
     fs.writeFileSync "#path/dict.json", stringify(result, space: 2)
+/**/
