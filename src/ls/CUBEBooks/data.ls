@@ -197,7 +197,7 @@ utils =
     pages = []
     counter = 0
     got-one = (data, i) ->
-      pages.push data
+      pages[i] = data
       counter += 1
       if counter is setup.total-pages
         done do

@@ -713,7 +713,7 @@
 	      pages = [];
 	      counter = 0;
 	      gotOne = function(data, i){
-	        pages.push(data);
+	        pages[i] = data;
 	        counter += 1;
 	        if (counter === setup.totalPages) {
 	          return done({
