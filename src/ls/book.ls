@@ -34,13 +34,6 @@ Book = React.createClass do
     @state.audio = audio
   componentDidMount: ->
     @state.audio.sprite @state.sprite
-    if not @props.auto-fit
-      $.fn.modal = ->
-        @fadeIn \fast
-        @css marginTop: \-200px, opacity: 0.9
-        $('#wrap').css \opacity 0.5
-        @on \click \.close ~> $('#wrap').css \opacity 1 @fadeOut \fast
-        $('#wrap').one \click ~> $('#wrap').css \opacity 1 @fadeOut \fast
   resize: (dpcm) ->
     return 0.98 if not @props.auto-fit
     $window = $ window
@@ -117,11 +110,22 @@ Book = React.createClass do
             attrs.onClick = ~>
               @setState text: text
               @setProps show-text: false
-              $ @refs.modal.getDOMNode!
-                .modal do
-                  detachable: false
-                  onHide: ~> @setProps show-text: true
-                .modal \show
+              $pages = $ '.office.presentation'
+              $modal = $ @refs.modal.getDOMNode!
+              show = ~>
+                $pages.css \opacity 1
+                $modal.fadeOut \fast
+                @setProps show-text: true
+              $pages.css \opacity 0.5
+              $modal
+                .fadeIn \fast
+                .css marginTop: \-200px, opacity: 0.9
+                .one \click \.close show
+              #$ @refs.modal.getDOMNode!
+              #  .modal do
+              #    detachable: false
+              #    onHide: ~> @setProps show-text: true
+              #  .modal \show
             attrs.style <<< display: \none if not @props.show-text
             if @props.vtt
               delete props.data.text

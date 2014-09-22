@@ -199,24 +199,7 @@
 	      return this.state.audio = audio;
 	    },
 	    componentDidMount: function(){
-	      this.state.audio.sprite(this.state.sprite);
-	      if (!this.props.autoFit) {
-	        return $.fn.modal = function(){
-	          var this$ = this;
-	          this.fadeIn('fast');
-	          this.css({
-	            marginTop: '-200px',
-	            opacity: 0.9
-	          });
-	          $('#wrap').css('opacity', 0.5);
-	          this.on('click', '.close', function(){
-	            return $('#wrap').css('opacity', 1, this$.fadeOut('fast'));
-	          });
-	          return $('#wrap').one('click', function(){
-	            return $('#wrap').css('opacity', 1, this$.fadeOut('fast'));
-	          });
-	        };
-	      }
+	      return this.state.audio.sprite(this.state.sprite);
 	    },
 	    resize: function(dpcm){
 	      var $window, setup, ratio, pxWidth, pxHeight, width, height;
@@ -321,20 +304,27 @@
 	          case !(data.name === 'span' && data.text):
 	            text = props.data.text;
 	            attrs.onClick = function(){
+	              var $pages, $modal, show;
 	              this$.setState({
 	                text: text
 	              });
 	              this$.setProps({
 	                showText: false
 	              });
-	              return $(this$.refs.modal.getDOMNode()).modal({
-	                detachable: false,
-	                onHide: function(){
-	                  return this$.setProps({
-	                    showText: true
-	                  });
-	                }
-	              }).modal('show');
+	              $pages = $('.office.presentation');
+	              $modal = $(this$.refs.modal.getDOMNode());
+	              show = function(){
+	                $pages.css('opacity', 1);
+	                $modal.fadeOut('fast');
+	                return this$.setProps({
+	                  showText: true
+	                });
+	              };
+	              $pages.css('opacity', 0.5);
+	              return $modal.fadeIn('fast').css({
+	                marginTop: '-200px',
+	                opacity: 0.9
+	              }).one('click', '.close', show);
 	            };
 	            if (!this$.props.showText) {
 	              attrs.style.display = 'none';
