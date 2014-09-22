@@ -10,28 +10,35 @@ AudioControl = React.createClass do
     id: 0
     audio: null
   getInitialState: ->
+    loading: true
     playing: false
   componentWillMount: ->
     return if not @props.audio
     @props.audio
+      ..on \load  @onLoad
       ..on \play  @onPlay
       ..on \pause @onStop
       ..on \end   @onStop
   componentWillUnmount: ->
     return if not @props.audio
     @props.audio
+      ..off \load  @onLoad
       ..off \play  @onPlay
       ..off \pause @onStop
       ..off \end   @onStop
+  onLoad: -> @setState loading: false
   onPlay: -> @setState playing: true
   onStop: -> @setState playing: false
   render: ->
+    classes = 'audio-control'
+    classes += ' playing' if @state.playing
+    classes += ' loading' if @state.loading
     div do
-      className: "audio-control#{if @state.playing then ' playing' else ''}"
+      className: classes
       style:
         width:  '100%'
         height: '100%'
-      onClick: ~>
+      onClick: if not @state.loading then ~>
         @props.onClick.call this, it
         return if not @props.audio
         if not @state.playing
