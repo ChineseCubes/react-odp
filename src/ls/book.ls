@@ -18,19 +18,20 @@ Book = React.createClass do
     dpcm: 37.79527
     show-text: true
   getInitialState: ->
-    {setup} = @props.master-page
-    audio = try new Howl urls: ["#{setup.path}/audio.mp3"]
-    if audio
-      require 'react-vtt/css/react-vtt.css'
-      audio.on \end ~> @state.current-sprite = null
     scale: @resize @props.dpcm
-    audio: audio
+    audio: null
     sprite: {}
     current-sprite: null
     text: ''
   componentWillMount: ->
     if @props.auto-fit
       $ window .resize ~> @setState scale: @resize @props.dpcm
+    {setup} = @props.master-page
+    audio = try new Howl urls: ["#{setup.path}/audio.mp3"]
+    if audio
+      require 'react-vtt/css/react-vtt.css'
+      audio.on \end ~> @state.current-sprite = null
+    @state.audio = audio
   componentDidMount: ->
     @state.audio.sprite @state.sprite
     if not @props.auto-fit
@@ -98,17 +99,17 @@ Book = React.createClass do
                 range
                   ..start = r.start if r.start < range.start
                   ..end   = r.end   if r.end   > range.end
-              if range.start > range.end
-                range = range{start: end, end: start}
-              @state.sprite[counter] =
+              id = "segment-#counter"
+              @state.sprite[id] =
                 [range.start * 1000, (range.end - range.start) * 1000]
-              ODP.components.image do
-                props
-                CUBEBooks.AudioControl do
-                  id: counter
-                  audio: @state.audio
-                  onClick: ~>
-                    @state.current-sprite = @state.sprite[counter]
+              if range.start < range.end
+                ODP.components.image do
+                  props
+                  CUBEBooks.AudioControl do
+                    id: id
+                    audio: @state.audio
+                    onClick: ~>
+                      @state.current-sprite = @state.sprite[id]
             ++counter
             comp
           | data.name is 'span' and data.text

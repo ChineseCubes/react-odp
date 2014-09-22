@@ -255,8 +255,9 @@ Sentence = React.createClass do
           key: "stroker"
           ref: "stroker"
         for let i, word of words
+          id = (word.short / ' ')join '-'
           Word do
-            key: "#{i}-#{word.short}"
+            key: "#{i}-#{id}"
             ref: i
             data: word
             mode: @state.mode
@@ -286,7 +287,6 @@ Sentence = React.createClass do
                 @state.focus?setState menu: off
                 comp.setState menu: on
                 @setState focus: comp
-        #Stroker ref: 'stroker'
       nav do
         ref: 'settings'
         className: 'navbar'
