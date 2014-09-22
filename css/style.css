@@ -310,14 +310,13 @@ small {
 }
 .ui.modal.control .playground .comp.redo-cut {
   position: absolute;
-}
-.ui.modal.control .playground .comp top 1rem {
+  top: 1rem;
   right: 2rem;
   text-align: center;
   padding-left: 0;
   padding-right: 0;
 }
-.ui.modal.control .playground .comp top 1rem i {
+.ui.modal.control .playground .comp.redo-cut i {
   margin: 0;
 }
 .ui.modal.control .playground .comp.word {
