@@ -33,7 +33,7 @@ Book = React.createClass do
       audio.on \end ~> @state.current-sprite = null
     @state.audio = audio
   componentDidMount: ->
-    @state.audio.sprite @state.sprite
+    @state.audio?sprite @state.sprite
   resize: (dpcm) ->
     return 0.98 if not @props.auto-fit
     $window = $ window
@@ -87,8 +87,10 @@ Book = React.createClass do
             delete attrs.href
             delete attrs.onClick
             comp = let counter
+              text = ''
               range = start: Infinity, end: -Infinity
               while r = ranges.pop!
+                text = r.text + text
                 range
                   ..start = r.start if r.start < range.start
                   ..end   = r.end   if r.end   > range.end
@@ -101,6 +103,7 @@ Book = React.createClass do
                   CUBEBooks.AudioControl do
                     id: id
                     audio: @state.audio
+                    text: text
                     onClick: ~>
                       @state.current-sprite = @state.sprite[id]
             ++counter
@@ -127,24 +130,31 @@ Book = React.createClass do
               #    onHide: ~> @setProps show-text: true
               #  .modal \show
             attrs.style <<< display: \none if not @props.show-text
-            if @props.vtt
+            if not @props.audio
+              ranges.push do
+                text:  text
+                start: 0 # XXX: hack
+                end:   1
+              ODP.renderProps props
+            else
+              if @props.vtt
+                # search and remember ranges for later use
+                for cue in @props.vtt.cues
+                  if cue.text is text
+                    ranges.push do
+                      text:  text
+                      start: cue.startTime
+                      end:   cue.endTime
+                    break
+              console.log @props.vtt
               delete props.data.text
-              for cue in @props.vtt.cues
-                if cue.text is text
-                  ranges.push do
-                    start: cue.startTime
-                    end:   cue.endTime
-                  break
-            ODP.components.span do
-              props
-              ReactVTT.IsolatedCue do
-                target: "#{setup.path}/audio.vtt"
-                match: text
-                currentTime: ~>
-                  if @state.current-sprite
-                    @state.current-sprite.0 / 1000 + @state.audio.pos!
-                  else
-                    0
+              ODP.components.span do
+                props
+                ReactVTT.IsolatedCue do
+                  target: "#{setup.path}/audio.vtt"
+                  match: text
+                  currentTime: ~>
+                    (@state.current-sprite?0 or 0) / 1000 + (@state.audio?pos! or 0)
           | otherwise => ODP.renderProps props
 
 module.exports = Book

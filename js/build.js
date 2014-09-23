@@ -199,7 +199,8 @@
 	      return this.state.audio = audio;
 	    },
 	    componentDidMount: function(){
-	      return this.state.audio.sprite(this.state.sprite);
+	      var ref$;
+	      return (ref$ = this.state.audio) != null ? ref$.sprite(this.state.sprite) : void 8;
 	    },
 	    resize: function(dpcm){
 	      var $window, setup, ratio, pxWidth, pxHeight, width, height;
@@ -273,12 +274,14 @@
 	            delete attrs.href;
 	            delete attrs.onClick;
 	            comp = (function(counter){
-	              var range, r, x$, id, this$ = this;
+	              var text, range, r, x$, id, this$ = this;
+	              text = '';
 	              range = {
 	                start: Infinity,
 	                end: -Infinity
 	              };
 	              while (r = ranges.pop()) {
+	                text = r.text + text;
 	                x$ = range;
 	                if (r.start < range.start) {
 	                  x$.start = r.start;
@@ -293,6 +296,7 @@
 	                return ODP.components.image(props, CUBEBooks.AudioControl({
 	                  id: id,
 	                  audio: this.state.audio,
+	                  text: text,
 	                  onClick: function(){
 	                    return this$.state.currentSprite = this$.state.sprite[id];
 	                  }
@@ -329,30 +333,39 @@
 	            if (!this$.props.showText) {
 	              attrs.style.display = 'none';
 	            }
-	            if (this$.props.vtt) {
+	            if (!this$.props.audio) {
+	              ranges.push({
+	                text: text,
+	                start: 0,
+	                end: 1
+	              });
+	              return ODP.renderProps(props);
+	            } else {
+	              if (this$.props.vtt) {
+	                for (i$ = 0, len$ = (ref$ = this$.props.vtt.cues).length; i$ < len$; ++i$) {
+	                  cue = ref$[i$];
+	                  if (cue.text === text) {
+	                    ranges.push({
+	                      text: text,
+	                      start: cue.startTime,
+	                      end: cue.endTime
+	                    });
+	                    break;
+	                  }
+	                }
+	              }
+	              console.log(this$.props.vtt);
 	              delete props.data.text;
-	              for (i$ = 0, len$ = (ref$ = this$.props.vtt.cues).length; i$ < len$; ++i$) {
-	                cue = ref$[i$];
-	                if (cue.text === text) {
-	                  ranges.push({
-	                    start: cue.startTime,
-	                    end: cue.endTime
-	                  });
-	                  break;
+	              return ODP.components.span(props, ReactVTT.IsolatedCue({
+	                target: setup.path + "/audio.vtt",
+	                match: text,
+	                currentTime: function(){
+	                  var ref$;
+	                  return (((ref$ = this$.state.currentSprite) != null ? ref$[0] : void 8) || 0) / 1000 + (((ref$ = this$.state.audio) != null ? ref$.pos() : void 8) || 0);
 	                }
-	              }
+	              }));
 	            }
-	            return ODP.components.span(props, ReactVTT.IsolatedCue({
-	              target: setup.path + "/audio.vtt",
-	              match: text,
-	              currentTime: function(){
-	                if (this$.state.currentSprite) {
-	                  return this$.state.currentSprite[0] / 1000 + this$.state.audio.pos();
-	                } else {
-	                  return 0;
-	                }
-	              }
-	            }));
+	            break;
 	          default:
 	            return ODP.renderProps(props);
 	          }
@@ -850,7 +863,8 @@
 	    getDefaultProps: function(){
 	      return {
 	        id: 0,
-	        audio: null
+	        audio: null,
+	        text: '本頁沒有文字'
 	      };
 	    },
 	    getInitialState: function(){
@@ -862,6 +876,7 @@
 	    componentWillMount: function(){
 	      var x$;
 	      if (!this.props.audio) {
+	        this.state.loading = false;
 	        return;
 	      }
 	      x$ = this.props.audio;
@@ -913,21 +928,32 @@
 	          width: '100%',
 	          height: '100%'
 	        },
-	        onClick: !this.state.loading ? function(it){
-	          var x$;
-	          this$.props.onClick.call(this$, it);
-	          if (!this$.props.audio) {
-	            return;
+	        onClick: function(it){
+	          var x$, syn, utt, y$, u;
+	          switch (false) {
+	          case !this$.props.audio:
+	            if (this$.state.loading) {
+	              return;
+	            }
+	            if (!this$.state.playing) {
+	              x$ = this$.props.audio;
+	              x$.stop(this$.props.id);
+	              x$.play(this$.props.id);
+	            } else {
+	              this$.props.audio.pause();
+	            }
+	            break;
+	          default:
+	            syn = window.speechSynthesis;
+	            utt = window.SpeechSynthesisUtterance;
+	            y$ = u = new utt(this$.props.text);
+	            y$.lang = 'zh-TW';
+	            y$.volume = 1.0;
+	            y$.rate = 1.0;
+	            syn.speak(u);
 	          }
-	          if (!this$.state.playing) {
-	            x$ = this$.props.audio;
-	            x$.stop(this$.props.id);
-	            x$.play(this$.props.id);
-	            return x$;
-	          } else {
-	            return this$.props.audio.pause();
-	          }
-	        } : void 8
+	          return this$.props.onClick.call(this$, it);
+	        }
 	      });
 	    }
 	  });

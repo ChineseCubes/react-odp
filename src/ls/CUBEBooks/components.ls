@@ -9,11 +9,14 @@ AudioControl = React.createClass do
   getDefaultProps: ->
     id: 0
     audio: null
+    text: '本頁沒有文字'
   getInitialState: ->
     loading: true
     playing: false
   componentWillMount: ->
-    return if not @props.audio
+    if not @props.audio
+      @state.loading = false
+      return
     @props.audio
       ..on \load  @onLoad
       ..on \play  @onPlay
@@ -38,16 +41,25 @@ AudioControl = React.createClass do
       style:
         width:  '100%'
         height: '100%'
-      onClick: if not @state.loading then ~>
+      onClick: ~>
+        | @props.audio
+          return if @state.loading
+          if not @state.playing
+            @props.audio
+              #..pos 0, @props.id # not work
+              ..stop @props.id # reset pos
+              ..play @props.id
+          else
+            @props.audio.pause! # pause every sprites
+        | otherwise
+          syn = window.speechSynthesis
+          utt = window.SpeechSynthesisUtterance
+          u = new utt @props.text
+            ..lang = \zh-TW
+            ..volume = 1.0
+            ..rate = 1.0
+          syn.speak u
         @props.onClick.call this, it
-        return if not @props.audio
-        if not @state.playing
-          @props.audio
-            #..pos 0, @props.id # not work
-            ..stop @props.id # reset pos
-            ..play @props.id
-        else
-          @props.audio.pause! # pause every sprites
 
 Character = React.createClass do
   displayName: 'CUBE.Character'
