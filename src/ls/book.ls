@@ -31,8 +31,10 @@ Book = React.createClass do
     if audio
       require 'react-vtt/css/react-vtt.css'
       audio.on \end ~> @state.current-sprite = null
-    @state.audio = audio
+    # set audio and update sprites after prerendered content has been mounted
+    @setState audio: audio
   componentDidMount: ->
+    try window.console.log @state.sprite
     @state.audio?sprite @state.sprite
   resize: (dpcm) ->
     return 0.98 if not @props.auto-fit
@@ -130,7 +132,7 @@ Book = React.createClass do
               #    onHide: ~> @setProps show-text: true
               #  .modal \show
             attrs.style <<< display: \none if not @props.show-text
-            if not @props.audio
+            if not @state.audio
               ranges.push do
                 text:  text
                 start: 0 # XXX: hack
@@ -146,7 +148,6 @@ Book = React.createClass do
                       start: cue.startTime
                       end:   cue.endTime
                     break
-              console.log @props.vtt
               delete props.data.text
               ODP.components.span do
                 props

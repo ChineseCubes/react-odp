@@ -196,10 +196,15 @@
 	          return this$.state.currentSprite = null;
 	        });
 	      }
-	      return this.state.audio = audio;
+	      return this.setState({
+	        audio: audio
+	      });
 	    },
 	    componentDidMount: function(){
 	      var ref$;
+	      try {
+	        window.console.log(this.state.sprite);
+	      } catch (e$) {}
 	      return (ref$ = this.state.audio) != null ? ref$.sprite(this.state.sprite) : void 8;
 	    },
 	    resize: function(dpcm){
@@ -333,7 +338,7 @@
 	            if (!this$.props.showText) {
 	              attrs.style.display = 'none';
 	            }
-	            if (!this$.props.audio) {
+	            if (!this$.state.audio) {
 	              ranges.push({
 	                text: text,
 	                start: 0,
@@ -354,7 +359,6 @@
 	                  }
 	                }
 	              }
-	              console.log(this$.props.vtt);
 	              delete props.data.text;
 	              return ODP.components.span(props, ReactVTT.IsolatedCue({
 	                target: setup.path + "/audio.vtt",
