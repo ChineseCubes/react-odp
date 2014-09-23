@@ -213,7 +213,7 @@ utils =
       err, data <- fs.readFile "#path/page#i.json"
       got-one utils.patchPageJSON(JSON.parse(data), path), i - 1
   patchPageJSON: (data, path = '') ->
-    prop-names = <[name x y width height href data onClick]>
+    prop-names = <[name x y width height href data onClick onTouchStart]>
     data.children = data.children.concat master-page.children
     utils.transform data, (attrs = {}, node-name, parents) ->
       new-attrs = style: {}

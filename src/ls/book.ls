@@ -27,7 +27,9 @@ Book = React.createClass do
     if @props.auto-fit
       $ window .resize ~> @setState scale: @resize @props.dpcm
     {setup} = @props.master-page
-    audio = try new Howl urls: ["#{setup.path}/audio.mp3"]
+    audio = try
+      Howler.iOSAutoEnable = false
+      new Howl urls: ["#{setup.path}/audio.mp3"]
     if audio
       require 'react-vtt/css/react-vtt.css'
       audio.on \end ~> @state.current-sprite = null
@@ -152,7 +154,7 @@ Book = React.createClass do
               ODP.components.span do
                 props
                 ReactVTT.IsolatedCue do
-                  target: "#{setup.path}/audio.vtt"
+                  target: "#{setup.path}/audio.vtt.json"
                   match: text
                   currentTime: ~>
                     (@state.current-sprite?0 or 0) / 1000 + (@state.audio?pos! or 0)

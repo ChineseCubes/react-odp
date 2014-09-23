@@ -14,7 +14,7 @@ if not path or not pages.length
 {setup}:mp <- Data.getMasterPage path
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
-vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt"
+vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt.json"
 
 content =
   React.renderComponentToString do

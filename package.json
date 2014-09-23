@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^2.4.1",
-    "react-vtt": "^0.1.6",
+    "react-vtt": "^0.1.7",
     "vtt.js": "^0.11.11"
   },
   "devDependencies": {

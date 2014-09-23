@@ -3,6 +3,7 @@ React        = require 'react'
 Data         = require './data'
 zhStrokeData = try require 'zhStrokeData'
 {a, div, i, nav, span} = React.DOM
+onClick = if \ontouchstart of window then \onTouchStart else \onClick
 
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
@@ -41,7 +42,7 @@ AudioControl = React.createClass do
       style:
         width:  '100%'
         height: '100%'
-      onClick: ~>
+      "#onClick": ~>
         | @props.audio
           return if @state.loading
           if not @state.playing
@@ -59,7 +60,7 @@ AudioControl = React.createClass do
             ..volume = 1.0
             ..rate = 1.0
           syn.speak u
-        @props.onClick.call this, it
+        @props."#onClick".call this, it
 
 Character = React.createClass do
   displayName: 'CUBE.Character'
@@ -93,7 +94,7 @@ RedoCut = React.createClass do
       className: 'comp redo-cut ui black icon buttons'
       div do
         className: "ui button #disabled"
-        onClick: @props.onClick
+        "#onClick": @props."#onClick"
         i className: 'repeat icon'
 
 Word = React.createClass do
@@ -115,7 +116,7 @@ Word = React.createClass do
     data = @props.data
     div do
       className: 'comp word'
-      onClick: ~> @click! if not @state.cut
+      "#onClick": ~> @click! if not @state.cut
       if @state.menu
         ActionMenu do
           action: if data.children.length > 1 then \cut else \stroke
@@ -172,7 +173,7 @@ ActionMenu = React.createClass do
           #  i className: 'icon volume up'
           div do
             className: 'ui icon button black'
-            onClick: ~>
+            "#onClick": ~>
               it.stopPropagation!
               func = "on#{@props.action.0.toUpperCase!}#{@props.action.slice 1}"
               @props[func].call this, it
@@ -219,7 +220,7 @@ Stroker = React.createClass do
       className: 'strokes'
       style:
         display: if not @state.hide then 'block' else 'none'
-      onClick: ~> @setState hide: true
+      "#onClick": ~> @setState hide: true
       div className: 'grid'
       div ref: 'container'
 
@@ -316,11 +317,11 @@ Sentence = React.createClass do
             className: 'right menu'
             a do
               className: 'item toggle chinese'
-              onClick: @toggleMode
+              "#onClick": @toggleMode
               if @state.mode is 'zh_TW' then '繁' else '简'
       RedoCut do
         disabled: @state.undo.length is 0
-        onClick: ~>
+        "#onClick": ~>
           comp = @state.undo.pop!
           comp?setState cut: false
           comp?click!
@@ -347,7 +348,7 @@ Sentence = React.createClass do
           span className: 'aligner'
           a do
             className: "ui toggle basic button chinese #{if @state.pinyin then \active else ''}"
-            onClick: ~>
+            "#onClick": ~>
               if not @state.pinyin then try
                 syn = window.speechSynthesis
                 utt = window.SpeechSynthesisUtterance
@@ -371,7 +372,7 @@ Sentence = React.createClass do
             actived = if @state.meaning then \active else ''
             a do
               className: "ui toggle basic button chinese #actived"
-              onClick: ~>
+              "#onClick": ~>
                 if not @state.meaning then try
                   syn = window.speechSynthesis
                   utt = window.SpeechSynthesisUtterance

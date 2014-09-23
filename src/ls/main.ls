@@ -6,6 +6,7 @@ ReactVTT     = require 'react-vtt'
 
 <- window.requestAnimationFrame
 <- $
+React.initializeTouchEvents true
 # dots per cm
 dots = React.renderComponent do
   DotsDetector unit: \cm
@@ -14,7 +15,7 @@ dots = React.renderComponent do
 {setup}:mp <- Data.getMasterPage './LRRH/'
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
-vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt"
+vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt.json"
 
 props =
   master-page: mp
