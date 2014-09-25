@@ -308,7 +308,7 @@ small {
   left: 1rem;
   top: 1rem;
 }
-.ui.modal.control .playground .comp.redo-cut {
+.ui.modal.control .playground .comp.undo-cut {
   position: absolute;
   top: 1rem;
   right: 2rem;
@@ -316,7 +316,7 @@ small {
   padding-left: 0;
   padding-right: 0;
 }
-.ui.modal.control .playground .comp.redo-cut i {
+.ui.modal.control .playground .comp.undo-cut i {
   margin: 0;
 }
 .ui.modal.control .playground .comp.word {

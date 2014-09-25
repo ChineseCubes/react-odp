@@ -84,14 +84,14 @@ Character = React.createClass do
           className: 'char zh_CN'
           data.zh_CN
 
-RedoCut = React.createClass do
-  displayName: 'CUBE.RedoCut'
+UndoCut = React.createClass do
+  displayName: 'CUBE.UndoCut'
   getDefaultProps: ->
     disabled: true
   render: ->
     disabled = if @props.disabled then 'disabled' else ''
     div do
-      className: 'comp redo-cut ui black icon buttons'
+      className: 'comp undo-cut ui black icon buttons'
       div do
         className: "ui button #disabled"
         "#onClick": @props."#onClick"
@@ -319,7 +319,7 @@ Sentence = React.createClass do
               className: 'item toggle chinese'
               "#onClick": @toggleMode
               if @state.mode is 'zh_TW' then '繁' else '简'
-      RedoCut do
+      UndoCut do
         disabled: @state.undo.length is 0
         "#onClick": ~>
           comp = @state.undo.pop!
