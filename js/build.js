@@ -1230,7 +1230,8 @@
 	      return {
 	        data: null,
 	        pinyin: false,
-	        meaning: false
+	        meaning: false,
+	        stroke: true
 	      };
 	    },
 	    getInitialState: function(){
@@ -1304,10 +1305,10 @@
 	        className: 'playground'
 	      }, div({
 	        className: 'comp sentence'
-	      }, Stroker({
+	      }, this.props.stroke ? Stroker({
 	        key: "stroker",
 	        ref: "stroker"
-	      }), (function(){
+	      }) : void 8, (function(){
 	        var i$, results$ = [];
 	        for (i$ in words) {
 	          results$.push((fn$.call(this, i$, words[i$])));

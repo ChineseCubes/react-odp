@@ -231,6 +231,7 @@ Sentence = React.createClass do
     data:    null
     pinyin:  off
     meaning: off
+    stroke:  on
   getInitialState: ->
     mode:    'zh_TW'
     pinyin: @props.pinyin
@@ -272,7 +273,7 @@ Sentence = React.createClass do
       className: 'playground'
       div do
         className: 'comp sentence'
-        Stroker do
+        if @props.stroke then Stroker do
           key: "stroker"
           ref: "stroker"
         for let i, word of words
