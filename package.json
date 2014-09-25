@@ -12,6 +12,7 @@
   "author": "caasi Huang <caasi@chinesecubes.com>",
   "license": "MIT",
   "dependencies": {
+    "jquery": "^2.1.1",
     "lodash": "^2.4.1",
     "react-vtt": "^0.1.7",
     "vtt.js": "^0.11.11"

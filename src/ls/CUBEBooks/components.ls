@@ -1,4 +1,5 @@
 {isNaN}      = require 'lodash'
+$            = require 'jquery'
 React        = require 'react'
 Data         = require './data'
 zhStrokeData = try require 'zhStrokeData'
