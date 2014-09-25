@@ -242,7 +242,7 @@ Sentence = React.createClass do
     if @props.data?short isnt props.data?short
       @setState @getInitialState!{focus}
       $(@refs.settings.getDOMNode!)height 0
-      @refs.stroker.setState words: null
+      @refs.stroker?setState words: null
   componentDidMount: ->
     if not @state.focus
       @refs.0?click!
@@ -286,6 +286,7 @@ Sentence = React.createClass do
             pinyin: @state.pinyin
             meaning: @state.meaning and @state.undo.length isnt 0
             onStroke: (text) ~>
+              return if not @refs.stroker
               stroker = @refs.stroker
               if stroker.state.hide
                 stroker.setState do
@@ -299,7 +300,7 @@ Sentence = React.createClass do
             onChildCut:   (comp) ~>
               @state.undo.push comp
             onChildClick: (comp) ~>
-              @refs.stroker.setState do
+              @refs.stroker?setState do
                 words: null
                 hide: true
               if @state.focus is comp

@@ -1250,9 +1250,9 @@
 	          focus: this.getInitialState().focus
 	        });
 	        $(this.refs.settings.getDOMNode()).height(0);
-	        return this.refs.stroker.setState({
+	        return (ref$ = this.refs.stroker) != null ? ref$.setState({
 	          words: null
-	        });
+	        }) : void 8;
 	      }
 	    },
 	    componentDidMount: function(){
@@ -1326,6 +1326,9 @@
 	            meaning: this.state.meaning && this.state.undo.length !== 0,
 	            onStroke: function(text){
 	              var stroker;
+	              if (!this$.refs.stroker) {
+	                return;
+	              }
 	              stroker = this$.refs.stroker;
 	              if (stroker.state.hide) {
 	                return stroker.setState({
@@ -1345,10 +1348,12 @@
 	            },
 	            onChildClick: function(comp){
 	              var ref$;
-	              this$.refs.stroker.setState({
-	                words: null,
-	                hide: true
-	              });
+	              if ((ref$ = this$.refs.stroker) != null) {
+	                ref$.setState({
+	                  words: null,
+	                  hide: true
+	                });
+	              }
 	              if (this$.state.focus === comp) {
 	                comp.setState({
 	                  menu: false
