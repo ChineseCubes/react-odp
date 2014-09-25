@@ -6,6 +6,15 @@ zhStrokeData = try require 'zhStrokeData'
 {a, div, i, nav, span} = React.DOM
 onClick = if \ontouchstart of window then \onTouchStart else \onClick
 
+say-it = (text, lang = \en-US) ->
+  syn = window.speechSynthesis
+  utt = window.SpeechSynthesisUtterance
+  u = new utt text
+    ..lang = lang
+    ..volume = 1.0
+    ..rate = 1.0
+  syn.speak u
+
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
   getDefaultProps: ->
@@ -103,8 +112,6 @@ Word = React.createClass do
   getDefaultProps: ->
     data:    null
     mode:    'zh_TW'
-    pinyin:  off
-    meaning: off
     menu:    off
     onStroke:     -> ...
     onChildCut:   -> ...
@@ -112,24 +119,44 @@ Word = React.createClass do
   getInitialState: ->
     menu: @props.menu
     cut:  false
+    pinyin:  off
+    meaning: off
   click: -> @props.onChildClick this
   render: ->
     data = @props.data
+    lang = -> switch it
+      | \zh_TW => \zh-TW
+      | \zh_CN => \zh-CN
     div do
       className: 'comp word'
-      "#onClick": ~> @click! if not @state.cut
+      "#onClick": ~> @click! unless @state.cut
       if @state.menu
         ActionMenu do
-          action: if data.children.length > 1 then \cut else \stroke
-          onStroke: ~>
-            @props.onStroke(@props.data.flatten!map (.zh_TW) .join '')
-          onCut:    ~>
+          className: 'menu-cut'
+          onButtonClick: (it, name) ~>
             next-cut = not @state.cut
             if next-cut is true
               @props
                 ..onChildCut this
                 ..onChildClick this
             @setState cut: next-cut
+      if @state.menu
+        ActionMenu do
+          className: 'menu-learn'
+          buttons: <[pinyin stroke english]>
+          actived: [yes, (data.children.length is 1), yes]
+          onButtonClick: (it, name) ~>
+            | name is \pinyin
+              if not @state.pinyin
+                text = data.flatten!map(~> it[@props.mode])join ''
+                say-it text, lang @props.mode
+              @setState pinyin: !@state.pinyin
+            | name is \stroke
+              @props.onStroke(data.flatten!map (.zh_TW) .join '')
+            | name is \english
+              if not @state.meaning
+                say-it data.short
+              @setState meaning: !@state.meaning
       div do
         className: 'characters'
         if not @state.cut
@@ -138,47 +165,53 @@ Word = React.createClass do
               key: i
               data: c
               mode: @props.mode
-              pinyin: @props.pinyin
+              pinyin: @state.pinyin
         else
           for let i, c of data.children
             Word do
               key: "#{i}-#{c.short}"
               data: c
               mode: @props.mode
-              pinyin:  @props.pinyin
-              meaning: @props.meaning
               onStroke:     ~> @props.onStroke it
               onChildCut:   ~> @props.onChildCut it
               onChildClick: ~> @props.onChildClick it
       div do
         className: 'meaning'
-        if @props.meaning and not @state.cut then data.short else ''
+        if @state.meaning and not @state.cut then data.short else ''
 
 ActionMenu = React.createClass do
   icon: ->
-    | it is \stroke => \pencil
-    | it is \cut    => \cut
-    | otherwise     => \question
+    | it is \stroke  => \pencil
+    | it is \cut     => \cut
+    | it is \pinyin  => "volume up"
+    | it is \english => \font
+    | otherwise      => \question
   displayName: 'CUBE.ActionMenu'
   getDefaultProps: ->
-    action: 'cut'
+    buttons: <[cut]>
+    actived: [yes]
+    onButtonClick: -> ...
   render: ->
+    buttons = @props.buttons
+    type = if buttons.length is 1 then 'single' else 'multiple'
     div do
-      className: 'actions'
+      className: "actions #{@props.className}"
       div do
-        className: "menu single"
+        className: "menu #type"
         div do
           className: 'ui buttons'
           #div do
           #  className: 'ui icon button black listen'
           #  i className: 'icon volume up'
-          div do
-            className: 'ui icon button black'
-            "#onClick": ~>
-              it.stopPropagation!
-              func = "on#{@props.action.0.toUpperCase!}#{@props.action.slice 1}"
-              @props[func].call this, it
-            i className: "icon #{@icon @props.action}"
+          for let idx, btn of buttons
+            actived = if @props.actived[idx] then 'actived' else ''
+            div do
+              key: "button-#idx"
+              className: "ui icon button black #actived"
+              "#onClick": ~>
+                it.stopPropagation!
+                @props.onButtonClick.call this, it, btn
+              i className: "icon #{@icon btn}"
 
 SettingsButton = React.createClass do
   displayName: 'CUBE.SettingsButton'
@@ -229,13 +262,9 @@ Sentence = React.createClass do
   displayName: 'CUBE.Sentence'
   getDefaultProps: ->
     data:    null
-    pinyin:  off
-    meaning: off
     stroke:  on
   getInitialState: ->
     mode:    'zh_TW'
-    pinyin: @props.pinyin
-    meaning: @props.meaning
     focus: null
     undo: []
   componentWillReceiveProps: (props) ->
@@ -251,10 +280,6 @@ Sentence = React.createClass do
       switch
         | @state.mode isnt state.mode
           console.log 'mode changed'
-        | @state.pinyin isnt state.pinyin
-          console.log 'pinyin toggled'
-        | @state.meaning isnt state.meaning
-          console.log 'translation toggled'
         | @state.focus is state.focus
           state.focus = null
   componentDidUpdate: (props, state) ->
@@ -283,8 +308,6 @@ Sentence = React.createClass do
             ref: i
             data: word
             mode: @state.mode
-            pinyin: @state.pinyin
-            meaning: @state.meaning and @state.undo.length isnt 0
             onStroke: (text) ~>
               return if not @refs.stroker
               stroker = @refs.stroker
@@ -346,51 +369,6 @@ Sentence = React.createClass do
             span do
               className: 'definition'
               focus.definition
-        nav do
-          className: 'display-mode'
-          span className: 'aligner'
-          a do
-            className: "ui toggle basic button chinese #{if @state.pinyin then \active else ''}"
-            "#onClick": ~>
-              if not @state.pinyin then try
-                syn = window.speechSynthesis
-                utt = window.SpeechSynthesisUtterance
-                text =
-                  if not @state.focus
-                    data.flatten!
-                  else
-                    @state.focus.props.data.flatten!
-                text = (for c in text => c[@state.mode])join ''
-                lang = switch @state.mode
-                  | \zh_TW => \zh-TW
-                  | \zh_CN => \zh-CN
-                u = new utt text
-                  ..lang = lang
-                  ..volume = 1.0
-                  ..rate = 1.0
-                syn.speak u
-              @setState pinyin: !@state.pinyin
-            \拼
-          if @state.undo.length isnt 0
-            actived = if @state.meaning then \active else ''
-            a do
-              className: "ui toggle basic button chinese #actived"
-              "#onClick": ~>
-                if not @state.meaning then try
-                  syn = window.speechSynthesis
-                  utt = window.SpeechSynthesisUtterance
-                  text =
-                    if not @state.focus
-                      data.short
-                    else
-                      @state.focus.props.data.short
-                  u = new utt text
-                    ..lang = \en-US
-                    ..volume = 1.0
-                    ..rate = 1.0
-                  syn.speak u
-                @setState meaning: !@state.meaning
-              \En
 
 module.exports =
   AudioControl:   AudioControl

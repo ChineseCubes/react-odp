@@ -222,7 +222,6 @@ small {
   border-bottom-right-radius: 5px;
   min-height: 2rem;
   padding: 1rem;
-  padding-right: 6rem;
   font-size: 1rem;
   text-align: left;
 }
@@ -232,24 +231,6 @@ small {
 }
 .ui.modal.control .playground .entry .word-class {
   margin-left: 0.5rem;
-}
-.ui.modal.control .playground .entry .display-mode {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-.ui.modal.control .playground .entry .display-mode .aligner {
-  vertical-align: middle;
-  display: inline-block;
-  height: 100%;
-}
-.ui.modal.control .playground .entry .display-mode .button {
-  vertical-align: middle;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  padding: 0.5rem;
-  margin-right: 0.5rem;
 }
 .ui.modal.control .playground .comp.sentence {
   position: relative;
@@ -335,15 +316,16 @@ small {
   right: 0;
   margin-top: 0.2rem;
   font-size: 0.9rem;
-  line-height: 1rem;
+  line-height: 1.5rem;
   min-height: 1.5rem;
   text-align: center;
   color: #000;
 }
 .ui.modal.control .playground .comp.word .actions {
+  pointer-events: none;
   position: absolute;
-  top: -3rem;
-  left: 50%;
+  left: -100%;
+  right: -100%;
   text-align: center;
   padding: 0;
 }
@@ -354,36 +336,47 @@ small {
   border-radius: 0.3rem;
 }
 .ui.modal.control .playground .comp.word .actions .menu .button {
+  pointer-events: auto;
+  width: 2rem;
+  height: 2rem;
+  -webkit-border-radius: 1rem;
+  border-radius: 1rem;
   border: none;
   -webkit-box-shadow: none;
   box-shadow: none;
+  padding: 0;
+  margin-right: 0.5rem;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  pointer-events: none;
 }
-.ui.modal.control .playground .comp.word .actions .menu.single {
-  width: 3rem;
-  margin-left: -1.5rem;
+.ui.modal.control .playground .comp.word .actions .menu .button:last-child {
+  margin-right: 0;
 }
-.ui.modal.control .playground .comp.word .actions .menu.multiple {
-  width: 6rem;
-  margin-left: -3rem;
+.ui.modal.control .playground .comp.word .actions .menu .button i.icon {
+  line-height: 2rem;
 }
-.ui.modal.control .playground .comp.word .actions .menu:before {
-  position: absolute;
-  margin-left: -0.5rem;
-  left: 50%;
-  top: 99%;
-  content: "";
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0.5rem 0.5rem 0 0.5rem;
-  border-color: #5c6166 transparent transparent transparent;
+.ui.modal.control .playground .comp.word .actions .menu .button.actived {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  pointer-events: auto;
 }
 .ui.modal.control .playground .comp.word .actions .menu i.cut.icon {
+  margin-left: 0.9rem;
+  margin-top: 0.5rem;
   -moz-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
+}
+.ui.modal.control .playground .comp.word .menu-cut {
+  top: -2.5rem;
+}
+.ui.modal.control .playground .comp.word .menu-learn {
+  bottom: -3.5rem;
 }
 .ui.modal.control .playground .comp.characters {
   display: inline-block;

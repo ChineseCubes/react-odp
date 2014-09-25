@@ -38,7 +38,6 @@ strokes-border = #e05656
       border-bottom-right-radius 5px
       min-height 2rem
       padding 1rem
-      padding-right 6rem
       font-size 1rem
       text-align left
       .definition
@@ -46,20 +45,6 @@ strokes-border = #e05656
         margin-left 1rem
       .word-class
         margin-left 0.5rem
-      .display-mode
-        position absolute
-        right 0
-        top 0
-        bottom 0
-        .aligner
-          vertical-align middle
-          display inline-block
-          height 100%
-        .button
-          vertical-align middle
-          box-shadow none
-          padding 0.5rem
-          margin-right 0.5rem
     .comp
       &.sentence
         position relative
@@ -132,15 +117,16 @@ strokes-border = #e05656
           right 0
           margin-top  0.2rem
           font-size   0.9rem
-          line-height 1rem
+          line-height 1.5rem
           min-height  1.5rem
           text-align center
           color rgba(#000,1)
         .actions
           //display none
+          pointer-events none
           position absolute
-          top -3rem
-          left 50%
+          left  -100%
+          right -100%
           text-align center
           padding 0
           .menu
@@ -148,29 +134,33 @@ strokes-border = #e05656
             z-index 1
             border-radius 0.3rem
             .button
+              pointer-events auto
+              width  2rem
+              height 2rem
+              border-radius 1rem
               border none
               box-shadow none
-            &.single
-              width 3rem
-              margin-left -1.5rem
-            &.multiple
-              width 6rem
-              margin-left -3rem
-            &:before
-              position absolute
-              margin-left -0.5rem
-              left 50%
-              top 99% // for the strange rounding in Chrome
-              content ""
-              width  0
-              height 0
-              border-style solid
-              border-width 0.5rem 0.5rem 0 0.5rem
-              border-color #5c6166 transparent transparent transparent
+              padding 0
+              margin-right 0.5rem
+              &:last-child
+                margin-right 0
+              i.icon
+                line-height 2rem
+              opacity 0
+              pointer-events none
+              &.actived
+                opacity 1
+                pointer-events auto
             //.buttons
             //  position relative
             i.cut.icon
+              margin-left 0.9rem
+              margin-top 0.5rem
               transform rotate(90deg)
+        .menu-cut
+          top   -2.5rem
+        .menu-learn
+          bottom   -3.5rem
       &.characters
         display inline-block
         position relative
