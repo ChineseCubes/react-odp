@@ -160,6 +160,8 @@ class Segmentations
     @data[it]
 
 utils =
+  Node: Node
+  Char: Char
   punctuations: punctuations
   splitNamespace: ->
     r = it.toLowerCase!split(':')reverse!
