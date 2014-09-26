@@ -324,8 +324,8 @@ small {
 }
 .ui.modal.control .playground .comp.word .meaning {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: -100%;
+  right: -100%;
   margin-top: 0.2rem;
   font-size: 0.9rem;
   line-height: 1.5rem;

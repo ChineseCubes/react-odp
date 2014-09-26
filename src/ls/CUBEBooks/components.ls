@@ -326,15 +326,21 @@ Sentence = React.createClass do
                   hide: true
             onChildCut:   (comp) ~>
               @state.undo.push comp
+              comp.setState do
+                pinyin:  off
+                meaning: off
             onChildClick: (comp) ~>
               @refs.stroker?setState do
                 words: null
                 hide: true
               if @state.focus is comp
-                comp.setState menu: off
+                comp.setState menu:    off
                 @setState focus: null
               else
-                @state.focus?setState menu: off
+                @state.focus?setState do
+                  menu:    off
+                  pinyin:  off
+                  meaning: off
                 comp.setState menu: on
                 @setState focus: comp
       nav do
