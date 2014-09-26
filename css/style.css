@@ -332,6 +332,14 @@ small {
   min-height: 1.5rem;
   text-align: center;
   color: #000;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.ui.modal.control .playground .comp.word .meaning.actived {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
 }
 .ui.modal.control .playground .comp.word .actions {
   pointer-events: none;
@@ -420,6 +428,14 @@ small {
   font-family: "American Typewriter", monospace;
   text-align: center;
   color: rgba(0,0,0,0.5);
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.ui.modal.control .playground .comp.character .pronounciation.actived {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
 }
 .ui.modal.control #deck {
   width: 100%;

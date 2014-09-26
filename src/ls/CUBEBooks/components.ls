@@ -80,11 +80,12 @@ Character = React.createClass do
     pinyin: off
   render: ->
     data = @props.data
+    actived = if @props.pinyin then 'actived' else ''
     div do
       className: 'comp character'
       div do
-        className: 'pronounciation'
-        span null if @props.pinyin then data.pinyin else ''
+        className: "pronounciation #actived"
+        span null data.pinyin
       if @props.mode is 'zh_TW'
         div do
           className: 'char zh_TW'
@@ -127,6 +128,7 @@ Word = React.createClass do
     lang = -> switch it
       | \zh_TW => \zh-TW
       | \zh_CN => \zh-CN
+    actived = if @state.meaning then 'actived' else ''
     div do
       className: 'comp word'
       "#onClick": ~> @click! unless @state.cut
@@ -178,8 +180,8 @@ Word = React.createClass do
               onChildCut:   ~> @props.onChildCut it
               onChildClick: ~> @props.onChildClick it
       div do
-        className: 'meaning'
-        span null if @state.meaning and not @state.cut then data.short else ''
+        className: "meaning #actived"
+        span null data.short
 
 ActionMenu = React.createClass do
   icon: ->
