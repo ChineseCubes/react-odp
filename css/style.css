@@ -297,7 +297,19 @@ small {
   padding-left: 0;
   padding-right: 0;
 }
-.ui.modal.control .playground .comp.undo-cut i {
+.ui.modal.control .playground .comp.undo-cut .button {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  pointer-events: none;
+}
+.ui.modal.control .playground .comp.undo-cut .button.actived {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  pointer-events: auto;
+}
+.ui.modal.control .playground .comp.undo-cut .button i {
   margin: 0;
 }
 .ui.modal.control .playground .comp.word {

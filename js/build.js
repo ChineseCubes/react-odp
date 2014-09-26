@@ -993,7 +993,7 @@
 	        className: 'comp character'
 	      }, div({
 	        className: 'pronounciation'
-	      }, this.props.pinyin ? data.pinyin : ''), this.props.mode === 'zh_TW'
+	      }, span(null, this.props.pinyin ? data.pinyin : '')), this.props.mode === 'zh_TW'
 	        ? div({
 	          className: 'char zh_TW'
 	        }, data.zh_TW)
@@ -1006,16 +1006,16 @@
 	    displayName: 'CUBE.UndoCut',
 	    getDefaultProps: function(){
 	      return {
-	        disabled: true
+	        actived: false
 	      };
 	    },
 	    render: function(){
-	      var disabled, ref$;
-	      disabled = this.props.disabled ? 'disabled' : '';
+	      var actived, ref$;
+	      actived = this.props.actived ? 'actived' : '';
 	      return div({
 	        className: 'comp undo-cut ui black icon buttons'
 	      }, div((ref$ = {
-	        className: "ui button " + disabled
+	        className: "ui button " + actived
 	      }, ref$[onClick + ""] = this.props[onClick + ""], ref$), i({
 	        className: 'repeat icon'
 	      })));
@@ -1156,7 +1156,7 @@
 	          }
 	        }.call(this))), div({
 	        className: 'meaning'
-	      }, this.state.meaning && !this.state.cut ? data.short : ''));
+	      }, span(null, this.state.meaning && !this.state.cut ? data.short : '')));
 	    }
 	  });
 	  ActionMenu = React.createClass({
@@ -1444,7 +1444,7 @@
 	      }, a((ref$ = {
 	        className: 'item toggle chinese'
 	      }, ref$[onClick + ""] = this.toggleMode, ref$), this.state.mode === 'zh_TW' ? '繁' : '简')))), UndoCut((ref$ = {
-	        disabled: this.state.undo.length === 0
+	        actived: this.state.undo.length !== 0
 	      }, ref$[onClick + ""] = function(){
 	        var comp;
 	        comp = this$.state.undo.pop();

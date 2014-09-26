@@ -101,8 +101,14 @@ strokes-border = #e05656
         text-align center
         padding-left 0
         padding-right 0
-        i
-          margin 0
+        .button
+          opacity 0
+          pointer-events none
+          &.actived
+            opacity 1
+            pointer-events auto
+          i
+            margin 0
       &.word
         position relative
         cursor pointer

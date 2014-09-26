@@ -84,7 +84,7 @@ Character = React.createClass do
       className: 'comp character'
       div do
         className: 'pronounciation'
-        if @props.pinyin then data.pinyin else ''
+        span null if @props.pinyin then data.pinyin else ''
       if @props.mode is 'zh_TW'
         div do
           className: 'char zh_TW'
@@ -97,13 +97,13 @@ Character = React.createClass do
 UndoCut = React.createClass do
   displayName: 'CUBE.UndoCut'
   getDefaultProps: ->
-    disabled: true
+    actived: no
   render: ->
-    disabled = if @props.disabled then 'disabled' else ''
+    actived = if @props.actived then 'actived' else ''
     div do
       className: 'comp undo-cut ui black icon buttons'
       div do
-        className: "ui button #disabled"
+        className: "ui button #actived"
         "#onClick": @props."#onClick"
         i className: 'repeat icon'
 
@@ -179,7 +179,7 @@ Word = React.createClass do
               onChildClick: ~> @props.onChildClick it
       div do
         className: 'meaning'
-        if @state.meaning and not @state.cut then data.short else ''
+        span null if @state.meaning and not @state.cut then data.short else ''
 
 ActionMenu = React.createClass do
   icon: ->
@@ -348,7 +348,7 @@ Sentence = React.createClass do
               "#onClick": @toggleMode
               if @state.mode is 'zh_TW' then '繁' else '简'
       UndoCut do
-        disabled: @state.undo.length is 0
+        actived: @state.undo.length isnt 0
         "#onClick": ~>
           comp = @state.undo.pop!
           comp?setState cut: false
