@@ -133,6 +133,8 @@ Word = React.createClass do
       if @state.menu
         ActionMenu do
           className: 'menu-cut'
+          buttons: <[cut]>
+          actived: [data.children.length isnt 1]
           onButtonClick: (it, name) ~>
             next-cut = not @state.cut
             if next-cut is true
