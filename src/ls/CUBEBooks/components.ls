@@ -3,12 +3,13 @@ $            = require 'jquery'
 React        = require 'react'
 Data         = require './data'
 zhStrokeData = try require 'zhStrokeData'
-{a, div, i, nav, span} = React.DOM
+{a, div, i, img, nav, span} = React.DOM
 onClick = if \ontouchstart of window then \onTouchStart else \onClick
 
 say-it = (text, lang = \en-US) ->
-  syn = window.speechSynthesis
-  utt = window.SpeechSynthesisUtterance
+  syn = try window.speechSynthesis
+  utt = try window.SpeechSynthesisUtterance
+  return if not syn or utt
   u = new utt text
     ..lang = lang
     ..volume = 1.0
@@ -241,13 +242,14 @@ Stroker = React.createClass do
   displayName: 'ZhStrokeData.SpriteStroker'
   getDefaultProps: ->
     path: './strokes/'
+    fallback: null
   getInitialState: ->
     play: no
     hide: true
     words: null
     stroker: null
   componentWillUpdate: (props, state) ->
-    return if not state.words
+    return if not state.words or @props.fallback
     punc = new RegExp Object.keys(Data.punctuations)join('|'), \g
     state.words .= replace punc, ''
     if @state.hide isnt state.hide and state.hide is true
@@ -255,7 +257,9 @@ Stroker = React.createClass do
   componentDidUpdate: (old-props, old-state) ->
     $container = $ @refs.container.getDOMNode!
     $container.empty!
-    return if not @state.words or @state.words.length is 0
+    return if not @state.words or
+              @state.words.length is 0 or
+              @props.fallback
     if not @state.stroker or old-state.words isnt @state.words
       @state.stroker =
         new zh-stroke-data.SpriteStroker do
@@ -272,13 +276,21 @@ Stroker = React.createClass do
         ..play!
   onHide: -> ...
   render: ->
+    console.log @props.fallback
     div do
       className: 'strokes'
       style:
         display: if not @state.hide then 'block' else 'none'
       "#onClick": ~> @setState hide: true
-      div className: 'grid'
-      div ref: 'container'
+      if not @props.fallback
+        div className: 'grid'
+      else
+        div do
+          className: 'fallback'
+          style:
+            background-image: "url(#{@props.fallback})"
+      div do
+        ref: 'container'
 
 Sentence = React.createClass do
   displayName: 'CUBE.Sentence'

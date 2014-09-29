@@ -289,6 +289,13 @@ small {
   left: 1rem;
   top: 1rem;
 }
+.ui.modal.control .playground .comp.sentence .strokes .fallback {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  width: 215px;
+  height: 215px;
+}
 .ui.modal.control .playground .comp.undo-cut {
   position: absolute;
   top: 1rem;

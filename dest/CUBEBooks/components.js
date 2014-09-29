@@ -1,5 +1,5 @@
 (function(){
-  var isNaN, $, React, Data, zhStrokeData, ref$, a, div, i, nav, span, onClick, sayIt, AudioControl, Character, UndoCut, Word, ActionMenu, SettingsButton, Stroker, Sentence, split$ = ''.split;
+  var isNaN, $, React, Data, zhStrokeData, ref$, a, div, i, img, nav, span, onClick, sayIt, AudioControl, Character, UndoCut, Word, ActionMenu, SettingsButton, Stroker, Sentence, split$ = ''.split;
   isNaN = require('lodash').isNaN;
   $ = require('jquery');
   React = require('react');
@@ -9,13 +9,24 @@
       return require('zhStrokeData');
     } catch (e$) {}
   }());
-  ref$ = React.DOM, a = ref$.a, div = ref$.div, i = ref$.i, nav = ref$.nav, span = ref$.span;
+  ref$ = React.DOM, a = ref$.a, div = ref$.div, i = ref$.i, img = ref$.img, nav = ref$.nav, span = ref$.span;
   onClick = 'ontouchstart' in window ? 'onTouchStart' : 'onClick';
   sayIt = function(text, lang){
     var syn, utt, x$, u;
     lang == null && (lang = 'en-US');
-    syn = window.speechSynthesis;
-    utt = window.SpeechSynthesisUtterance;
+    syn = (function(){
+      try {
+        return window.speechSynthesis;
+      } catch (e$) {}
+    }());
+    utt = (function(){
+      try {
+        return window.SpeechSynthesisUtterance;
+      } catch (e$) {}
+    }());
+    if (!syn || utt) {
+      return;
+    }
     x$ = u = new utt(text);
     x$.lang = lang;
     x$.volume = 1.0;
@@ -397,7 +408,8 @@
     displayName: 'ZhStrokeData.SpriteStroker',
     getDefaultProps: function(){
       return {
-        path: './strokes/'
+        path: './strokes/',
+        fallback: null
       };
     },
     getInitialState: function(){
@@ -410,7 +422,7 @@
     },
     componentWillUpdate: function(props, state){
       var punc;
-      if (!state.words) {
+      if (!state.words || this.props.fallback) {
         return;
       }
       punc = new RegExp(Object.keys(Data.punctuations).join('|'), 'g');
@@ -423,7 +435,7 @@
       var $container, x$;
       $container = $(this.refs.container.getDOMNode());
       $container.empty();
-      if (!this.state.words || this.state.words.length === 0) {
+      if (!this.state.words || this.state.words.length === 0 || this.props.fallback) {
         return;
       }
       if (!this.state.stroker || oldState.words !== this.state.words) {
@@ -447,6 +459,7 @@
     },
     render: function(){
       var ref$, this$ = this;
+      console.log(this.props.fallback);
       return div((ref$ = {
         className: 'strokes',
         style: {
@@ -456,9 +469,16 @@
         return this$.setState({
           hide: true
         });
-      }, ref$), div({
-        className: 'grid'
-      }), div({
+      }, ref$), !this.props.fallback
+        ? div({
+          className: 'grid'
+        })
+        : div({
+          className: 'fallback',
+          style: {
+            backgroundImage: "url(" + this.props.fallback + ")"
+          }
+        }), div({
         ref: 'container'
       }));
     }
