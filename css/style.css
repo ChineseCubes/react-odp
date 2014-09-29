@@ -366,10 +366,6 @@ small {
   box-shadow: none;
   padding: 0;
   margin-right: 0.5rem;
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-  pointer-events: none;
 }
 .ui.modal.control .playground .comp.word .actions .menu .button:last-child {
   margin-right: 0;
@@ -377,11 +373,11 @@ small {
 .ui.modal.control .playground .comp.word .actions .menu .button i.icon {
   line-height: 2rem;
 }
-.ui.modal.control .playground .comp.word .actions .menu .button.actived {
-  opacity: 1;
-  -ms-filter: none;
-  filter: none;
-  pointer-events: auto;
+.ui.modal.control .playground .comp.word .actions .menu .button.disabled {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  pointer-events: none;
 }
 .ui.modal.control .playground .comp.word .actions .menu i.cut.icon {
   margin-left: 0.9rem;

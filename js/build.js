@@ -1072,7 +1072,7 @@
 	      }, ref$), this.state.menu ? ActionMenu({
 	        className: 'menu-cut',
 	        buttons: ['cut'],
-	        actived: [data.children.length !== 1],
+	        disabled: [data.children.length === 1],
 	        onButtonClick: function(it, name){
 	          var nextCut, x$;
 	          nextCut = !this$.state.cut;
@@ -1088,8 +1088,8 @@
 	      }) : void 8, this.state.menu ? ActionMenu({
 	        className: 'menu-learn',
 	        buttons: ['pinyin', 'stroke', 'english'],
-	        actived: [true, data.children.length === 1, true],
-	        onButtonClick: function(it, name){
+	        disabled: [false, data.children.length !== 1, false],
+	        onButtonClick: function(it, name, close){
 	          var text;
 	          switch (false) {
 	          case name !== 'pinyin':
@@ -1098,6 +1098,8 @@
 	                return it[this$.props.mode];
 	              }).join('');
 	              sayIt(text, lang(this$.props.mode));
+	            } else {
+	              close();
 	            }
 	            return this$.setState({
 	              pinyin: !this$.state.pinyin
@@ -1105,10 +1107,12 @@
 	          case name !== 'stroke':
 	            return this$.props.onStroke(data.flatten().map(function(it){
 	              return it.zh_TW;
-	            }).join(''));
+	            }).join(''), close);
 	          case name !== 'english':
 	            if (!this$.state.meaning) {
 	              sayIt(data.short);
+	            } else {
+	              close();
 	            }
 	            return this$.setState({
 	              meaning: !this$.state.meaning
@@ -1145,8 +1149,8 @@
 	              key: i + "-" + c.short,
 	              data: c,
 	              mode: this.props.mode,
-	              onStroke: function(it){
-	                return this$.props.onStroke(it);
+	              onStroke: function(it, close){
+	                return this$.props.onStroke(it, close);
 	              },
 	              onChildCut: function(it){
 	                return this$.props.onChildCut(it);
@@ -1180,10 +1184,20 @@
 	    getDefaultProps: function(){
 	      return {
 	        buttons: ['cut'],
-	        actived: [true],
+	        disabled: [false],
 	        onButtonClick: function(){
 	          throw Error('unimplemented');
 	        }
+	      };
+	    },
+	    getInitialState: function(){
+	      var actived, i;
+	      actived = [];
+	      for (i in this.props.buttons) {
+	        actived[i] = false;
+	      }
+	      return {
+	        actived: actived
 	      };
 	    },
 	    render: function(){
@@ -1203,14 +1217,24 @@
 	        }
 	        return results$;
 	        function fn$(idx, btn){
-	          var actived, ref$, this$ = this;
-	          actived = this.props.actived[idx] ? 'actived' : '';
+	          var actived, disabled, ref$, this$ = this;
+	          actived = this.state.actived[idx] ? 'actived' : '';
+	          disabled = this.props.disabled[idx] ? 'disabled' : '';
 	          return div((ref$ = {
 	            key: "button-" + idx,
-	            className: "ui icon button black " + actived
+	            className: "ui icon button black " + actived + " " + disabled
 	          }, ref$[onClick + ""] = function(it){
 	            it.stopPropagation();
-	            return this$.props.onButtonClick.call(this$, it, btn);
+	            this$.props.onButtonClick.call(this$, it, btn, function(){
+	              var actived;
+	              actived = Array.prototype.slice.call(this$.state.actived);
+	              actived[idx] = false;
+	              return this$.setState({
+	                actived: actived
+	              });
+	            });
+	            this$.state.actived[idx] = true;
+	            return this$.forceUpdate();
 	          }, ref$), i({
 	            className: "icon " + this.icon(btn)
 	          }));
@@ -1247,7 +1271,10 @@
 	        return;
 	      }
 	      punc = new RegExp(Object.keys(Data.punctuations).join('|'), 'g');
-	      return state.words = state.words.replace(punc, '');
+	      state.words = state.words.replace(punc, '');
+	      if (this.state.hide !== state.hide && state.hide === true) {
+	        return this.onHide.call(this);
+	      }
 	    },
 	    componentDidUpdate: function(oldProps, oldState){
 	      var $container, x$;
@@ -1271,6 +1298,9 @@
 	        x$.play();
 	        return x$;
 	      }
+	    },
+	    onHide: function(){
+	      throw Error('unimplemented');
 	    },
 	    render: function(){
 	      var ref$, this$ = this;
@@ -1380,23 +1410,34 @@
 	            ref: i,
 	            data: word,
 	            mode: this.state.mode,
-	            onStroke: function(text){
-	              var stroker;
+	            onStroke: function(text, close){
+	              var stroker, x$, y$;
 	              if (!this$.refs.stroker) {
 	                return;
 	              }
 	              stroker = this$.refs.stroker;
 	              if (stroker.state.hide) {
-	                return stroker.setState({
+	                x$ = stroker;
+	                x$.onHide = function(){
+	                  return close();
+	                };
+	                x$.setState({
 	                  words: text,
 	                  play: true,
 	                  hide: false
 	                });
+	                return x$;
 	              } else {
-	                return stroker.setState({
+	                close();
+	                y$ = stroker;
+	                y$.onHide = function(){
+	                  return close();
+	                };
+	                y$.setState({
 	                  words: null,
 	                  hide: true
 	                });
+	                return y$;
 	              }
 	            },
 	            onChildCut: function(comp){

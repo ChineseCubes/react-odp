@@ -136,7 +136,7 @@ Word = React.createClass do
         ActionMenu do
           className: 'menu-cut'
           buttons: <[cut]>
-          actived: [data.children.length isnt 1]
+          disabled: [data.children.length is 1]
           onButtonClick: (it, name) ~>
             next-cut = not @state.cut
             if next-cut is true
@@ -148,18 +148,22 @@ Word = React.createClass do
         ActionMenu do
           className: 'menu-learn'
           buttons: <[pinyin stroke english]>
-          actived: [yes, (data.children.length is 1), yes]
-          onButtonClick: (it, name) ~>
+          disabled: [no, (data.children.length isnt 1), no]
+          onButtonClick: (it, name, close) ~>
             | name is \pinyin
               if not @state.pinyin
                 text = data.flatten!map(~> it[@props.mode])join ''
                 say-it text, lang @props.mode
+              else
+                close!
               @setState pinyin: !@state.pinyin
             | name is \stroke
-              @props.onStroke(data.flatten!map (.zh_TW) .join '')
+              @props.onStroke(data.flatten!map (.zh_TW) .join(''), close)
             | name is \english
               if not @state.meaning
                 say-it data.short
+              else
+                close!
               @setState meaning: !@state.meaning
       div do
         className: 'characters'
@@ -176,9 +180,9 @@ Word = React.createClass do
               key: "#{i}-#{c.short}"
               data: c
               mode: @props.mode
-              onStroke:     ~> @props.onStroke it
-              onChildCut:   ~> @props.onChildCut it
-              onChildClick: ~> @props.onChildClick it
+              onStroke: (it, close) ~> @props.onStroke it, close
+              onChildCut:           ~> @props.onChildCut it
+              onChildClick:         ~> @props.onChildClick it
       div do
         className: "meaning #actived"
         span null data.short
@@ -193,8 +197,13 @@ ActionMenu = React.createClass do
   displayName: 'CUBE.ActionMenu'
   getDefaultProps: ->
     buttons: <[cut]>
-    actived: [yes]
+    disabled: [no]
     onButtonClick: -> ...
+  getInitialState: ->
+    actived = []
+    for i of @props.buttons
+      actived[i] = false
+    actived: actived
   render: ->
     buttons = @props.buttons
     type = if buttons.length is 1 then 'single' else 'multiple'
@@ -208,13 +217,19 @@ ActionMenu = React.createClass do
           #  className: 'ui icon button black listen'
           #  i className: 'icon volume up'
           for let idx, btn of buttons
-            actived = if @props.actived[idx] then 'actived' else ''
+            actived = if @state.actived[idx] then 'actived' else ''
+            disabled = if @props.disabled[idx] then 'disabled' else ''
             div do
               key: "button-#idx"
-              className: "ui icon button black #actived"
+              className: "ui icon button black #actived #disabled"
               "#onClick": ~>
                 it.stopPropagation!
-                @props.onButtonClick.call this, it, btn
+                @props.onButtonClick.call this, it, btn, ~>
+                  actived = Array::slice.call @state.actived
+                  actived[idx] = no
+                  @setState actived: actived
+                @state.actived[idx] = yes
+                @forceUpdate!
               i className: "icon #{@icon btn}"
 
 SettingsButton = React.createClass do
@@ -235,6 +250,8 @@ Stroker = React.createClass do
     return if not state.words
     punc = new RegExp Object.keys(Data.punctuations)join('|'), \g
     state.words .= replace punc, ''
+    if @state.hide isnt state.hide and state.hide is true
+      @onHide.call this
   componentDidUpdate: (old-props, old-state) ->
     $container = $ @refs.container.getDOMNode!
     $container.empty!
@@ -253,6 +270,7 @@ Stroker = React.createClass do
       @state.stroker
         #..fastSeek 0 # FIXME
         ..play!
+  onHide: -> ...
   render: ->
     div do
       className: 'strokes'
@@ -312,18 +330,23 @@ Sentence = React.createClass do
             ref: i
             data: word
             mode: @state.mode
-            onStroke: (text) ~>
+            onStroke: (text, close) ~>
               return if not @refs.stroker
               stroker = @refs.stroker
               if stroker.state.hide
-                stroker.setState do
-                  words: text
-                  play:  yes
-                  hide:  false
+                stroker
+                  ..onHide = -> close!
+                  ..setState do
+                    words: text
+                    play:  yes
+                    hide:  false
               else
-                stroker.setState do
-                  words: null
-                  hide: true
+                close!
+                stroker
+                  ..onHide = -> close!
+                  ..setState do
+                    words: null
+                    hide: true
             onChildCut:   (comp) ~>
               @state.undo.push comp
               comp.setState do
