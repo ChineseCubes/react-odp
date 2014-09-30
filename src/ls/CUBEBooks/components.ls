@@ -4,7 +4,7 @@ React        = require 'react'
 Data         = require './data'
 zhStrokeData = try require 'zhStrokeData'
 {a, div, i, img, nav, span} = React.DOM
-onClick = if \ontouchstart of window then \onTouchStart else \onClick
+onClick = if (try \ontouchstart of window) then \onTouchStart else \onClick
 
 say-it = (text, lang = \en-US) ->
   syn = try window.speechSynthesis
@@ -276,7 +276,6 @@ Stroker = React.createClass do
         ..play!
   onHide: -> ...
   render: ->
-    console.log @props.fallback
     div do
       className: 'strokes'
       style:

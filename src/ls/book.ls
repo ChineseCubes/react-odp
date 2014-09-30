@@ -36,7 +36,6 @@ Book = React.createClass do
     # set audio and update sprites after prerendered content has been mounted
     @setState audio: audio
   componentDidMount: ->
-    try window.console.log @state.sprite
     @state.audio?sprite @state.sprite
   resize: (dpcm) ->
     return 0.98 if not @props.auto-fit

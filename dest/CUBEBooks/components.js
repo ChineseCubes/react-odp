@@ -459,7 +459,6 @@
     },
     render: function(){
       var ref$, this$ = this;
-      console.log(this.props.fallback);
       return div((ref$ = {
         className: 'strokes',
         style: {

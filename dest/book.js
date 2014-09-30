@@ -58,9 +58,6 @@
     },
     componentDidMount: function(){
       var ref$;
-      try {
-        window.console.log(this.state.sprite);
-      } catch (e$) {}
       return (ref$ = this.state.audio) != null ? ref$.sprite(this.state.sprite) : void 8;
     },
     resize: function(dpcm){

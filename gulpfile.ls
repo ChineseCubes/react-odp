@@ -56,6 +56,9 @@ gulp.task \webpack <[js:app]> ->
       externals:
         'vtt.js': \WebVTT
         zhStrokeData: \zhStrokeData
+      resolve:
+        alias:
+          request: 'browser-request'
     .pipe gulp-replace 'node.innerHTML = html;', """
       if (document.contentType === "application/xhtml+xml") {
         var dom = new DOMParser().parseFromString(html, 'text/html');

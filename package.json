@@ -12,6 +12,7 @@
   "author": "caasi Huang <caasi@chinesecubes.com>",
   "license": "MIT",
   "dependencies": {
+    "browser-request": "^0.3.2",
     "jquery": "^2.1.1",
     "lodash": "^2.4.1",
     "react-vtt": "^0.1.7",
@@ -37,7 +38,7 @@
     "main-bower-files": "^1.0.2",
     "nib": "^1.0.2",
     "react": "^0.11.2",
-    "request": "^2.42.0",
+    "request": "^2.44.0",
     "style-loader": "^0.8.0",
     "xmldom": "^0.1.19"
   }
