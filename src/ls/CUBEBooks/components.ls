@@ -9,7 +9,7 @@ onClick = if \ontouchstart of window then \onTouchStart else \onClick
 say-it = (text, lang = \en-US) ->
   syn = try window.speechSynthesis
   utt = try window.SpeechSynthesisUtterance
-  return if not syn or utt
+  return if not syn or not utt
   u = new utt text
     ..lang = lang
     ..volume = 1.0

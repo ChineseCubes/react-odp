@@ -24,7 +24,7 @@
         return window.SpeechSynthesisUtterance;
       } catch (e$) {}
     }());
-    if (!syn || utt) {
+    if (!syn || !utt) {
       return;
     }
     x$ = u = new utt(text);
