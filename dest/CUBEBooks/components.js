@@ -205,8 +205,7 @@
         cut: false,
         pinyin: false,
         meaning: false,
-        soundURI: null,
-        strokeURI: null
+        soundURI: null
       };
     },
     click: function(){
@@ -431,8 +430,7 @@
     displayName: 'ZhStrokeData.SpriteStroker',
     getDefaultProps: function(){
       return {
-        path: './strokes/',
-        fallback: null
+        path: './strokes/'
       };
     },
     getInitialState: function(){
@@ -440,7 +438,8 @@
         play: false,
         hide: true,
         words: null,
-        stroker: null
+        stroker: null,
+        strokeURI: null
       };
     },
     componentWillUpdate: function(props, state){
@@ -458,7 +457,7 @@
       var $container, x$;
       $container = $(this.refs.container.getDOMNode());
       $container.empty();
-      if (!this.state.words || this.state.words.length === 0 || this.props.fallback) {
+      if (!this.state.words || this.state.words.length === 0 || this.state.strokeURI) {
         return;
       }
       if (!this.state.stroker || oldState.words !== this.state.words) {
@@ -491,14 +490,14 @@
         return this$.setState({
           hide: true
         });
-      }, ref$), !this.props.fallback
+      }, ref$), !this.state.strokeURI
         ? div({
           className: 'grid'
         })
         : div({
           className: 'fallback',
           style: {
-            backgroundImage: "url(" + this.props.fallback + ")"
+            backgroundImage: "url(" + this.state.strokeURI + ")"
           }
         }), div({
         ref: 'container'
@@ -596,33 +595,37 @@
             data: word,
             mode: this.state.mode,
             onStroke: function(text, close){
-              var stroker, x$, y$;
+              var stroker, x$;
               if (!this$.refs.stroker) {
                 return;
               }
               stroker = this$.refs.stroker;
               if (stroker.state.hide) {
+                return API.Talks.get(text, function(err, data){
+                  var x$;
+                  x$ = stroker;
+                  x$.onHide = function(){
+                    return close();
+                  };
+                  x$.setState({
+                    words: text,
+                    play: true,
+                    hide: false,
+                    strokeURI: data != null ? data.strokeURI() : void 8
+                  });
+                  return x$;
+                });
+              } else {
+                close();
                 x$ = stroker;
                 x$.onHide = function(){
                   return close();
                 };
                 x$.setState({
-                  words: text,
-                  play: true,
-                  hide: false
-                });
-                return x$;
-              } else {
-                close();
-                y$ = stroker;
-                y$.onHide = function(){
-                  return close();
-                };
-                y$.setState({
                   words: null,
                   hide: true
                 });
-                return y$;
+                return x$;
               }
             },
             onChildCut: function(comp){

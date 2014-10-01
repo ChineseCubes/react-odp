@@ -125,7 +125,6 @@ Word = React.createClass do
     pinyin:  off
     meaning: off
     soundURI: null
-    strokeURI: null
   click: -> @props.onChildClick this
   render: ->
     data = @props.data
@@ -254,12 +253,12 @@ Stroker = React.createClass do
   displayName: 'ZhStrokeData.SpriteStroker'
   getDefaultProps: ->
     path: './strokes/'
-    fallback: null
   getInitialState: ->
     play: no
     hide: true
     words: null
     stroker: null
+    strokeURI: null
   componentWillUpdate: (props, state) ->
     return if not state.words or @props.fallback
     punc = new RegExp Object.keys(Data.punctuations)join('|'), \g
@@ -271,7 +270,7 @@ Stroker = React.createClass do
     $container.empty!
     return if not @state.words or
               @state.words.length is 0 or
-              @props.fallback
+              @state.strokeURI
     if not @state.stroker or old-state.words isnt @state.words
       @state.stroker =
         new zh-stroke-data.SpriteStroker do
@@ -293,13 +292,13 @@ Stroker = React.createClass do
       style:
         display: if not @state.hide then 'block' else 'none'
       "#onClick": ~> @setState hide: true
-      if not @props.fallback
+      if not @state.strokeURI
         div className: 'grid'
       else
         div do
           className: 'fallback'
           style:
-            background-image: "url(#{@props.fallback})"
+            background-image: "url(#{@state.strokeURI})"
       div do
         ref: 'container'
 
@@ -357,12 +356,14 @@ Sentence = React.createClass do
               return if not @refs.stroker
               stroker = @refs.stroker
               if stroker.state.hide
+                err, data <- API.Talks.get text
                 stroker
                   ..onHide = -> close!
                   ..setState do
                     words: text
                     play:  yes
                     hide:  false
+                    strokeURI: data?strokeURI!
               else
                 close!
                 stroker
