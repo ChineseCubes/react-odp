@@ -22,24 +22,32 @@ get-json = !(path, done) ->
 
 class CubeList
   ([it]) ~> this <<< it
+  # XXX: Howler should test MIME type instead of extension
+  # BTW, the base64 decoding in Howler may also have problem.
+  # Should patch it someday.
+  soundURI: -> "#remote/sentencesound/#{@id}.mp3"
   getSoundDataURI: !(done) ->
-    err, data <- get-base64 "#remote/sentencesound/#{@id}"
+    err, data <- get-base64 @soundURI!
     if err
       then done err
-      else done err, "data:audio/mpeg3;base64;#data"
+      # FIXME: use wrong MIME type for Howler
+      # https://github.com/goldfire/howler.js/issues/218
+      else done err, "data:audio/mp3;base64,#data"
 
 class Cube extends CubeList
   ~> super it
+  soundURI: -> "#remote/cubesound/#{@id}.mp3"
+  strokeURI: -> "#remote/cubestroke/#{@id}"
   getSoundDataURI:  !(done) ->
-    err, data <- get-base64 "#remote/cubesound/#{@id}"
+    err, data <- get-base64 @soundURI!
     if err
       then done err
-      else done err, "data:audio/mpeg3;base64;#data"
+      else done err, "data:audio/mp3;base64,#data"
   getStrokeDataURI: !(done) ->
-    err, data <- get-base64 "#remote/cubestroke/#{@id}"
+    err, data <- get-base64 @strokeURI!
     if err
       then done err
-      else done err, "data:image/gif;base64;#data"
+      else done err, "data:image/gif;base64,#data"
 
 
 

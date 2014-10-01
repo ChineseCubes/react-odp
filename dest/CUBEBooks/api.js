@@ -31,12 +31,15 @@
       import$(this$, it);
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
+    prototype.soundURI = function(){
+      return remote + "/sentencesound/" + this.id + ".mp3";
+    };
     prototype.getSoundDataURI = function(done){
-      getBase64(remote + "/sentencesound/" + this.id, function(err, data){
+      getBase64(this.soundURI(), function(err, data){
         if (err) {
           return done(err);
         } else {
-          return done(err, "data:audio/mpeg3;base64;" + data);
+          return done(err, "data:audio/mp3;base64," + data);
         }
       });
     };
@@ -49,21 +52,27 @@
       Cube.superclass.call(this$, it);
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
+    prototype.soundURI = function(){
+      return remote + "/cubesound/" + this.id + ".mp3";
+    };
+    prototype.strokeURI = function(){
+      return remote + "/cubestroke/" + this.id;
+    };
     prototype.getSoundDataURI = function(done){
-      getBase64(remote + "/cubesound/" + this.id, function(err, data){
+      getBase64(this.soundURI(), function(err, data){
         if (err) {
           return done(err);
         } else {
-          return done(err, "data:audio/mpeg3;base64;" + data);
+          return done(err, "data:audio/mp3;base64," + data);
         }
       });
     };
     prototype.getStrokeDataURI = function(done){
-      getBase64(remote + "/cubestroke/" + this.id, function(err, data){
+      getBase64(this.strokeURI(), function(err, data){
         if (err) {
           return done(err);
         } else {
-          return done(err, "data:image/gif;base64;" + data);
+          return done(err, "data:image/gif;base64," + data);
         }
       });
     };

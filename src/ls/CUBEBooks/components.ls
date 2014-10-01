@@ -109,6 +109,7 @@ UndoCut = React.createClass do
         "#onClick": @props."#onClick"
         i className: 'repeat icon'
 
+API = require './api'
 Word = React.createClass do
   displayName: 'CUBE.Word'
   getDefaultProps: ->
@@ -123,6 +124,8 @@ Word = React.createClass do
     cut:  false
     pinyin:  off
     meaning: off
+    soundURI: null
+    strokeURI: null
   click: -> @props.onChildClick this
   render: ->
     data = @props.data
@@ -154,7 +157,16 @@ Word = React.createClass do
             | name is \pinyin
               if not @state.pinyin
                 text = data.flatten!map(~> it[@props.mode])join ''
-                say-it text, lang @props.mode
+                if not @state.soundURI
+                  say-it text, lang @props.mode
+                  err, data <~ API.Talks.get text
+                  throw err if err
+                  @state.soundURI = data.soundURI!
+                else try
+                  Howler.iOSAutoEnable = false
+                  new Howl do
+                    autoplay: on
+                    urls: [@state.soundURI]
               else
                 close!
               @setState pinyin: !@state.pinyin

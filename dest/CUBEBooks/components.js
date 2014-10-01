@@ -1,5 +1,5 @@
 (function(){
-  var isNaN, $, React, Data, zhStrokeData, ref$, a, div, i, img, nav, span, onClick, sayIt, AudioControl, Character, UndoCut, Word, ActionMenu, SettingsButton, Stroker, Sentence, split$ = ''.split;
+  var isNaN, $, React, Data, zhStrokeData, ref$, a, div, i, img, nav, span, onClick, sayIt, AudioControl, Character, UndoCut, API, Word, ActionMenu, SettingsButton, Stroker, Sentence, split$ = ''.split;
   isNaN = require('lodash').isNaN;
   $ = require('jquery');
   React = require('react');
@@ -180,6 +180,7 @@
       })));
     }
   });
+  API = require('./api');
   Word = React.createClass({
     displayName: 'CUBE.Word',
     getDefaultProps: function(){
@@ -203,7 +204,9 @@
         menu: this.props.menu,
         cut: false,
         pinyin: false,
-        meaning: false
+        meaning: false,
+        soundURI: null,
+        strokeURI: null
       };
     },
     click: function(){
@@ -255,7 +258,23 @@
               text = data.flatten().map(function(it){
                 return it[this$.props.mode];
               }).join('');
-              sayIt(text, lang(this$.props.mode));
+              if (!this$.state.soundURI) {
+                sayIt(text, lang(this$.props.mode));
+                API.Talks.get(text, function(err, data){
+                  if (err) {
+                    throw err;
+                  }
+                  return this$.state.soundURI = data.soundURI();
+                });
+              } else {
+                try {
+                  Howler.iOSAutoEnable = false;
+                  new Howl({
+                    autoplay: true,
+                    urls: [this$.state.soundURI]
+                  });
+                } catch (e$) {}
+              }
             } else {
               close();
             }
