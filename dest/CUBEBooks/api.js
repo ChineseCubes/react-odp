@@ -36,7 +36,7 @@
         if (err) {
           return done(err);
         } else {
-          return done(err, "audio/mpeg3;base64;" + data);
+          return done(err, "data:audio/mpeg3;base64;" + data);
         }
       });
     };
@@ -54,7 +54,7 @@
         if (err) {
           return done(err);
         } else {
-          return done(err, "audio/mpeg3;base64;" + data);
+          return done(err, "data:audio/mpeg3;base64;" + data);
         }
       });
     };
@@ -63,7 +63,7 @@
         if (err) {
           return done(err);
         } else {
-          return done(err, "image/gif;base64;" + data);
+          return done(err, "data:image/gif;base64;" + data);
         }
       });
     };

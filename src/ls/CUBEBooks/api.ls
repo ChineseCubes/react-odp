@@ -26,7 +26,7 @@ class CubeList
     err, data <- get-base64 "#remote/sentencesound/#{@id}"
     if err
       then done err
-      else done err, "audio/mpeg3;base64;#data"
+      else done err, "data:audio/mpeg3;base64;#data"
 
 class Cube extends CubeList
   ~> super it
@@ -34,12 +34,12 @@ class Cube extends CubeList
     err, data <- get-base64 "#remote/cubesound/#{@id}"
     if err
       then done err
-      else done err, "audio/mpeg3;base64;#data"
+      else done err, "data:audio/mpeg3;base64;#data"
   getStrokeDataURI: !(done) ->
     err, data <- get-base64 "#remote/cubestroke/#{@id}"
     if err
       then done err
-      else done err, "image/gif;base64;#data"
+      else done err, "data:image/gif;base64;#data"
 
 
 
