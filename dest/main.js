@@ -1,31 +1,10 @@
 (function(){
-  var React, DotsDetector, Data, API, Book, ReactVTT, log;
+  var React, DotsDetector, Data, Book, ReactVTT;
   React = require('react');
   DotsDetector = require('./react-dots-detector');
   Data = require('./CUBEBooks/data');
-  API = require('./CUBEBooks/api');
   Book = require('./book');
   ReactVTT = require('react-vtt');
-  log = function(it){
-    try {
-      return window.console.log(it);
-    } catch (e$) {}
-  };
-  API.Talks.get('愛', function(err, ai){
-    log(err) || ai;
-    return ai != null ? ai.getStroke(function(err, g){
-      log(err) || g;
-      return ai != null ? ai.getSound(function(err, s){
-        return log(err) || s;
-      }) : void 8;
-    }) : void 8;
-  });
-  API.Talks.get('我愛你', function(err, ai){
-    log(err) || ai;
-    return ai != null ? ai.getSound(function(err, s){
-      return log(err) || s;
-    }) : void 8;
-  });
   window.requestAnimationFrame(function(){
     return $(function(){
       var dots;

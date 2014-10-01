@@ -1,17 +1,16 @@
 require! request
+Buffer = require 'buffer'
+Buffer = Buffer.Buffer or Buffer
 
 
 
 remote = 'https://apis-beta.chinesecubes.com/CubeTalks'
 
-get = !(path, done) ->
-  err, res, body <- request do
-    method: \GET
-    encoding: null
-    uri: path
+get-base64 = !(path, done) ->
+  err, res, body <- request path
   if err
     then done err
-    else done err, body
+    else done err, new Buffer(body)toString(\base64)
 
 get-json = !(path, done) ->
   err, res, body <- request path
@@ -23,12 +22,24 @@ get-json = !(path, done) ->
 
 class CubeList
   ([it]) ~> this <<< it
-  getSound: !(done) -> get "#remote/sentencesound/#{@id}" done
+  getSoundDataURI: !(done) ->
+    err, data <- get-base64 "#remote/sentencesound/#{@id}"
+    if err
+      then done err
+      else done err, "audio/mpeg3;base64;#data"
 
 class Cube extends CubeList
   ~> super it
-  getSound:  !(done) -> get "#remote/cubesound/#{@id}"  done
-  getStroke: !(done) -> get "#remote/cubestroke/#{@id}" done
+  getSoundDataURI:  !(done) ->
+    err, data <- get-base64 "#remote/cubesound/#{@id}"
+    if err
+      then done err
+      else done err, "audio/mpeg3;base64;#data"
+  getStrokeDataURI: !(done) ->
+    err, data <- get-base64 "#remote/cubestroke/#{@id}"
+    if err
+      then done err
+      else done err, "image/gif;base64;#data"
 
 
 

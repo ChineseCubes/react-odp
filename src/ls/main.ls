@@ -1,23 +1,8 @@
 React        = require 'react'
 DotsDetector = require './react-dots-detector'
 Data         = require './CUBEBooks/data'
-API          = require './CUBEBooks/api'
 Book         = require './book'
 ReactVTT     = require 'react-vtt'
-
-log = -> try window.console.log it
-do
-  err, ai <- API.Talks.get '愛'
-  log err or ai
-  err, g <- ai?getStroke
-  log err or g
-  err, s <- ai?getSound
-  log err or s
-do
-  err, ai <- API.Talks.get '我愛你'
-  log err or ai
-  err, s <- ai?getSound
-  log err or s
 
 <- window.requestAnimationFrame
 <- $

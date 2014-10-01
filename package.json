@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "browser-request": "^0.3.2",
+    "buffer": "^2.7.0",
     "jquery": "^2.1.1",
     "lodash": "^2.4.1",
     "react-vtt": "^0.1.7",

@@ -10,7 +10,11 @@
     } catch (e$) {}
   }());
   ref$ = React.DOM, a = ref$.a, div = ref$.div, i = ref$.i, img = ref$.img, nav = ref$.nav, span = ref$.span;
-  onClick = 'ontouchstart' in window ? 'onTouchStart' : 'onClick';
+  onClick = (function(){
+    try {
+      return 'ontouchstart' in window;
+    } catch (e$) {}
+  }()) ? 'onTouchStart' : 'onClick';
   sayIt = function(text, lang){
     var syn, utt, x$, u;
     lang == null && (lang = 'en-US');

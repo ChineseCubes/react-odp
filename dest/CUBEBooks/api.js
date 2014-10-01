@@ -1,17 +1,15 @@
 (function(){
-  var request, remote, get, getJson, CubeList, Cube, getCube, getCubeList, Talks, API;
+  var request, Buffer, remote, getBase64, getJson, CubeList, Cube, getCube, getCubeList, Talks, API;
   request = require('request');
+  Buffer = require('buffer');
+  Buffer = Buffer.Buffer || Buffer;
   remote = 'https://apis-beta.chinesecubes.com/CubeTalks';
-  get = function(path, done){
-    request({
-      method: 'GET',
-      encoding: null,
-      uri: path
-    }, function(err, res, body){
+  getBase64 = function(path, done){
+    request(path, function(err, res, body){
       if (err) {
         return done(err);
       } else {
-        return done(err, body);
+        return done(err, new Buffer(body).toString('base64'));
       }
     });
   };
@@ -33,8 +31,14 @@
       import$(this$, it);
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
-    prototype.getSound = function(done){
-      get(remote + "/sentencesound/" + this.id, done);
+    prototype.getSoundDataURI = function(done){
+      getBase64(remote + "/sentencesound/" + this.id, function(err, data){
+        if (err) {
+          return done(err);
+        } else {
+          return done(err, "audio/mpeg3;base64;" + data);
+        }
+      });
     };
     return CubeList;
   }());
@@ -45,11 +49,23 @@
       Cube.superclass.call(this$, it);
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
-    prototype.getSound = function(done){
-      get(remote + "/cubesound/" + this.id, done);
+    prototype.getSoundDataURI = function(done){
+      getBase64(remote + "/cubesound/" + this.id, function(err, data){
+        if (err) {
+          return done(err);
+        } else {
+          return done(err, "audio/mpeg3;base64;" + data);
+        }
+      });
     };
-    prototype.getStroke = function(done){
-      get(remote + "/cubestroke/" + this.id, done);
+    prototype.getStrokeDataURI = function(done){
+      getBase64(remote + "/cubestroke/" + this.id, function(err, data){
+        if (err) {
+          return done(err);
+        } else {
+          return done(err, "image/gif;base64;" + data);
+        }
+      });
     };
     return Cube;
   }(CubeList));
