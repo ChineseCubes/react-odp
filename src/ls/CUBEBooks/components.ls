@@ -109,6 +109,7 @@ UndoCut = React.createClass do
         "#onClick": @props."#onClick"
         i className: 'repeat icon'
 
+{Howler, Howl} = require 'howler'
 API = require './api'
 Word = React.createClass do
   displayName: 'CUBE.Word'

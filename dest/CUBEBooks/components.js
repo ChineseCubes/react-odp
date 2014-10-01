@@ -1,5 +1,5 @@
 (function(){
-  var isNaN, $, React, Data, zhStrokeData, ref$, a, div, i, img, nav, span, onClick, sayIt, AudioControl, Character, UndoCut, API, Word, ActionMenu, SettingsButton, Stroker, Sentence, split$ = ''.split;
+  var isNaN, $, React, Data, zhStrokeData, ref$, a, div, i, img, nav, span, onClick, sayIt, AudioControl, Character, UndoCut, Howler, Howl, API, Word, ActionMenu, SettingsButton, Stroker, Sentence, split$ = ''.split;
   isNaN = require('lodash').isNaN;
   $ = require('jquery');
   React = require('react');
@@ -180,6 +180,7 @@
       })));
     }
   });
+  ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
   API = require('./api');
   Word = React.createClass({
     displayName: 'CUBE.Word',

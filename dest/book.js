@@ -1,10 +1,11 @@
 (function(){
-  var React, ReactVTT, CUBEBooks, ODP, ref$, div, i, small, Book;
+  var React, ReactVTT, CUBEBooks, ODP, ref$, div, i, small, Howler, Howl, Book;
   React = require('react');
   ReactVTT = require('react-vtt');
   CUBEBooks = require('./CUBEBooks/components');
   ODP = require('./ODP/components');
   ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small;
+  ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
   Book = React.createClass({
     displayName: 'CUBE.Book',
     getDefaultProps: function(){

@@ -4,6 +4,7 @@ CUBEBooks = require './CUBEBooks/components'
 ODP       = require './ODP/components'
 
 {div, i, small} = React.DOM
+{Howler, Howl} = require 'howler'
 
 Book = React.createClass do
   displayName: \CUBE.Book
