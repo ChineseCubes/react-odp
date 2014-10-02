@@ -306,12 +306,14 @@ Stroker = React.createClass do
 Sentence = React.createClass do
   displayName: 'CUBE.Sentence'
   getDefaultProps: ->
-    data:    null
-    stroke:  on
+    data:     null
+    image:    ''
+    stroke:   on
+    sentence: on
   getInitialState: ->
-    mode:    'zh_TW'
+    mode:  'zh_TW'
     focus: null
-    undo: []
+    undo:  []
   componentWillReceiveProps: (props) ->
     if @props.data?short isnt props.data?short
       @setState @getInitialState!{focus}
@@ -341,8 +343,12 @@ Sentence = React.createClass do
     words = data?childrenOfDepth(0) or []
     div do
       className: 'playground'
+      style:
+        background-image: "url('#{@props.image}')"
       div do
         className: 'comp sentence'
+        style:
+          display: if @props.sentence then 'block' else 'none'
         if @props.stroke then Stroker do
           key: "stroker"
           ref: "stroker"

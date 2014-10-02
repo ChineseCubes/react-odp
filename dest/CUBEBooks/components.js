@@ -510,7 +510,9 @@
     getDefaultProps: function(){
       return {
         data: null,
-        stroke: true
+        image: '',
+        stroke: true,
+        sentence: true
       };
     },
     getInitialState: function(){
@@ -575,9 +577,15 @@
       data = this.props.data;
       words = (data != null ? data.childrenOfDepth(0) : void 8) || [];
       return div({
-        className: 'playground'
+        className: 'playground',
+        style: {
+          backgroundImage: "url('" + this.props.image + "')"
+        }
       }, div({
-        className: 'comp sentence'
+        className: 'comp sentence',
+        style: {
+          display: this.props.sentence ? 'block' : 'none'
+        }
       }, this.props.stroke ? Stroker({
         key: "stroker",
         ref: "stroker"
