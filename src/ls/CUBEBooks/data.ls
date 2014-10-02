@@ -257,6 +257,20 @@ utils =
     #    ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
     #  | otherwise => it
     #tmp.textContent or tmp.innerText or ''
+  # segment: return a tree with no value
+  segment: (str, segs = []) ->
+    | not str?length   => null
+    | segs.length is 0 => Node (for c in str => Node [Char '' c])
+    | otherwise        =>
+      words = {} <<< punctuations
+      segs.sort (a, b) -> a.length - b.length
+      for seg in segs
+        words[seg] = Node (for c in seg => Node [Char '' c])
+      re = new RegExp Object.keys(punctuations)concat(segs)join('|')
+      Node do
+        while r = re.exec str
+          str = str.replace r.0, ''
+          words[r.0]
   Segmentations: Segmentations
 
 module.exports = utils

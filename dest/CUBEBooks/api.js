@@ -106,6 +106,14 @@
       default:
         return getCubeList(str, done);
       }
+    },
+    recommend: function(str, done){
+      switch (false) {
+      case !(!str.length || str.length === 1):
+        return done(new Error('too short'));
+      default:
+        return getJson(remote + "/recommend/" + encodeURIComponent(str), done);
+      }
     }
   };
   API = {

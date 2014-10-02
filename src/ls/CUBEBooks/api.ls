@@ -70,6 +70,11 @@ Talks =
     | not str.length  => done new Error 'too short'
     | str.length is 1 => get-cube str, done
     | otherwise       => get-cube-list str, done
+  recommend: (str, done) ->
+    | not str.length or
+      str.length is 1 => done new Error 'too short'
+    | otherwise       =>
+      get-json "#remote/recommend/#{encodeURIComponent str}" done
 
 
 
