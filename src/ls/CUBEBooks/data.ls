@@ -263,11 +263,20 @@ utils =
     | segs.length is 0 => [str.slice!]
     | otherwise        =>
       segs.sort (a, b) -> a.length - b.length
-      re = new RegExp Object.keys(punctuations)concat(segs)join('|')
+      re = "#{Object.keys(punctuations)concat(segs)join('|')}"
+      re = new RegExp re, \g
+      words = []
+      lastIndex = 0
       while r = re.exec str
-        str = str.replace r.0, ''
-        r.0
+        if lastIndex isnt r.index
+          # push skiped word
+          words.push str.substring lastIndex, r.index
+        lastIndex = re.lastIndex
+        words.push r.0
+      words
   Segmentations: Segmentations
+
+console.log utils.segment '這裡是哪裡？' <[這裡 哪裡]>
 
 module.exports = utils
 

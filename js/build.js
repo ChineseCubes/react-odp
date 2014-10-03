@@ -834,7 +834,7 @@
 	      });
 	    },
 	    segment: function(str, segs){
-	      var re, r, results$ = [];
+	      var re, words, lastIndex, r;
 	      segs == null && (segs = []);
 	      switch (false) {
 	      case !!(str != null && str.length):
@@ -845,16 +845,23 @@
 	        segs.sort(function(a, b){
 	          return a.length - b.length;
 	        });
-	        re = new RegExp(Object.keys(punctuations).concat(segs).join('|'));
+	        re = Object.keys(punctuations).concat(segs).join('|') + "";
+	        re = new RegExp(re, 'g');
+	        words = [];
+	        lastIndex = 0;
 	        while (r = re.exec(str)) {
-	          str = str.replace(r[0], '');
-	          results$.push(r[0]);
+	          if (lastIndex !== r.index) {
+	            words.push(str.substring(lastIndex, r.index));
+	          }
+	          lastIndex = re.lastIndex;
+	          words.push(r[0]);
 	        }
-	        return results$;
+	        return words;
 	      }
 	    },
 	    Segmentations: Segmentations
 	  };
+	  console.log(utils.segment('這裡是哪裡？', ['這裡', '哪裡']));
 	  module.exports = utils;
 	  function import$(obj, src){
 	    var own = {}.hasOwnProperty;
