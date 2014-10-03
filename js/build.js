@@ -861,7 +861,6 @@
 	    },
 	    Segmentations: Segmentations
 	  };
-	  console.log(utils.segment('這裡是哪裡？', ['這裡', '哪裡']));
 	  module.exports = utils;
 	  function import$(obj, src){
 	    var own = {}.hasOwnProperty;
@@ -3595,8 +3594,8 @@
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
-		module.hot.accept("!!/Users/caasi/Documents/ChineseCUBES/react-odp/node_modules/css-loader/index.js!/Users/caasi/Documents/ChineseCUBES/react-odp/node_modules/react-vtt/css/react-vtt.css", function() {
-			var newContent = require("!!/Users/caasi/Documents/ChineseCUBES/react-odp/node_modules/css-loader/index.js!/Users/caasi/Documents/ChineseCUBES/react-odp/node_modules/react-vtt/css/react-vtt.css");
+		module.hot.accept("!!/Users/caasi/Documents/ChineseCUBES/chinesecubes.github.io/react-odp/node_modules/css-loader/index.js!/Users/caasi/Documents/ChineseCUBES/chinesecubes.github.io/react-odp/node_modules/react-vtt/css/react-vtt.css", function() {
+			var newContent = require("!!/Users/caasi/Documents/ChineseCUBES/chinesecubes.github.io/react-odp/node_modules/css-loader/index.js!/Users/caasi/Documents/ChineseCUBES/chinesecubes.github.io/react-odp/node_modules/react-vtt/css/react-vtt.css");
 			if(typeof newContent === 'string') newContent = [module.id, newContent, ''];
 			update(newContent);
 		});

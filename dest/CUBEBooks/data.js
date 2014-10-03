@@ -469,7 +469,6 @@
     },
     Segmentations: Segmentations
   };
-  console.log(utils.segment('這裡是哪裡？', ['這裡', '哪裡']));
   module.exports = utils;
   function import$(obj, src){
     var own = {}.hasOwnProperty;
