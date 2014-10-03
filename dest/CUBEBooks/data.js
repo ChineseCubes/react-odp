@@ -442,44 +442,21 @@
       });
     },
     segment: function(str, segs){
-      var c, words, i$, len$, seg, re, r;
+      var re, r, results$ = [];
       segs == null && (segs = []);
       switch (false) {
       case !!(str != null && str.length):
         return null;
       case segs.length !== 0:
-        return Node((function(){
-          var i$, ref$, len$, results$ = [];
-          for (i$ = 0, len$ = (ref$ = str).length; i$ < len$; ++i$) {
-            c = ref$[i$];
-            results$.push(Node([Char('', c)]));
-          }
-          return results$;
-        }()));
+        return [str.slice()];
       default:
-        words = import$({}, punctuations);
         segs.sort(function(a, b){
           return a.length - b.length;
         });
-        for (i$ = 0, len$ = segs.length; i$ < len$; ++i$) {
-          seg = segs[i$];
-          words[seg] = Node((fn$()));
-        }
         re = new RegExp(Object.keys(punctuations).concat(segs).join('|'));
-        return Node((function(){
-          var results$ = [];
-          while (r = re.exec(str)) {
-            str = str.replace(r[0], '');
-            results$.push(words[r[0]]);
-          }
-          return results$;
-        }()));
-      }
-      function fn$(){
-        var i$, ref$, len$, results$ = [];
-        for (i$ = 0, len$ = (ref$ = seg).length; i$ < len$; ++i$) {
-          c = ref$[i$];
-          results$.push(Node([Char('', c)]));
+        while (r = re.exec(str)) {
+          str = str.replace(r[0], '');
+          results$.push(r[0]);
         }
         return results$;
       }
