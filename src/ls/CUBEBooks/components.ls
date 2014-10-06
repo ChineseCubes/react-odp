@@ -117,15 +117,19 @@ Word = React.createClass do
     data:    null
     mode:    'zh_TW'
     menu:    off
-    onStroke:     -> ...
-    onChildCut:   -> ...
-    onChildClick: -> ...
+    onStroke:      -> ...
+    onChildCut:    -> ...
+    afterChildCut: -> ...
+    onChildClick:  -> ...
   getInitialState: ->
     menu: @props.menu
     cut:  false
     pinyin:  off
     meaning: off
     soundURI: null
+  componentDidUpdate: !(props, state) ->
+    if state.cut is false and @state.cut is true
+      @props.afterChildCut this
   click: -> @props.onChildClick this
   render: ->
     data = @props.data
@@ -186,10 +190,12 @@ Word = React.createClass do
           for let i, c of data.children
             Word do
               key: "#{i}-#{c.short}"
+              ref: i
               data: c
               mode: @props.mode
               onStroke: (it, close) ~> @props.onStroke it, close
               onChildCut:           ~> @props.onChildCut it
+              afterChildCut:        ~> @props.afterChildCut it
               onChildClick:         ~> @props.onChildClick it
       div do
         className: "meaning #actived"
@@ -331,7 +337,7 @@ Sentence = React.createClass do
   componentDidUpdate: (props, state) ->
     if @props.data?short isnt props.data?short
       @setState undo: []
-      @refs.0.click!
+      @refs.0?click!
   toggleMode: ->
     @setState mode: if @state.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
   toggleSettings: ->
@@ -379,15 +385,18 @@ Sentence = React.createClass do
                     hide: true
             onChildCut:   (comp) ~>
               @state.undo.push comp
-              comp.setState do
-                pinyin:  off
-                meaning: off
+              comp.click!
+              #comp.setState do
+              #  pinyin:  off
+              #  meaning: off
+            afterChildCut: (comp) ~>
+              comp.refs.0?click!
             onChildClick: (comp) ~>
               @refs.stroker?setState do
                 words: null
                 hide: true
               if @state.focus is comp
-                comp.setState menu:    off
+                comp.setState menu: off
                 @setState focus: null
               else
                 @state.focus?setState do

@@ -195,6 +195,9 @@
         onChildCut: function(){
           throw Error('unimplemented');
         },
+        afterChildCut: function(){
+          throw Error('unimplemented');
+        },
         onChildClick: function(){
           throw Error('unimplemented');
         }
@@ -208,6 +211,11 @@
         meaning: false,
         soundURI: null
       };
+    },
+    componentDidUpdate: function(props, state){
+      if (state.cut === false && this.state.cut === true) {
+        this.props.afterChildCut(this);
+      }
     },
     click: function(){
       return this.props.onChildClick(this);
@@ -319,6 +327,7 @@
             var this$ = this;
             return Word({
               key: i + "-" + c.short,
+              ref: i,
               data: c,
               mode: this.props.mode,
               onStroke: function(it, close){
@@ -326,6 +335,9 @@
               },
               onChildCut: function(it){
                 return this$.props.onChildCut(it);
+              },
+              afterChildCut: function(it){
+                return this$.props.afterChildCut(it);
               },
               onChildClick: function(it){
                 return this$.props.onChildClick(it);
@@ -561,7 +573,7 @@
         this.setState({
           undo: []
         });
-        return this.refs[0].click();
+        return (ref$ = this.refs[0]) != null ? ref$.click() : void 8;
       }
     },
     toggleMode: function(){
@@ -643,10 +655,11 @@
             },
             onChildCut: function(comp){
               this$.state.undo.push(comp);
-              return comp.setState({
-                pinyin: false,
-                meaning: false
-              });
+              return comp.click();
+            },
+            afterChildCut: function(comp){
+              var ref$;
+              return (ref$ = comp.refs[0]) != null ? ref$.click() : void 8;
             },
             onChildClick: function(comp){
               var ref$;
