@@ -141,21 +141,20 @@ Word = React.createClass do
           className: 'menu-cut'
           buttons: <[cut]>
           disabled: [data.children.length is 1]
-          onButtonClick: (it, name) ~>
-            next-cut = not @state.cut
-            if next-cut is true
+          onChange: (it, name, actived) ~>
+            if actived
               @props
                 ..onChildCut this
                 ..onChildClick this
-            @setState cut: next-cut
+            @setState cut: actived
       if @state.menu
         ActionMenu do
           className: 'menu-learn'
           buttons: <[pinyin stroke english]>
           disabled: [no, (data.children.length isnt 1), no]
-          onButtonClick: (it, name, close) ~>
+          onChange: (it, name, actived, close) ~>
             | name is \pinyin
-              if not @state.pinyin
+              if actived
                 text = data.flatten!map(~> it[@props.mode])join ''
                 if not @state.soundURI
                   say-it text, lang @props.mode
@@ -167,17 +166,13 @@ Word = React.createClass do
                   new Howl do
                     autoplay: on
                     urls: [@state.soundURI]
-              else
-                close!
-              @setState pinyin: !@state.pinyin
-            | name is \stroke
+              @setState pinyin: actived
+            | name is \stroke and actived
               @props.onStroke(data.flatten!map (.zh_TW) .join(''), close)
             | name is \english
-              if not @state.meaning
+              if actived
                 say-it data.short
-              else
-                close!
-              @setState meaning: !@state.meaning
+              @setState meaning: actived
       div do
         className: 'characters'
         if not @state.cut
@@ -211,7 +206,7 @@ ActionMenu = React.createClass do
   getDefaultProps: ->
     buttons: <[cut]>
     disabled: [no]
-    onButtonClick: -> ...
+    onChange: -> ...
   getInitialState: ->
     actived = []
     for i of @props.buttons
@@ -237,12 +232,16 @@ ActionMenu = React.createClass do
               className: "ui icon button black #actived #disabled"
               "#onClick": ~>
                 it.stopPropagation!
-                @props.onButtonClick.call this, it, btn, ~>
-                  actived = Array::slice.call @state.actived
-                  actived[idx] = no
-                  @setState actived: actived
-                @state.actived[idx] = yes
-                @forceUpdate!
+                @setState actived:
+                  for i from 0 til @state.actived.length
+                    # exclude
+                    actived = if i is +idx
+                      then !@state.actived[i]
+                      else off
+                    @props.onChange.call this, it, buttons[i], actived, ~>
+                      @state.actived[idx] = off
+                      @setState actived: @state.actived
+                    actived
               i className: "icon #{@icon btn}"
 
 SettingsButton = React.createClass do
@@ -299,7 +298,7 @@ Stroker = React.createClass do
         div do
           className: 'fallback'
           style:
-            background-image: "url(#{@state.strokeURI})"
+            background-image: "url(#{@state.strokeURI}?#{Date.now!})"
       div do
         ref: 'container'
 

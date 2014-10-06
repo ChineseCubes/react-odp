@@ -234,27 +234,26 @@
         className: 'menu-cut',
         buttons: ['cut'],
         disabled: [data.children.length === 1],
-        onButtonClick: function(it, name){
-          var nextCut, x$;
-          nextCut = !this$.state.cut;
-          if (nextCut === true) {
+        onChange: function(it, name, actived){
+          var x$;
+          if (actived) {
             x$ = this$.props;
             x$.onChildCut(this$);
             x$.onChildClick(this$);
           }
           return this$.setState({
-            cut: nextCut
+            cut: actived
           });
         }
       }) : void 8, this.state.menu ? ActionMenu({
         className: 'menu-learn',
         buttons: ['pinyin', 'stroke', 'english'],
         disabled: [false, data.children.length !== 1, false],
-        onButtonClick: function(it, name, close){
+        onChange: function(it, name, actived, close){
           var text;
           switch (false) {
           case name !== 'pinyin':
-            if (!this$.state.pinyin) {
+            if (actived) {
               text = data.flatten().map(function(it){
                 return it[this$.props.mode];
               }).join('');
@@ -275,24 +274,20 @@
                   });
                 } catch (e$) {}
               }
-            } else {
-              close();
             }
             return this$.setState({
-              pinyin: !this$.state.pinyin
+              pinyin: actived
             });
-          case name !== 'stroke':
+          case !(name === 'stroke' && actived):
             return this$.props.onStroke(data.flatten().map(function(it){
               return it.zh_TW;
             }).join(''), close);
           case name !== 'english':
-            if (!this$.state.meaning) {
+            if (actived) {
               sayIt(data.short);
-            } else {
-              close();
             }
             return this$.setState({
-              meaning: !this$.state.meaning
+              meaning: actived
             });
           }
         }
@@ -362,7 +357,7 @@
       return {
         buttons: ['cut'],
         disabled: [false],
-        onButtonClick: function(){
+        onChange: function(){
           throw Error('unimplemented');
         }
       };
@@ -401,17 +396,26 @@
             key: "button-" + idx,
             className: "ui icon button black " + actived + " " + disabled
           }, ref$[onClick + ""] = function(it){
+            var i, actived;
             it.stopPropagation();
-            this$.props.onButtonClick.call(this$, it, btn, function(){
-              var actived;
-              actived = Array.prototype.slice.call(this$.state.actived);
-              actived[idx] = false;
-              return this$.setState({
-                actived: actived
-              });
+            return this$.setState({
+              actived: (function(){
+                var i$, to$, results$ = [];
+                for (i$ = 0, to$ = this.state.actived.length; i$ < to$; ++i$) {
+                  i = i$;
+                  actived = i === +idx ? !this.state.actived[i] : false;
+                  this.props.onChange.call(this, it, buttons[i], actived, fn$);
+                  results$.push(actived);
+                }
+                return results$;
+                function fn$(){
+                  this$.state.actived[idx] = false;
+                  return this$.setState({
+                    actived: this$.state.actived
+                  });
+                }
+              }.call(this$))
             });
-            this$.state.actived[idx] = true;
-            return this$.forceUpdate();
           }, ref$), i({
             className: "icon " + this.icon(btn)
           }));
@@ -498,7 +502,7 @@
         : div({
           className: 'fallback',
           style: {
-            backgroundImage: "url(" + this.state.strokeURI + ")"
+            backgroundImage: "url(" + this.state.strokeURI + "?" + Date.now() + ")"
           }
         }), div({
         ref: 'container'
