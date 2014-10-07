@@ -713,7 +713,9 @@
         comp = this$.state.undo.pop();
         if (comp != null) {
           comp.setState({
-            cut: false
+            cut: false,
+            pinyin: false,
+            meaning: false
           });
         }
         return comp != null ? comp.click() : void 8;

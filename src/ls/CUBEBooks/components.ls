@@ -423,7 +423,10 @@ Sentence = React.createClass do
         actived: @state.undo.length isnt 0
         "#onClick": ~>
           comp = @state.undo.pop!
-          comp?setState cut: false
+          comp?setState do
+            cut: false
+            pinyin: off
+            meaning: off
           comp?click!
       div do
         className: 'entry'
