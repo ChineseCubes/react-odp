@@ -1469,6 +1469,21 @@
 	        height: $settings.height() !== 0 ? 0 : 48
 	      });
 	    },
+	    undo: function(){
+	      var comp, x$;
+	      if (comp = this.state.undo.pop()) {
+	        x$ = comp;
+	        x$.setState({
+	          cut: false
+	        });
+	        x$.click();
+	      }
+	    },
+	    undoAll: function(){
+	      while (this.state.undo.length) {
+	        this.undo();
+	      }
+	    },
 	    render: function(){
 	      var data, words, ref$, focus, this$ = this;
 	      data = this.props.data;
@@ -1593,16 +1608,7 @@
 	        className: 'item toggle chinese'
 	      }, ref$[onClick + ""] = this.toggleMode, ref$), this.state.mode === 'zh_TW' ? '繁' : '简')))), UndoCut((ref$ = {
 	        actived: this.state.undo.length !== 0
-	      }, ref$[onClick + ""] = function(){
-	        var comp;
-	        comp = this$.state.undo.pop();
-	        if (comp != null) {
-	          comp.setState({
-	            cut: false
-	          });
-	        }
-	        return comp != null ? comp.click() : void 8;
-	      }, ref$)), div({
+	      }, ref$[onClick + ""] = this.undo, ref$)), div({
 	        className: 'entry'
 	      }, this.state.focus !== null ? (focus = this.state.focus.props.data, [
 	        span({

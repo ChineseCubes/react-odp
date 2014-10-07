@@ -345,6 +345,14 @@ Sentence = React.createClass do
   toggleSettings: ->
     $settings = $ @refs.settings.getDOMNode!
     $settings.animate height: if $settings.height! isnt 0 then 0 else 48
+  undo: !->
+    if comp = @state.undo.pop!
+      comp
+        ..setState cut: false
+        ..click!
+  undoAll: !->
+    while @state.undo.length
+      @undo!
   render: ->
     data = @props.data
     words = data?childrenOfDepth(0) or []
@@ -421,10 +429,7 @@ Sentence = React.createClass do
               if @state.mode is 'zh_TW' then '繁' else '简'
       UndoCut do
         actived: @state.undo.length isnt 0
-        "#onClick": ~>
-          comp = @state.undo.pop!
-          comp?setState cut: false
-          comp?click!
+        "#onClick": @undo
       div do
         className: 'entry'
         if @state.focus isnt null
