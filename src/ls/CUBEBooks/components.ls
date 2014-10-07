@@ -152,8 +152,10 @@ Word = React.createClass do
                 ..onChildClick this
             @setState cut: actived
       if @state.menu
+        with-hint =
+          if @state.pinyin or @state.meaning then 'with-hint' else ''
         ActionMenu do
-          className: 'menu-learn'
+          className: "menu-learn #with-hint"
           buttons: <[pinyin stroke english]>
           disabled: [no, (data.children.length isnt 1), no]
           onChange: (it, name, actived, close) ~>

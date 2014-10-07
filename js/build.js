@@ -1102,7 +1102,7 @@
 	      return this.props.onChildClick(this);
 	    },
 	    render: function(){
-	      var data, lang, actived, ref$, this$ = this;
+	      var data, lang, actived, ref$, withHint, this$ = this;
 	      data = this.props.data;
 	      lang = function(it){
 	        switch (it) {
@@ -1134,8 +1134,8 @@
 	            cut: actived
 	          });
 	        }
-	      }) : void 8, this.state.menu ? ActionMenu({
-	        className: 'menu-learn',
+	      }) : void 8, this.state.menu ? (withHint = this.state.pinyin || this.state.meaning ? 'with-hint' : '', ActionMenu({
+	        className: "menu-learn " + withHint,
 	        buttons: ['pinyin', 'stroke', 'english'],
 	        disabled: [false, data.children.length !== 1, false],
 	        onChange: function(it, name, actived, close){
@@ -1180,7 +1180,7 @@
 	            });
 	          }
 	        }
-	      }) : void 8, div({
+	      })) : void 8, div({
 	        className: 'characters'
 	      }, !this.state.cut
 	        ? (function(){
