@@ -655,6 +655,10 @@
             },
             onChildCut: function(comp){
               this$.state.undo.push(comp);
+              comp.setState({
+                pinyin: false,
+                meaning: false
+              });
               return comp.click();
             },
             afterChildCut: function(comp){
@@ -713,9 +717,7 @@
         comp = this$.state.undo.pop();
         if (comp != null) {
           comp.setState({
-            cut: false,
-            pinyin: false,
-            meaning: false
+            cut: false
           });
         }
         return comp != null ? comp.click() : void 8;

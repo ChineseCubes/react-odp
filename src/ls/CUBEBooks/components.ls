@@ -387,10 +387,10 @@ Sentence = React.createClass do
                     hide: true
             onChildCut:   (comp) ~>
               @state.undo.push comp
+              comp.setState do
+                pinyin:  off
+                meaning: off
               comp.click!
-              #comp.setState do
-              #  pinyin:  off
-              #  meaning: off
             afterChildCut: (comp) ~>
               comp.refs.0?click!
             onChildClick: (comp) ~>
@@ -423,10 +423,7 @@ Sentence = React.createClass do
         actived: @state.undo.length isnt 0
         "#onClick": ~>
           comp = @state.undo.pop!
-          comp?setState do
-            cut: false
-            pinyin: off
-            meaning: off
+          comp?setState cut: false
           comp?click!
       div do
         className: 'entry'
