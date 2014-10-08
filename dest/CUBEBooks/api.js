@@ -1,9 +1,10 @@
 (function(){
-  var request, Buffer, remote, getBase64, getJson, CubeList, Cube, getCube, getCubeList, Talks, API;
+  var request, Buffer, remoteTalks, remoteBooks, getBase64, getJson, CubeList, Cube, Book, getCube, getCubeList, getBookList, Talks, Books, API;
   request = require('request');
   Buffer = require('buffer');
   Buffer = Buffer.Buffer || Buffer;
-  remote = 'https://apis-beta.chinesecubes.com/CubeTalks';
+  remoteTalks = 'https://apis-beta.chinesecubes.com/CubeTalks';
+  remoteBooks = 'https://apis-beta.chinesecubes.com/CubeBooks';
   getBase64 = function(path, done){
     request(path, function(err, res, body){
       if (err) {
@@ -32,7 +33,7 @@
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
     prototype.soundURI = function(){
-      return remote + "/sentencesound/" + this.id + ".mp3";
+      return remoteTalks + "/sentencesound/" + this.id + ".mp3";
     };
     prototype.getSoundDataURI = function(done){
       getBase64(this.soundURI(), function(err, data){
@@ -53,10 +54,10 @@
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
     prototype.soundURI = function(){
-      return remote + "/cubesound/" + this.id + ".mp3";
+      return remoteTalks + "/cubesound/" + this.id + ".mp3";
     };
     prototype.strokeURI = function(){
-      return remote + "/cubestroke/" + this.id;
+      return remoteTalks + "/cubestroke/" + this.id;
     };
     prototype.getSoundDataURI = function(done){
       getBase64(this.soundURI(), function(err, data){
@@ -78,8 +79,27 @@
     };
     return Cube;
   }(CubeList));
+  Book = (function(){
+    Book.displayName = 'Book';
+    var prototype = Book.prototype, constructor = Book;
+    function Book(it){
+      var this$ = this instanceof ctor$ ? this : new ctor$;
+      import$(this$, it);
+      return this$;
+    } function ctor$(){} ctor$.prototype = prototype;
+    prototype.getDetails = function(done){
+      getJson(remoteBooks + "/books/" + this.id, function(err, data){
+        if (err) {
+          return done(err);
+        } else {
+          return done(err, import$(this, data));
+        }
+      });
+    };
+    return Book;
+  }());
   getCube = function(str, done){
-    getJson(remote + "/getcube/" + encodeURIComponent(str), function(err, data){
+    getJson(remoteTalks + "/getcube/" + encodeURIComponent(str), function(err, data){
       if (err) {
         return done(err);
       } else {
@@ -88,11 +108,28 @@
     });
   };
   getCubeList = function(str, done){
-    getJson(remote + "/sentence/" + encodeURIComponent(str), function(err, data){
+    getJson(remoteTalks + "/sentence/" + encodeURIComponent(str), function(err, data){
       if (err) {
         return done(err);
       } else {
         return done(err, CubeList(data));
+      }
+    });
+  };
+  getBookList = function(str, done){
+    getJson(remoteBooks + "/booklist/" + encodeURIComponent(str), function(err, data){
+      var d;
+      if (err) {
+        return done(err);
+      } else {
+        return done(err, (function(){
+          var i$, ref$, len$, results$ = [];
+          for (i$ = 0, len$ = (ref$ = data).length; i$ < len$; ++i$) {
+            d = ref$[i$];
+            results$.push(Book(d));
+          }
+          return results$;
+        }()));
       }
     });
   };
@@ -112,12 +149,23 @@
       case !(!str.length || str.length === 1):
         return done(new Error('too short'));
       default:
-        return getJson(remote + "/recommend/" + encodeURIComponent(str), done);
+        return getJson(remoteTalks + "/recommend/" + encodeURIComponent(str), done);
+      }
+    }
+  };
+  Books = {
+    get: function(str, done){
+      switch (false) {
+      case str.length !== undefined:
+        return done(new Error('not a string'));
+      default:
+        return getBookList(str, done);
       }
     }
   };
   API = {
-    Talks: Talks
+    Talks: Talks,
+    Books: Books
   };
   module.exports = API;
   function import$(obj, src){
