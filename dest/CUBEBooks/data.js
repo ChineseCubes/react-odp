@@ -1,5 +1,5 @@
 (function(){
-  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, utils;
+  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, Data;
   try {
     fs = require('fs');
   } catch (e$) {}
@@ -11,6 +11,7 @@
     }
   });
   ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, flatten = ref$.flatten, max = ref$.max, min = ref$.min, map = ref$.map, zipObject = ref$.zipObject;
+  ref$ = require('./utils'), unslash = ref$.unslash, tagless = ref$.strip, splitNamespace = ref$.splitNamespace, camelFromHyphenated = ref$.camelFromHyphenated;
   slice = Array.prototype.slice;
   shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
   masterPage = {
@@ -185,8 +186,7 @@
     Dict.displayName = 'Dict';
     var prototype = Dict.prototype, constructor = Dict;
     function Dict(path, done){
-      var tagless, this$ = this instanceof ctor$ ? this : new ctor$;
-      tagless = utils.strip;
+      var this$ = this instanceof ctor$ ? this : new ctor$;
       fs.readFile(path + "/dict.json", function(err, data){
         var moe, c, x$;
         moe = JSON.parse(data);
@@ -213,14 +213,13 @@
     function Segmentations(node, path, done){
       var this$ = this instanceof ctor$ ? this : new ctor$;
       Dict(path, function(dict){
-        var tagless, keys, values, idx, keywords, re;
-        tagless = utils.strip;
+        var keys, values, idx, keywords, re;
         keys = [];
         values = [];
         idx = 0;
         keywords = import$({}, punctuations);
         re = null;
-        utils.traverse(node, function(node, parents){
+        Data.traverse(node, function(node, parents){
           var ref$, ks, x$, s, str, r;
           if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
             return;
@@ -282,35 +281,14 @@
     };
     return Segmentations;
   }());
-  utils = {
+  Data = {
     Node: Node,
     Char: Char,
     punctuations: punctuations,
-    splitNamespace: function(it){
-      var r;
-      r = it.toLowerCase().split(':').reverse();
-      return {
-        namespace: r[1],
-        name: r[0]
-      };
-    },
-    unslash: function(it){
-      return it.replace(/\/$/, '') + "";
-    },
-    camelFromHyphenated: function(it){
-      return it.split('-').map(function(v, i){
-        switch (false) {
-        case i !== 0:
-          return v;
-        default:
-          return v.slice(0, 1).toUpperCase() + "" + v.slice(1);
-        }
-      }).join('');
-    },
     getMasterPage: function(path, done){
-      path = utils.unslash(path);
+      path = unslash(path);
       return fs.readFile(path + "/masterpage.json", function(err, data){
-        return done(utils.patchMasterPage(JSON.parse(data), path));
+        return done(Data.patchMasterPage(JSON.parse(data), path));
       });
     },
     patchMasterPage: function(mp, path){
@@ -336,7 +314,7 @@
     getPresentation: function(masterPage, done){
       var setup, path, pages, counter, gotOne, i$, to$, results$ = [];
       setup = masterPage.setup;
-      path = utils.unslash(setup.path);
+      path = unslash(setup.path);
       pages = [];
       counter = 0;
       gotOne = function(data, i){
@@ -362,7 +340,7 @@
       return results$;
       function fn$(i){
         return fs.readFile(path + "/page" + i + ".json", function(err, data){
-          return gotOne(utils.patchPageJSON(JSON.parse(data), path), i - 1);
+          return gotOne(Data.patchPageJSON(JSON.parse(data), path), i - 1);
         });
       }
     },
@@ -371,7 +349,7 @@
       path == null && (path = '');
       propNames = ['name', 'x', 'y', 'width', 'height', 'href', 'data', 'onClick', 'onTouchStart'];
       data.children = data.children.concat(masterPage.children);
-      return utils.transform(data, function(attrs, nodeName, parents){
+      return Data.transform(data, function(attrs, nodeName, parents){
         var newAttrs, k, v, name, x$;
         attrs == null && (attrs = {});
         newAttrs = {
@@ -379,7 +357,7 @@
         };
         for (k in attrs) {
           v = attrs[k];
-          name = utils.camelFromHyphenated(utils.splitNamespace(k).name);
+          name = camelFromHyphenated(splitNamespace(k).name);
           switch (false) {
           case name !== 'pageWidth':
             newAttrs.width = v;
@@ -405,7 +383,7 @@
       var child;
       onNode == null && (onNode = null);
       parents == null && (parents = []);
-      return import$(utils.splitNamespace(node.name), {
+      return import$(splitNamespace(node.name), {
         text: node.text,
         attrs: typeof onNode === 'function' ? onNode(node.attrs, node.name, parents) : void 8,
         children: !node.children
@@ -414,7 +392,7 @@
             var i$, ref$, len$, results$ = [];
             for (i$ = 0, len$ = (ref$ = node.children).length; i$ < len$; ++i$) {
               child = ref$[i$];
-              results$.push(utils.transform(child, onNode, parents.concat([node.name])));
+              results$.push(Data.transform(child, onNode, parents.concat([node.name])));
             }
             return results$;
           }())
@@ -432,14 +410,9 @@
       }
       for (i$ = 0, len$ = (ref$ = node.children).length; i$ < len$; ++i$) {
         child = ref$[i$];
-        results$.push(utils.traverse(child, onNode, parents.concat([node.name])));
+        results$.push(Data.traverse(child, onNode, parents.concat([node.name])));
       }
       return results$;
-    },
-    strip: function(it){
-      return it.replace(/<.*?>/g, function(){
-        return '';
-      });
     },
     segment: function(str, segs){
       var re, words, lastIndex, r;
@@ -469,7 +442,7 @@
     },
     Segmentations: Segmentations
   };
-  module.exports = utils;
+  module.exports = Data;
   function import$(obj, src){
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];

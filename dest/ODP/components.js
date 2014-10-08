@@ -1,11 +1,11 @@
 (function(){
-  var React, Data, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, renderProps, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents;
+  var React, camelFromHyphenated, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, renderProps, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents;
   React = require('react');
-  Data = require('../CUBEBooks/data');
+  camelFromHyphenated = require('../CUBEBooks/utils').camelFromHyphenated;
   ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, isNumber = ref$.isNumber, filter = ref$.filter, map = ref$.map, mapValues = ref$.mapValues, cloneDeep = ref$.cloneDeep;
   renderProps = function(it){
     var key$;
-    return typeof defaultComponents[key$ = Data.camelFromHyphenated(it.data.name)] === 'function' ? defaultComponents[key$](it) : void 8;
+    return typeof defaultComponents[key$ = camelFromHyphenated(it.data.name)] === 'function' ? defaultComponents[key$](it) : void 8;
   };
   doTextareaVerticalAlign = function(it){
     var ref$, ref1$, style, i$;

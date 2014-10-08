@@ -2,7 +2,14 @@ try require! fs
 fs ?= readFile: (path, done) ->
   data <- $.get path, null, _, \text
   done null, data
-{isArray, isString, flatten, max, min, map, zipObject} = require \lodash
+
+{ isArray, isString, flatten, max, min, map, zipObject } = require \lodash
+{
+  unslash
+  strip:tagless
+  splitNamespace
+  camelFromHyphenated
+} = require './utils'
 slice = Array::slice
 
 shadow = '0 0 5px 5px rgba(0,0,0,0.1);'
@@ -83,7 +90,6 @@ punctuations =
 
 class Dict
   (path, done) ~>
-    tagless = utils.strip
     # XXX: should sort surrogates
     err, data <~ fs.readFile "#path/dict.json"
     moe = JSON.parse data
@@ -101,13 +107,12 @@ class Dict
 class Segmentations
   (node, path, done) ~>
     dict <~ Dict path
-    tagless = utils.strip
     keys   = []
     values = []
     idx = 0
     keywords = {} <<< punctuations
     re = null
-    utils.traverse node, (node, parents) ->
+    Data.traverse node, (node, parents) ->
       return if not node.text and not node.attrs?data
       if parents.2 isnt 'notes'
         # prepare the root Node of this sentence
@@ -159,27 +164,14 @@ class Segmentations
   get: ->
     @data[it]
 
-utils =
+Data =
   Node: Node
   Char: Char
   punctuations: punctuations
-  splitNamespace: ->
-    r = it.toLowerCase!split(':')reverse!
-    namespace: r.1
-    name:      r.0
-  unslash: ->
-    "#{it.replace /\/$/ ''}"
-  camelFromHyphenated : ->
-    it
-      .split '-'
-      .map (v, i) ->
-        | i is 0  => v
-        | otherwise =>"#{v.slice(0, 1)toUpperCase!}#{v.slice(1)}"
-    .join ''
   getMasterPage: (path, done) ->
-    path = utils.unslash path
+    path = unslash path
     fs.readFile "#path/masterpage.json" (err, data) ->
-      done utils.patchMasterPage JSON.parse(data), path
+      done Data.patchMasterPage JSON.parse(data), path
   patchMasterPage: ({attrs}:mp, path) ->
     width  = parseInt attrs['FO:PAGE-WIDTH'],  10
     height = parseInt attrs['FO:PAGE-HEIGHT'], 10
@@ -195,7 +187,7 @@ utils =
       total-pages: attrs['TOTAL-PAGES']
     mp <<< master-page
   getPresentation: ({setup}:master-page, done) ->
-    path = utils.unslash setup.path
+    path = unslash setup.path
     pages = []
     counter = 0
     got-one = (data, i) ->
@@ -213,14 +205,14 @@ utils =
           children:  pages
     for let i from 1 to setup.total-pages
       err, data <- fs.readFile "#path/page#i.json"
-      got-one utils.patchPageJSON(JSON.parse(data), path), i - 1
+      got-one Data.patchPageJSON(JSON.parse(data), path), i - 1
   patchPageJSON: (data, path = '') ->
     prop-names = <[name x y width height href data onClick onTouchStart]>
     data.children = data.children.concat master-page.children
-    utils.transform data, (attrs = {}, node-name, parents) ->
+    Data.transform data, (attrs = {}, node-name, parents) ->
       new-attrs = style: {}
       for k, v of attrs
-        name = utils.camelFromHyphenated utils.splitNamespace(k)name
+        name = camelFromHyphenated splitNamespace(k)name
         switch
         | name is 'pageWidth'  => new-attrs.width       = v
         | name is 'pageHeight' => new-attrs.height      = v
@@ -229,35 +221,18 @@ utils =
       new-attrs
         ..href = "#path/#{new-attrs.href}" if new-attrs.href
   transform: (node, onNode = null, parents = []) ->
-    utils.splitNamespace(node.name) <<< do
+    splitNamespace(node.name) <<< do
       text:      node.text
       attrs:     onNode? node.attrs, node.name, parents
       children: if not node.children then [] else
         for child in node.children
-          utils.transform child, onNode, parents.concat [node.name]
+          Data.transform child, onNode, parents.concat [node.name]
   traverse: (node, onNode, parents = []) ->
     return if not onNode
     onNode node, parents
     return if not node.children
     for child in node.children
-      utils.traverse child, onNode, parents.concat [node.name]
-  strip: ->
-    it.replace /<.*?>/g -> ''
-    #tmp = document.createElement 'span'
-    #tmp.innerHTML = switch
-    #  | document.contentType is 'application/xhtml+xml'
-    #    new XMLSerializer!serializeToString(
-    #      new DOMParser!parseFromString(it, 'text/html').body
-    #    ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
-    #  | document.xmlVersion
-    #    dom = document.implementation.createHTMLDocument ''
-    #    dom.body.innerHTML = it
-    #    new XMLSerializer!serializeToString(
-    #      dom.body
-    #    ).replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '')
-    #  | otherwise => it
-    #tmp.textContent or tmp.innerText or ''
-  # segment: return segments
+      Data.traverse child, onNode, parents.concat [node.name]
   segment: (str, segs = []) ->
     | not str?length   => null
     | segs.length is 0 => [str.slice!]
@@ -276,5 +251,5 @@ utils =
       words
   Segmentations: Segmentations
 
-module.exports = utils
+module.exports = Data
 

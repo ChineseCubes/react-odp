@@ -43,7 +43,7 @@ gulp.task \js:app ->
     .pipe livescript!
     .pipe gulp.dest "#{path.dest}/"
 
-gulp.task \webpack <[js:app]> ->
+gulp.task \webpack <[js:app css:app]> ->
   gulp.src "#{path.dest}/main.js"
     .pipe webpack do
       context: "#{path.dest}/"
@@ -113,7 +113,7 @@ gulp.task \watch <[build]> ->
   gulp
     ..watch 'bower.json'            <[vendor]>
     ..watch "#{path.src}/**/*.ls"   <[webpack]>
-    ..watch "#{path.src}/**/*.styl" <[css:app]>
+    ..watch "#{path.src}/**/*.styl" <[webpack]>
     ..watch "#{path.src}/*.jade"    <[html]>
 
 gulp.task \server <[watch]> ->

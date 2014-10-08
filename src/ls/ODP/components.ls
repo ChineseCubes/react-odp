@@ -1,8 +1,11 @@
 React = require 'react'
-Data  = require '../CUBEBooks/data'
-{isArray, isString, isNumber, filter, map, mapValues, cloneDeep} = require 'lodash'
+{ camelFromHyphenated }  = require '../CUBEBooks/utils'
+{
+  isArray, isString, isNumber,
+  filter, map, mapValues, cloneDeep
+} = require 'lodash'
 
-renderProps = -> default-components[Data.camelFromHyphenated it.data.name]? it
+renderProps = -> default-components[camelFromHyphenated it.data.name]? it
 doTextareaVerticalAlign = ->
   return if not it?attrs?style?textarea-vertical-align
   style= it.attrs.style
