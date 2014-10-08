@@ -1,5 +1,5 @@
 (function(){
-  var sayIt, unslash, strip, splitNamespace, camelFromHyphenated;
+  var sayIt, unslash, strip, splitNamespace, camelFromHyphenated, onClick;
   sayIt = function(text, lang){
     var syn, utt, x$, u;
     lang == null && (lang = 'en-US');
@@ -48,11 +48,17 @@
       }
     }).join('');
   };
+  onClick = (function(){
+    try {
+      return 'ontouchstart' in window;
+    } catch (e$) {}
+  }()) ? 'onTouchStart' : 'onClick';
   module.exports = {
     sayIt: sayIt,
     unslash: unslash,
     strip: strip,
     splitNamespace: splitNamespace,
-    camelFromHyphenated: camelFromHyphenated
+    camelFromHyphenated: camelFromHyphenated,
+    onClick: onClick
   };
 }).call(this);

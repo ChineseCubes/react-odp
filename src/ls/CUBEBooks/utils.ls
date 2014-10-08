@@ -26,12 +26,12 @@ strip = -> it.replace /<.*?>/g -> ''
   #  | otherwise => it
   #tmp.textContent or tmp.innerText or ''
 
-splitNamespace = ->
+split-namespace = ->
   r = it.toLowerCase!split(':')reverse!
   namespace: r.1
   name:      r.0
 
-camelFromHyphenated = ->
+camel-from-hyphenated = ->
   it
     .split '-'
     .map (v, i) ->
@@ -39,10 +39,13 @@ camelFromHyphenated = ->
       | otherwise =>"#{v.slice(0, 1)toUpperCase!}#{v.slice(1)}"
   .join ''
 
+onClick = if (try \ontouchstart of window) then \onTouchStart else \onClick
+
 module.exports = {
   say-it
   unslash
   strip
-  splitNamespace
-  camelFromHyphenated
+  split-namespace
+  camel-from-hyphenated
+  onClick
 }
