@@ -1,0 +1,48 @@
+@require '../colors'
+
+char-bg = color-0
+char-fg = color-3
+char-bdr = color-8
+arrow-wdith = 0.4rem
+
+.comp.character
+  position relative
+  display inline-block
+  padding 0.8rem
+  background char-bg
+  color char-fg
+  border 0.1rem solid char-bdr
+  border-radius 0.5rem
+  margin-right 0.1rem
+  font-weight bold
+  &:last-child
+    margin-right 0
+  .char
+    font-size 2.4rem
+  .pronounciation
+    pointer-events none
+    position absolute
+    bottom -2.2rem
+    left   -100%
+    right  -100%
+    opacity 0
+    &.actived
+      opacity 1
+    span
+      &:before
+        content ''
+        position absolute
+        bottom 98%
+        left   50%
+        margin-left -arrow-width
+        width  0
+        height 0
+        border-style solid
+        border-width 0 arrow-width arrow-width arrow-width
+        border-color transparent transparent pinyin-bg transparent
+      font-size 1rem
+      position relative
+      padding 0.3rem 0.6rem
+      border-radius 0.3rem
+      background pinyin-bg
+      color pinyin-fg

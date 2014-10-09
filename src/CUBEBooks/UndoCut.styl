@@ -1,0 +1,32 @@
+@require '../colors'
+
+icon-bg = color-2
+icon-fg = color-0
+icon-r = 1.6rem
+icon-strong-bg = color-3
+icon-cut-scale = 1.3
+
+.comp.undo-cut
+  position absolute
+  top  10.5rem
+  left 50%
+  margin-left - icon-r
+  text-align center
+  i.repeat.icon:before
+    font-family 'icomoon'
+    font-size 2.4rem
+    line-height 2 * icon-r
+    content "\e603"
+    speak none
+    font-style normal
+    font-weight normal
+    font-variant normal
+    text-transform none
+  .button
+    display none
+    &.actived
+      display block
+      .icon
+        background icon-bg
+        &:hover
+          background icon-strong-bg
