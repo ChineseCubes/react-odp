@@ -1,6 +1,6 @@
 React = require 'react'
 Character = require './Character'
-ActionMenu = require './ActionMenu'
+Menu = require './Menu'
 API = require './api'
 
 { div, i, span } = React.DOM
@@ -37,44 +37,27 @@ Word = React.createClass do
       className: 'comp word'
       "#onClick": ~> @click! unless @state.cut
       if @state.menu
-        ActionMenu do
+        status = if data.children.length is 1 then 'hidden' else ''
+        Menu do
           className: 'menu-cut'
-          buttons: <[cut]>
-          disabled: [data.children.length is 1]
-          onChange: (it, name, actived) ~>
-            if actived
+          buttons: ["cut #status"]
+          onButtonClick: !(classes) ~>
+            [name, status] = classes.split ' '
+            return unless name is 'cut'
+            unless status is 'hidden'
               @props
                 ..onChildCut this
                 ..onChildClick this
-            @setState cut: actived
+              @setState cut: true
       if @state.menu
         with-hint =
           if @state.pinyin or @state.meaning then 'with-hint' else ''
-        ActionMenu do
+        Menu do
           className: "menu-learn #with-hint"
           buttons: <[pinyin stroke english]>
-          disabled: [no, (data.children.length isnt 1), no]
-          onChange: (it, name, actived, close) ~>
-            | name is \pinyin
-              if actived
-                text = data.flatten!map(~> it[@props.mode])join ''
-                if not @state.soundURI
-                  say-it text, lang @props.mode
-                  err, data <~ API.Talks.get text
-                  throw err if err
-                  @state.soundURI = data.soundURI!
-                else try
-                  Howler.iOSAutoEnable = false
-                  new Howl do
-                    autoplay: on
-                    urls: [@state.soundURI]
-              @setState pinyin: actived
-            | name is \stroke and actived
-              @props.onStroke(data.flatten!map (.zh_TW) .join(''), close)
-            | name is \english
-              if actived
-                say-it data.short
-              @setState meaning: actived
+          onButtonClick: (classes) ~>
+            # XXX: lets encode statuses in the class for now
+            console.log classes
       div do
         className: 'characters'
         if not @state.cut

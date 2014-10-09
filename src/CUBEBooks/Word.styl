@@ -1,2 +1,19 @@
-@require 'ActionMenu'
+@require 'Menu'
 @require 'Character'
+
+.word
+  position relative
+  display inline-block
+  margin-right 1rem
+  &:last-child
+    margin-right 0
+  .menu
+    position absolute
+    &.menu-cut
+      top - 2 * button-radius - 0.5rem
+    &.menu-learn
+      bottom - 2 * button-radius - 0.5rem
+  .meaning
+    position absolute
+    left  -100%
+    right -100%

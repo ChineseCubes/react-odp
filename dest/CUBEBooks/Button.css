@@ -1,0 +1,36 @@
+.button {
+  display: block;
+  pointer-events: auto;
+  cursor: pointer;
+  font-family: "icomoon";
+  width: 3.2rem;
+  height: 3.2rem;
+  line-height: 3.2rem;
+  border-radius: 1.6rem;
+  background-color: #575f64;
+}
+.button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.button:hover {
+  background-color: #f94646;
+}
+.button div {
+  color: #fff;
+}
+.button.cut div:before {
+  content: "\e605";
+}
+.button.pinyin div:before {
+  content: "\e604";
+}
+.button.stroke div:before {
+  content: "\e606";
+}
+.button.english div:before {
+  content: "\e601";
+}
+.button.undo div:before {
+  content: "\e603";
+}

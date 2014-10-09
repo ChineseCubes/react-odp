@@ -1,9 +1,9 @@
 (function(){
-  var $, React, API, UndoCut, Stroker, Word, ref$, nav, div, i, span, a, onClick, Sentence, split$ = ''.split;
+  var $, React, API, Button, Stroker, Word, ref$, nav, div, i, span, a, onClick, Sentence, split$ = ''.split;
   $ = require('jquery');
   React = require('react');
   API = require('./api');
-  UndoCut = require('./UndoCut');
+  Button = require('./Button');
   Stroker = require('./Stroker');
   Word = require('./Word');
   ref$ = React.DOM, nav = ref$.nav, div = ref$.div, i = ref$.i, span = ref$.span, a = ref$.a;
@@ -212,8 +212,8 @@
         className: 'right menu'
       }, a((ref$ = {
         className: 'item toggle chinese'
-      }, ref$[onClick + ""] = this.toggleMode, ref$), this.state.mode === 'zh_TW' ? '繁' : '简')))), UndoCut((ref$ = {
-        actived: this.state.undo.length !== 0
+      }, ref$[onClick + ""] = this.toggleMode, ref$), this.state.mode === 'zh_TW' ? '繁' : '简')))), Button((ref$ = {
+        className: "undo " + (!this.state.undo.length ? 'hidden' : '')
       }, ref$[onClick + ""] = this.undo, ref$)), div({
         className: 'entry'
       }, this.state.focus !== null ? (focus = this.state.focus.props.data, [

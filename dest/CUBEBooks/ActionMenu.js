@@ -4,20 +4,6 @@
   ref$ = React.DOM, div = ref$.div, i = ref$.i;
   onClick = require('./utils').onClick;
   ActionMenu = React.createClass({
-    icon: function(it){
-      switch (false) {
-      case it !== 'stroke':
-        return 'pencil';
-      case it !== 'cut':
-        return 'cut';
-      case it !== 'pinyin':
-        return "volume up";
-      case it !== 'english':
-        return 'font';
-      default:
-        return 'question';
-      }
-    },
     displayName: 'CUBE.ActionMenu',
     getDefaultProps: function(){
       return {

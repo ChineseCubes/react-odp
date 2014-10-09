@@ -1,8 +1,8 @@
 (function(){
-  var React, Character, ActionMenu, API, ref$, div, i, span, Howler, Howl, onClick, sayIt, Word;
+  var React, Character, Menu, API, ref$, div, i, span, Howler, Howl, onClick, sayIt, Word;
   React = require('react');
   Character = require('./Character');
-  ActionMenu = require('./ActionMenu');
+  Menu = require('./Menu');
   API = require('./api');
   ref$ = React.DOM, div = ref$.div, i = ref$.i, span = ref$.span;
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
@@ -46,7 +46,7 @@
       return this.props.onChildClick(this);
     },
     render: function(){
-      var data, lang, actived, ref$, withHint, this$ = this;
+      var data, lang, actived, ref$, status, withHint, this$ = this;
       data = this.props.data;
       lang = function(it){
         switch (it) {
@@ -63,66 +63,29 @@
         if (!this$.state.cut) {
           return this$.click();
         }
-      }, ref$), this.state.menu ? ActionMenu({
+      }, ref$), this.state.menu ? (status = data.children.length === 1 ? 'hidden' : '', Menu({
         className: 'menu-cut',
-        buttons: ['cut'],
-        disabled: [data.children.length === 1],
-        onChange: function(it, name, actived){
-          var x$;
-          if (actived) {
+        buttons: ["cut " + status],
+        onButtonClick: function(classes){
+          var ref$, name, status, x$;
+          ref$ = classes.split(' '), name = ref$[0], status = ref$[1];
+          if (name !== 'cut') {
+            return;
+          }
+          if (status !== 'hidden') {
             x$ = this$.props;
             x$.onChildCut(this$);
             x$.onChildClick(this$);
+            this$.setState({
+              cut: true
+            });
           }
-          return this$.setState({
-            cut: actived
-          });
         }
-      }) : void 8, this.state.menu ? (withHint = this.state.pinyin || this.state.meaning ? 'with-hint' : '', ActionMenu({
+      })) : void 8, this.state.menu ? (withHint = this.state.pinyin || this.state.meaning ? 'with-hint' : '', Menu({
         className: "menu-learn " + withHint,
         buttons: ['pinyin', 'stroke', 'english'],
-        disabled: [false, data.children.length !== 1, false],
-        onChange: function(it, name, actived, close){
-          var text;
-          switch (false) {
-          case name !== 'pinyin':
-            if (actived) {
-              text = data.flatten().map(function(it){
-                return it[this$.props.mode];
-              }).join('');
-              if (!this$.state.soundURI) {
-                sayIt(text, lang(this$.props.mode));
-                API.Talks.get(text, function(err, data){
-                  if (err) {
-                    throw err;
-                  }
-                  return this$.state.soundURI = data.soundURI();
-                });
-              } else {
-                try {
-                  Howler.iOSAutoEnable = false;
-                  new Howl({
-                    autoplay: true,
-                    urls: [this$.state.soundURI]
-                  });
-                } catch (e$) {}
-              }
-            }
-            return this$.setState({
-              pinyin: actived
-            });
-          case !(name === 'stroke' && actived):
-            return this$.props.onStroke(data.flatten().map(function(it){
-              return it.zh_TW;
-            }).join(''), close);
-          case name !== 'english':
-            if (actived) {
-              sayIt(data.short);
-            }
-            return this$.setState({
-              meaning: actived
-            });
-          }
+        onButtonClick: function(classes){
+          return console.log(classes);
         }
       })) : void 8, div({
         className: 'characters'

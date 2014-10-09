@@ -1,7 +1,7 @@
 $ = require 'jquery'
 React = require 'react'
 API = require './api'
-UndoCut = require './UndoCut'
+Button = require './Button'
 Stroker = require './Stroker'
 Word = require './Word'
 
@@ -125,8 +125,8 @@ Sentence = React.createClass do
               className: 'item toggle chinese'
               "#onClick": @toggleMode
               if @state.mode is 'zh_TW' then '繁' else '简'
-      UndoCut do
-        actived: @state.undo.length isnt 0
+      Button do
+        className: "undo #{if not @state.undo.length then 'hidden' else ''}"
         "#onClick": @undo
       div do
         className: 'entry'
