@@ -195,11 +195,7 @@
   border-left: 1px solid #f1f1f1;
   color: #575f64;
 }
-.playground {
-  font-size: 1.2rem;
-  text-align: center;
-}
-.playground .entry {
+.definition {
   position: relative;
   background-color: #fff;
   border-bottom-left-radius: 5px;
@@ -209,12 +205,18 @@
   font-size: 1rem;
   text-align: left;
 }
-.playground .entry .definition {
-  line-height: 2rem;
-  margin-left: 1rem;
+.definition .word,
+.definition .translation {
+  padding: 0.2rem 0.4rem;
 }
-.playground .entry .word-class {
-  margin-left: 0.5rem;
+.definition .word {
+  background-color: #575f64;
+  color: #fff;
+  border-radius: 0.3rem;
+}
+.playground {
+  font-size: 1.2rem;
+  text-align: center;
 }
 .playground .sentence {
   position: relative;

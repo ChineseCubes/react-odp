@@ -1,0 +1,20 @@
+@require '../colors'
+
+definition-bg = color-2
+definition-fg = color-0
+
+.definition
+  position relative
+  background-color white
+  border-bottom-left-radius  5px
+  border-bottom-right-radius 5px
+  min-height 2rem
+  padding 1rem
+  font-size 1rem
+  text-align left
+  .word, .translation
+    padding 0.2rem 0.4rem
+  .word
+    background-color definition-bg
+    color definition-fg
+    border-radius 0.3rem

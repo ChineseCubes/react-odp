@@ -1,5 +1,5 @@
 (function(){
-  var $, React, API, Button, Stroker, Word, Settings, ref$, nav, div, i, span, a, onClick, Sentence, split$ = ''.split;
+  var $, React, API, Button, Stroker, Word, Settings, Definition, ref$, nav, div, i, span, a, onClick, Sentence, split$ = ''.split;
   $ = require('jquery');
   React = require('react');
   API = require('./api');
@@ -7,6 +7,7 @@
   Stroker = require('./Stroker');
   Word = require('./Word');
   Settings = require('./Settings');
+  Definition = require('./Definition');
   ref$ = React.DOM, nav = ref$.nav, div = ref$.div, i = ref$.i, span = ref$.span, a = ref$.a;
   onClick = require('./utils').onClick;
   Sentence = React.createClass({
@@ -201,17 +202,17 @@
         onModeClick: this.toggleMode
       }), Button((ref$ = {
         className: "undo " + (!this.state.undo.length ? 'hidden' : '')
-      }, ref$[onClick + ""] = this.undo, ref$)), div({
-        className: 'entry'
-      }, this.state.focus !== null ? (focus = this.state.focus.props.data, [
-        span({
-          className: 'ui black label'
-        }, focus.flatten().map(function(it){
-          return it[this$.state.mode];
-        }).join('')), span({
-          className: 'definition'
-        }, focus.definition)
-      ]) : void 8));
+      }, ref$[onClick + ""] = this.undo, ref$)), Definition(this.state.focus !== null
+        ? (focus = this.state.focus.props.data, {
+          word: focus.flatten().map(function(it){
+            return it[this$.state.mode];
+          }).join(''),
+          definition: focus.definition
+        })
+        : {
+          word: '',
+          definition: ''
+        }));
     }
   });
   module.exports = Sentence;

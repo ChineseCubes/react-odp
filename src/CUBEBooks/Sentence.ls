@@ -5,6 +5,7 @@ Button = require './Button'
 Stroker = require './Stroker'
 Word = require './Word'
 Settings = require './Settings'
+Definition = require './Definition'
 
 { nav, div, i, span, a } = React.DOM
 { onClick } = require './utils'
@@ -118,23 +119,13 @@ Sentence = React.createClass do
       Button do
         className: "undo #{if not @state.undo.length then 'hidden' else ''}"
         "#onClick": @undo
-      div do
-        className: 'entry'
+      Definition do
         if @state.focus isnt null
           focus = @state.focus.props.data
-          * span do
-              className: 'ui black label'
-              focus.flatten!map(~> it[@state.mode])join ''
-            # XXX: hide word classes for now
-            #span do
-            #  className: 'word-class'
-            #  for let i, wc of focus.word-class
-            #    div do
-            #      key: i
-            #      className: 'ui label'
-            #      wc
-            span do
-              className: 'definition'
-              focus.definition
+          word: focus.flatten!map(~> it[@state.mode])join ''
+          definition: focus.definition
+        else
+          word: ''
+          definition: ''
 
 module.exports = Sentence
