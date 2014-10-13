@@ -1,10 +1,21 @@
+@require 'colors'
 @require 'CUBEBooks/components'
 
 .ui.modal.control
   .header
-    .setting.icon
-      float right
-      cursor pointer
+    .button.settings-button
+      position absolute
+      right 1rem
+      font-family inherit
+      border-radius 0.3rem
+      width auto
+      height auto
+      line-height 1.5rem
+      font-size 1rem
+      background color-2
+      padding 0.2rem 0.4rem
+      div
+        color color-0
   .content
     padding 0
     border-bottom-left-radius  5px

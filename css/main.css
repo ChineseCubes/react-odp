@@ -400,6 +400,7 @@ body {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   min-height: 2rem;
+  line-height: 2rem;
   padding: 1rem;
   font-size: 1rem;
   text-align: left;
@@ -431,9 +432,21 @@ body {
   right: 2rem;
   font-size: 2.4rem;
 }
-.ui.modal.control .header .setting.icon {
-  float: right;
-  cursor: pointer;
+.ui.modal.control .header .button.settings-button {
+  position: absolute;
+  right: 1rem;
+  font-family: inherit;
+  -webkit-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+  width: auto;
+  height: auto;
+  line-height: 1.5rem;
+  font-size: 1rem;
+  background: #575f64;
+  padding: 0.2rem 0.4rem;
+}
+.ui.modal.control .header .button.settings-button div {
+  color: #fff;
 }
 .ui.modal.control .content {
   padding: 0;

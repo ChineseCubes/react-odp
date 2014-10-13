@@ -1,9 +1,10 @@
 (function(){
-  var React, ReactVTT, CUBEBooks, ODP, ref$, div, i, small, Howler, Howl, Book;
+  var React, ReactVTT, CUBEBooks, ODP, Button, ref$, div, i, small, Howler, Howl, Book;
   React = require('react');
   ReactVTT = require('react-vtt');
   CUBEBooks = require('./CUBEBooks/components');
   ODP = require('./ODP/components');
+  Button = require('./CUBEBooks/Button');
   ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small;
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
   Book = React.createClass({
@@ -93,12 +94,12 @@
         className: 'close icon'
       }), div({
         className: 'header'
-      }, CUBEBooks.SettingsButton({
-        className: 'settings',
+      }, Button({
+        className: 'settings-button',
         onClick: function(){
           return this$.refs.sentence.toggleSettings();
         }
-      }), 'C', small(null, 'UBE'), 'Control'), div({
+      }, 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
         className: 'content'
       }, CUBEBooks.Sentence({
         ref: 'sentence',

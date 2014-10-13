@@ -2,6 +2,7 @@ React     = require 'react'
 ReactVTT  = require 'react-vtt'
 CUBEBooks = require './CUBEBooks/components'
 ODP       = require './ODP/components'
+Button    = require './CUBEBooks/Button'
 
 {div, i, small} = React.DOM
 {Howler, Howl} = require 'howler'
@@ -63,10 +64,11 @@ Book = React.createClass do
         i className: 'close icon'
         div do
           className: 'header'
-          CUBEBooks.SettingsButton do
-            className: 'settings'
+          Button do
+            className: 'settings-button'
             onClick: ~>
               @refs.sentence.toggleSettings!
+            'Settings'
           'C'
           small null, 'UBE'
           'Control'

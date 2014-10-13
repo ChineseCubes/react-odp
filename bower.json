@@ -14,8 +14,8 @@
     "tests"
   ],
   "dependencies": {
-    "semantic-ui": "~0.19.0",
-    "vtt.js": "~0.11.11"
+    "vtt.js": "~0.11.11",
+    "jquery": "~2.1.1"
   },
   "overrides": {}
 }
