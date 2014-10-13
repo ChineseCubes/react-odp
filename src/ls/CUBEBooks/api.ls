@@ -4,8 +4,8 @@ Buffer = Buffer.Buffer or Buffer
 
 
 
-remote-talks = 'https://apis-beta.chinesecubes.com/CubeTalks'
-remote-books = 'https://apis-beta.chinesecubes.com/CubeBooks'
+remote-talks = 'https://apis-beta.chinesecubes.com/static/CubeTalks'
+remote-books = 'https://apis-beta.chinesecubes.com/static/CubeBooks'
 
 get-base64 = !(path, done) ->
   err, res, body <- request path
