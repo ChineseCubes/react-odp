@@ -3,8 +3,8 @@
   request = require('request');
   Buffer = require('buffer');
   Buffer = Buffer.Buffer || Buffer;
-  remoteTalks = 'https://apis-beta.chinesecubes.com/CubeTalks';
-  remoteBooks = 'https://apis-beta.chinesecubes.com/CubeBooks';
+  remoteTalks = 'https://apis-beta.chinesecubes.com/static/CubeTalks';
+  remoteBooks = 'https://apis-beta.chinesecubes.com/static/CubeBooks';
   getBase64 = function(path, done){
     request(path, function(err, res, body){
       if (err) {
