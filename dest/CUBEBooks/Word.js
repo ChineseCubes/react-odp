@@ -1,7 +1,8 @@
 (function(){
-  var React, Character, Menu, API, ref$, div, i, span, Howler, Howl, onClick, sayIt, Word;
+  var React, Character, Popup, Menu, API, ref$, div, i, span, Howler, Howl, onClick, sayIt, Word;
   React = require('react');
   Character = require('./Character');
+  Popup = require('./Popup');
   Menu = require('./Menu');
   API = require('./api');
   ref$ = React.DOM, div = ref$.div, i = ref$.i, span = ref$.span;
@@ -33,20 +34,49 @@
         menu: this.props.menu,
         cut: false,
         pinyin: false,
+        stroke: false,
         meaning: false,
         soundURI: null
       };
     },
     componentDidUpdate: function(props, state){
+      var lang, this$ = this;
       if (state.cut === false && this.state.cut === true) {
         this.props.afterChildCut(this);
+      }
+      if (this.state.pinyin) {
+        lang = function(){
+          switch (false) {
+          case !'zh_TW':
+            return 'zh-TW';
+          case !'zh_CN':
+            return 'zh-CN';
+          }
+        };
+        sayIt(this.props.data.flatten().map(function(it){
+          return it[this$.props.mode];
+        }).join(''), lang(this.props.mode));
+      }
+      if (state.stroke !== this.state.stroke) {
+        this.props.onStroke(this.state.stroke ? this.props.data.flatten().map(function(it){
+          return it.zh_TW;
+        }).join('') : null, function(){
+          return this$.setState({
+            pinyin: false,
+            stroke: false,
+            meaning: false
+          });
+        });
+      }
+      if (this.state.meaning) {
+        sayIt(this.props.data.short);
       }
     },
     click: function(){
       return this.props.onChildClick(this);
     },
     render: function(){
-      var data, lang, actived, ref$, status, withHint, this$ = this;
+      var data, lang, meaningStatus, ref$, menuStatus, withHint, pinyin, stroke, english, this$ = this;
       data = this.props.data;
       lang = function(it){
         switch (it) {
@@ -56,16 +86,16 @@
           return 'zh-CN';
         }
       };
-      actived = this.state.meaning ? 'actived' : '';
+      meaningStatus = this.state.meaning ? '' : 'hidden';
       return div((ref$ = {
         className: 'comp word'
       }, ref$[onClick + ""] = function(){
         if (!this$.state.cut) {
           return this$.click();
         }
-      }, ref$), this.state.menu ? (status = data.children.length === 1 ? 'hidden' : '', Menu({
+      }, ref$), this.state.menu ? (menuStatus = data.children.length === 1 ? 'hidden' : '', Menu({
         className: 'menu-cut',
-        buttons: ["cut " + status],
+        buttons: ["cut " + menuStatus],
         onButtonClick: function(classes){
           var ref$, name, status, x$;
           ref$ = classes.split(' '), name = ref$[0], status = ref$[1];
@@ -81,11 +111,31 @@
             });
           }
         }
-      })) : void 8, this.state.menu ? (withHint = this.state.pinyin || this.state.meaning ? 'with-hint' : '', Menu({
+      })) : void 8, this.state.menu ? (withHint = this.state.pinyin || this.state.meaning ? 'with-hint' : '', pinyin = this.state.pinyin ? 'pinyin actived' : 'pinyin', stroke = this.state.stroke ? 'stroke actived' : 'stroke', data.children.length !== 1 && (stroke += ' hidden'), english = this.state.meaning ? 'english actived' : 'english', Menu({
         className: "menu-learn " + withHint,
-        buttons: ['pinyin', 'stroke', 'english'],
+        buttons: [pinyin, stroke, english],
         onButtonClick: function(classes){
-          return console.log(classes);
+          var ref$, name, status;
+          ref$ = classes.split(' '), name = ref$[0], status = ref$[1];
+          if (name === 'pinyin') {
+            return this$.setState({
+              pinyin: !this$.state.pinyin,
+              stroke: false,
+              meaning: false
+            });
+          } else if (name === 'stroke') {
+            return this$.setState({
+              pinyin: false,
+              stroke: !this$.state.stroke,
+              meaning: false
+            });
+          } else if (name === 'english') {
+            return this$.setState({
+              pinyin: false,
+              stroke: false,
+              meaning: !this$.state.meaning
+            });
+          }
         }
       })) : void 8, div({
         className: 'characters'
@@ -132,9 +182,9 @@
               }
             });
           }
-        }.call(this))), div({
-        className: "meaning " + actived
-      }, span(null, data.short)));
+        }.call(this))), Popup({
+        className: "meaning " + meaningStatus
+      }, data.short));
     }
   });
   module.exports = Word;

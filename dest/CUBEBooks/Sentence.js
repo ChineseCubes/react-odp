@@ -122,37 +122,28 @@
             data: word,
             mode: this.state.mode,
             onStroke: function(text, close){
-              var stroker, x$;
+              var state, stroker;
               if (!this$.refs.stroker) {
                 return;
               }
+              state = {
+                words: text,
+                play: text !== null,
+                hide: text === null
+              };
               stroker = this$.refs.stroker;
-              if (stroker.state.hide) {
+              if (text) {
                 return API.Talks.get(text, function(err, data){
                   var x$;
                   x$ = stroker;
                   x$.onHide = function(){
                     return close();
                   };
-                  x$.setState({
-                    words: text,
-                    play: true,
-                    hide: false,
-                    strokeURI: data != null ? data.strokeURI() : void 8
-                  });
+                  x$.setState((state.strokeURI = data != null ? data.strokeURI() : void 8, state));
                   return x$;
                 });
               } else {
-                close();
-                x$ = stroker;
-                x$.onHide = function(){
-                  return close();
-                };
-                x$.setState({
-                  words: null,
-                  hide: true
-                });
-                return x$;
+                return stroker.setState(state);
               }
             },
             onChildCut: function(comp){

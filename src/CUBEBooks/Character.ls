@@ -1,4 +1,5 @@
 React = require 'react'
+Popup = require './Popup'
 
 { div, span } = React.DOM
 
@@ -10,19 +11,19 @@ Character = React.createClass do
     pinyin: off
   render: ->
     data = @props.data
-    actived = if @props.pinyin then 'actived' else ''
+    status = if @props.pinyin then '' else 'hidden'
     div do
       className: 'comp character'
-      div do
-        className: "pronounciation #actived"
-        span null data.pinyin
+      Popup do
+        className: "pronounciation #status"
+        data?pinyin
       if @props.mode is 'zh_TW'
         div do
           className: 'char zh_TW'
-          data.zh_TW
+          data?zh_TW
       else
         div do
           className: 'char zh_CN'
-          data.zh_CN
+          data?zh_CN
 
 module.exports = Character

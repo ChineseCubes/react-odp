@@ -430,7 +430,8 @@ small {
   filter: alpha(opacity=0);
   pointer-events: none;
 }
-.button:hover {
+.button:hover,
+.button.actived {
   background-color: #f94646;
 }
 .button div {
@@ -454,8 +455,8 @@ small {
 .menu {
   position: absolute;
   pointer-events: none;
-  left: -100%;
-  right: -100%;
+  left: -200%;
+  right: -200%;
 }
 .menu .button {
   display: inline-block;
@@ -463,6 +464,39 @@ small {
 }
 .menu .button:last-child {
   margin-right: 0;
+}
+.popup {
+  pointer-events: none;
+  position: absolute;
+  bottom: -2.2rem;
+  left: -100%;
+  right: -100%;
+}
+.popup.hidden {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.popup span {
+  font-size: 1rem;
+  position: relative;
+  padding: 0.3rem 0.6rem;
+  -webkit-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+  background-color: #f94646;
+  color: #fff;
+}
+.popup span:before {
+  content: '';
+  position: absolute;
+  bottom: 98%;
+  left: 50%;
+  margin-left: -0.4rem;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0.4rem 0.4rem 0.4rem;
+  border-color: transparent transparent #f94646 transparent;
 }
 .character {
   position: relative;
@@ -481,42 +515,6 @@ small {
 }
 .character .char {
   font-size: 2rem;
-}
-.character .pronounciation {
-  pointer-events: none;
-  position: absolute;
-  bottom: -1.8rem;
-  left: -100%;
-  right: -100%;
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-}
-.character .pronounciation.actived {
-  opacity: 1;
-  -ms-filter: none;
-  filter: none;
-}
-.character .pronounciation span {
-  font-size: 1rem;
-  position: relative;
-  padding: 0.3rem 0.6rem;
-  -webkit-border-radius: 0.3rem;
-  border-radius: 0.3rem;
-  background: pinyin-bg;
-  color: pinyin-fg;
-}
-.character .pronounciation span:before {
-  content: '';
-  position: absolute;
-  bottom: 98%;
-  left: 50%;
-  margin-left: -arrow-width;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 arrow-width arrow-width arrow-width;
-  border-color: transparent transparent pinyin-bg transparent;
 }
 .word {
   position: relative;

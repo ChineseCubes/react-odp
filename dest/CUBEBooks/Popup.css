@@ -28,20 +28,3 @@
   border-width: 0 0.4rem 0.4rem 0.4rem;
   border-color: transparent transparent #f94646 transparent;
 }
-.character {
-  position: relative;
-  display: inline-block;
-  padding: 0.6rem;
-  background: #fff;
-  color: #f94646;
-  border: 0.1rem solid #c7c7c7;
-  border-radius: 0.5rem;
-  margin-right: 0.1rem;
-  font-weight: bold;
-}
-.character:last-child {
-  margin-right: 0;
-}
-.character .char {
-  font-size: 2rem;
-}

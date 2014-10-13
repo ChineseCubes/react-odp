@@ -74,23 +74,18 @@ Sentence = React.createClass do
             mode: @state.mode
             onStroke: (text, close) ~>
               return if not @refs.stroker
+              state = do
+                words: text
+                play:  text isnt null
+                hide:  text is null
               stroker = @refs.stroker
-              if stroker.state.hide
+              if text
                 err, data <- API.Talks.get text
                 stroker
                   ..onHide = -> close!
-                  ..setState do
-                    words: text
-                    play:  yes
-                    hide:  false
-                    strokeURI: data?strokeURI!
+                  ..setState state <<< strokeURI: data?strokeURI!
               else
-                close!
-                stroker
-                  ..onHide = -> close!
-                  ..setState do
-                    words: null
-                    hide: true
+                stroker.setState state
             onChildCut:   (comp) ~>
               @state.undo.push comp
               comp.setState do

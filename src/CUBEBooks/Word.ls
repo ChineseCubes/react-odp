@@ -1,5 +1,6 @@
 React = require 'react'
 Character = require './Character'
+Popup = require './Popup'
 Menu = require './Menu'
 API = require './api'
 
@@ -21,26 +22,46 @@ Word = React.createClass do
     menu: @props.menu
     cut:  false
     pinyin:  off
+    stroke:  off
     meaning: off
     soundURI: null
   componentDidUpdate: !(props, state) ->
     if state.cut is false and @state.cut is true
       @props.afterChildCut this
+    if @state.pinyin
+      lang = ->
+        | 'zh_TW' => 'zh-TW'
+        | 'zh_CN' => 'zh-CN'
+      say-it do
+        @props.data.flatten!map(~> it[@props.mode])join('')
+        lang @props.mode
+    if state.stroke isnt @state.stroke
+      @props.onStroke do
+        if @state.stroke
+          then @props.data.flatten!map (.zh_TW) .join ''
+          else null
+        ~> # off switch for parent component
+          @setState do
+            pinyin:  off
+            stroke:  off
+            meaning: off
+    if @state.meaning
+      say-it @props.data.short
   click: -> @props.onChildClick this
   render: ->
     data = @props.data
     lang = -> switch it
       | \zh_TW => \zh-TW
       | \zh_CN => \zh-CN
-    actived = if @state.meaning then 'actived' else ''
+    meaning-status = if @state.meaning then '' else 'hidden'
     div do
       className: 'comp word'
       "#onClick": ~> @click! unless @state.cut
       if @state.menu
-        status = if data.children.length is 1 then 'hidden' else ''
+        menu-status = if data.children.length is 1 then 'hidden' else ''
         Menu do
           className: 'menu-cut'
-          buttons: ["cut #status"]
+          buttons: ["cut #menu-status"]
           onButtonClick: !(classes) ~>
             [name, status] = classes.split ' '
             return unless name is 'cut'
@@ -52,12 +73,31 @@ Word = React.createClass do
       if @state.menu
         with-hint =
           if @state.pinyin or @state.meaning then 'with-hint' else ''
+        pinyin = if @state.pinyin then 'pinyin actived' else 'pinyin'
+        stroke = if @state.stroke then 'stroke actived' else 'stroke'
+        stroke += ' hidden' if data.children.length isnt 1
+        english = if @state.meaning then 'english actived' else 'english'
         Menu do
           className: "menu-learn #with-hint"
-          buttons: <[pinyin stroke english]>
+          buttons: [pinyin , stroke, english]
           onButtonClick: (classes) ~>
             # XXX: lets encode statuses in the class for now
-            console.log classes
+            [name, status] = classes.split ' '
+            if name is 'pinyin'
+              @setState do
+                pinyin:  !@state.pinyin
+                stroke:  off
+                meaning: off
+            else if name is 'stroke'
+              @setState do
+                pinyin:  off
+                stroke:  !@state.stroke
+                meaning: off
+            else if name is 'english'
+              @setState do
+                pinyin:  off
+                stroke:  off
+                meaning: !@state.meaning
       div do
         className: 'characters'
         if not @state.cut
@@ -78,8 +118,8 @@ Word = React.createClass do
               onChildCut:           ~> @props.onChildCut it
               afterChildCut:        ~> @props.afterChildCut it
               onChildClick:         ~> @props.onChildClick it
-      div do
-        className: "meaning #actived"
-        span null data.short
+      Popup do
+        className: "meaning #meaning-status"
+        data.short
 
 module.exports = Word

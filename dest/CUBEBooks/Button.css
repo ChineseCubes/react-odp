@@ -13,7 +13,8 @@
   opacity: 0;
   pointer-events: none;
 }
-.button:hover {
+.button:hover,
+.button.actived {
   background-color: #f94646;
 }
 .button div {

@@ -1,6 +1,7 @@
 (function(){
-  var React, ref$, div, span, Character;
+  var React, Popup, ref$, div, span, Character;
   React = require('react');
+  Popup = require('./Popup');
   ref$ = React.DOM, div = ref$.div, span = ref$.span;
   Character = React.createClass({
     displayName: 'CUBE.Character',
@@ -12,20 +13,20 @@
       };
     },
     render: function(){
-      var data, actived;
+      var data, status;
       data = this.props.data;
-      actived = this.props.pinyin ? 'actived' : '';
+      status = this.props.pinyin ? '' : 'hidden';
       return div({
         className: 'comp character'
-      }, div({
-        className: "pronounciation " + actived
-      }, span(null, data.pinyin)), this.props.mode === 'zh_TW'
+      }, Popup({
+        className: "pronounciation " + status
+      }, data != null ? data.pinyin : void 8), this.props.mode === 'zh_TW'
         ? div({
           className: 'char zh_TW'
-        }, data.zh_TW)
+        }, data != null ? data.zh_TW : void 8)
         : div({
           className: 'char zh_CN'
-        }, data.zh_CN));
+        }, data != null ? data.zh_CN : void 8));
     }
   });
   module.exports = Character;
