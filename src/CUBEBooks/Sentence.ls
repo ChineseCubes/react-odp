@@ -4,6 +4,7 @@ API = require './api'
 Button = require './Button'
 Stroker = require './Stroker'
 Word = require './Word'
+Settings = require './Settings'
 
 { nav, div, i, span, a } = React.DOM
 { onClick } = require './utils'
@@ -108,18 +109,12 @@ Sentence = React.createClass do
                   meaning: off
                 comp.setState menu: on
                 @setState focus: comp
-      nav do
+      Settings do
         ref: 'settings'
-        className: 'navbar'
-        style: height: 0
-        div do
-          className: 'ui borderless menu'
-          div do
-            className: 'right menu'
-            a do
-              className: 'item toggle chinese'
-              "#onClick": @toggleMode
-              if @state.mode is 'zh_TW' then '繁' else '简'
+        style:
+          height: 0
+        mode: @state.mode
+        onModeClick: @toggleMode
       Button do
         className: "undo #{if not @state.undo.length then 'hidden' else ''}"
         "#onClick": @undo

@@ -1,0 +1,23 @@
+.settings {
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  top: 1px;
+  right: 0;
+  background-color: #fff;
+  text-align: right;
+}
+.settings:before {
+  display: inline-block;
+  content: '';
+  vertical-align: middle;
+  height: 100%;
+}
+.settings .item {
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: middle;
+  padding: 0 12px;
+  border-left: 1px solid #f1f1f1;
+  color: #575f64;
+}

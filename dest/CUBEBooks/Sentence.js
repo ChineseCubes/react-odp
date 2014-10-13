@@ -1,11 +1,12 @@
 (function(){
-  var $, React, API, Button, Stroker, Word, ref$, nav, div, i, span, a, onClick, Sentence, split$ = ''.split;
+  var $, React, API, Button, Stroker, Word, Settings, ref$, nav, div, i, span, a, onClick, Sentence, split$ = ''.split;
   $ = require('jquery');
   React = require('react');
   API = require('./api');
   Button = require('./Button');
   Stroker = require('./Stroker');
   Word = require('./Word');
+  Settings = require('./Settings');
   ref$ = React.DOM, nav = ref$.nav, div = ref$.div, i = ref$.i, span = ref$.span, a = ref$.a;
   onClick = require('./utils').onClick;
   Sentence = React.createClass({
@@ -191,19 +192,14 @@
             }
           });
         }
-      }.call(this))), nav({
+      }.call(this))), Settings({
         ref: 'settings',
-        className: 'navbar',
         style: {
           height: 0
-        }
-      }, div({
-        className: 'ui borderless menu'
-      }, div({
-        className: 'right menu'
-      }, a((ref$ = {
-        className: 'item toggle chinese'
-      }, ref$[onClick + ""] = this.toggleMode, ref$), this.state.mode === 'zh_TW' ? '繁' : '简')))), Button((ref$ = {
+        },
+        mode: this.state.mode,
+        onModeClick: this.toggleMode
+      }), Button((ref$ = {
         className: "undo " + (!this.state.undo.length ? 'hidden' : '')
       }, ref$[onClick + ""] = this.undo, ref$)), div({
         className: 'entry'
