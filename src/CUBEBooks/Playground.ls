@@ -20,14 +20,13 @@ Playground = React.createClass do
     undo:  []
   componentWillReceiveProps: (props) ->
     if @props.data?short isnt props.data?short
+      @undoAll!
       @setState @getInitialState!{focus}
       $(@refs.settings.getDOMNode!)height 0
   componentWillUpdate: (props, state) ->
     if @props.data?short is props.data?short
       if @state.mode isnt state.mode
         console.log 'mode will change'
-    else
-      @state.undo = []
   componentDidUpdate: (props, state) ->
     if @props.data?short isnt props.data?short
       @refs.sentence.refs.0?click!
@@ -44,8 +43,9 @@ Playground = React.createClass do
         ..setState cut: false
         ..click!
   undoAll: !->
-    while @state.undo.length
-      @undo!
+    for comp in @state.undo
+      comp.setState cut: false
+    @setState undo: []
   render: ->
     data = @props.data
     words = data?childrenOfDepth(0) or []

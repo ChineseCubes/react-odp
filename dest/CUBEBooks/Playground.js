@@ -27,6 +27,7 @@
     componentWillReceiveProps: function(props){
       var ref$;
       if (((ref$ = this.props.data) != null ? ref$.short : void 8) !== ((ref$ = props.data) != null ? ref$.short : void 8)) {
+        this.undoAll();
         this.setState({
           focus: this.getInitialState().focus
         });
@@ -39,8 +40,6 @@
         if (this.state.mode !== state.mode) {
           return console.log('mode will change');
         }
-      } else {
-        return this.state.undo = [];
       }
     },
     componentDidUpdate: function(props, state){
@@ -79,9 +78,16 @@
       }
     },
     undoAll: function(){
-      while (this.state.undo.length) {
-        this.undo();
+      var i$, ref$, len$, comp;
+      for (i$ = 0, len$ = (ref$ = this.state.undo).length; i$ < len$; ++i$) {
+        comp = ref$[i$];
+        comp.setState({
+          cut: false
+        });
       }
+      this.setState({
+        undo: []
+      });
     },
     render: function(){
       var data, words, ref$, focus, this$ = this;
