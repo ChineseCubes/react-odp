@@ -1,16 +1,3 @@
-.audio-control {
-  cursor: pointer;
-  background-position: 50% 50%;
-  background-size: cover;
-  background-image: url("../images/play.png");
-}
-.audio-control.playing {
-  background-image: url("../images/pause.png");
-}
-.audio-control.loading {
-  cursor: auto;
-  opacity: 0.5;
-}
 .strokes {
   z-index: 2;
   background: #fff;

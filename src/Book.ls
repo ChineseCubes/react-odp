@@ -67,15 +67,15 @@ Book = React.createClass do
           Button do
             className: 'settings-button'
             onClick: ~>
-              @refs.sentence.toggleSettings!
+              @refs.playground.toggleSettings!
             'Settings'
           'C'
           small null, 'UBE'
           'Control'
         div do
           className: 'content'
-          CUBEBooks.Sentence do
-            ref: \sentence
+          CUBEBooks.Playground do
+            ref: \playground
             data: @props.segs.get @state.text
       ODP.components.presentation do
         ref: \presentation

@@ -1,6 +1,6 @@
 (function(){
   module.exports = {
     AudioControl: require('./AudioControl'),
-    Sentence: require('./Sentence')
+    Playground: require('./Playground')
   };
 }).call(this);

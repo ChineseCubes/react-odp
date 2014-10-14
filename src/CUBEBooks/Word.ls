@@ -16,7 +16,6 @@ Word = React.createClass do
     menu:    off
     onStroke:      -> ...
     onChildCut:    -> ...
-    afterChildCut: -> ...
     onChildClick:  -> ...
   getInitialState: ->
     menu: @props.menu
@@ -27,7 +26,7 @@ Word = React.createClass do
     soundURI: null
   componentDidUpdate: !(props, state) ->
     if state.cut is false and @state.cut is true
-      @props.afterChildCut this
+      @props.onChildCut this
     if @state.pinyin
       lang = ->
         | 'zh_TW' => 'zh-TW'
@@ -66,9 +65,7 @@ Word = React.createClass do
             [name, status] = classes.split ' '
             return unless name is 'cut'
             unless status is 'hidden'
-              @props
-                ..onChildCut this
-                ..onChildClick this
+              @props.onChildClick this
               @setState cut: true
       if @state.menu
         with-hint =
@@ -116,7 +113,6 @@ Word = React.createClass do
               mode: @props.mode
               onStroke: (it, close) ~> @props.onStroke it, close
               onChildCut:           ~> @props.onChildCut it
-              afterChildCut:        ~> @props.afterChildCut it
               onChildClick:         ~> @props.onChildClick it
       Popup do
         className: "meaning #meaning-status"

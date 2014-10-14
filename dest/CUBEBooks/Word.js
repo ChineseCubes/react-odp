@@ -21,9 +21,6 @@
         onChildCut: function(){
           throw Error('unimplemented');
         },
-        afterChildCut: function(){
-          throw Error('unimplemented');
-        },
         onChildClick: function(){
           throw Error('unimplemented');
         }
@@ -42,7 +39,7 @@
     componentDidUpdate: function(props, state){
       var lang, this$ = this;
       if (state.cut === false && this.state.cut === true) {
-        this.props.afterChildCut(this);
+        this.props.onChildCut(this);
       }
       if (this.state.pinyin) {
         lang = function(){
@@ -97,15 +94,13 @@
         className: 'menu-cut',
         buttons: ["cut " + menuStatus],
         onButtonClick: function(classes){
-          var ref$, name, status, x$;
+          var ref$, name, status;
           ref$ = classes.split(' '), name = ref$[0], status = ref$[1];
           if (name !== 'cut') {
             return;
           }
           if (status !== 'hidden') {
-            x$ = this$.props;
-            x$.onChildCut(this$);
-            x$.onChildClick(this$);
+            this$.props.onChildClick(this$);
             this$.setState({
               cut: true
             });
@@ -173,9 +168,6 @@
               },
               onChildCut: function(it){
                 return this$.props.onChildCut(it);
-              },
-              afterChildCut: function(it){
-                return this$.props.afterChildCut(it);
               },
               onChildClick: function(it){
                 return this$.props.onChildClick(it);

@@ -97,12 +97,12 @@
       }, Button({
         className: 'settings-button',
         onClick: function(){
-          return this$.refs.sentence.toggleSettings();
+          return this$.refs.playground.toggleSettings();
         }
       }, 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
         className: 'content'
-      }, CUBEBooks.Sentence({
-        ref: 'sentence',
+      }, CUBEBooks.Playground({
+        ref: 'playground',
         data: this.props.segs.get(this.state.text)
       }))), ODP.components.presentation({
         ref: 'presentation',
