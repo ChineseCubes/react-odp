@@ -8,6 +8,7 @@
   line-height: 3.2rem;
   border-radius: 1.6rem;
   background-color: #575f64;
+  text-align: center;
 }
 .button.hidden {
   opacity: 0;
@@ -40,6 +41,7 @@
   pointer-events: none;
   left: -200%;
   right: -200%;
+  text-align: center;
 }
 .menu .button {
   display: inline-block;

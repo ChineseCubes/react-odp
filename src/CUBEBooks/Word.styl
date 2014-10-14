@@ -9,11 +9,14 @@
   &:last-child
     margin-right 0
   .menu
+    z-index 1
     position absolute
     &.menu-cut
-      top - 2 * button-radius - 0.5rem
+      top - button-radius
     &.menu-learn
-      bottom - 2 * button-radius - 0.5rem
+      bottom - button-radius
+      &.with-hint
+        bottom - button-radius - 2rem
   .meaning
     position absolute
     left  -100%

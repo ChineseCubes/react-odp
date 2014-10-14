@@ -121,14 +121,19 @@ Book = React.createClass do
               @setProps show-text: false
               $pages = $ '.office.presentation'
               $modal = $ @refs.modal.getDOMNode!
+              height = $modal.height!
               show = ~>
                 $pages.css \opacity 1
-                $modal.fadeOut \fast
+                $modal
+                  .fadeOut \fast
+                  .css margin-top: \inherit
                 @setProps show-text: true
               $pages.css \opacity 0.5
               $modal
                 .fadeIn \fast
-                .css marginTop: \-200px, opacity: 0.9
+                .css do
+                  margin-top: -250
+                  opacity: 1
                 .one \click \.close show
               #$ @refs.modal.getDOMNode!
               #  .modal do

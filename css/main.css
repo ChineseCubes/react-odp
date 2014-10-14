@@ -256,6 +256,7 @@ body {
   -webkit-border-radius: 1.6rem;
   border-radius: 1.6rem;
   background-color: #575f64;
+  text-align: center;
 }
 .button.hidden {
   opacity: 0;
@@ -290,6 +291,7 @@ body {
   pointer-events: none;
   left: -200%;
   right: -200%;
+  text-align: center;
 }
 .menu .button {
   display: inline-block;
@@ -299,9 +301,10 @@ body {
   margin-right: 0;
 }
 .popup {
+  text-align: center;
   pointer-events: none;
   position: absolute;
-  bottom: -2.2rem;
+  bottom: 0.4rem;
   left: -100%;
   right: -100%;
 }
@@ -334,20 +337,33 @@ body {
 .character {
   position: relative;
   display: inline-block;
+  margin-right: 0.1rem;
+  height: 8rem;
+/*
+  .pronounciation
+    bottom 0rem
+  */
+}
+.character:last-child {
+  margin-right: 0;
+}
+.character:before {
+  content: '';
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.character .char {
   padding: 0.6rem;
   background: #fff;
   color: #f94646;
   border: 0.1rem solid #c7c7c7;
   -webkit-border-radius: 0.5rem;
   border-radius: 0.5rem;
-  margin-right: 0.1rem;
-  font-weight: bold;
-}
-.character:last-child {
-  margin-right: 0;
-}
-.character .char {
   font-size: 2rem;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: middle;
 }
 .word {
   position: relative;
@@ -358,13 +374,17 @@ body {
   margin-right: 0;
 }
 .word .menu {
+  z-index: 1;
   position: absolute;
 }
 .word .menu.menu-cut {
-  top: -3.7rem;
+  top: -1.6rem;
 }
 .word .menu.menu-learn {
-  bottom: -3.7rem;
+  bottom: -1.6rem;
+}
+.word .menu.menu-learn.with-hint {
+  bottom: -3.6rem;
 }
 .word .meaning {
   position: absolute;
@@ -373,7 +393,7 @@ body {
 }
 .sentence {
   position: relative;
-  padding: 6rem 1rem;
+  padding: 4rem 6rem;
 }
 .settings {
   position: absolute;
@@ -414,6 +434,7 @@ body {
   padding: 0.2rem 0.4rem;
 }
 .definition .word {
+  height: auto;
   background-color: #575f64;
   color: #fff;
   -webkit-border-radius: 0.3rem;
@@ -429,6 +450,10 @@ body {
   top: 1rem;
   right: 2rem;
   font-size: 2.4rem;
+}
+.ui.modal.control {
+  position: fixed;
+  top: 50%;
 }
 .ui.modal.control .header .button.settings-button {
   position: absolute;

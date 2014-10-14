@@ -1,7 +1,8 @@
 .popup {
+  text-align: center;
   pointer-events: none;
   position: absolute;
-  bottom: -2.2rem;
+  bottom: 0.4rem;
   left: -100%;
   right: -100%;
 }
@@ -31,17 +32,30 @@
 .character {
   position: relative;
   display: inline-block;
+  margin-right: 0.1rem;
+  height: 8rem;
+/*
+  .pronounciation
+    bottom 0rem
+  */
+}
+.character:last-child {
+  margin-right: 0;
+}
+.character:before {
+  content: '';
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.character .char {
   padding: 0.6rem;
   background: #fff;
   color: #f94646;
   border: 0.1rem solid #c7c7c7;
   border-radius: 0.5rem;
-  margin-right: 0.1rem;
-  font-weight: bold;
-}
-.character:last-child {
-  margin-right: 0;
-}
-.character .char {
   font-size: 2rem;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: middle;
 }

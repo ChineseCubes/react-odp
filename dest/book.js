@@ -168,7 +168,7 @@
           case !(data.name === 'span' && data.text):
             text = props.data.text;
             attrs.onClick = function(){
-              var $pages, $modal, show;
+              var $pages, $modal, height, show;
               this$.setState({
                 text: text
               });
@@ -177,17 +177,20 @@
               });
               $pages = $('.office.presentation');
               $modal = $(this$.refs.modal.getDOMNode());
+              height = $modal.height();
               show = function(){
                 $pages.css('opacity', 1);
-                $modal.fadeOut('fast');
+                $modal.fadeOut('fast').css({
+                  marginTop: 'inherit'
+                });
                 return this$.setProps({
                   showText: true
                 });
               };
               $pages.css('opacity', 0.5);
               return $modal.fadeIn('fast').css({
-                marginTop: '-200px',
-                opacity: 0.9
+                marginTop: -250,
+                opacity: 1
               }).one('click', '.close', show);
             };
             if (!this$.props.showText) {

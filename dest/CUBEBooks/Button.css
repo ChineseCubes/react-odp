@@ -8,6 +8,7 @@
   line-height: 3.2rem;
   border-radius: 1.6rem;
   background-color: #575f64;
+  text-align: center;
 }
 .button.hidden {
   opacity: 0;

@@ -9,14 +9,26 @@ char-bdr = color-8
 .character
   position relative
   display inline-block
-  padding 0.6rem
-  background char-bg
-  color char-fg
-  border 0.1rem solid char-bdr
-  border-radius 0.5rem
   margin-right 0.1rem
-  font-weight bold
+  height 8rem
   &:last-child
     margin-right 0
+  &:before
+    content ''
+    height 100%
+    display inline-block
+    vertical-align middle
   .char
+    padding 0.6rem
+    background char-bg
+    color char-fg
+    border 0.1rem solid char-bdr
+    border-radius 0.5rem
     font-size 2rem
+    font-weight bold
+    display inline-block
+    vertical-align middle
+  /*
+  .pronounciation
+    bottom 0rem
+  */
