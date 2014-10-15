@@ -354,6 +354,7 @@ body {
   vertical-align: middle;
 }
 .character .char {
+  cursor: pointer;
   padding: 0.6rem;
   background: #fff;
   color: #f94646;
