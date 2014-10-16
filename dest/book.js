@@ -102,9 +102,9 @@
       }, Playground({
         ref: 'playground',
         data: this.props.segs.get(this.state.text)
-      })), i({
-        className: 'close icon'
-      })), ODP.components.presentation({
+      })), Button({
+        className: 'close'
+      }, '✖')), ODP.components.presentation({
         ref: 'presentation',
         scale: this.state.scale,
         data: this.props.data,

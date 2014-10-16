@@ -76,7 +76,9 @@ Book = React.createClass do
           Playground do
             ref: \playground
             data: @props.segs.get @state.text
-        i className: 'close icon'
+        Button do
+          className: 'close'
+          '✖'
       ODP.components.presentation do
         ref: \presentation
         scale: @state.scale

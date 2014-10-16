@@ -16,12 +16,16 @@
   &.hidden
     opacity 0
     pointer-events none
-  > .close.icon
+  > .close.button
     position absolute
-    top   -1rem
-    right -1rem
+    top   -2rem
+    right -2rem
     cursor pointer
-    color white
+    background-color transparent
+    > div
+      color color-0
+    &:hover > div
+      color color-3
   > .header
     display none
     > .settings.button

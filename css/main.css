@@ -476,12 +476,18 @@ body {
   filter: alpha(opacity=0);
   pointer-events: none;
 }
-.modal > .close.icon {
+.modal > .close.button {
   position: absolute;
-  top: -1rem;
-  right: -1rem;
+  top: -2rem;
+  right: -2rem;
   cursor: pointer;
+  background-color: transparent;
+}
+.modal > .close.button > div {
   color: #fff;
+}
+.modal > .close.button:hover > div {
+  color: #f94646;
 }
 .modal > .header {
   display: none;
