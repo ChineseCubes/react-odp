@@ -7,7 +7,7 @@
     displayName: 'CUBE.Book.Settings',
     getDefaultProps: function(){
       return {
-        mode: 'zh_TW',
+        mode: 'zh-TW',
         onModeClick: function(){
           throw Error('unimplemented');
         }
@@ -21,7 +21,7 @@
         className: 'item toggle chinese'
       }, ref$[onClick + ""] = function(it){
         return this$.props.onModeClick.call(this$, it);
-      }, ref$), this.props.mode === 'zh_TW' ? '繁' : '简')));
+      }, ref$), this.props.mode === 'zh-TW' ? '繁' : '简')));
     }
   });
   module.exports = Settings;

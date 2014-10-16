@@ -10,7 +10,7 @@ Sentence = React.createClass do
   displayName: 'CUBE.Book.Sentence'
   getDefaultProps: ->
     data: null
-    mode: 'zh_TW'
+    mode: 'zh-TW'
     onWordCut:   -> ...
     onWordClick: -> ...
   componentWillReceiveProps: (props) ->

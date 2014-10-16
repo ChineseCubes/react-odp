@@ -8,7 +8,7 @@
     getDefaultProps: function(){
       return {
         data: null,
-        mode: 'zh_TW',
+        mode: 'zh-TW',
         pinyin: false
       };
     },
@@ -20,13 +20,13 @@
         className: 'character'
       }, Popup({
         className: "pronounciation " + status
-      }, data != null ? data.pinyin : void 8), this.props.mode === 'zh_TW'
+      }, data != null ? data.pinyin : void 8), this.props.mode === 'zh-TW'
         ? div({
-          className: 'char zh_TW'
-        }, data != null ? data.zh_TW : void 8)
+          className: 'char zh-TW'
+        }, data != null ? data['zh-TW'] : void 8)
         : div({
-          className: 'char zh_CN'
-        }, data != null ? data.zh_CN : void 8));
+          className: 'char zh-CN'
+        }, data != null ? data['zh-CN'] : void 8));
     }
   });
   module.exports = Character;

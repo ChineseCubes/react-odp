@@ -2,14 +2,15 @@
 require! <[fs request colors]>
 {filter, unique, omit} = require \lodash
 stringify = require \json-stable-stringify
-Data      = require '../CUBEBooks/data'
+Data      = require '../CUBE/data'
+{ unslash } = require '../CUBE/utils'
 
 if not process.argv.2
   {1:filename} = /.*\/(.*)/exec process.argv.1
   console.log "Usage: ./#filename [book path]"
   process.exit 0
 
-path = Data.unslash process.argv.2
+path = unslash process.argv.2
 path-master = "#path/masterpage.json"
 
 if not fs.existsSync path-master
@@ -47,10 +48,10 @@ for let c in chars
   fetched[c] = if not err and res.statusCode is 200
     process.stdout.write c.green
     moe = JSON.parse body
-    zh_TW:  moe.title
-    zh_CN:  moe.heteronyms.0.alt or moe.title
-    pinyin: moe.heteronyms.0.pinyin
-    en:     moe.translation.English.join(\,)split(/,\w*?/)
+    'zh-TW': moe.title
+    'zh-CN': moe.heteronyms.0.alt or moe.title
+    pinyin:  moe.heteronyms.0.pinyin
+    en:      moe.translation.English.join(\,)split(/,\w*?/)
   else
     process.stdout.write c.red
     null

@@ -11,7 +11,7 @@
     getDefaultProps: function(){
       return {
         data: null,
-        mode: 'zh_TW',
+        mode: 'zh-TW',
         onWordCut: function(){
           throw Error('unimplemented');
         },

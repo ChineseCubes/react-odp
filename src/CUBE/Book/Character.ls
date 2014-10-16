@@ -7,7 +7,7 @@ Character = React.createClass do
   displayName: 'CUBE.Book.Character'
   getDefaultProps: ->
     data:   null
-    mode:   'zh_TW'
+    mode:   'zh-TW'
     pinyin: off
   render: ->
     data = @props.data
@@ -17,13 +17,13 @@ Character = React.createClass do
       Popup do
         className: "pronounciation #status"
         data?pinyin
-      if @props.mode is 'zh_TW'
+      if @props.mode is 'zh-TW'
         div do
-          className: 'char zh_TW'
-          data?zh_TW
+          className: 'char zh-TW'
+          data?['zh-TW']
       else
         div do
-          className: 'char zh_CN'
-          data?zh_CN
+          className: 'char zh-CN'
+          data?['zh-CN']
 
 module.exports = Character

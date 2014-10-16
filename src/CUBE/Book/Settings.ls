@@ -6,7 +6,7 @@ React = require 'react'
 Settings = React.createClass do
   displayName: 'CUBE.Book.Settings'
   getDefaultProps: ->
-    mode: 'zh_TW'
+    mode: 'zh-TW'
     onModeClick: -> ...
   render: ->
     @transferPropsTo nav do
@@ -14,6 +14,6 @@ Settings = React.createClass do
       a do
         className: 'item toggle chinese'
         "#onClick": ~> @props.onModeClick.call this, it
-        if @props.mode is 'zh_TW' then '繁' else '简'
+        if @props.mode is 'zh-TW' then '繁' else '简'
 
 module.exports = Settings

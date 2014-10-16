@@ -463,13 +463,13 @@
 	  c = Char = (function(){
 	    Char.displayName = 'Char';
 	    var prototype = Char.prototype, constructor = Char;
-	    function Char(pinyin, zh_TW, zh_CN){
+	    function Char(pinyin, arg$, arg1$){
 	      var this$ = this instanceof ctor$ ? this : new ctor$;
-	      this$.pinyin = pinyin;
-	      this$.zh_TW = zh_TW;
-	      this$.zh_CN = zh_CN != null
-	        ? zh_CN
-	        : this$.zh_TW;
+	      this$.pinyin = pinyin != null ? pinyin : '';
+	      this$['zh-TW'] = arg$ != null ? arg$ : '';
+	      this$['zh-CN'] = arg1$ != null
+	        ? arg1$
+	        : this$['zh-TW'];
 	      return this$;
 	    } function ctor$(){} ctor$.prototype = prototype;
 	    prototype.flatten = function(){
@@ -583,8 +583,8 @@
 	        moe = JSON.parse(data);
 	        for (c in moe) {
 	          x$ = moe[c];
-	          x$.zh_TW = tagless(moe[c].zh_TW);
-	          x$.zh_CN = tagless(moe[c].zh_CN);
+	          x$['zh-TW'] = tagless(moe[c]['zh-TW']);
+	          x$['zh-CN'] = tagless(moe[c]['zh-CN']);
 	          x$.pinyin = tagless(moe[c].pinyin);
 	          x$.en = x$.en.map(tagless);
 	        }
@@ -635,10 +635,10 @@
 	                var moe, en;
 	                moe = dict.get(it);
 	                if (children.length === 1) {
-	                  return Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe.zh_TW : void 8) || it, moe != null ? moe.zh_CN : void 8);
+	                  return Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe['zh-TW'] : void 8) || it, moe != null ? moe['zh-CN'] : void 8);
 	                } else {
 	                  en = slice.call(moe.en);
-	                  return Node([Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe.zh_TW : void 8) || it, moe != null ? moe.zh_CN : void 8)], en.join(', '), en.sort(function(a, b){
+	                  return Node([Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe['zh-TW'] : void 8) || it, moe != null ? moe['zh-CN'] : void 8)], en.join(', '), en.sort(function(a, b){
 	                    return a.length - b.length;
 	                  })[0]);
 	                }
@@ -3064,7 +3064,7 @@
 	    },
 	    getInitialState: function(){
 	      return {
-	        mode: 'zh_TW',
+	        mode: 'zh-TW',
 	        focus: null,
 	        undo: []
 	      };
@@ -3102,7 +3102,7 @@
 	    },
 	    toggleMode: function(){
 	      return this.setState({
-	        mode: this.state.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
+	        mode: this.state.mode === 'zh-TW' ? 'zh-CN' : 'zh-TW'
 	      });
 	    },
 	    toggleSettings: function(){
@@ -10569,7 +10569,7 @@
 	    getDefaultProps: function(){
 	      return {
 	        data: null,
-	        mode: 'zh_TW',
+	        mode: 'zh-TW',
 	        onWordCut: function(){
 	          throw Error('unimplemented');
 	        },
@@ -10669,7 +10669,7 @@
 	    displayName: 'CUBE.Book.Settings',
 	    getDefaultProps: function(){
 	      return {
-	        mode: 'zh_TW',
+	        mode: 'zh-TW',
 	        onModeClick: function(){
 	          throw Error('unimplemented');
 	        }
@@ -10683,7 +10683,7 @@
 	        className: 'item toggle chinese'
 	      }, ref$[onClick + ""] = function(it){
 	        return this$.props.onModeClick.call(this$, it);
-	      }, ref$), this.props.mode === 'zh_TW' ? '繁' : '简')));
+	      }, ref$), this.props.mode === 'zh-TW' ? '繁' : '简')));
 	    }
 	  });
 	  module.exports = Settings;
@@ -26098,7 +26098,7 @@
 	    getDefaultProps: function(){
 	      return {
 	        data: null,
-	        mode: 'zh_TW',
+	        mode: 'zh-TW',
 	        menu: false,
 	        onStroke: function(){
 	          throw Error('unimplemented');
@@ -26122,27 +26122,17 @@
 	      };
 	    },
 	    componentDidUpdate: function(props, state){
-	      var lang, this$ = this;
+	      var this$ = this;
 	      if (state.cut === false && this.state.cut === true) {
 	        this.props.onChildCut(this);
 	      }
 	      if (this.state.pinyin) {
-	        lang = function(){
-	          switch (false) {
-	          case !'zh_TW':
-	            return 'zh-TW';
-	          case !'zh_CN':
-	            return 'zh-CN';
-	          }
-	        };
 	        sayIt(this.props.data.flatten().map(function(it){
 	          return it[this$.props.mode];
-	        }).join(''), lang(this.props.mode));
+	        }).join(''), this.props.mode);
 	      }
 	      if (state.stroke !== this.state.stroke) {
-	        this.props.onStroke(this.state.stroke ? this.props.data.flatten().map(function(it){
-	          return it.zh_TW;
-	        }).join('') : null, function(){
+	        this.props.onStroke(this.state.stroke ? this.props.data.flatten().map(it['zh-TW']).join('') : null, function(){
 	          return this$.setState({
 	            pinyin: false,
 	            stroke: false,
@@ -26158,16 +26148,8 @@
 	      return this.props.onChildClick(this);
 	    },
 	    render: function(){
-	      var data, lang, meaningStatus, ref$, menuStatus, withHint, pinyin, stroke, english, this$ = this;
+	      var data, meaningStatus, ref$, menuStatus, withHint, pinyin, stroke, english, this$ = this;
 	      data = this.props.data;
-	      lang = function(it){
-	        switch (it) {
-	        case 'zh_TW':
-	          return 'zh-TW';
-	        case 'zh_CN':
-	          return 'zh-CN';
-	        }
-	      };
 	      meaningStatus = this.state.meaning ? '' : 'hidden';
 	      return div((ref$ = {
 	        className: 'word'
@@ -33580,7 +33562,7 @@
 	    getDefaultProps: function(){
 	      return {
 	        data: null,
-	        mode: 'zh_TW',
+	        mode: 'zh-TW',
 	        pinyin: false
 	      };
 	    },
@@ -33592,13 +33574,13 @@
 	        className: 'character'
 	      }, Popup({
 	        className: "pronounciation " + status
-	      }, data != null ? data.pinyin : void 8), this.props.mode === 'zh_TW'
+	      }, data != null ? data.pinyin : void 8), this.props.mode === 'zh-TW'
 	        ? div({
-	          className: 'char zh_TW'
-	        }, data != null ? data.zh_TW : void 8)
+	          className: 'char zh-TW'
+	        }, data != null ? data['zh-TW'] : void 8)
 	        : div({
-	          className: 'char zh_CN'
-	        }, data != null ? data.zh_CN : void 8));
+	          className: 'char zh-CN'
+	        }, data != null ? data['zh-CN'] : void 8));
 	    }
 	  });
 	  module.exports = Character;

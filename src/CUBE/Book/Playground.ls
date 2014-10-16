@@ -15,7 +15,7 @@ Playground = React.createClass do
     image:    ''
     sentence: on
   getInitialState: ->
-    mode:  'zh_TW'
+    mode:  'zh-TW'
     focus: null
     undo:  []
   componentWillReceiveProps: (props) ->
@@ -33,7 +33,7 @@ Playground = React.createClass do
     if @state.focus
       @state.focus.setState menu: on
   toggleMode: ->
-    @setState mode: if @state.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
+    @setState mode: if @state.mode is 'zh-TW' then 'zh-CN' else 'zh-TW'
   toggleSettings: ->
     $settings = $ @refs.settings.getDOMNode!
     $settings.animate height: if $settings.height! isnt 0 then 0 else 48

@@ -12,7 +12,7 @@ Word = React.createClass do
   displayName: 'CUBE.Book.Word'
   getDefaultProps: ->
     data:    null
-    mode:    'zh_TW'
+    mode:    'zh-TW'
     menu:    off
     onStroke:      -> ...
     onChildCut:    -> ...
@@ -28,16 +28,13 @@ Word = React.createClass do
     if state.cut is false and @state.cut is true
       @props.onChildCut this
     if @state.pinyin
-      lang = ->
-        | 'zh_TW' => 'zh-TW'
-        | 'zh_CN' => 'zh-CN'
       say-it do
         @props.data.flatten!map(~> it[@props.mode])join('')
-        lang @props.mode
+        @props.mode
     if state.stroke isnt @state.stroke
       @props.onStroke do
         if @state.stroke
-          then @props.data.flatten!map (.zh_TW) .join ''
+          then @props.data.flatten!map (it['zh-TW']) .join ''
           else null
         ~> # off switch for parent component
           @setState do
@@ -49,9 +46,6 @@ Word = React.createClass do
   click: -> @props.onChildClick this
   render: ->
     data = @props.data
-    lang = -> switch it
-      | \zh_TW => \zh-TW
-      | \zh_CN => \zh-CN
     meaning-status = if @state.meaning then '' else 'hidden'
     div do
       className: 'word'

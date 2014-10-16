@@ -13,7 +13,7 @@
     getDefaultProps: function(){
       return {
         data: null,
-        mode: 'zh_TW',
+        mode: 'zh-TW',
         menu: false,
         onStroke: function(){
           throw Error('unimplemented');
@@ -37,27 +37,17 @@
       };
     },
     componentDidUpdate: function(props, state){
-      var lang, this$ = this;
+      var this$ = this;
       if (state.cut === false && this.state.cut === true) {
         this.props.onChildCut(this);
       }
       if (this.state.pinyin) {
-        lang = function(){
-          switch (false) {
-          case !'zh_TW':
-            return 'zh-TW';
-          case !'zh_CN':
-            return 'zh-CN';
-          }
-        };
         sayIt(this.props.data.flatten().map(function(it){
           return it[this$.props.mode];
-        }).join(''), lang(this.props.mode));
+        }).join(''), this.props.mode);
       }
       if (state.stroke !== this.state.stroke) {
-        this.props.onStroke(this.state.stroke ? this.props.data.flatten().map(function(it){
-          return it.zh_TW;
-        }).join('') : null, function(){
+        this.props.onStroke(this.state.stroke ? this.props.data.flatten().map(it['zh-TW']).join('') : null, function(){
           return this$.setState({
             pinyin: false,
             stroke: false,
@@ -73,16 +63,8 @@
       return this.props.onChildClick(this);
     },
     render: function(){
-      var data, lang, meaningStatus, ref$, menuStatus, withHint, pinyin, stroke, english, this$ = this;
+      var data, meaningStatus, ref$, menuStatus, withHint, pinyin, stroke, english, this$ = this;
       data = this.props.data;
-      lang = function(it){
-        switch (it) {
-        case 'zh_TW':
-          return 'zh-TW';
-        case 'zh_CN':
-          return 'zh-CN';
-        }
-      };
       meaningStatus = this.state.meaning ? '' : 'hidden';
       return div((ref$ = {
         className: 'word'

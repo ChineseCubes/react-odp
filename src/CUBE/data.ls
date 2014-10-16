@@ -55,7 +55,7 @@ master-page =
         ...
 
 c = class Char
-  (@pinyin, @zh_TW, @zh_CN = @zh_TW) ~>
+  (@pinyin = '', @['zh-TW'] = '', @['zh-CN'] = @['zh-TW']) ~>
   flatten: -> this
 o = class Node
   (@children = [], @definition = '', @short = '', @word-class = []) ~>
@@ -95,8 +95,8 @@ class Dict
     moe = JSON.parse data
     for c of moe
       moe[c]
-        ..zh_TW  = tagless moe[c]zh_TW
-        ..zh_CN  = tagless moe[c]zh_CN
+        ..['zh-TW']  = tagless moe[c]['zh-TW']
+        ..['zh-CN']  = tagless moe[c]['zh-CN']
         ..pinyin = tagless moe[c]pinyin
         ..en .= map (tagless)
     @data = moe
@@ -134,11 +134,11 @@ class Segmentations
               children.map ->
                 moe = dict.get it
                 if children.length is 1
-                  Char moe?pinyin, (moe?zh_TW or it), moe?zh_CN
+                  Char moe?pinyin, (moe?['zh-TW'] or it), moe?['zh-CN']
                 else
                   en = slice.call moe.en
                   Node do
-                    [Char moe?pinyin, (moe?zh_TW or it), moe?zh_CN]
+                    [Char moe?pinyin, (moe?['zh-TW'] or it), moe?['zh-CN']]
                     en.join ', '
                     en.sort((a, b) -> a.length - b.length)0
               en.join ', '

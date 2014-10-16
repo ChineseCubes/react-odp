@@ -19,7 +19,7 @@
     },
     getInitialState: function(){
       return {
-        mode: 'zh_TW',
+        mode: 'zh-TW',
         focus: null,
         undo: []
       };
@@ -57,7 +57,7 @@
     },
     toggleMode: function(){
       return this.setState({
-        mode: this.state.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
+        mode: this.state.mode === 'zh-TW' ? 'zh-CN' : 'zh-TW'
       });
     },
     toggleSettings: function(){
