@@ -1,8 +1,8 @@
 #!/usr/bin/env lsc
 React    = require 'react'
 ReactVTT = require 'react-vtt'
-Data     = require '../CUBEBooks/data'
-Book     = require '../book'
+Data     = require '../CUBE/data'
+Book     = require '../Book'
 
 path = process.argv.2
 pages = Array::slice.call process.argv, 3
