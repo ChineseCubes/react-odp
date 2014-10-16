@@ -1,11 +1,11 @@
 React     = require 'react'
 ReactVTT  = require 'react-vtt'
-CUBEBooks = require './CUBEBooks/components'
 ODP       = require './ODP/components'
 Button    = require './CUBEBooks/Button'
 
-{div, i, small} = React.DOM
-{Howler, Howl} = require 'howler'
+{ div, i, small } = React.DOM
+{ Playground, AudioControl } = require './CUBEBooks/components'
+{ Howler, Howl } = require 'howler'
 
 Book = React.createClass do
   displayName: \CUBE.Book
@@ -57,15 +57,14 @@ Book = React.createClass do
     counter = 0
     ranges = []
     div do
-      className: 'comp main'
+      className: 'main'
       div do
         ref: \modal
-        className: 'ui modal control'
-        i className: 'close icon'
+        className: 'modal hidden'
         div do
           className: 'header'
           Button do
-            className: 'settings-button'
+            className: 'settings'
             onClick: ~>
               @refs.playground.toggleSettings!
             'Settings'
@@ -74,9 +73,10 @@ Book = React.createClass do
           'Control'
         div do
           className: 'content'
-          CUBEBooks.Playground do
+          Playground do
             ref: \playground
             data: @props.segs.get @state.text
+        i className: 'close icon'
       ODP.components.presentation do
         ref: \presentation
         scale: @state.scale
@@ -106,7 +106,7 @@ Book = React.createClass do
               if range.start < range.end
                 ODP.components.image do
                   props
-                  CUBEBooks.AudioControl do
+                  AudioControl do
                     id: id
                     audio: @state.audio
                     text: text
@@ -126,14 +126,13 @@ Book = React.createClass do
                 $pages.css \opacity 1
                 $modal
                   .fadeOut \fast
-                  .css margin-top: \inherit
+                  .toggleClass 'hidden' on
                 @setProps show-text: true
               $pages.css \opacity 0.5
               $modal
                 .fadeIn \fast
-                .css do
-                  margin-top: -250
-                  opacity: 1
+                # XXX: this state should be managed by React
+                .toggleClass 'hidden' off
                 .one \click \.close show
               #$ @refs.modal.getDOMNode!
               #  .modal do

@@ -66,7 +66,7 @@
     render: function(){
       var ref$, this$ = this;
       return div((ref$ = {
-        className: 'strokes',
+        className: 'stroker',
         style: {
           display: !this.state.hide ? 'block' : 'none'
         }

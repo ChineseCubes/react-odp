@@ -1,14 +1,30 @@
 @require 'colors'
 @require 'CUBEBooks/components'
 
-.ui.modal.control
+.modal
+  z-index 2
   position fixed
-  top 50%
+  top    0
+  right  0
+  bottom 0
+  left   0
+  width  60rem
+  height 20rem
+  margin auto
   background-color transparent
   border none
-  .header
+  &.hidden
+    opacity 0
+    pointer-events none
+  > .close.icon
+    position absolute
+    top   -1rem
+    right -1rem
+    cursor pointer
+    color white
+  > .header
     display none
-    .button.settings-button
+    > .settings.button
       display none
       position absolute
       right 1rem
@@ -20,9 +36,9 @@
       font-size 1rem
       background color-2
       padding 0.2rem 0.4rem
-      div
+      > div
         color color-0
-  .content
+  > .content
     padding 0
     background-color color-11
     border-radius 3rem

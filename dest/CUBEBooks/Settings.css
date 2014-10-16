@@ -13,7 +13,7 @@
   vertical-align: middle;
   height: 100%;
 }
-.settings .item {
+.settings > .item {
   display: inline-block;
   cursor: pointer;
   vertical-align: middle;

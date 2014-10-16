@@ -7,7 +7,7 @@ Stroker = require './Stroker'
 { onClick } = require './utils'
 
 Sentence = React.createClass do
-  displayName: 'CCUI.Sentence'
+  displayName: 'CUBE.Book.Sentence'
   getDefaultProps: ->
     data: null
     mode: 'zh_TW'

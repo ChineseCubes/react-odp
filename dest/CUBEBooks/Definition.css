@@ -9,11 +9,12 @@
   font-size: 1rem;
   text-align: left;
 }
-.definition .word,
-.definition .translation {
+.definition > dt,
+.definition > dd {
+  display: inline-block;
   padding: 0.2rem 0.4rem;
 }
-.definition .word {
+.definition > dt {
   height: auto;
   background-color: #575f64;
   color: #fff;

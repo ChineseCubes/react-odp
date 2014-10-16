@@ -1,10 +1,9 @@
 @require '../colors'
+@require 'Popup'
 
 char-bg = color-0
 char-fg = color-3
 char-bdr = color-8
-
-@require 'Popup'
 
 .character
   position relative
@@ -18,7 +17,7 @@ char-bdr = color-8
     height 100%
     display inline-block
     vertical-align middle
-  .char
+  > .char
     cursor pointer
     padding 0.6rem
     background char-bg

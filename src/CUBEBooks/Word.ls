@@ -9,7 +9,7 @@ API = require './api'
 { onClick, say-it } = require './utils'
 
 Word = React.createClass do
-  displayName: 'CUBE.Word'
+  displayName: 'CUBE.Book.Word'
   getDefaultProps: ->
     data:    null
     mode:    'zh_TW'
@@ -54,7 +54,7 @@ Word = React.createClass do
       | \zh_CN => \zh-CN
     meaning-status = if @state.meaning then '' else 'hidden'
     div do
-      className: 'comp word'
+      className: 'word'
       "#onClick": ~> @click! unless @state.cut
       if @state.menu
         menu-status = if data.children.length is 1 then 'hidden' else ''

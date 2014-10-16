@@ -4,7 +4,7 @@ React = require 'react'
 { onClick } = require './utils'
 
 Settings = React.createClass do
-  displayName: 'CCUI.Settings'
+  displayName: 'CUBE.Book.Settings'
   getDefaultProps: ->
     mode: 'zh_TW'
     onModeClick: -> ...

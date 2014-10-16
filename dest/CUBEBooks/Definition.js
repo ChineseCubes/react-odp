@@ -1,9 +1,9 @@
 (function(){
-  var React, ref$, div, span, Definition;
+  var React, ref$, dl, dt, dd, Definition;
   React = require('react');
-  ref$ = React.DOM, div = ref$.div, span = ref$.span;
+  ref$ = React.DOM, dl = ref$.dl, dt = ref$.dt, dd = ref$.dd;
   Definition = React.createClass({
-    className: 'CCUI.Definition',
+    className: 'CUBE.Book.Definition',
     getDefaultProps: function(){
       return {
         word: null,
@@ -11,15 +11,9 @@
       };
     },
     render: function(){
-      return this.transferPropsTo(div({
+      return this.transferPropsTo(dl({
         className: 'definition'
-      }, this.props.word && this.props.definition ? [
-        span({
-          className: 'word'
-        }, this.props.word), span({
-          className: 'translation'
-        }, this.props.definition)
-      ] : void 8));
+      }, this.props.word && this.props.definition ? [dt({}, this.props.word), dd({}, this.props.definition)] : void 8));
     }
   });
   module.exports = Definition;

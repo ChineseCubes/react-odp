@@ -1,15 +1,15 @@
 (function(){
-  var React, div, onClick, AudioControl;
+  var React, div, ref$, sayIt, onClick, AudioControl;
   React = require('react');
   div = React.DOM.div;
-  onClick = require('./utils').onClick;
+  ref$ = require('./utils'), sayIt = ref$.sayIt, onClick = ref$.onClick;
   AudioControl = React.createClass({
-    displayName: 'CUBEBooks.AudioControl',
+    displayName: 'CUBE.Book.AudioControl',
     getDefaultProps: function(){
       return {
         id: 0,
         audio: null,
-        text: '本頁沒有文字'
+        text: '這頁沒有文字'
       };
     },
     getInitialState: function(){
@@ -74,7 +74,7 @@
           height: '100%'
         }
       }, ref$[onClick + ""] = function(it){
-        var x$, syn, utt, y$, u;
+        var x$;
         switch (false) {
         case !this$.props.audio:
           if (this$.state.loading) {
@@ -89,13 +89,7 @@
           }
           break;
         default:
-          syn = window.speechSynthesis;
-          utt = window.SpeechSynthesisUtterance;
-          y$ = u = new utt(this$.props.text);
-          y$.lang = 'zh-TW';
-          y$.volume = 1.0;
-          y$.rate = 1.0;
-          syn.speak(u);
+          sayIt(this$.props.text, 'zh-TW');
         }
         return this$.props[onClick + ""].call(this$, it);
       }, ref$));

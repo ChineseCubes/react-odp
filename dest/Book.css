@@ -11,7 +11,7 @@
   cursor: auto;
   opacity: 0.5;
 }
-.strokes {
+.stroker {
   z-index: 2;
   background: #fff;
   position: absolute;
@@ -26,7 +26,7 @@
   border: 4px solid #e05656;
   border-radius: 1.5rem;
 }
-.strokes .grid {
+.stroker > .grid {
   position: absolute;
   top: 1rem;
   left: 1rem;
@@ -35,8 +35,8 @@
   border: 1px solid #e0e0e0;
   border-radius: 1rem;
 }
-.strokes .grid:before,
-.strokes .grid:after {
+.stroker > .grid:before,
+.stroker > .grid:after {
   content: '';
   position: absolute;
   top: 0;
@@ -46,22 +46,22 @@
   margin: auto;
   border: 1px dashed #e0e0e0;
 }
-.strokes .grid:before {
+.stroker > .grid:before {
   height: 33.33%;
   border-left-width: 0;
   border-right-width: 0;
 }
-.strokes .grid:after {
+.stroker > .grid:after {
   width: 33.33%;
   border-top-width: 0;
   border-bottom-width: 0;
 }
-.strokes canvas {
+.stroker > div > canvas {
   position: absolute;
   left: 1rem;
   top: 1rem;
 }
-.strokes .fallback {
+.stroker > .fallback {
   background-size: cover;
   width: 215px;
   height: 215px;
@@ -111,11 +111,11 @@
   right: -200%;
   text-align: center;
 }
-.menu .button {
+.menu > .buttons > .button {
   display: inline-block;
   margin-right: 0.5rem;
 }
-.menu .button:last-child {
+.menu > .buttons > .button:last-child {
   margin-right: 0;
 }
 .popup {
@@ -129,7 +129,7 @@
 .popup.hidden {
   opacity: 0;
 }
-.popup span {
+.popup > span {
   font-size: 1rem;
   position: relative;
   padding: 0.3rem 0.6rem;
@@ -137,7 +137,7 @@
   background-color: #f94646;
   color: #fff;
 }
-.popup span:before {
+.popup > span:before {
   content: '';
   position: absolute;
   bottom: 98%;
@@ -168,7 +168,7 @@
   display: inline-block;
   vertical-align: middle;
 }
-.character .char {
+.character > .char {
   cursor: pointer;
   padding: 0.6rem;
   background: #fff;
@@ -188,20 +188,20 @@
 .word:last-child {
   margin-right: 0;
 }
-.word .menu {
+.word > .menu {
   z-index: 1;
   position: absolute;
 }
-.word .menu.menu-cut {
+.word > .menu.menu-cut {
   top: -1.6rem;
 }
-.word .menu.menu-learn {
+.word > .menu.menu-learn {
   bottom: -1.6rem;
 }
-.word .menu.menu-learn.with-hint {
+.word > .menu.menu-learn.with-hint {
   bottom: -3.6rem;
 }
-.word .meaning {
+.word > .meaning {
   position: absolute;
   left: -100%;
   right: -100%;
@@ -225,7 +225,7 @@
   vertical-align: middle;
   height: 100%;
 }
-.settings .item {
+.settings > .item {
   display: inline-block;
   cursor: pointer;
   vertical-align: middle;
@@ -244,11 +244,12 @@
   font-size: 1rem;
   text-align: left;
 }
-.definition .word,
-.definition .translation {
+.definition > dt,
+.definition > dd {
+  display: inline-block;
   padding: 0.2rem 0.4rem;
 }
-.definition .word {
+.definition > dt {
   height: auto;
   background-color: #575f64;
   color: #fff;
@@ -259,26 +260,44 @@
   font-size: 1.2rem;
   text-align: center;
 }
-.playground .undo.button {
+.playground > .undo.button {
   position: absolute;
   top: 1rem;
   right: 2rem;
   font-size: 2.4rem;
 }
-.playground .settings,
-.playground .definition {
+.playground > .settings,
+.playground > .definition {
   display: none;
 }
-.ui.modal.control {
+.modal {
+  z-index: 2;
   position: fixed;
-  top: 50%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 60rem;
+  height: 20rem;
+  margin: auto;
   background-color: transparent;
   border: none;
 }
-.ui.modal.control .header {
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.modal > .close.icon {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  cursor: pointer;
+  color: #fff;
+}
+.modal > .header {
   display: none;
 }
-.ui.modal.control .header .button.settings-button {
+.modal > .header > .settings.button {
   display: none;
   position: absolute;
   right: 1rem;
@@ -291,10 +310,10 @@
   background: #575f64;
   padding: 0.2rem 0.4rem;
 }
-.ui.modal.control .header .button.settings-button div {
+.modal > .header > .settings.button > div {
   color: #fff;
 }
-.ui.modal.control .content {
+.modal > .content {
   padding: 0;
   background-color: rgba(255,255,255,0.8);
   border-radius: 3rem;

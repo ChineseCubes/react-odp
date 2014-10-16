@@ -4,7 +4,7 @@ Popup = require './Popup'
 { div, span } = React.DOM
 
 Character = React.createClass do
-  displayName: 'CUBE.Character'
+  displayName: 'CUBE.Book.Character'
   getDefaultProps: ->
     data:   null
     mode:   'zh_TW'
@@ -13,7 +13,7 @@ Character = React.createClass do
     data = @props.data
     status = if @props.pinyin then '' else 'hidden'
     div do
-      className: 'comp character'
+      className: 'character'
       Popup do
         className: "pronounciation #status"
         data?pinyin

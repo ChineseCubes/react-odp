@@ -1,14 +1,14 @@
 React = require 'react'
 
 { div } = React.DOM
-{ onClick } = require './utils'
+{ say-it, onClick } = require './utils'
 
 AudioControl = React.createClass do
-  displayName: \CUBEBooks.AudioControl
+  displayName: \CUBE.Book.AudioControl
   getDefaultProps: ->
     id: 0
     audio: null
-    text: '本頁沒有文字'
+    text: '這頁沒有文字'
   getInitialState: ->
     loading: true
     playing: false
@@ -51,13 +51,7 @@ AudioControl = React.createClass do
           else
             @props.audio.pause! # pause every sprites
         | otherwise
-          syn = window.speechSynthesis
-          utt = window.SpeechSynthesisUtterance
-          u = new utt @props.text
-            ..lang = \zh-TW
-            ..volume = 1.0
-            ..rate = 1.0
-          syn.speak u
+          say-it @props.text, \zh-TW
         @props."#onClick".call this, it
 
 module.exports = AudioControl

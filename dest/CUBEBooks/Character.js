@@ -4,7 +4,7 @@
   Popup = require('./Popup');
   ref$ = React.DOM, div = ref$.div, span = ref$.span;
   Character = React.createClass({
-    displayName: 'CUBE.Character',
+    displayName: 'CUBE.Book.Character',
     getDefaultProps: function(){
       return {
         data: null,
@@ -17,7 +17,7 @@
       data = this.props.data;
       status = this.props.pinyin ? '' : 'hidden';
       return div({
-        className: 'comp character'
+        className: 'character'
       }, Popup({
         className: "pronounciation " + status
       }, data != null ? data.pinyin : void 8), this.props.mode === 'zh_TW'

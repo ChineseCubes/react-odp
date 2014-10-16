@@ -9,7 +9,7 @@ Definition = require './Definition'
 { onClick } = require './utils'
 
 Playground = React.createClass do
-  displayName: 'CCUI.Playground'
+  displayName: 'CUBE.Book.Playground'
   getDefaultProps: ->
     data:     null
     image:    ''

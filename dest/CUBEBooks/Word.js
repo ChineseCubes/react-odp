@@ -9,7 +9,7 @@
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
   ref$ = require('./utils'), onClick = ref$.onClick, sayIt = ref$.sayIt;
   Word = React.createClass({
-    displayName: 'CUBE.Word',
+    displayName: 'CUBE.Book.Word',
     getDefaultProps: function(){
       return {
         data: null,
@@ -85,7 +85,7 @@
       };
       meaningStatus = this.state.meaning ? '' : 'hidden';
       return div((ref$ = {
-        className: 'comp word'
+        className: 'word'
       }, ref$[onClick + ""] = function(){
         if (!this$.state.cut) {
           return this$.click();

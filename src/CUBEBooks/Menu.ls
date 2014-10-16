@@ -5,7 +5,7 @@ Button = require './Button'
 { onClick } = require './utils'
 
 Menu = React.createClass do
-  displayName: 'CCUI.Menu'
+  displayName: 'CUBE.UI.Menu'
   getDefaultProps: ->
     buttons: []
     onButtonClick: -> ...
@@ -20,6 +20,6 @@ Menu = React.createClass do
             className: btn
             "#onClick": ~>
               it.stopPropagation!
-              @props.onButtonClick.call this, btn
+              @props.onButtonClick.apply this, [btn] ++ arguments
 
 module.exports = Menu

@@ -2,7 +2,7 @@ strokes-grid = #e0e0e0
 strokes-bg = white
 strokes-bdr = #e05656
 
-.strokes
+.stroker
   z-index 2
   background strokes-bg
   position absolute
@@ -16,7 +16,7 @@ strokes-bdr = #e05656
   padding 1rem
   border 4px solid strokes-bdr
   border-radius 1.5rem
-  .grid
+  > .grid
     position absolute
     top    1rem
     left   1rem
@@ -41,11 +41,11 @@ strokes-bdr = #e05656
       width 33.33%
       border-top-width 0
       border-bottom-width 0
-  canvas
+  > div > canvas
     position absolute
     left 1rem
     top  1rem
-  .fallback
+  > .fallback
     background-size cover
     width  215px
     height 215px

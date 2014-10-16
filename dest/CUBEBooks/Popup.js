@@ -3,7 +3,7 @@
   React = require('react');
   ref$ = React.DOM, div = ref$.div, span = ref$.span;
   Popup = React.createClass({
-    displayName: 'CCUI.Popup',
+    displayName: 'CUBE.UI.Popup',
     render: function(){
       return this.transferPropsTo(div({
         className: 'popup'

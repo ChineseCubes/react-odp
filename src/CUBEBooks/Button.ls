@@ -3,7 +3,7 @@ React = require 'react'
 { div } = React.DOM
 
 Button = React.createClass do
-  displayName: 'CCUI.Button'
+  displayName: 'CUBE.UI.Button'
   render: ->
     @transferPropsTo div do
       className: 'button'

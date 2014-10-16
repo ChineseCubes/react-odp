@@ -1,3 +1,3 @@
 module.exports =
-  AudioControl:   require './AudioControl'
-  Playground:       require './Playground'
+  AudioControl: require './AudioControl'
+  Playground:   require './Playground'

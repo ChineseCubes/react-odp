@@ -5,7 +5,7 @@
   div = React.DOM.div;
   onClick = require('./utils').onClick;
   Menu = React.createClass({
-    displayName: 'CCUI.Menu',
+    displayName: 'CUBE.UI.Menu',
     getDefaultProps: function(){
       return {
         buttons: [],
@@ -32,7 +32,7 @@
             className: btn
           }, ref$[onClick + ""] = function(it){
             it.stopPropagation();
-            return this$.props.onButtonClick.call(this$, btn);
+            return this$.props.onButtonClick.apply(this$, [btn].concat(arguments));
           }, ref$));
         }
       }.call(this)))));

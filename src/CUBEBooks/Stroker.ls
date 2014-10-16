@@ -45,7 +45,7 @@ Stroker = React.createClass do
   onHide: -> ...
   render: ->
     div do
-      className: 'strokes'
+      className: 'stroker'
       style:
         display: if not @state.hide then 'block' else 'none'
       "#onClick": ~> @setState hide: true

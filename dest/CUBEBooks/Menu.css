@@ -43,10 +43,10 @@
   right: -200%;
   text-align: center;
 }
-.menu .button {
+.menu > .buttons > .button {
   display: inline-block;
   margin-right: 0.5rem;
 }
-.menu .button:last-child {
+.menu > .buttons > .button:last-child {
   margin-right: 0;
 }

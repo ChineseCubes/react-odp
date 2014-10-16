@@ -7,7 +7,7 @@
   ref$ = React.DOM, nav = ref$.nav, div = ref$.div, i = ref$.i, span = ref$.span, a = ref$.a;
   onClick = require('./utils').onClick;
   Sentence = React.createClass({
-    displayName: 'CCUI.Sentence',
+    displayName: 'CUBE.Book.Sentence',
     getDefaultProps: function(){
       return {
         data: null,

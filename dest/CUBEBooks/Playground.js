@@ -9,7 +9,7 @@
   ref$ = React.DOM, nav = ref$.nav, div = ref$.div, i = ref$.i, span = ref$.span, a = ref$.a;
   onClick = require('./utils').onClick;
   Playground = React.createClass({
-    displayName: 'CCUI.Playground',
+    displayName: 'CUBE.Book.Playground',
     getDefaultProps: function(){
       return {
         data: null,

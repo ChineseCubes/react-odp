@@ -1,11 +1,11 @@
 (function(){
-  var React, ReactVTT, CUBEBooks, ODP, Button, ref$, div, i, small, Howler, Howl, Book;
+  var React, ReactVTT, ODP, Button, ref$, div, i, small, Playground, AudioControl, Howler, Howl, Book;
   React = require('react');
   ReactVTT = require('react-vtt');
-  CUBEBooks = require('./CUBEBooks/components');
   ODP = require('./ODP/components');
   Button = require('./CUBEBooks/Button');
   ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small;
+  ref$ = require('./CUBEBooks/components'), Playground = ref$.Playground, AudioControl = ref$.AudioControl;
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
   Book = React.createClass({
     displayName: 'CUBE.Book',
@@ -86,25 +86,25 @@
       counter = 0;
       ranges = [];
       return div({
-        className: 'comp main'
+        className: 'main'
       }, div({
         ref: 'modal',
-        className: 'ui modal control'
-      }, i({
-        className: 'close icon'
-      }), div({
+        className: 'modal hidden'
+      }, div({
         className: 'header'
       }, Button({
-        className: 'settings-button',
+        className: 'settings',
         onClick: function(){
           return this$.refs.playground.toggleSettings();
         }
       }, 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
         className: 'content'
-      }, CUBEBooks.Playground({
+      }, Playground({
         ref: 'playground',
         data: this.props.segs.get(this.state.text)
-      }))), ODP.components.presentation({
+      })), i({
+        className: 'close icon'
+      })), ODP.components.presentation({
         ref: 'presentation',
         scale: this.state.scale,
         data: this.props.data,
@@ -153,7 +153,7 @@
               id = "segment-" + counter;
               this.state.sprite[id] = [range.start * 1000, (range.end - range.start) * 1000];
               if (range.start < range.end) {
-                return ODP.components.image(props, CUBEBooks.AudioControl({
+                return ODP.components.image(props, AudioControl({
                   id: id,
                   audio: this.state.audio,
                   text: text,
@@ -180,18 +180,13 @@
               height = $modal.height();
               show = function(){
                 $pages.css('opacity', 1);
-                $modal.fadeOut('fast').css({
-                  marginTop: 'inherit'
-                });
+                $modal.fadeOut('fast').toggleClass('hidden', true);
                 return this$.setProps({
                   showText: true
                 });
               };
               $pages.css('opacity', 0.5);
-              return $modal.fadeIn('fast').css({
-                marginTop: -250,
-                opacity: 1
-              }).one('click', '.close', show);
+              return $modal.fadeIn('fast').toggleClass('hidden', false).one('click', '.close', show);
             };
             if (!this$.props.showText) {
               attrs.style.display = 'none';

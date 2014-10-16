@@ -4,7 +4,7 @@
   ref$ = React.DOM, nav = ref$.nav, div = ref$.div, a = ref$.a;
   onClick = require('./utils').onClick;
   Settings = React.createClass({
-    displayName: 'CCUI.Settings',
+    displayName: 'CUBE.Book.Settings',
     getDefaultProps: function(){
       return {
         mode: 'zh_TW',
