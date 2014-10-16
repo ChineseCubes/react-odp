@@ -42,9 +42,8 @@ console.log """<?xml version="1.0" encoding="utf-8" ?>
 .draw.frame:nth-child(4) { display: none !important }
 .draw.frame:nth-child(5) { left: 1cm !important; top: 0.5cm !important; }
 </style>
-<link rel="stylesheet" type="text/css" href="./css/reset.css" />
-<link rel="stylesheet" type="text/css" href="./css/vendor.css" />
-<link rel="stylesheet" type="text/css" href="./css/style.css" />
+<link rel="stylesheet" type="text/css" href="./css/icons.css" />
+<link rel="stylesheet" type="text/css" href="./css/main.css" />
 </head>
 <body>
 <div id="detector"></div>
