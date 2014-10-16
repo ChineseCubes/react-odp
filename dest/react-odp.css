@@ -12,19 +12,21 @@ body {
 }
 .presentation {
   position: absolute;
-  left: 0;
   top: 0;
-  right: 0;
   bottom: 0;
   margin: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  width: 100% !important;
   color: #000;
 }
 .presentation .draw {
   position: absolute;
 }
 .presentation .draw.page {
+  display: inline-block;
   position: relative;
-  margin-bottom: 1% !important;
   background: #fff;
 }
 .presentation .draw.image {
