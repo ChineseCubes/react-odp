@@ -1,5 +1,5 @@
 React = require 'react'
-Popup = require './Popup'
+Popup = require '../UI/Popup'
 
 { div, span } = React.DOM
 

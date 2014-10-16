@@ -2,12 +2,12 @@
   var React, Character, Popup, Menu, API, ref$, div, i, span, Howler, Howl, onClick, sayIt, Word;
   React = require('react');
   Character = require('./Character');
-  Popup = require('./Popup');
-  Menu = require('./Menu');
-  API = require('./api');
+  Popup = require('../UI/Popup');
+  Menu = require('../UI/Menu');
+  API = require('../api');
   ref$ = React.DOM, div = ref$.div, i = ref$.i, span = ref$.span;
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
-  ref$ = require('./utils'), onClick = ref$.onClick, sayIt = ref$.sayIt;
+  ref$ = require('../utils'), onClick = ref$.onClick, sayIt = ref$.sayIt;
   Word = React.createClass({
     displayName: 'CUBE.Book.Word',
     getDefaultProps: function(){

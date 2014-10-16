@@ -2,12 +2,12 @@
   var $, React, Button, Sentence, Settings, Definition, ref$, nav, div, i, span, a, onClick, Playground;
   $ = require('jquery');
   React = require('react');
-  Button = require('./Button');
+  Button = require('../UI/Button');
   Sentence = require('./Sentence');
   Settings = require('./Settings');
   Definition = require('./Definition');
   ref$ = React.DOM, nav = ref$.nav, div = ref$.div, i = ref$.i, span = ref$.span, a = ref$.a;
-  onClick = require('./utils').onClick;
+  onClick = require('../utils').onClick;
   Playground = React.createClass({
     displayName: 'CUBE.Book.Playground',
     getDefaultProps: function(){

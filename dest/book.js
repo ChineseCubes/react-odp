@@ -2,10 +2,10 @@
   var React, ReactVTT, ODP, Button, ref$, div, i, small, Playground, AudioControl, Howler, Howl, Book;
   React = require('react');
   ReactVTT = require('react-vtt');
-  ODP = require('./ODP/components');
-  Button = require('./CUBEBooks/Button');
+  ODP = require('./ODP');
+  Button = require('./CUBE/UI/Button');
   ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small;
-  ref$ = require('./CUBEBooks/components'), Playground = ref$.Playground, AudioControl = ref$.AudioControl;
+  ref$ = require('./CUBE/Book'), Playground = ref$.Playground, AudioControl = ref$.AudioControl;
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
   Book = React.createClass({
     displayName: 'CUBE.Book',

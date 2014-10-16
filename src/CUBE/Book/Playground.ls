@@ -1,12 +1,12 @@
 $ = require 'jquery'
 React = require 'react'
-Button = require './Button'
+Button = require '../UI/Button'
 Sentence = require './Sentence'
 Settings = require './Settings'
 Definition = require './Definition'
 
 { nav, div, i, span, a } = React.DOM
-{ onClick } = require './utils'
+{ onClick } = require '../utils'
 
 Playground = React.createClass do
   displayName: 'CUBE.Book.Playground'

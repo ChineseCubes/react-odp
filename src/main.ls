@@ -1,6 +1,6 @@
 React        = require 'react'
 DotsDetector = require './react-dots-detector'
-Data         = require './CUBEBooks/data'
+Data         = require './CUBE/data'
 Book         = require './Book'
 ReactVTT     = require 'react-vtt'
 

@@ -2,7 +2,7 @@
   var React, div, ref$, sayIt, onClick, AudioControl;
   React = require('react');
   div = React.DOM.div;
-  ref$ = require('./utils'), sayIt = ref$.sayIt, onClick = ref$.onClick;
+  ref$ = require('../utils'), sayIt = ref$.sayIt, onClick = ref$.onClick;
   AudioControl = React.createClass({
     displayName: 'CUBE.Book.AudioControl',
     getDefaultProps: function(){

@@ -1,7 +1,7 @@
 (function(){
   var React, Popup, ref$, div, span, Character;
   React = require('react');
-  Popup = require('./Popup');
+  Popup = require('../UI/Popup');
   ref$ = React.DOM, div = ref$.div, span = ref$.span;
   Character = React.createClass({
     displayName: 'CUBE.Book.Character',

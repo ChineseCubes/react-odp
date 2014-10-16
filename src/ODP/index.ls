@@ -1,5 +1,5 @@
 React = require 'react'
-{ camelFromHyphenated }  = require '../CUBEBooks/utils'
+{ camelFromHyphenated }  = require '../CUBE/utils'
 {
   isArray, isString, isNumber,
   filter, map, mapValues, cloneDeep

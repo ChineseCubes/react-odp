@@ -1,7 +1,7 @@
 (function(){
   var React, camelFromHyphenated, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, renderProps, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents;
   React = require('react');
-  camelFromHyphenated = require('../CUBEBooks/utils').camelFromHyphenated;
+  camelFromHyphenated = require('../CUBE/utils').camelFromHyphenated;
   ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, isNumber = ref$.isNumber, filter = ref$.filter, map = ref$.map, mapValues = ref$.mapValues, cloneDeep = ref$.cloneDeep;
   renderProps = function(it){
     var key$;

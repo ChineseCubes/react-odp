@@ -2,7 +2,7 @@ React = require 'react'
 Button = require './Button'
 
 { div } = React.DOM
-{ onClick } = require './utils'
+{ onClick } = require '../utils'
 
 Menu = React.createClass do
   displayName: 'CUBE.UI.Menu'

@@ -1,7 +1,7 @@
 React = require 'react'
 
 { div } = React.DOM
-{ say-it, onClick } = require './utils'
+{ say-it, onClick } = require '../utils'
 
 AudioControl = React.createClass do
   displayName: \CUBE.Book.AudioControl

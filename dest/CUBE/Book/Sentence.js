@@ -1,11 +1,11 @@
 (function(){
   var React, API, Word, Stroker, ref$, nav, div, i, span, a, onClick, Sentence, split$ = ''.split;
   React = require('react');
-  API = require('./api');
+  API = require('../api');
   Word = require('./Word');
   Stroker = require('./Stroker');
   ref$ = React.DOM, nav = ref$.nav, div = ref$.div, i = ref$.i, span = ref$.span, a = ref$.a;
-  onClick = require('./utils').onClick;
+  onClick = require('../utils').onClick;
   Sentence = React.createClass({
     displayName: 'CUBE.Book.Sentence',
     getDefaultProps: function(){

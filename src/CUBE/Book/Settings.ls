@@ -1,7 +1,7 @@
 React = require 'react'
 
 { nav, div, a } = React.DOM
-{ onClick } = require './utils'
+{ onClick } = require '../utils'
 
 Settings = React.createClass do
   displayName: 'CUBE.Book.Settings'

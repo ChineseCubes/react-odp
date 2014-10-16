@@ -1,10 +1,10 @@
 React = require 'react'
-API = require './api'
+API = require '../api'
 Word = require './Word'
 Stroker = require './Stroker'
 
 { nav, div, i, span, a } = React.DOM
-{ onClick } = require './utils'
+{ onClick } = require '../utils'
 
 Sentence = React.createClass do
   displayName: 'CUBE.Book.Sentence'

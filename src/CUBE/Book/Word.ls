@@ -1,12 +1,12 @@
 React = require 'react'
 Character = require './Character'
-Popup = require './Popup'
-Menu = require './Menu'
-API = require './api'
+Popup = require '../UI/Popup'
+Menu = require '../UI/Menu'
+API = require '../api'
 
 { div, i, span } = React.DOM
 { Howler, Howl } = require 'howler'
-{ onClick, say-it } = require './utils'
+{ onClick, say-it } = require '../utils'
 
 Word = React.createClass do
   displayName: 'CUBE.Book.Word'

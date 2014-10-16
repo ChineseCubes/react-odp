@@ -1,10 +1,10 @@
 $ = require 'jquery'
 React = require 'react'
 zhStrokeData = try require 'zhStrokeData'
-Data = require './data'
+Data = require '../data'
 
 { div } = React.DOM
-{ onClick } = require './utils'
+{ onClick } = require '../utils'
 
 Stroker = React.createClass do
   displayName: 'ZhStrokeData.SpriteStroker'

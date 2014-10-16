@@ -7,9 +7,9 @@
       return require('zhStrokeData');
     } catch (e$) {}
   }());
-  Data = require('./data');
+  Data = require('../data');
   div = React.DOM.div;
-  onClick = require('./utils').onClick;
+  onClick = require('../utils').onClick;
   Stroker = React.createClass({
     displayName: 'ZhStrokeData.SpriteStroker',
     getDefaultProps: function(){

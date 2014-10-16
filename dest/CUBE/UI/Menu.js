@@ -3,7 +3,7 @@
   React = require('react');
   Button = require('./Button');
   div = React.DOM.div;
-  onClick = require('./utils').onClick;
+  onClick = require('../utils').onClick;
   Menu = React.createClass({
     displayName: 'CUBE.UI.Menu',
     getDefaultProps: function(){
