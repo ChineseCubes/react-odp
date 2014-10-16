@@ -5,6 +5,7 @@
   Data = require('./CUBE/data');
   Book = require('./Book');
   ReactVTT = require('react-vtt');
+  require('react-vtt/dest/ReactVTT.css');
   window.requestAnimationFrame(function(){
     return $(function(){
       var dots;

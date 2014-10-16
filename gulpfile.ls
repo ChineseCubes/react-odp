@@ -1,4 +1,4 @@
-require! <[gulp gulp-concat gulp-filter gulp-flatten gulp-replace]>
+require! <[gulp gulp-concat gulp-filter gulp-flatten gulp-replace nib]>
 require! <[bower main-bower-files]>
 connect    = require \gulp-connect
 webpack    = require \gulp-webpack
@@ -85,7 +85,7 @@ gulp.task \css:app ->
   gulp.src [
     "#{path.src}/**/main.styl"
   ]
-    .pipe stylus use: <[nib]>
+    .pipe stylus use: [nib!]
     .pipe gulp.dest "#{path.build}/css"
     .pipe connect.reload!
   # for other apps
@@ -93,7 +93,7 @@ gulp.task \css:app ->
     "#{path.src}/**/*.styl"
     "!#{path.src}/**/main.styl"
   ]
-    .pipe stylus use: <[nib]>
+    .pipe stylus use: [nib!]
     .pipe gulp.dest "#{path.dest}/"
 
 gulp.task \vendor <[fonts:vendor images:vendor js:vendor css:vendor]>

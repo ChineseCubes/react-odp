@@ -33,7 +33,6 @@ Book = React.createClass do
       Howler.iOSAutoEnable = false
       new Howl urls: ["#{setup.path}/audio.mp3"]
     if audio
-      require 'react-vtt/css/react-vtt.css'
       audio.on \end ~> @state.current-sprite = null
     # set audio and update sprites after prerendered content has been mounted
     @setState audio: audio

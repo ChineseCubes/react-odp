@@ -49,7 +49,6 @@
         } catch (e$) {}
       }());
       if (audio) {
-        require('react-vtt/css/react-vtt.css');
         audio.on('end', function(){
           return this$.state.currentSprite = null;
         });
