@@ -30,7 +30,8 @@ if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
     ..pages = [RegExp.$1]
     ..auto-fit = off
 
-React.renderComponent do
-  Book props
-  $ \#app .get!0
+(try window)?book =
+  React.renderComponent do
+    Book props
+    $ \#app .get!0
 

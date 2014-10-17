@@ -8,10 +8,6 @@ Button    = require './CUBE/UI/Button'
 { Playground, AudioControl } = require './CUBE/Book'
 { Howler, Howl } = require 'howler'
 
-# XXX: should be methods of Book
-shortcuts = {}
-(try window or {})book = shortcuts
-
 Book = React.createClass do
   displayName: \CUBE.Book
   getDefaultProps: ->
@@ -30,6 +26,7 @@ Book = React.createClass do
     sprite: {}
     current-sprite: null
     text: ''
+    page-number: 0
   componentWillMount: ->
     if @props.auto-fit
       $ window .resize ~> @setState scale: @resize @props.dpcm
@@ -60,6 +57,8 @@ Book = React.createClass do
     {setup} = @props.master-page
     counter = 0
     ranges = []
+    attrs = @props.data.attrs
+    offset-x = "-#{@state.page-number * +(attrs.width.replace 'cm' '')}cm"
     div do
       className: 'main'
       div do
@@ -95,10 +94,14 @@ Book = React.createClass do
           attrs = data.attrs
           switch
           | data.name is 'page'
-            # create shortcut for Book API
-            shortcuts[attrs.name] =
+            attrs.x = offset-x
+            # expose pages
+            @[attrs.name] ?=
+              go: ~>
+                @setState page-number: +attrs.name.replace('page' '') - 1
               speak: -> ...
-              openPlayground: []
+              sentences: []
+              playgrounds: []
             ODP.renderProps props if attrs.name in pages
           | data.name is 'image' and attrs.name is 'activity'
             delete attrs.href
@@ -115,6 +118,7 @@ Book = React.createClass do
               @state.sprite[id] =
                 [range.start * 1000, (range.end - range.start) * 1000]
               if range.start < range.end
+                book = this
                 ODP.components.image do
                   props
                   AudioControl do
@@ -122,37 +126,42 @@ Book = React.createClass do
                     audio: @state.audio
                     text: text
                     onMount: ->
-                      shortcuts[parents.1.name]speak := ~> @play!
+                      book[parents.1.name]speak := ~> @play!
                     "#onClick": ~>
                       @state.current-sprite = @state.sprite[id]
             ++counter
             comp
           | data.name is 'span' and data.text
             text = props.data.text
-            attrs["#onClick"] = ~>
+            hide = ~>
+              $ '.office.presentation' .css \opacity 1
+              $ @refs.modal.getDOMNode!
+                .fadeOut \fast
+                .toggleClass 'hidden' on
+              @setProps show-text: true
+            show = ~>
               @setState text: text
               @setProps show-text: false
-              $pages = $ '.office.presentation'
               $modal = $ @refs.modal.getDOMNode!
               height = $modal.height!
-              show = ~>
-                $pages.css \opacity 1
-                $modal
-                  .fadeOut \fast
-                  .toggleClass 'hidden' on
-                @setProps show-text: true
-              $pages.css \opacity 0.5
+              $ '.office.presentation' .css \opacity 0.5
               $modal
                 .fadeIn \fast
                 # XXX: this state should be managed by React
                 .toggleClass 'hidden' off
-                .one \click \.close show
+                .one \click \.close hide
               #$ @refs.modal.getDOMNode!
               #  .modal do
               #    detachable: false
               #    onHide: ~> @setProps show-text: true
               #  .modal \show
-            shortcuts[parents.1.name]openPlayground.push attrs["#onClick"]
+            page = @[parents.1.name]
+            unless text in page.sentences
+              page
+                ..sentences.push text
+                ..playgrounds.push do
+                  toggle: -> if it then show! else hide!
+            attrs["#onClick"] = show
             attrs.style <<< display: \none if not @props.show-text
             if not @state.audio
               ranges.push do

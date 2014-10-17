@@ -65,7 +65,7 @@
 	        return Data.getPresentation(mp, function(data){
 	          return Data.Segmentations(data, setup.path, function(segs){
 	            return ReactVTT.parse(setup.path + "/audio.vtt.json", function(vtt){
-	              var props, x$;
+	              var props, x$, ref$;
 	              props = {
 	                masterPage: mp,
 	                data: data,
@@ -78,7 +78,11 @@
 	                x$.pages = [RegExp.$1];
 	                x$.autoFit = false;
 	              }
-	              return React.renderComponent(Book(props), $('#app').get()[0]);
+	              return (ref$ = (function(){
+	                try {
+	                  return window;
+	                } catch (e$) {}
+	              }())) != null ? ref$.book = React.renderComponent(Book(props), $('#app').get()[0]) : void 8;
 	            });
 	          });
 	        });
@@ -146,7 +150,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
-	  var React, ReactVTT, ODP, Button, ref$, div, i, small, onClick, Playground, AudioControl, Howler, Howl, shortcuts, Book;
+	  var React, ReactVTT, ODP, Button, ref$, div, i, small, onClick, Playground, AudioControl, Howler, Howl, Book;
 	  React = __webpack_require__(5);
 	  ReactVTT = __webpack_require__(6);
 	  ODP = __webpack_require__(7);
@@ -155,12 +159,6 @@
 	  onClick = __webpack_require__(4).onClick;
 	  ref$ = __webpack_require__(9), Playground = ref$.Playground, AudioControl = ref$.AudioControl;
 	  ref$ = __webpack_require__(13), Howler = ref$.Howler, Howl = ref$.Howl;
-	  shortcuts = {};
-	  (function(){
-	    try {
-	      return window || {};
-	    } catch (e$) {}
-	  }()).book = shortcuts;
 	  Book = React.createClass({
 	    displayName: 'CUBE.Book',
 	    getDefaultProps: function(){
@@ -181,7 +179,8 @@
 	        audio: null,
 	        sprite: {},
 	        currentSprite: null,
-	        text: ''
+	        text: '',
+	        pageNumber: 0
 	      };
 	    },
 	    componentWillMount: function(){
@@ -234,10 +233,12 @@
 	      }
 	    },
 	    render: function(){
-	      var setup, counter, ranges, ref$, this$ = this;
+	      var setup, counter, ranges, attrs, offsetX, ref$, this$ = this;
 	      setup = this.props.masterPage.setup;
 	      counter = 0;
 	      ranges = [];
+	      attrs = this.props.data.attrs;
+	      offsetX = "-" + this.state.pageNumber * +attrs.width.replace('cm', '') + "cm";
 	      return div({
 	        className: 'main'
 	      }, div({
@@ -261,7 +262,7 @@
 	        scale: this.state.scale,
 	        data: this.props.data,
 	        renderProps: function(props){
-	          var pages, parents, data, attrs, comp, text, i$, ref$, len$, cue;
+	          var pages, parents, data, attrs, key$, comp, text, hide, show, page, x$, i$, ref$, len$, cue;
 	          if (!this$.props.pages) {
 	            this$.props.pages = (function(){
 	              var i$, to$, results$ = [];
@@ -279,12 +280,19 @@
 	          attrs = data.attrs;
 	          switch (false) {
 	          case data.name !== 'page':
-	            shortcuts[attrs.name] = {
+	            attrs.x = offsetX;
+	            this$[key$ = attrs.name] == null && (this$[key$] = {
+	              go: function(){
+	                return this$.setState({
+	                  pageNumber: +attrs.name.replace('page', '') - 1
+	                });
+	              },
 	              speak: function(){
 	                throw Error('unimplemented');
 	              },
-	              openPlayground: []
-	            };
+	              sentences: [],
+	              playgrounds: []
+	            });
 	            if (in$(attrs.name, pages)) {
 	              return ODP.renderProps(props);
 	            }
@@ -293,7 +301,7 @@
 	            delete attrs.href;
 	            delete attrs[onClick + ""];
 	            comp = (function(counter){
-	              var text, range, r, x$, id, ref$, this$ = this;
+	              var text, range, r, x$, id, book, ref$, this$ = this;
 	              text = '';
 	              range = {
 	                start: Infinity,
@@ -312,13 +320,14 @@
 	              id = "segment-" + counter;
 	              this.state.sprite[id] = [range.start * 1000, (range.end - range.start) * 1000];
 	              if (range.start < range.end) {
+	                book = this;
 	                return ODP.components.image(props, AudioControl((ref$ = {
 	                  id: id,
 	                  audio: this.state.audio,
 	                  text: text,
 	                  onMount: function(){
 	                    var this$ = this;
-	                    return shortcuts[parents[1].name].speak = function(){
+	                    return book[parents[1].name].speak = function(){
 	                      return this$.play();
 	                    };
 	                  }
@@ -331,28 +340,41 @@
 	            return comp;
 	          case !(data.name === 'span' && data.text):
 	            text = props.data.text;
-	            attrs[onClick + ""] = function(){
-	              var $pages, $modal, height, show;
+	            hide = function(){
+	              $('.office.presentation').css('opacity', 1);
+	              $(this$.refs.modal.getDOMNode()).fadeOut('fast').toggleClass('hidden', true);
+	              return this$.setProps({
+	                showText: true
+	              });
+	            };
+	            show = function(){
+	              var $modal, height;
 	              this$.setState({
 	                text: text
 	              });
 	              this$.setProps({
 	                showText: false
 	              });
-	              $pages = $('.office.presentation');
 	              $modal = $(this$.refs.modal.getDOMNode());
 	              height = $modal.height();
-	              show = function(){
-	                $pages.css('opacity', 1);
-	                $modal.fadeOut('fast').toggleClass('hidden', true);
-	                return this$.setProps({
-	                  showText: true
-	                });
-	              };
-	              $pages.css('opacity', 0.5);
-	              return $modal.fadeIn('fast').toggleClass('hidden', false).one('click', '.close', show);
+	              $('.office.presentation').css('opacity', 0.5);
+	              return $modal.fadeIn('fast').toggleClass('hidden', false).one('click', '.close', hide);
 	            };
-	            shortcuts[parents[1].name].openPlayground.push(attrs[onClick + ""]);
+	            page = this$[parents[1].name];
+	            if (!in$(text, page.sentences)) {
+	              x$ = page;
+	              x$.sentences.push(text);
+	              x$.playgrounds.push({
+	                toggle: function(it){
+	                  if (it) {
+	                    return show();
+	                  } else {
+	                    return hide();
+	                  }
+	                }
+	              });
+	            }
+	            attrs[onClick + ""] = show;
 	            if (!this$.props.showText) {
 	              attrs.style.display = 'none';
 	            }
@@ -1240,9 +1262,9 @@
 	        return value;
 	      case !isNumber(value):
 	        return value * this.props.scale;
-	      case !/^\d*\.?\d+%$/.test(value):
+	      case !/^-?\d*\.?\d+%$/.test(value):
 	        return value;
-	      case !(r = /^(\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/.exec(value)):
+	      case !(r = /^(-?\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/.exec(value)):
 	        return +r[1] * this.props.scale + "" + (r[2] || '');
 	      default:
 	        return value;
