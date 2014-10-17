@@ -9,6 +9,8 @@ AudioControl = React.createClass do
     id: 0
     audio: null
     text: '這頁沒有文字'
+    onMount: -> ...
+    "#onClick": -> ...
   getInitialState: ->
     loading: true
     playing: false
@@ -21,6 +23,8 @@ AudioControl = React.createClass do
       ..on \play  @onPlay
       ..on \pause @onStop
       ..on \end   @onStop
+  componentDidMount: ->
+    @props.onMount ...
   componentWillUnmount: ->
     return if not @props.audio
     @props.audio
@@ -31,6 +35,19 @@ AudioControl = React.createClass do
   onLoad: -> @setState loading: false
   onPlay: -> @setState playing: true
   onStop: -> @setState playing: false
+  play: ->
+    if @props.audio
+      return if @state.loading
+      if not @state.playing
+        @props.audio
+          #..pos 0, @props.id # not work
+          ..stop @props.id # reset pos
+          ..play @props.id
+      else
+        @props.audio.pause! # pause every sprites
+    else
+      say-it @props.text, \zh-TW
+    @props["#onClick"] ...
   render: ->
     classes = 'audio-control'
     classes += ' playing' if @state.playing
@@ -40,18 +57,6 @@ AudioControl = React.createClass do
       style:
         width:  '100%'
         height: '100%'
-      "#onClick": ~>
-        | @props.audio
-          return if @state.loading
-          if not @state.playing
-            @props.audio
-              #..pos 0, @props.id # not work
-              ..stop @props.id # reset pos
-              ..play @props.id
-          else
-            @props.audio.pause! # pause every sprites
-        | otherwise
-          say-it @props.text, \zh-TW
-        @props."#onClick".call this, it
+      "#onClick": @play
 
 module.exports = AudioControl

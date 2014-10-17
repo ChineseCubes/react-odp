@@ -46,11 +46,11 @@
 
 	(function(){
 	  var React, DotsDetector, Data, Book, ReactVTT;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  DotsDetector = __webpack_require__(1);
 	  Data = __webpack_require__(3);
 	  Book = __webpack_require__(2);
-	  ReactVTT = __webpack_require__(5);
+	  ReactVTT = __webpack_require__(6);
 	  __webpack_require__(11);
 	  window.requestAnimationFrame(function(){
 	    return $(function(){
@@ -94,7 +94,7 @@
 
 	(function(){
 	  var React, div, DotsDetector;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  div = React.DOM.div;
 	  DotsDetector = React.createClass({
 	    displayName: 'DotsDetector',
@@ -146,14 +146,21 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
-	  var React, ReactVTT, ODP, Button, ref$, div, i, small, Playground, AudioControl, Howler, Howl, Book;
-	  React = __webpack_require__(4);
-	  ReactVTT = __webpack_require__(5);
+	  var React, ReactVTT, ODP, Button, ref$, div, i, small, onClick, Playground, AudioControl, Howler, Howl, shortcuts, Book;
+	  React = __webpack_require__(5);
+	  ReactVTT = __webpack_require__(6);
 	  ODP = __webpack_require__(7);
 	  Button = __webpack_require__(8);
 	  ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small;
+	  onClick = __webpack_require__(4).onClick;
 	  ref$ = __webpack_require__(9), Playground = ref$.Playground, AudioControl = ref$.AudioControl;
 	  ref$ = __webpack_require__(13), Howler = ref$.Howler, Howl = ref$.Howl;
+	  shortcuts = {};
+	  (function(){
+	    try {
+	      return window || {};
+	    } catch (e$) {}
+	  }()).book = shortcuts;
 	  Book = React.createClass({
 	    displayName: 'CUBE.Book',
 	    getDefaultProps: function(){
@@ -227,7 +234,7 @@
 	      }
 	    },
 	    render: function(){
-	      var setup, counter, ranges, this$ = this;
+	      var setup, counter, ranges, ref$, this$ = this;
 	      setup = this.props.masterPage.setup;
 	      counter = 0;
 	      ranges = [];
@@ -238,12 +245,11 @@
 	        className: 'modal hidden'
 	      }, div({
 	        className: 'header'
-	      }, Button({
-	        className: 'settings',
-	        onClick: function(){
-	          return this$.refs.playground.toggleSettings();
-	        }
-	      }, 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
+	      }, Button((ref$ = {
+	        className: 'settings'
+	      }, ref$[onClick + ""] = function(){
+	        return this$.refs.playground.toggleSettings();
+	      }, ref$), 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
 	        className: 'content'
 	      }, Playground({
 	        ref: 'playground',
@@ -255,7 +261,7 @@
 	        scale: this.state.scale,
 	        data: this.props.data,
 	        renderProps: function(props){
-	          var pages, data, attrs, comp, text, i$, ref$, len$, cue;
+	          var pages, parents, data, attrs, comp, text, i$, ref$, len$, cue;
 	          if (!this$.props.pages) {
 	            this$.props.pages = (function(){
 	              var i$, to$, results$ = [];
@@ -268,19 +274,26 @@
 	          pages = this$.props.pages.map(function(it){
 	            return "page" + it;
 	          });
+	          parents = props.parents;
 	          data = props.data;
 	          attrs = data.attrs;
 	          switch (false) {
 	          case data.name !== 'page':
+	            shortcuts[attrs.name] = {
+	              speak: function(){
+	                throw Error('unimplemented');
+	              },
+	              openPlayground: []
+	            };
 	            if (in$(attrs.name, pages)) {
 	              return ODP.renderProps(props);
 	            }
 	            break;
 	          case !(data.name === 'image' && attrs.name === 'activity'):
 	            delete attrs.href;
-	            delete attrs.onClick;
+	            delete attrs[onClick + ""];
 	            comp = (function(counter){
-	              var text, range, r, x$, id, this$ = this;
+	              var text, range, r, x$, id, ref$, this$ = this;
 	              text = '';
 	              range = {
 	                start: Infinity,
@@ -299,21 +312,26 @@
 	              id = "segment-" + counter;
 	              this.state.sprite[id] = [range.start * 1000, (range.end - range.start) * 1000];
 	              if (range.start < range.end) {
-	                return ODP.components.image(props, AudioControl({
+	                return ODP.components.image(props, AudioControl((ref$ = {
 	                  id: id,
 	                  audio: this.state.audio,
 	                  text: text,
-	                  onClick: function(){
-	                    return this$.state.currentSprite = this$.state.sprite[id];
+	                  onMount: function(){
+	                    var this$ = this;
+	                    return shortcuts[parents[1].name].speak = function(){
+	                      return this$.play();
+	                    };
 	                  }
-	                }));
+	                }, ref$[onClick + ""] = function(){
+	                  return this$.state.currentSprite = this$.state.sprite[id];
+	                }, ref$)));
 	              }
 	            }.call(this$, counter));
 	            ++counter;
 	            return comp;
 	          case !(data.name === 'span' && data.text):
 	            text = props.data.text;
-	            attrs.onClick = function(){
+	            attrs[onClick + ""] = function(){
 	              var $pages, $modal, height, show;
 	              this$.setState({
 	                text: text
@@ -334,6 +352,7 @@
 	              $pages.css('opacity', 0.5);
 	              return $modal.fadeIn('fast').toggleClass('hidden', false).one('click', '.close', show);
 	            };
+	            shortcuts[parents[1].name].openPlayground.push(attrs[onClick + ""]);
 	            if (!this$.props.showText) {
 	              attrs.style.display = 'none';
 	            }
@@ -402,7 +421,7 @@
 	    }
 	  });
 	  ref$ = __webpack_require__(18), isArray = ref$.isArray, isString = ref$.isString, flatten = ref$.flatten, max = ref$.max, min = ref$.min, map = ref$.map, zipObject = ref$.zipObject;
-	  ref$ = __webpack_require__(6), unslash = ref$.unslash, tagless = ref$.strip, splitNamespace = ref$.splitNamespace, camelFromHyphenated = ref$.camelFromHyphenated;
+	  ref$ = __webpack_require__(4), unslash = ref$.unslash, tagless = ref$.strip, splitNamespace = ref$.splitNamespace, camelFromHyphenated = ref$.camelFromHyphenated;
 	  slice = Array.prototype.slice;
 	  shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
 	  masterPage = {
@@ -851,17 +870,87 @@
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(17);
+	(function(){
+	  var sayIt, unslash, strip, splitNamespace, camelFromHyphenated, onClick;
+	  sayIt = function(text, lang){
+	    var syn, utt, x$, u;
+	    lang == null && (lang = 'en-US');
+	    syn = (function(){
+	      try {
+	        return window.speechSynthesis;
+	      } catch (e$) {}
+	    }());
+	    utt = (function(){
+	      try {
+	        return window.SpeechSynthesisUtterance;
+	      } catch (e$) {}
+	    }());
+	    if (!syn || !utt) {
+	      return;
+	    }
+	    x$ = u = new utt(text);
+	    x$.lang = lang;
+	    x$.volume = 1.0;
+	    x$.rate = 1.0;
+	    return syn.speak(u);
+	  };
+	  unslash = function(it){
+	    return it.replace(/\/$/, '') + "";
+	  };
+	  strip = function(it){
+	    return it.replace(/<.*?>/g, function(){
+	      return '';
+	    });
+	  };
+	  splitNamespace = function(it){
+	    var r;
+	    r = it.toLowerCase().split(':').reverse();
+	    return {
+	      namespace: r[1],
+	      name: r[0]
+	    };
+	  };
+	  camelFromHyphenated = function(it){
+	    return it.split('-').map(function(v, i){
+	      switch (false) {
+	      case i !== 0:
+	        return v;
+	      default:
+	        return v.slice(0, 1).toUpperCase() + "" + v.slice(1);
+	      }
+	    }).join('');
+	  };
+	  onClick = (function(){
+	    try {
+	      return 'ontouchstart' in window;
+	    } catch (e$) {}
+	  }()) ? 'onTouchStart' : 'onClick';
+	  module.exports = {
+	    sayIt: sayIt,
+	    unslash: unslash,
+	    strip: strip,
+	    splitNamespace: splitNamespace,
+	    camelFromHyphenated: camelFromHyphenated,
+	    onClick: onClick
+	  };
+	}).call(this);
 
 
 /***/ },
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__(17);
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(module) {// Generated by LiveScript 1.3.0
 	(function(){
 	  var React, $, _, WebVTT, ref$, p, span, ol, li, filter, slice, update, parseVtt, sourceFromSelectorOrPath, ReactVTTMixin, ReactVTT;
-	  React == null && (React = __webpack_require__(4));
+	  React == null && (React = __webpack_require__(5));
 	  $ == null && ($ = __webpack_require__(45));
 	  _ == null && (_ = __webpack_require__(18));
 	  WebVTT == null && (WebVTT = __webpack_require__(10));
@@ -1064,83 +1153,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)(module)))
 
 /***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	(function(){
-	  var sayIt, unslash, strip, splitNamespace, camelFromHyphenated, onClick;
-	  sayIt = function(text, lang){
-	    var syn, utt, x$, u;
-	    lang == null && (lang = 'en-US');
-	    syn = (function(){
-	      try {
-	        return window.speechSynthesis;
-	      } catch (e$) {}
-	    }());
-	    utt = (function(){
-	      try {
-	        return window.SpeechSynthesisUtterance;
-	      } catch (e$) {}
-	    }());
-	    if (!syn || !utt) {
-	      return;
-	    }
-	    x$ = u = new utt(text);
-	    x$.lang = lang;
-	    x$.volume = 1.0;
-	    x$.rate = 1.0;
-	    return syn.speak(u);
-	  };
-	  unslash = function(it){
-	    return it.replace(/\/$/, '') + "";
-	  };
-	  strip = function(it){
-	    return it.replace(/<.*?>/g, function(){
-	      return '';
-	    });
-	  };
-	  splitNamespace = function(it){
-	    var r;
-	    r = it.toLowerCase().split(':').reverse();
-	    return {
-	      namespace: r[1],
-	      name: r[0]
-	    };
-	  };
-	  camelFromHyphenated = function(it){
-	    return it.split('-').map(function(v, i){
-	      switch (false) {
-	      case i !== 0:
-	        return v;
-	      default:
-	        return v.slice(0, 1).toUpperCase() + "" + v.slice(1);
-	      }
-	    }).join('');
-	  };
-	  onClick = (function(){
-	    try {
-	      return 'ontouchstart' in window;
-	    } catch (e$) {}
-	  }()) ? 'onTouchStart' : 'onClick';
-	  module.exports = {
-	    sayIt: sayIt,
-	    unslash: unslash,
-	    strip: strip,
-	    splitNamespace: splitNamespace,
-	    camelFromHyphenated: camelFromHyphenated,
-	    onClick: onClick
-	  };
-	}).call(this);
-
-
-/***/ },
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
 	  var React, camelFromHyphenated, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, renderProps, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents;
-	  React = __webpack_require__(4);
-	  camelFromHyphenated = __webpack_require__(6).camelFromHyphenated;
+	  React = __webpack_require__(5);
+	  camelFromHyphenated = __webpack_require__(4).camelFromHyphenated;
 	  ref$ = __webpack_require__(18), isArray = ref$.isArray, isString = ref$.isString, isNumber = ref$.isNumber, filter = ref$.filter, map = ref$.map, mapValues = ref$.mapValues, cloneDeep = ref$.cloneDeep;
 	  renderProps = function(it){
 	    var key$;
@@ -1302,7 +1321,10 @@
 	        return {
 	          key: i,
 	          scale: this.props.scale,
-	          parents: this.props.parents.concat([data.name]),
+	          parents: this.props.parents.concat([{
+	            tag: data.name,
+	            name: attrs.name
+	          }]),
 	          data: cloneDeep(child),
 	          renderProps: this.props.renderProps
 	        };
@@ -1391,7 +1413,7 @@
 
 	(function(){
 	  var React, div, Button;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  div = React.DOM.div;
 	  Button = React.createClass({
 	    displayName: 'CUBE.UI.Button',
@@ -2940,17 +2962,23 @@
 
 	(function(){
 	  var React, div, ref$, sayIt, onClick, AudioControl;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  div = React.DOM.div;
-	  ref$ = __webpack_require__(6), sayIt = ref$.sayIt, onClick = ref$.onClick;
+	  ref$ = __webpack_require__(4), sayIt = ref$.sayIt, onClick = ref$.onClick;
 	  AudioControl = React.createClass({
 	    displayName: 'CUBE.Book.AudioControl',
 	    getDefaultProps: function(){
-	      return {
+	      var ref$;
+	      return ref$ = {
 	        id: 0,
 	        audio: null,
-	        text: '這頁沒有文字'
-	      };
+	        text: '這頁沒有文字',
+	        onMount: function(){
+	          throw Error('unimplemented');
+	        }
+	      }, ref$[onClick + ""] = function(){
+	        throw Error('unimplemented');
+	      }, ref$;
 	    },
 	    getInitialState: function(){
 	      return {
@@ -2970,6 +2998,9 @@
 	      x$.on('pause', this.onStop);
 	      x$.on('end', this.onStop);
 	      return x$;
+	    },
+	    componentDidMount: function(){
+	      return this.props.onMount.apply(this, arguments);
 	    },
 	    componentWillUnmount: function(){
 	      var x$;
@@ -2998,8 +3029,26 @@
 	        playing: false
 	      });
 	    },
+	    play: function(){
+	      var x$;
+	      if (this.props.audio) {
+	        if (this.state.loading) {
+	          return;
+	        }
+	        if (!this.state.playing) {
+	          x$ = this.props.audio;
+	          x$.stop(this.props.id);
+	          x$.play(this.props.id);
+	        } else {
+	          this.props.audio.pause();
+	        }
+	      } else {
+	        sayIt(this.props.text, 'zh-TW');
+	      }
+	      return this.props[onClick + ""].apply(this, arguments);
+	    },
 	    render: function(){
-	      var classes, ref$, this$ = this;
+	      var classes, ref$;
 	      classes = 'audio-control';
 	      if (this.state.playing) {
 	        classes += ' playing';
@@ -3013,26 +3062,7 @@
 	          width: '100%',
 	          height: '100%'
 	        }
-	      }, ref$[onClick + ""] = function(it){
-	        var x$;
-	        switch (false) {
-	        case !this$.props.audio:
-	          if (this$.state.loading) {
-	            return;
-	          }
-	          if (!this$.state.playing) {
-	            x$ = this$.props.audio;
-	            x$.stop(this$.props.id);
-	            x$.play(this$.props.id);
-	          } else {
-	            this$.props.audio.pause();
-	          }
-	          break;
-	        default:
-	          sayIt(this$.props.text, 'zh-TW');
-	        }
-	        return this$.props[onClick + ""].call(this$, it);
-	      }, ref$));
+	      }, ref$[onClick + ""] = this.play, ref$));
 	    }
 	  });
 	  module.exports = AudioControl;
@@ -3046,13 +3076,13 @@
 	(function(){
 	  var $, React, Button, Sentence, Settings, Definition, ref$, nav, div, i, span, a, onClick, Playground;
 	  $ = __webpack_require__(45);
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  Button = __webpack_require__(8);
 	  Sentence = __webpack_require__(21);
 	  Settings = __webpack_require__(22);
 	  Definition = __webpack_require__(23);
 	  ref$ = React.DOM, nav = ref$.nav, div = ref$.div, i = ref$.i, span = ref$.span, a = ref$.a;
-	  onClick = __webpack_require__(6).onClick;
+	  onClick = __webpack_require__(4).onClick;
 	  Playground = React.createClass({
 	    displayName: 'CUBE.Book.Playground',
 	    getDefaultProps: function(){
@@ -10558,12 +10588,12 @@
 
 	(function(){
 	  var React, API, Word, Stroker, ref$, nav, div, i, span, a, onClick, Sentence, split$ = ''.split;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  API = __webpack_require__(47);
 	  Word = __webpack_require__(48);
 	  Stroker = __webpack_require__(49);
 	  ref$ = React.DOM, nav = ref$.nav, div = ref$.div, i = ref$.i, span = ref$.span, a = ref$.a;
-	  onClick = __webpack_require__(6).onClick;
+	  onClick = __webpack_require__(4).onClick;
 	  Sentence = React.createClass({
 	    displayName: 'CUBE.Book.Sentence',
 	    getDefaultProps: function(){
@@ -10662,9 +10692,9 @@
 
 	(function(){
 	  var React, ref$, nav, div, a, onClick, Settings;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  ref$ = React.DOM, nav = ref$.nav, div = ref$.div, a = ref$.a;
-	  onClick = __webpack_require__(6).onClick;
+	  onClick = __webpack_require__(4).onClick;
 	  Settings = React.createClass({
 	    displayName: 'CUBE.Book.Settings',
 	    getDefaultProps: function(){
@@ -10696,7 +10726,7 @@
 
 	(function(){
 	  var React, ref$, dl, dt, dd, Definition;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  ref$ = React.DOM, dl = ref$.dl, dt = ref$.dt, dd = ref$.dd;
 	  Definition = React.createClass({
 	    className: 'CUBE.Book.Definition',
@@ -26085,14 +26115,14 @@
 
 	(function(){
 	  var React, Character, Popup, Menu, API, ref$, div, i, span, Howler, Howl, onClick, sayIt, Word;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  Character = __webpack_require__(111);
 	  Popup = __webpack_require__(112);
 	  Menu = __webpack_require__(113);
 	  API = __webpack_require__(47);
 	  ref$ = React.DOM, div = ref$.div, i = ref$.i, span = ref$.span;
 	  ref$ = __webpack_require__(13), Howler = ref$.Howler, Howl = ref$.Howl;
-	  ref$ = __webpack_require__(6), onClick = ref$.onClick, sayIt = ref$.sayIt;
+	  ref$ = __webpack_require__(4), onClick = ref$.onClick, sayIt = ref$.sayIt;
 	  Word = React.createClass({
 	    displayName: 'CUBE.Book.Word',
 	    getDefaultProps: function(){
@@ -26257,7 +26287,7 @@
 	(function(){
 	  var $, React, zhStrokeData, Data, div, onClick, Stroker;
 	  $ = __webpack_require__(45);
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  zhStrokeData = (function(){
 	    try {
 	      return __webpack_require__(110);
@@ -26265,7 +26295,7 @@
 	  }());
 	  Data = __webpack_require__(3);
 	  div = React.DOM.div;
-	  onClick = __webpack_require__(6).onClick;
+	  onClick = __webpack_require__(4).onClick;
 	  Stroker = React.createClass({
 	    displayName: 'ZhStrokeData.SpriteStroker',
 	    getDefaultProps: function(){
@@ -33554,7 +33584,7 @@
 
 	(function(){
 	  var React, Popup, ref$, div, span, Character;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  Popup = __webpack_require__(112);
 	  ref$ = React.DOM, div = ref$.div, span = ref$.span;
 	  Character = React.createClass({
@@ -33593,7 +33623,7 @@
 
 	(function(){
 	  var React, ref$, div, span, Popup;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  ref$ = React.DOM, div = ref$.div, span = ref$.span;
 	  Popup = React.createClass({
 	    displayName: 'CUBE.UI.Popup',
@@ -33613,10 +33643,10 @@
 
 	(function(){
 	  var React, Button, div, onClick, Menu;
-	  React = __webpack_require__(4);
+	  React = __webpack_require__(5);
 	  Button = __webpack_require__(8);
 	  div = React.DOM.div;
-	  onClick = __webpack_require__(6).onClick;
+	  onClick = __webpack_require__(4).onClick;
 	  Menu = React.createClass({
 	    displayName: 'CUBE.UI.Menu',
 	    getDefaultProps: function(){

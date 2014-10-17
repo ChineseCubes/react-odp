@@ -163,7 +163,10 @@
         return {
           key: i,
           scale: this.props.scale,
-          parents: this.props.parents.concat([data.name]),
+          parents: this.props.parents.concat([{
+            tag: data.name,
+            name: attrs.name
+          }]),
           data: cloneDeep(child),
           renderProps: this.props.renderProps
         };

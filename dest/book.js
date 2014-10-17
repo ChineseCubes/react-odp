@@ -1,12 +1,19 @@
 (function(){
-  var React, ReactVTT, ODP, Button, ref$, div, i, small, Playground, AudioControl, Howler, Howl, Book;
+  var React, ReactVTT, ODP, Button, ref$, div, i, small, onClick, Playground, AudioControl, Howler, Howl, shortcuts, Book;
   React = require('react');
   ReactVTT = require('react-vtt');
   ODP = require('./ODP');
   Button = require('./CUBE/UI/Button');
   ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small;
+  onClick = require('./CUBE/utils').onClick;
   ref$ = require('./CUBE/Book'), Playground = ref$.Playground, AudioControl = ref$.AudioControl;
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
+  shortcuts = {};
+  (function(){
+    try {
+      return window || {};
+    } catch (e$) {}
+  }()).book = shortcuts;
   Book = React.createClass({
     displayName: 'CUBE.Book',
     getDefaultProps: function(){
@@ -80,7 +87,7 @@
       }
     },
     render: function(){
-      var setup, counter, ranges, this$ = this;
+      var setup, counter, ranges, ref$, this$ = this;
       setup = this.props.masterPage.setup;
       counter = 0;
       ranges = [];
@@ -91,12 +98,11 @@
         className: 'modal hidden'
       }, div({
         className: 'header'
-      }, Button({
-        className: 'settings',
-        onClick: function(){
-          return this$.refs.playground.toggleSettings();
-        }
-      }, 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
+      }, Button((ref$ = {
+        className: 'settings'
+      }, ref$[onClick + ""] = function(){
+        return this$.refs.playground.toggleSettings();
+      }, ref$), 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
         className: 'content'
       }, Playground({
         ref: 'playground',
@@ -108,7 +114,7 @@
         scale: this.state.scale,
         data: this.props.data,
         renderProps: function(props){
-          var pages, data, attrs, comp, text, i$, ref$, len$, cue;
+          var pages, parents, data, attrs, comp, text, i$, ref$, len$, cue;
           if (!this$.props.pages) {
             this$.props.pages = (function(){
               var i$, to$, results$ = [];
@@ -121,19 +127,26 @@
           pages = this$.props.pages.map(function(it){
             return "page" + it;
           });
+          parents = props.parents;
           data = props.data;
           attrs = data.attrs;
           switch (false) {
           case data.name !== 'page':
+            shortcuts[attrs.name] = {
+              speak: function(){
+                throw Error('unimplemented');
+              },
+              openPlayground: []
+            };
             if (in$(attrs.name, pages)) {
               return ODP.renderProps(props);
             }
             break;
           case !(data.name === 'image' && attrs.name === 'activity'):
             delete attrs.href;
-            delete attrs.onClick;
+            delete attrs[onClick + ""];
             comp = (function(counter){
-              var text, range, r, x$, id, this$ = this;
+              var text, range, r, x$, id, ref$, this$ = this;
               text = '';
               range = {
                 start: Infinity,
@@ -152,21 +165,26 @@
               id = "segment-" + counter;
               this.state.sprite[id] = [range.start * 1000, (range.end - range.start) * 1000];
               if (range.start < range.end) {
-                return ODP.components.image(props, AudioControl({
+                return ODP.components.image(props, AudioControl((ref$ = {
                   id: id,
                   audio: this.state.audio,
                   text: text,
-                  onClick: function(){
-                    return this$.state.currentSprite = this$.state.sprite[id];
+                  onMount: function(){
+                    var this$ = this;
+                    return shortcuts[parents[1].name].speak = function(){
+                      return this$.play();
+                    };
                   }
-                }));
+                }, ref$[onClick + ""] = function(){
+                  return this$.state.currentSprite = this$.state.sprite[id];
+                }, ref$)));
               }
             }.call(this$, counter));
             ++counter;
             return comp;
           case !(data.name === 'span' && data.text):
             text = props.data.text;
-            attrs.onClick = function(){
+            attrs[onClick + ""] = function(){
               var $pages, $modal, height, show;
               this$.setState({
                 text: text
@@ -187,6 +205,7 @@
               $pages.css('opacity', 0.5);
               return $modal.fadeIn('fast').toggleClass('hidden', false).one('click', '.close', show);
             };
+            shortcuts[parents[1].name].openPlayground.push(attrs[onClick + ""]);
             if (!this$.props.showText) {
               attrs.style.display = 'none';
             }

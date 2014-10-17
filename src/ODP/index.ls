@@ -76,10 +76,10 @@ DrawMixin =
       style: style
     for key, attr of attrs => props[key] = attr if /^on.*$/test key
     child-props-list = for let i, child of data.children
-      key:         i
-      scale:       @props.scale
-      parents:     @props.parents.concat [data.name]
-      data:        cloneDeep child
+      key:     i
+      scale:   @props.scale
+      parents: @props.parents.concat [tag: data.name, name: attrs.name]
+      data:    cloneDeep child
       renderProps: @props.renderProps
     children = child-props-list
       |> map _, @props.renderProps

@@ -6,11 +6,17 @@
   AudioControl = React.createClass({
     displayName: 'CUBE.Book.AudioControl',
     getDefaultProps: function(){
-      return {
+      var ref$;
+      return ref$ = {
         id: 0,
         audio: null,
-        text: '這頁沒有文字'
-      };
+        text: '這頁沒有文字',
+        onMount: function(){
+          throw Error('unimplemented');
+        }
+      }, ref$[onClick + ""] = function(){
+        throw Error('unimplemented');
+      }, ref$;
     },
     getInitialState: function(){
       return {
@@ -30,6 +36,9 @@
       x$.on('pause', this.onStop);
       x$.on('end', this.onStop);
       return x$;
+    },
+    componentDidMount: function(){
+      return this.props.onMount.apply(this, arguments);
     },
     componentWillUnmount: function(){
       var x$;
@@ -58,8 +67,26 @@
         playing: false
       });
     },
+    play: function(){
+      var x$;
+      if (this.props.audio) {
+        if (this.state.loading) {
+          return;
+        }
+        if (!this.state.playing) {
+          x$ = this.props.audio;
+          x$.stop(this.props.id);
+          x$.play(this.props.id);
+        } else {
+          this.props.audio.pause();
+        }
+      } else {
+        sayIt(this.props.text, 'zh-TW');
+      }
+      return this.props[onClick + ""].apply(this, arguments);
+    },
     render: function(){
-      var classes, ref$, this$ = this;
+      var classes, ref$;
       classes = 'audio-control';
       if (this.state.playing) {
         classes += ' playing';
@@ -73,26 +100,7 @@
           width: '100%',
           height: '100%'
         }
-      }, ref$[onClick + ""] = function(it){
-        var x$;
-        switch (false) {
-        case !this$.props.audio:
-          if (this$.state.loading) {
-            return;
-          }
-          if (!this$.state.playing) {
-            x$ = this$.props.audio;
-            x$.stop(this$.props.id);
-            x$.play(this$.props.id);
-          } else {
-            this$.props.audio.pause();
-          }
-          break;
-        default:
-          sayIt(this$.props.text, 'zh-TW');
-        }
-        return this$.props[onClick + ""].call(this$, it);
-      }, ref$));
+      }, ref$[onClick + ""] = this.play, ref$));
     }
   });
   module.exports = AudioControl;

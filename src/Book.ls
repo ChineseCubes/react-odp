@@ -4,8 +4,13 @@ ODP       = require './ODP'
 Button    = require './CUBE/UI/Button'
 
 { div, i, small } = React.DOM
+{ onClick } = require './CUBE/utils'
 { Playground, AudioControl } = require './CUBE/Book'
 { Howler, Howl } = require 'howler'
+
+# XXX: should be methods of Book
+shortcuts = {}
+(try window or {})book = shortcuts
 
 Book = React.createClass do
   displayName: \CUBE.Book
@@ -64,7 +69,7 @@ Book = React.createClass do
           className: 'header'
           Button do
             className: 'settings'
-            onClick: ~>
+            "#onClick": ~>
               @refs.playground.toggleSettings!
             'Settings'
           'C'
@@ -85,14 +90,19 @@ Book = React.createClass do
         renderProps: (props) ~>
           @props.pages = [1 to setup.total-pages] if not @props.pages
           pages = @props.pages.map (-> "page#it")
+          parents = props.parents
           data  = props.data
           attrs = data.attrs
           switch
           | data.name is 'page'
+            # create shortcut for Book API
+            shortcuts[attrs.name] =
+              speak: -> ...
+              openPlayground: []
             ODP.renderProps props if attrs.name in pages
           | data.name is 'image' and attrs.name is 'activity'
             delete attrs.href
-            delete attrs.onClick
+            delete attrs["#onClick"]
             comp = let counter
               text = ''
               range = start: Infinity, end: -Infinity
@@ -111,13 +121,15 @@ Book = React.createClass do
                     id: id
                     audio: @state.audio
                     text: text
-                    onClick: ~>
+                    onMount: ->
+                      shortcuts[parents.1.name]speak := ~> @play!
+                    "#onClick": ~>
                       @state.current-sprite = @state.sprite[id]
             ++counter
             comp
           | data.name is 'span' and data.text
             text = props.data.text
-            attrs.onClick = ~>
+            attrs["#onClick"] = ~>
               @setState text: text
               @setProps show-text: false
               $pages = $ '.office.presentation'
@@ -140,6 +152,7 @@ Book = React.createClass do
               #    detachable: false
               #    onHide: ~> @setProps show-text: true
               #  .modal \show
+            shortcuts[parents.1.name]openPlayground.push attrs["#onClick"]
             attrs.style <<< display: \none if not @props.show-text
             if not @state.audio
               ranges.push do
