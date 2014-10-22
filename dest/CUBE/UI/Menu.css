@@ -1,0 +1,52 @@
+.button {
+  display: block;
+  pointer-events: auto;
+  cursor: pointer;
+  font-family: "icomoon";
+  width: 3.2rem;
+  height: 3.2rem;
+  line-height: 3.2rem;
+  border-radius: 1.6rem;
+  background-color: #575f64;
+  text-align: center;
+}
+.button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.button:hover,
+.button.actived {
+  background-color: #f94646;
+}
+.button div {
+  color: #fff;
+}
+.button.cut div:before {
+  content: "\e605";
+}
+.button.pinyin div:before {
+  content: "\e604";
+}
+.button.stroke div:before {
+  content: "\e606";
+}
+.button.english div:before {
+  content: "\e601";
+}
+.button.undo div:before {
+  content: "\e603";
+}
+.menu {
+  position: absolute;
+  pointer-events: none;
+  left: -200%;
+  right: -200%;
+  text-align: center;
+}
+.menu > .buttons > .button {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+.menu > .buttons > .button:last-child {
+  margin-right: 0;
+}

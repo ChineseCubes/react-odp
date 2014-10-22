@@ -2,9 +2,10 @@
   var React, DotsDetector, Data, Book, ReactVTT;
   React = require('react');
   DotsDetector = require('./react-dots-detector');
-  Data = require('./CUBEBooks/data');
-  Book = require('./book');
+  Data = require('./CUBE/data');
+  Book = require('./Book');
   ReactVTT = require('react-vtt');
+  require('react-vtt/dest/ReactVTT.css');
   window.requestAnimationFrame(function(){
     return $(function(){
       var dots;
@@ -18,7 +19,7 @@
         return Data.getPresentation(mp, function(data){
           return Data.Segmentations(data, setup.path, function(segs){
             return ReactVTT.parse(setup.path + "/audio.vtt.json", function(vtt){
-              var props, x$;
+              var props, x$, ref$;
               props = {
                 masterPage: mp,
                 data: data,
@@ -31,7 +32,11 @@
                 x$.pages = [RegExp.$1];
                 x$.autoFit = false;
               }
-              return React.renderComponent(Book(props), $('#app').get()[0]);
+              return (ref$ = (function(){
+                try {
+                  return window;
+                } catch (e$) {}
+              }())) != null ? ref$.book = React.renderComponent(Book(props), $('#app').get()[0]) : void 8;
             });
           });
         });

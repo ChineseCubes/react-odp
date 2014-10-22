@@ -1,10 +1,12 @@
 (function(){
-  var React, ReactVTT, CUBEBooks, ODP, ref$, div, i, small, Howler, Howl, Book;
+  var React, ReactVTT, ODP, Button, ref$, div, i, small, onClick, Playground, AudioControl, Howler, Howl, Book;
   React = require('react');
   ReactVTT = require('react-vtt');
-  CUBEBooks = require('./CUBEBooks/components');
-  ODP = require('./ODP/components');
+  ODP = require('./ODP');
+  Button = require('./CUBE/UI/Button');
   ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small;
+  onClick = require('./CUBE/utils').onClick;
+  ref$ = require('./CUBE/Book'), Playground = ref$.Playground, AudioControl = ref$.AudioControl;
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
   Book = React.createClass({
     displayName: 'CUBE.Book',
@@ -26,7 +28,8 @@
         audio: null,
         sprite: {},
         currentSprite: null,
-        text: ''
+        text: '',
+        pageNumber: 0
       };
     },
     componentWillMount: function(){
@@ -48,7 +51,6 @@
         } catch (e$) {}
       }());
       if (audio) {
-        require('react-vtt/css/react-vtt.css');
         audio.on('end', function(){
           return this$.state.currentSprite = null;
         });
@@ -80,35 +82,36 @@
       }
     },
     render: function(){
-      var setup, counter, ranges, this$ = this;
+      var setup, counter, ranges, attrs, offsetX, ref$, this$ = this;
       setup = this.props.masterPage.setup;
       counter = 0;
       ranges = [];
+      attrs = this.props.data.attrs;
+      offsetX = "-" + this.state.pageNumber * +attrs.width.replace('cm', '') + "cm";
       return div({
-        className: 'comp main'
+        className: 'main'
       }, div({
         ref: 'modal',
-        className: 'ui modal control'
-      }, i({
-        className: 'close icon'
-      }), div({
+        className: 'modal hidden'
+      }, div({
         className: 'header'
-      }, CUBEBooks.SettingsButton({
-        className: 'settings',
-        onClick: function(){
-          return this$.refs.sentence.toggleSettings();
-        }
-      }), 'C', small(null, 'UBE'), 'Control'), div({
+      }, Button((ref$ = {
+        className: 'settings'
+      }, ref$[onClick + ""] = function(){
+        return this$.refs.playground.toggleSettings();
+      }, ref$), 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
         className: 'content'
-      }, CUBEBooks.Sentence({
-        ref: 'sentence',
+      }, Playground({
+        ref: 'playground',
         data: this.props.segs.get(this.state.text)
-      }))), ODP.components.presentation({
+      })), Button({
+        className: 'close'
+      }, '✖')), ODP.components.presentation({
         ref: 'presentation',
         scale: this.state.scale,
         data: this.props.data,
         renderProps: function(props){
-          var pages, data, attrs, comp, text, i$, ref$, len$, cue;
+          var pages, parents, data, attrs, key$, comp, text, hide, show, page, x$, i$, ref$, len$, cue;
           if (!this$.props.pages) {
             this$.props.pages = (function(){
               var i$, to$, results$ = [];
@@ -121,19 +124,33 @@
           pages = this$.props.pages.map(function(it){
             return "page" + it;
           });
+          parents = props.parents;
           data = props.data;
           attrs = data.attrs;
           switch (false) {
           case data.name !== 'page':
+            attrs.x = offsetX;
+            this$[key$ = attrs.name] == null && (this$[key$] = {
+              go: function(){
+                return this$.setState({
+                  pageNumber: +attrs.name.replace('page', '') - 1
+                });
+              },
+              speak: function(){
+                throw Error('unimplemented');
+              },
+              sentences: [],
+              playgrounds: []
+            });
             if (in$(attrs.name, pages)) {
               return ODP.renderProps(props);
             }
             break;
           case !(data.name === 'image' && attrs.name === 'activity'):
             delete attrs.href;
-            delete attrs.onClick;
+            delete attrs[onClick + ""];
             comp = (function(counter){
-              var text, range, r, x$, id, this$ = this;
+              var text, range, r, x$, id, book, ref$, this$ = this;
               text = '';
               range = {
                 start: Infinity,
@@ -152,43 +169,61 @@
               id = "segment-" + counter;
               this.state.sprite[id] = [range.start * 1000, (range.end - range.start) * 1000];
               if (range.start < range.end) {
-                return ODP.components.image(props, CUBEBooks.AudioControl({
+                book = this;
+                return ODP.components.image(props, AudioControl((ref$ = {
                   id: id,
                   audio: this.state.audio,
                   text: text,
-                  onClick: function(){
-                    return this$.state.currentSprite = this$.state.sprite[id];
+                  onMount: function(){
+                    var this$ = this;
+                    return book[parents[1].name].speak = function(){
+                      return this$.play();
+                    };
                   }
-                }));
+                }, ref$[onClick + ""] = function(){
+                  return this$.state.currentSprite = this$.state.sprite[id];
+                }, ref$)));
               }
             }.call(this$, counter));
             ++counter;
             return comp;
           case !(data.name === 'span' && data.text):
             text = props.data.text;
-            attrs.onClick = function(){
-              var $pages, $modal, show;
+            hide = function(){
+              $('.office.presentation').css('opacity', 1);
+              $(this$.refs.modal.getDOMNode()).fadeOut('fast').toggleClass('hidden', true);
+              return this$.setProps({
+                showText: true
+              });
+            };
+            show = function(){
+              var $modal, height;
               this$.setState({
                 text: text
               });
               this$.setProps({
                 showText: false
               });
-              $pages = $('.office.presentation');
               $modal = $(this$.refs.modal.getDOMNode());
-              show = function(){
-                $pages.css('opacity', 1);
-                $modal.fadeOut('fast');
-                return this$.setProps({
-                  showText: true
-                });
-              };
-              $pages.css('opacity', 0.5);
-              return $modal.fadeIn('fast').css({
-                marginTop: '-200px',
-                opacity: 0.9
-              }).one('click', '.close', show);
+              height = $modal.height();
+              $('.office.presentation').css('opacity', 0.5);
+              return $modal.fadeIn('fast').toggleClass('hidden', false).one('click', '.close', hide);
             };
+            page = this$[parents[1].name];
+            if (!in$(text, page.sentences)) {
+              x$ = page;
+              x$.sentences.push(text);
+              x$.playgrounds.push({
+                toggle: function(it){
+                  if (it) {
+                    return show();
+                  } else {
+                    return hide();
+                  }
+                }
+              });
+            }
+            attrs[onClick + ""] = show;
             if (!this$.props.showText) {
               attrs.style.display = 'none';
             }

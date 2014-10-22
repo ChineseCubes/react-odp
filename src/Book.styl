@@ -1,0 +1,48 @@
+@require 'colors'
+@require 'CUBE/Book'
+
+.modal
+  z-index 2
+  position fixed
+  top    0
+  right  0
+  bottom 0
+  left   0
+  width  48rem
+  height 24rem
+  margin auto
+  background-color transparent
+  border none
+  &.hidden
+    opacity 0
+    pointer-events none
+  > .close.button
+    position absolute
+    top   -2rem
+    right -2rem
+    cursor pointer
+    background-color transparent
+    > div
+      color color-0
+    &:hover > div
+      color color-3
+  > .header
+    display none
+    > .settings.button
+      display none
+      position absolute
+      right 1rem
+      font-family inherit
+      border-radius 0.3rem
+      width auto
+      height auto
+      line-height 1.5rem
+      font-size 1rem
+      background color-2
+      padding 0.2rem 0.4rem
+      > div
+        color color-0
+  > .content
+    padding 0
+    background-color color-11
+    border-radius 3rem

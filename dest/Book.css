@@ -1,0 +1,326 @@
+.audio-control {
+  cursor: pointer;
+  background-position: 50% 50%;
+  background-size: cover;
+  background-image: url("../images/play.png");
+}
+.audio-control.playing {
+  background-image: url("../images/pause.png");
+}
+.audio-control.loading {
+  cursor: auto;
+  opacity: 0.5;
+}
+.stroker {
+  z-index: 2;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 215px;
+  height: 215px;
+  padding: 1rem;
+  border: 4px solid #e05656;
+  border-radius: 1.5rem;
+}
+.stroker > .grid {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  bottom: 1rem;
+  right: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 1rem;
+}
+.stroker > .grid:before,
+.stroker > .grid:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  border: 1px dashed #e0e0e0;
+}
+.stroker > .grid:before {
+  height: 33.33%;
+  border-left-width: 0;
+  border-right-width: 0;
+}
+.stroker > .grid:after {
+  width: 33.33%;
+  border-top-width: 0;
+  border-bottom-width: 0;
+}
+.stroker > div > canvas {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+}
+.stroker > .fallback {
+  background-size: cover;
+  width: 215px;
+  height: 215px;
+}
+.button {
+  display: block;
+  pointer-events: auto;
+  cursor: pointer;
+  font-family: "icomoon";
+  width: 3.2rem;
+  height: 3.2rem;
+  line-height: 3.2rem;
+  border-radius: 1.6rem;
+  background-color: #575f64;
+  text-align: center;
+}
+.button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.button:hover,
+.button.actived {
+  background-color: #f94646;
+}
+.button div {
+  color: #fff;
+}
+.button.cut div:before {
+  content: "\e605";
+}
+.button.pinyin div:before {
+  content: "\e604";
+}
+.button.stroke div:before {
+  content: "\e606";
+}
+.button.english div:before {
+  content: "\e601";
+}
+.button.undo div:before {
+  content: "\e603";
+}
+.menu {
+  position: absolute;
+  pointer-events: none;
+  left: -200%;
+  right: -200%;
+  text-align: center;
+}
+.menu > .buttons > .button {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+.menu > .buttons > .button:last-child {
+  margin-right: 0;
+}
+.popup {
+  text-align: center;
+  pointer-events: none;
+  position: absolute;
+  bottom: 0.4rem;
+  left: -100%;
+  right: -100%;
+}
+.popup.hidden {
+  opacity: 0;
+}
+.popup > span {
+  font-size: 1rem;
+  position: relative;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  background-color: #f94646;
+  color: #fff;
+}
+.popup > span:before {
+  content: '';
+  position: absolute;
+  bottom: 98%;
+  left: 50%;
+  margin-left: -0.4rem;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0.4rem 0.4rem 0.4rem;
+  border-color: transparent transparent #f94646 transparent;
+}
+.character {
+  position: relative;
+  display: inline-block;
+  margin-right: 0.1rem;
+  height: 8rem;
+/*
+  .pronounciation
+    bottom 0rem
+  */
+}
+.character:last-child {
+  margin-right: 0;
+}
+.character:before {
+  content: '';
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.character > .char {
+  cursor: pointer;
+  padding: 0.6rem;
+  background: #fff;
+  color: #f94646;
+  border: 0.1rem solid #c7c7c7;
+  border-radius: 0.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: middle;
+}
+.word {
+  position: relative;
+  display: inline-block;
+  margin-right: 1rem;
+}
+.word:last-child {
+  margin-right: 0;
+}
+.word > .menu {
+  z-index: 1;
+  position: absolute;
+}
+.word > .menu.menu-cut {
+  top: -1.6rem;
+}
+.word > .menu.menu-learn {
+  bottom: -1.6rem;
+}
+.word > .menu.menu-learn.with-hint {
+  bottom: -3.6rem;
+}
+.word > .meaning {
+  position: absolute;
+  left: -100%;
+  right: -100%;
+}
+.sentence {
+  position: relative;
+  padding: 4rem 6rem;
+}
+.settings {
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  top: 1px;
+  right: 0;
+  background-color: #fff;
+  text-align: right;
+}
+.settings:before {
+  display: inline-block;
+  content: '';
+  vertical-align: middle;
+  height: 100%;
+}
+.settings > .item {
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: middle;
+  padding: 0 12px;
+  border-left: 1px solid #f1f1f1;
+  color: #575f64;
+}
+.definition {
+  position: relative;
+  background-color: #fff;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  min-height: 2rem;
+  line-height: 2rem;
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: left;
+}
+.definition > dt,
+.definition > dd {
+  display: inline-block;
+  padding: 0.2rem 0.4rem;
+}
+.definition > dt {
+  height: auto;
+  background-color: #575f64;
+  color: #fff;
+  border-radius: 0.3rem;
+}
+.playground {
+  position: relative;
+  font-size: 1.2rem;
+  text-align: center;
+}
+.playground > .undo.button {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  font-size: 2.4rem;
+}
+.playground > .settings,
+.playground > .definition {
+  display: none;
+}
+.modal {
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 48rem;
+  height: 24rem;
+  margin: auto;
+  background-color: transparent;
+  border: none;
+}
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.modal > .close.button {
+  position: absolute;
+  top: -2rem;
+  right: -2rem;
+  cursor: pointer;
+  background-color: transparent;
+}
+.modal > .close.button > div {
+  color: #fff;
+}
+.modal > .close.button:hover > div {
+  color: #f94646;
+}
+.modal > .header {
+  display: none;
+}
+.modal > .header > .settings.button {
+  display: none;
+  position: absolute;
+  right: 1rem;
+  font-family: inherit;
+  border-radius: 0.3rem;
+  width: auto;
+  height: auto;
+  line-height: 1.5rem;
+  font-size: 1rem;
+  background: #575f64;
+  padding: 0.2rem 0.4rem;
+}
+.modal > .header > .settings.button > div {
+  color: #fff;
+}
+.modal > .content {
+  padding: 0;
+  background-color: rgba(255,255,255,0.8);
+  border-radius: 3rem;
+}

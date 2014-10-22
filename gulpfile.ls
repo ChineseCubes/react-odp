@@ -1,4 +1,4 @@
-require! <[gulp gulp-concat gulp-filter gulp-flatten gulp-replace]>
+require! <[gulp gulp-concat gulp-filter gulp-flatten gulp-replace nib]>
 require! <[bower main-bower-files]>
 connect    = require \gulp-connect
 webpack    = require \gulp-webpack
@@ -39,7 +39,7 @@ gulp.task \js:vendor <[bower]> ->
     .pipe gulp.dest "#{path.build}/js"
 
 gulp.task \js:app ->
-  gulp.src ["#{path.src}/ls/**/*.ls", "!#{path.src}/ls/build/*.ls"]
+  gulp.src ["#{path.src}/**/*.ls", "!#{path.src}/build/*.ls"]
     .pipe livescript!
     .pipe gulp.dest "#{path.dest}/"
 
@@ -81,23 +81,20 @@ gulp.task \css:vendor <[bower]> ->
     .pipe gulp.dest "#{path.build}/css"
 
 gulp.task \css:app ->
+  # for this app
   gulp.src [
-    "#{path.src}/stylus/reset.styl"
+    "#{path.src}/**/main.styl"
   ]
-    .pipe gulp-concat 'reset.styl'
-    .pipe stylus use: <[nib]>
+    .pipe stylus use: [nib!]
     .pipe gulp.dest "#{path.build}/css"
     .pipe connect.reload!
+  # for other apps
   gulp.src [
-    "#{path.src}/stylus/react-odp.styl"
-    "#{path.src}/stylus/semantic-custom.styl"
-    "#{path.src}/stylus/cubes-v5.styl"
-    "#{path.src}/stylus/main.styl"
+    "#{path.src}/**/*.styl"
+    "!#{path.src}/**/main.styl"
   ]
-    .pipe gulp-concat 'style.styl'
-    .pipe stylus use: <[nib]>
-    .pipe gulp.dest "#{path.build}/css"
-    .pipe connect.reload!
+    .pipe stylus use: [nib!]
+    .pipe gulp.dest "#{path.dest}/"
 
 gulp.task \vendor <[fonts:vendor images:vendor js:vendor css:vendor]>
 

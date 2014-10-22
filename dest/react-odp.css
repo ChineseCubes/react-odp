@@ -1,0 +1,69 @@
+html,
+body,
+#wrap {
+  width: 100%;
+  height: 100%;
+}
+body {
+  background: #16161d;
+}
+#wrap {
+  position: relative;
+}
+.presentation {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+  color: #000;
+}
+.presentation .draw {
+  position: absolute;
+}
+.presentation .draw.page {
+  display: inline-block;
+  position: relative;
+  background: #fff;
+}
+.presentation .draw.image {
+  background-size: cover;
+  width: 100% !important;
+  height: 100% !important;
+  content: '';
+}
+.presentation .draw.text-box {
+  width: 100% !important;
+  height: 100% !important;
+}
+.presentation .text {
+  display: inline;
+}
+.presentation .text.p,
+.presentation .text.span {
+  position: static;
+}
+.presentation .text.p .span {
+  white-space: nowrap;
+}
+.presentation .text.line-break {
+  position: static;
+}
+.frame > .image span {
+  height: 0 !important;
+}
+.frame > .image .p {
+  position: absolute !important;
+  width: 6em !important;
+  height: 1em !important;
+  margin: auto;
+  margin-left: -3em;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  text-align: center;
+}

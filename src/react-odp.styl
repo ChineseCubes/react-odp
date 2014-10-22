@@ -1,0 +1,58 @@
+html, body, #wrap
+  width  100%
+  height 100%
+
+body
+  background #16161D
+
+#wrap
+  position relative
+
+.presentation
+  position absolute
+  top    0
+  right  0
+  bottom 0
+  left   0
+  margin auto
+  overflow-x hidden
+  overflow-y hidden
+  white-space nowrap
+  color black
+  .draw
+    position absolute
+    &.page
+      display inline-block
+      position relative
+      background white
+    &.image
+      background-size cover
+      width  100% !important
+      height 100% !important
+      content ''
+    &.text-box
+      width  100% !important
+      height 100% !important
+  .text
+    display inline
+    &.p, &.span
+      position static
+    &.p .span
+      white-space nowrap
+    &.line-break
+      position static
+
+// tricks for master page
+.frame > .image
+  span
+    height 0 !important
+  .p
+    position absolute !important
+    width  6em !important
+    height 1em !important
+    margin auto
+    margin-left -3em
+    top    0 !important
+    bottom 0 !important
+    left   50% !important
+    text-align center

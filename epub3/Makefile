@@ -1,8 +1,10 @@
-all ::
+all :: gen pack
+
+pack ::
 	-rm ../LRRH-Demo.epub
 	zip -rX ../LRRH-Demo.epub mimetype *.xhtml package.opf META-INF LRRH css fonts js images strokes
 
-SCRIPT = ./ls/build/gen.ls
+SCRIPT = ./src/build/gen.ls
 gen ::
 	$(SCRIPT) ./LRRH/ 1 > page1.xhtml
 	$(SCRIPT) ./LRRH/ 2 > page2.xhtml

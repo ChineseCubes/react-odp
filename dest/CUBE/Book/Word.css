@@ -1,0 +1,140 @@
+.button {
+  display: block;
+  pointer-events: auto;
+  cursor: pointer;
+  font-family: "icomoon";
+  width: 3.2rem;
+  height: 3.2rem;
+  line-height: 3.2rem;
+  border-radius: 1.6rem;
+  background-color: #575f64;
+  text-align: center;
+}
+.button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.button:hover,
+.button.actived {
+  background-color: #f94646;
+}
+.button div {
+  color: #fff;
+}
+.button.cut div:before {
+  content: "\e605";
+}
+.button.pinyin div:before {
+  content: "\e604";
+}
+.button.stroke div:before {
+  content: "\e606";
+}
+.button.english div:before {
+  content: "\e601";
+}
+.button.undo div:before {
+  content: "\e603";
+}
+.menu {
+  position: absolute;
+  pointer-events: none;
+  left: -200%;
+  right: -200%;
+  text-align: center;
+}
+.menu > .buttons > .button {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+.menu > .buttons > .button:last-child {
+  margin-right: 0;
+}
+.popup {
+  text-align: center;
+  pointer-events: none;
+  position: absolute;
+  bottom: 0.4rem;
+  left: -100%;
+  right: -100%;
+}
+.popup.hidden {
+  opacity: 0;
+}
+.popup > span {
+  font-size: 1rem;
+  position: relative;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  background-color: #f94646;
+  color: #fff;
+}
+.popup > span:before {
+  content: '';
+  position: absolute;
+  bottom: 98%;
+  left: 50%;
+  margin-left: -0.4rem;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0.4rem 0.4rem 0.4rem;
+  border-color: transparent transparent #f94646 transparent;
+}
+.character {
+  position: relative;
+  display: inline-block;
+  margin-right: 0.1rem;
+  height: 8rem;
+/*
+  .pronounciation
+    bottom 0rem
+  */
+}
+.character:last-child {
+  margin-right: 0;
+}
+.character:before {
+  content: '';
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.character > .char {
+  cursor: pointer;
+  padding: 0.6rem;
+  background: #fff;
+  color: #f94646;
+  border: 0.1rem solid #c7c7c7;
+  border-radius: 0.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: middle;
+}
+.word {
+  position: relative;
+  display: inline-block;
+  margin-right: 1rem;
+}
+.word:last-child {
+  margin-right: 0;
+}
+.word > .menu {
+  z-index: 1;
+  position: absolute;
+}
+.word > .menu.menu-cut {
+  top: -1.6rem;
+}
+.word > .menu.menu-learn {
+  bottom: -1.6rem;
+}
+.word > .menu.menu-learn.with-hint {
+  bottom: -3.6rem;
+}
+.word > .meaning {
+  position: absolute;
+  left: -100%;
+  right: -100%;
+}
