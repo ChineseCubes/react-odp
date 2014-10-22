@@ -100,7 +100,7 @@
           width: '100%',
           height: '100%'
         }
-      }, ref$[onClick + ""] = this.play, ref$));
+      }, ref$[onClick + ""] = this.play, ref$), div({}, this.props.children));
     }
   });
   module.exports = AudioControl;

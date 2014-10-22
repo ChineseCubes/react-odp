@@ -17,29 +17,6 @@ master-page =
   children:
     * name: 'draw:frame'
       attrs:
-        background: '#fff'
-        opacity: '0.75'
-        '-webkit-box-shadow': shadow
-        '-moz-box-shadow': shadow
-        'box-shadow': shadow
-        width:  \28cm
-        height: \2cm
-    * name: 'draw:frame'
-      attrs:
-        'style-name': \Mgr3
-        'text-style-name': \MP4
-        x:      \0.34cm
-        y:      \0.38cm
-        width:  \1.41cm
-        height: \1.198cm
-      children:
-        * name: 'draw:image'
-          attrs:
-            href: '../images/home.png'
-            'on-click': -> alert 'home'
-        ...
-    * name: 'draw:frame'
-      attrs:
         'style-name': \Mgr4
         'text-style-name': \MP4
         x:      \26.16cm
@@ -52,6 +29,7 @@ master-page =
             name: 'activity'
             href: '../images/play.png'
             'on-click': -> ...
+            'font-size': '1cm'
         ...
 
 c = class Char

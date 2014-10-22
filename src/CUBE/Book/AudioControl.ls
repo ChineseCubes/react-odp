@@ -58,5 +58,6 @@ AudioControl = React.createClass do
         width:  '100%'
         height: '100%'
       "#onClick": @play
+      div {} @props.children
 
 module.exports = AudioControl

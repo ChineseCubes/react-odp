@@ -1,15 +1,186 @@
 .audio-control {
   cursor: pointer;
   background-position: 50% 50%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
   background-size: cover;
-  background-image: url("../images/play.png");
+  text-align: center;
 }
-.audio-control.playing {
-  background-image: url("../images/pause.png");
+.audio-control:hover div {
+  color: #f00;
+}
+.audio-control:before,
+.audio-control div {
+  display: inline-block;
+  vertical-align: middle;
+}
+.audio-control:before {
+  content: '';
+  width: 0;
+  height: 100%;
+}
+.audio-control div {
+  font-family: 'icomoon';
+  speak: none;
+  color: #575f64;
+}
+.audio-control div:before {
+  content: "\e604";
+}
+.audio-control.playing div {
+  color: #f00;
+  -webkit-animation: blink 1s steps(11, start) infinite;
+  -moz-animation: blink 1s steps(11, start) infinite;
+  -o-animation: blink 1s steps(11, start) infinite;
+  -ms-animation: blink 1s steps(11, start) infinite;
+  animation: blink 1s steps(11, start) infinite;
+}
+@-moz-keyframes blink {
+  0% {
+    font-size: 100%;
+  }
+  10% {
+    font-size: 103%;
+  }
+  20% {
+    font-size: 106%;
+  }
+  30% {
+    font-size: 109%;
+  }
+  40% {
+    font-size: 112%;
+  }
+  50% {
+    font-size: 115%;
+  }
+  60% {
+    font-size: 112%;
+  }
+  70% {
+    font-size: 109%;
+  }
+  80% {
+    font-size: 106%;
+  }
+  90% {
+    font-size: 103%;
+  }
+  100% {
+    font-size: 100%;
+  }
+}
+@-webkit-keyframes blink {
+  0% {
+    font-size: 100%;
+  }
+  10% {
+    font-size: 103%;
+  }
+  20% {
+    font-size: 106%;
+  }
+  30% {
+    font-size: 109%;
+  }
+  40% {
+    font-size: 112%;
+  }
+  50% {
+    font-size: 115%;
+  }
+  60% {
+    font-size: 112%;
+  }
+  70% {
+    font-size: 109%;
+  }
+  80% {
+    font-size: 106%;
+  }
+  90% {
+    font-size: 103%;
+  }
+  100% {
+    font-size: 100%;
+  }
+}
+@-o-keyframes blink {
+  0% {
+    font-size: 100%;
+  }
+  10% {
+    font-size: 103%;
+  }
+  20% {
+    font-size: 106%;
+  }
+  30% {
+    font-size: 109%;
+  }
+  40% {
+    font-size: 112%;
+  }
+  50% {
+    font-size: 115%;
+  }
+  60% {
+    font-size: 112%;
+  }
+  70% {
+    font-size: 109%;
+  }
+  80% {
+    font-size: 106%;
+  }
+  90% {
+    font-size: 103%;
+  }
+  100% {
+    font-size: 100%;
+  }
+}
+@keyframes blink {
+  0% {
+    font-size: 100%;
+  }
+  10% {
+    font-size: 103%;
+  }
+  20% {
+    font-size: 106%;
+  }
+  30% {
+    font-size: 109%;
+  }
+  40% {
+    font-size: 112%;
+  }
+  50% {
+    font-size: 115%;
+  }
+  60% {
+    font-size: 112%;
+  }
+  70% {
+    font-size: 109%;
+  }
+  80% {
+    font-size: 106%;
+  }
+  90% {
+    font-size: 103%;
+  }
+  100% {
+    font-size: 100%;
+  }
 }
 .audio-control.loading {
   cursor: auto;
+  pointer-events: none;
   opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
 }
 .stroker {
   z-index: 2;
@@ -24,6 +195,7 @@
   height: 215px;
   padding: 1rem;
   border: 4px solid #e05656;
+  -webkit-border-radius: 1.5rem;
   border-radius: 1.5rem;
 }
 .stroker > .grid {
@@ -33,6 +205,7 @@
   bottom: 1rem;
   right: 1rem;
   border: 1px solid #e0e0e0;
+  -webkit-border-radius: 1rem;
   border-radius: 1rem;
 }
 .stroker > .grid:before,
@@ -62,6 +235,8 @@
   top: 1rem;
 }
 .stroker > .fallback {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
   background-size: cover;
   width: 215px;
   height: 215px;
@@ -74,12 +249,15 @@
   width: 3.2rem;
   height: 3.2rem;
   line-height: 3.2rem;
+  -webkit-border-radius: 1.6rem;
   border-radius: 1.6rem;
   background-color: #575f64;
   text-align: center;
 }
 .button.hidden {
   opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
   pointer-events: none;
 }
 .button:hover,
@@ -128,11 +306,14 @@
 }
 .popup.hidden {
   opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
 }
 .popup > span {
   font-size: 1rem;
   position: relative;
   padding: 0.3rem 0.6rem;
+  -webkit-border-radius: 0.3rem;
   border-radius: 0.3rem;
   background-color: #f94646;
   color: #fff;
@@ -174,6 +355,7 @@
   background: #fff;
   color: #f94646;
   border: 0.1rem solid #c7c7c7;
+  -webkit-border-radius: 0.5rem;
   border-radius: 0.5rem;
   font-size: 2rem;
   font-weight: bold;
@@ -253,6 +435,7 @@
   height: auto;
   background-color: #575f64;
   color: #fff;
+  -webkit-border-radius: 0.3rem;
   border-radius: 0.3rem;
 }
 .playground {

@@ -15,59 +15,28 @@
   slice = Array.prototype.slice;
   shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
   masterPage = {
-    children: [
-      {
-        name: 'draw:frame',
+    children: {
+      name: 'draw:frame',
+      attrs: {
+        'style-name': 'Mgr4',
+        'text-style-name': 'MP4',
+        x: '26.16cm',
+        y: '0.35cm',
+        width: '1.458cm',
+        height: '1.358cm'
+      },
+      children: [{
+        name: 'draw:image',
         attrs: {
-          background: '#fff',
-          opacity: '0.75',
-          '-webkit-box-shadow': shadow,
-          '-moz-box-shadow': shadow,
-          'box-shadow': shadow,
-          width: '28cm',
-          height: '2cm'
+          name: 'activity',
+          href: '../images/play.png',
+          'on-click': function(){
+            throw Error('unimplemented');
+          },
+          'font-size': '1cm'
         }
-      }, {
-        name: 'draw:frame',
-        attrs: {
-          'style-name': 'Mgr3',
-          'text-style-name': 'MP4',
-          x: '0.34cm',
-          y: '0.38cm',
-          width: '1.41cm',
-          height: '1.198cm'
-        },
-        children: [{
-          name: 'draw:image',
-          attrs: {
-            href: '../images/home.png',
-            'on-click': function(){
-              return alert('home');
-            }
-          }
-        }]
-      }, {
-        name: 'draw:frame',
-        attrs: {
-          'style-name': 'Mgr4',
-          'text-style-name': 'MP4',
-          x: '26.16cm',
-          y: '0.35cm',
-          width: '1.458cm',
-          height: '1.358cm'
-        },
-        children: [{
-          name: 'draw:image',
-          attrs: {
-            name: 'activity',
-            href: '../images/play.png',
-            'on-click': function(){
-              throw Error('unimplemented');
-            }
-          }
-        }]
-      }
-    ]
+      }]
+    }
   };
   c = Char = (function(){
     Char.displayName = 'Char';
