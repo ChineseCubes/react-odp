@@ -1,0 +1,29 @@
+@require 'Book'
+
+.reader
+  .prev
+  .next
+    cursor pointer
+    width 4rem
+    height 4rem
+    background-color red
+    color white
+    text-align center
+    &.hidden
+      pointer-events none
+      opacity 0
+    span
+    &:before
+      display inline-block
+      vertical-align middle
+    &:before
+      content ''
+      height 100%
+  .prev
+    position absolute
+    bottom 0
+    left 0
+  .next
+    position absolute
+    bottom 0
+    right 0

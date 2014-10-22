@@ -2,6 +2,7 @@ React        = require 'react'
 DotsDetector = require './react-dots-detector'
 Data         = require './CUBE/data'
 Book         = require './Book'
+Reader       = require './Reader'
 ReactVTT     = require 'react-vtt'
 require 'react-vtt/dest/ReactVTT.css'
 
@@ -30,8 +31,7 @@ if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
     ..pages = [RegExp.$1]
     ..auto-fit = off
 
-(try window)?book =
-  React.renderComponent do
-    Book props
-    $ \#app .get!0
+React.renderComponent do
+  Reader props
+  $ \#app .get!0
 
