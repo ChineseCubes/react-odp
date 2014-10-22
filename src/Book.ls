@@ -17,19 +17,18 @@ Book = React.createClass do
     vtt: null
     #pages: [1]
     pages: null
-    auto-fit: on
     dpcm: 37.79527
+    width: 1024
+    height: 768
     show-text: true
   getInitialState: ->
-    scale: @resize @props.dpcm
+    scale: @resize @props.dpcm, @props.width, @props.height
     audio: null
     sprite: {}
     current-sprite: null
     text: ''
     page-number: 0
   componentWillMount: ->
-    if @props.auto-fit
-      $ window .resize ~> @setState scale: @resize @props.dpcm
     {setup} = @props.master-page
     audio = try
       Howler.iOSAutoEnable = false
@@ -38,17 +37,17 @@ Book = React.createClass do
       audio.on \end ~> @state.current-sprite = null
     # set audio and update sprites after prerendered content has been mounted
     @setState audio: audio
+  componentWillUpdate: (props, state) ->
+    state.scale = @resize props.dpcm, props.width, props.height
   componentDidMount: ->
     @state.audio?sprite @state.sprite
-  resize: (dpcm) ->
-    return 0.98 if not @props.auto-fit
+  resize: (dpcm, width, height) ->
+    #return 0.98 if not @props.auto-fit
     $window = $ window
     {setup} = @props.master-page
     ratio     = setup.ratio
     px-width  = setup.width  * @props.dpcm
     px-height = setup.height * @props.dpcm
-    width  = $window.width!
-    height = $window.height!
     if width / ratio < height
       width / px-width
     else

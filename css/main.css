@@ -114,12 +114,6 @@ body {
   position: relative;
 }
 .presentation {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
   overflow-x: hidden;
   overflow-y: hidden;
   white-space: nowrap;
@@ -684,6 +678,14 @@ body {
   background-color: rgba(255,255,255,0.8);
   -webkit-border-radius: 3rem;
   border-radius: 3rem;
+}
+.reader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
 }
 .reader .prev,
 .reader .next {

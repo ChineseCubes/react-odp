@@ -17,14 +17,15 @@
         segs: null,
         vtt: null,
         pages: null,
-        autoFit: true,
         dpcm: 37.79527,
+        width: 1024,
+        height: 768,
         showText: true
       };
     },
     getInitialState: function(){
       return {
-        scale: this.resize(this.props.dpcm),
+        scale: this.resize(this.props.dpcm, this.props.width, this.props.height),
         audio: null,
         sprite: {},
         currentSprite: null,
@@ -34,13 +35,6 @@
     },
     componentWillMount: function(){
       var setup, audio, this$ = this;
-      if (this.props.autoFit) {
-        $(window).resize(function(){
-          return this$.setState({
-            scale: this$.resize(this$.props.dpcm)
-          });
-        });
-      }
       setup = this.props.masterPage.setup;
       audio = (function(){
         try {
@@ -59,22 +53,20 @@
         audio: audio
       });
     },
+    componentWillUpdate: function(props, state){
+      return state.scale = this.resize(props.dpcm, props.width, props.height);
+    },
     componentDidMount: function(){
       var ref$;
       return (ref$ = this.state.audio) != null ? ref$.sprite(this.state.sprite) : void 8;
     },
-    resize: function(dpcm){
-      var $window, setup, ratio, pxWidth, pxHeight, width, height;
-      if (!this.props.autoFit) {
-        return 0.98;
-      }
+    resize: function(dpcm, width, height){
+      var $window, setup, ratio, pxWidth, pxHeight;
       $window = $(window);
       setup = this.props.masterPage.setup;
       ratio = setup.ratio;
       pxWidth = setup.width * this.props.dpcm;
       pxHeight = setup.height * this.props.dpcm;
-      width = $window.width();
-      height = $window.height();
       if (width / ratio < height) {
         return width / pxWidth;
       } else {

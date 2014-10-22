@@ -20,20 +20,29 @@
         return Data.getPresentation(mp, function(data){
           return Data.Segmentations(data, setup.path, function(segs){
             return ReactVTT.parse(setup.path + "/audio.vtt.json", function(vtt){
-              var props, x$;
+              var $win, props, x$, reader;
+              $win = $(window);
               props = {
                 masterPage: mp,
                 data: data,
                 segs: segs,
                 vtt: vtt,
-                dpcm: dots.state.x
+                dpcm: dots.state.x,
+                width: $win.width(),
+                height: $win.height()
               };
               if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
                 x$ = props;
                 x$.pages = [RegExp.$1];
                 x$.autoFit = false;
               }
-              return React.renderComponent(Reader(props), $('#app').get()[0]);
+              reader = React.renderComponent(Reader(props), $('#app').get()[0]);
+              return $win.resize(function(){
+                return reader.setProps({
+                  width: $win.width(),
+                  height: $win.height()
+                });
+              });
             });
           });
         });

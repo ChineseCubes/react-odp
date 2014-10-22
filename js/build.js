@@ -66,20 +66,29 @@
 	        return Data.getPresentation(mp, function(data){
 	          return Data.Segmentations(data, setup.path, function(segs){
 	            return ReactVTT.parse(setup.path + "/audio.vtt.json", function(vtt){
-	              var props, x$;
+	              var $win, props, x$, reader;
+	              $win = $(window);
 	              props = {
 	                masterPage: mp,
 	                data: data,
 	                segs: segs,
 	                vtt: vtt,
-	                dpcm: dots.state.x
+	                dpcm: dots.state.x,
+	                width: $win.width(),
+	                height: $win.height()
 	              };
 	              if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
 	                x$ = props;
 	                x$.pages = [RegExp.$1];
 	                x$.autoFit = false;
 	              }
-	              return React.renderComponent(Reader(props), $('#app').get()[0]);
+	              reader = React.renderComponent(Reader(props), $('#app').get()[0]);
+	              return $win.resize(function(){
+	                return reader.setProps({
+	                  width: $win.width(),
+	                  height: $win.height()
+	                });
+	              });
 	            });
 	          });
 	        });
@@ -165,14 +174,15 @@
 	        segs: null,
 	        vtt: null,
 	        pages: null,
-	        autoFit: true,
 	        dpcm: 37.79527,
+	        width: 1024,
+	        height: 768,
 	        showText: true
 	      };
 	    },
 	    getInitialState: function(){
 	      return {
-	        scale: this.resize(this.props.dpcm),
+	        scale: this.resize(this.props.dpcm, this.props.width, this.props.height),
 	        audio: null,
 	        sprite: {},
 	        currentSprite: null,
@@ -182,13 +192,6 @@
 	    },
 	    componentWillMount: function(){
 	      var setup, audio, this$ = this;
-	      if (this.props.autoFit) {
-	        $(window).resize(function(){
-	          return this$.setState({
-	            scale: this$.resize(this$.props.dpcm)
-	          });
-	        });
-	      }
 	      setup = this.props.masterPage.setup;
 	      audio = (function(){
 	        try {
@@ -207,22 +210,20 @@
 	        audio: audio
 	      });
 	    },
+	    componentWillUpdate: function(props, state){
+	      return state.scale = this.resize(props.dpcm, props.width, props.height);
+	    },
 	    componentDidMount: function(){
 	      var ref$;
 	      return (ref$ = this.state.audio) != null ? ref$.sprite(this.state.sprite) : void 8;
 	    },
-	    resize: function(dpcm){
-	      var $window, setup, ratio, pxWidth, pxHeight, width, height;
-	      if (!this.props.autoFit) {
-	        return 0.98;
-	      }
+	    resize: function(dpcm, width, height){
+	      var $window, setup, ratio, pxWidth, pxHeight;
 	      $window = $(window);
 	      setup = this.props.masterPage.setup;
 	      ratio = setup.ratio;
 	      pxWidth = setup.width * this.props.dpcm;
 	      pxHeight = setup.height * this.props.dpcm;
-	      width = $window.width();
-	      height = $window.height();
 	      if (width / ratio < height) {
 	        return width / pxWidth;
 	      } else {
@@ -435,17 +436,34 @@
 	  onClick = __webpack_require__(5).onClick;
 	  Reader = React.createClass({
 	    displayName: 'CUBE.Reader',
+	    getDefaultProps: function(){
+	      return {
+	        width: 1024,
+	        height: 768
+	      };
+	    },
 	    getInitialState: function(){
 	      return {
 	        page: 1
 	      };
 	    },
 	    render: function(){
-	      var pageCount, ref$, this$ = this;
+	      var setup, width, height, pageCount, ref$, this$ = this;
+	      setup = this.props.masterPage.setup;
+	      width = this.props.width / this.props.height > setup.ratio
+	        ? this.props.height * setup.ratio
+	        : this.props.width;
+	      height = this.props.width / this.props.height < setup.ratio
+	        ? this.props.width / setup.ratio
+	        : this.props.height;
 	      pageCount = this.props.data.children.length;
 	      return div({
-	        className: 'reader'
-	      }, Book((ref$ = this.props, ref$.ref = 'book', ref$)), div({
+	        className: 'reader',
+	        style: {
+	          width: width,
+	          height: height
+	        }
+	      }, Book((ref$ = this.props, ref$.ref = 'book', ref$.width = width, ref$.height = height, ref$)), div({
 	        className: 'menu'
 	      }), div((ref$ = {
 	        className: "prev " + (this.state.page === 1 ? 'hidden' : '')

@@ -6,17 +6,34 @@
   onClick = require('./CUBE/utils').onClick;
   Reader = React.createClass({
     displayName: 'CUBE.Reader',
+    getDefaultProps: function(){
+      return {
+        width: 1024,
+        height: 768
+      };
+    },
     getInitialState: function(){
       return {
         page: 1
       };
     },
     render: function(){
-      var pageCount, ref$, this$ = this;
+      var setup, width, height, pageCount, ref$, this$ = this;
+      setup = this.props.masterPage.setup;
+      width = this.props.width / this.props.height > setup.ratio
+        ? this.props.height * setup.ratio
+        : this.props.width;
+      height = this.props.width / this.props.height < setup.ratio
+        ? this.props.width / setup.ratio
+        : this.props.height;
       pageCount = this.props.data.children.length;
       return div({
-        className: 'reader'
-      }, Book((ref$ = this.props, ref$.ref = 'book', ref$)), div({
+        className: 'reader',
+        style: {
+          width: width,
+          height: height
+        }
+      }, Book((ref$ = this.props, ref$.ref = 'book', ref$.width = width, ref$.height = height, ref$)), div({
         className: 'menu'
       }), div((ref$ = {
         className: "prev " + (this.state.page === 1 ? 'hidden' : '')

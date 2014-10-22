@@ -511,6 +511,14 @@
   -webkit-border-radius: 3rem;
   border-radius: 3rem;
 }
+.reader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
 .reader .prev,
 .reader .next {
   cursor: pointer;

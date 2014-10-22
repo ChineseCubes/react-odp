@@ -6,13 +6,24 @@ Book  = require './Book'
 
 Reader = React.createClass do
   displayName: 'CUBE.Reader'
+  getDefaultProps: ->
+    width: 1024
+    height: 768
   getInitialState: ->
     page: 1
   render: ->
+    { setup } = @props.master-page
+    width = if @props.width / @props.height > setup.ratio
+      then @props.height * setup.ratio
+      else @props.width
+    height = if @props.width / @props.height < setup.ratio
+      then @props.width / setup.ratio
+      else @props.height
     page-count = @props.data.children.length
     div do
       className: 'reader'
-      Book @props <<< ref: 'book'
+      style: { width, height }
+      Book @props <<< { ref: 'book', width, height }
       div do
         className: 'menu'
       div do
