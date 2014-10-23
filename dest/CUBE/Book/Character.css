@@ -20,14 +20,21 @@
 .popup > span:before {
   content: '';
   position: absolute;
-  bottom: 98%;
   left: 50%;
   margin-left: -0.4rem;
   width: 0;
   height: 0;
   border-style: solid;
+}
+.popup.up > span:before {
+  bottom: 95%;
   border-width: 0 0.4rem 0.4rem 0.4rem;
   border-color: transparent transparent #f94646 transparent;
+}
+.popup.down > span:before {
+  top: 95%;
+  border-width: 0.4rem 0.4rem 0 0.4rem;
+  border-color: #f94646 transparent transparent transparent;
 }
 .character {
   position: relative;

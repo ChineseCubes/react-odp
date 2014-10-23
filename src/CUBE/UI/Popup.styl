@@ -23,11 +23,16 @@ arrow-width = 0.4rem
     &:before
       content ''
       position absolute
-      bottom 98%
       left   50%
       margin-left - arrow-width
       width  0
       height 0
       border-style solid
-      border-width 0 arrow-width arrow-width arrow-width
-      border-color transparent transparent popup-bg transparent
+  &.up > span:before
+    bottom 95%
+    border-width 0 arrow-width arrow-width arrow-width
+    border-color transparent transparent popup-bg transparent
+  &.down > span:before
+    top 95%
+    border-width arrow-width arrow-width 0 arrow-width
+    border-color popup-bg transparent transparent transparent

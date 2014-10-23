@@ -15,7 +15,7 @@ Character = React.createClass do
     div do
       className: 'character'
       Popup do
-        className: "pronounciation #status"
+        className: "up pronounciation #status"
         data?pinyin
       if @props.mode is 'zh-TW'
         div do

@@ -109,7 +109,7 @@ Word = React.createClass do
               onChildCut:           ~> @props.onChildCut it
               onChildClick:         ~> @props.onChildClick it
       Popup do
-        className: "meaning #meaning-status"
+        className: "up meaning #meaning-status"
         data.short
 
 module.exports = Word

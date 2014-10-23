@@ -157,7 +157,7 @@
             });
           }
         }.call(this))), Popup({
-        className: "meaning " + meaningStatus
+        className: "up meaning " + meaningStatus
       }, data.short));
     }
   });
