@@ -20,7 +20,6 @@ Book = React.createClass do
     dpcm: 37.79527
     width: 1024
     height: 768
-    show-text: true
   getInitialState: ->
     scale: @resize @props.dpcm, @props.width, @props.height
     audio: null
@@ -28,6 +27,7 @@ Book = React.createClass do
     current-sprite: null
     text: ''
     page-number: 0
+    show-text: true
   componentWillMount: ->
     {setup} = @props.master-page
     audio = try
@@ -137,10 +137,10 @@ Book = React.createClass do
               $ @refs.modal.getDOMNode!
                 .fadeOut \fast
                 .toggleClass 'hidden' on
-              @setProps show-text: true
+              @setState show-text: true
             show = ~>
               @setState text: text
-              @setProps show-text: false
+              @setState show-text: false
               $modal = $ @refs.modal.getDOMNode!
               height = $modal.height!
               $ '.office.presentation' .css \opacity 0.5
@@ -152,7 +152,7 @@ Book = React.createClass do
               #$ @refs.modal.getDOMNode!
               #  .modal do
               #    detachable: false
-              #    onHide: ~> @setProps show-text: true
+              #    onHide: ~> @setState show-text: true
               #  .modal \show
             page = @[parents.1.name]
             unless text in page.sentences
@@ -161,7 +161,7 @@ Book = React.createClass do
                 ..playgrounds.push do
                   toggle: -> if it then show! else hide!
             attrs["#onClick"] = show
-            attrs.style <<< display: \none if not @props.show-text
+            attrs.style <<< display: \none if not @state.show-text
             if not @state.audio
               ranges.push do
                 text:  text

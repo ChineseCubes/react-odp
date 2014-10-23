@@ -19,8 +19,7 @@
         pages: null,
         dpcm: 37.79527,
         width: 1024,
-        height: 768,
-        showText: true
+        height: 768
       };
     },
     getInitialState: function(){
@@ -30,7 +29,8 @@
         sprite: {},
         currentSprite: null,
         text: '',
-        pageNumber: 0
+        pageNumber: 0,
+        showText: true
       };
     },
     componentWillMount: function(){
@@ -184,7 +184,7 @@
             hide = function(){
               $('.office.presentation').css('opacity', 1);
               $(this$.refs.modal.getDOMNode()).fadeOut('fast').toggleClass('hidden', true);
-              return this$.setProps({
+              return this$.setState({
                 showText: true
               });
             };
@@ -193,7 +193,7 @@
               this$.setState({
                 text: text
               });
-              this$.setProps({
+              this$.setState({
                 showText: false
               });
               $modal = $(this$.refs.modal.getDOMNode());
@@ -216,7 +216,7 @@
               });
             }
             attrs[onClick + ""] = show;
-            if (!this$.props.showText) {
+            if (!this$.state.showText) {
               attrs.style.display = 'none';
             }
             if (!this$.state.audio) {
