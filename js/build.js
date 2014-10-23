@@ -464,7 +464,7 @@
 	          height: height
 	        }
 	      }, Book((ref$ = this.props, ref$.ref = 'book', ref$.width = width, ref$.height = height, ref$)), div({
-	        className: 'menu'
+	        className: 'navbar'
 	      }), div((ref$ = {
 	        className: "prev " + (this.state.page === 1 ? 'hidden' : '')
 	      }, ref$[onClick + ""] = function(){
@@ -476,7 +476,7 @@
 	        return this$.setState({
 	          page: this$.state.page
 	        });
-	      }, ref$), span({}, '上一頁')), div((ref$ = {
+	      }, ref$), span()), div((ref$ = {
 	        className: "next " + (this.state.page === pageCount ? 'hidden' : '')
 	      }, ref$[onClick + ""] = function(){
 	        ++this$.state.page;
@@ -487,7 +487,7 @@
 	        return this$.setState({
 	          page: this$.state.page
 	        });
-	      }, ref$), span({}, '下一頁')));
+	      }, ref$), span()));
 	    }
 	  });
 	  module.exports = Reader;

@@ -25,7 +25,7 @@ Reader = React.createClass do
       style: { width, height }
       Book @props <<< { ref: 'book', width, height }
       div do
-        className: 'menu'
+        className: 'navbar'
       div do
         className: "prev #{if @state.page is 1 then 'hidden' else ''}"
         "#onClick": ~>
@@ -33,7 +33,7 @@ Reader = React.createClass do
           @state.page = 1 if @state.page < 1
           @refs.book["page#{@state.page}"].go!
           @setState page: @state.page
-        span {} '上一頁'
+        span!
       div do
         className: "next #{if @state.page is page-count then 'hidden' else ''}"
         "#onClick": ~>
@@ -41,6 +41,6 @@ Reader = React.createClass do
           @state.page = page-count if @state.page > page-count
           @refs.book["page#{@state.page}"].go!
           @setState page: @state.page
-        span {} '下一頁'
+        span!
 
 module.exports = Reader

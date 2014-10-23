@@ -520,13 +520,34 @@
   margin: auto;
 }
 .reader .prev,
+.reader .next,
+.reader .navbar {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -webkit-transition: opacity 0.25s ease-in-out;
+  -moz-transition: opacity 0.25s ease-in-out;
+  -o-transition: opacity 0.25s ease-in-out;
+  -ms-transition: opacity 0.25s ease-in-out;
+  transition: opacity 0.25s ease-in-out;
+}
+.reader .prev:hover,
+.reader .next:hover,
+.reader .navbar:hover {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+.reader .prev,
 .reader .next {
+  font-family: 'icomoon';
+  speak: none;
+  font-size: 1.5rem;
   cursor: pointer;
-  width: 4rem;
-  height: 4rem;
-  background-color: #f00;
-  color: #fff;
+  width: 10%;
   text-align: center;
+  background-color: trasparent;
+  color: #f94646;
 }
 .reader .prev.hidden,
 .reader .next.hidden {
@@ -549,11 +570,28 @@
 }
 .reader .prev {
   position: absolute;
+  top: 0;
   bottom: 0;
   left: 0;
 }
+.reader .prev:after {
+  content: "\e60a";
+}
 .reader .next {
   position: absolute;
+  top: 0;
   bottom: 0;
   right: 0;
+}
+.reader .next:after {
+  content: "\e60b";
+}
+.reader .navbar {
+  background-color: #f94646;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10%;
 }
