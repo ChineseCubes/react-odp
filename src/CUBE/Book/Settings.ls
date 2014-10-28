@@ -9,8 +9,9 @@ Settings = React.createClass do
     mode: 'zh-TW'
     onModeClick: -> ...
   render: ->
-    @transferPropsTo nav do
-      className: 'settings'
+    className = "settings #{@props.className}"
+    nav do
+      @props <<< { className }
       a do
         className: 'item toggle chinese'
         "#onClick": ~> @props.onModeClick.call this, it

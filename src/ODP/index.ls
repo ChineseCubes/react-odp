@@ -5,7 +5,8 @@ React = require 'react'
   filter, map, mapValues, cloneDeep
 } = require 'lodash'
 
-renderProps = -> default-components[camelFromHyphenated it.data.name]? it
+renderProps = ->
+  default-components[camelFromHyphenated it.data.name]? it
 doTextareaVerticalAlign = ->
   return if not it?attrs?style?textarea-vertical-align
   style= it.attrs.style
@@ -89,40 +90,41 @@ DrawMixin =
       props
       children.concat @props.children
 
+# act like React.DOM at v0.12
 default-components =
-  page: React.createClass do
+  page: React.createFactory React.createClass do
     displayName: \ReactODP.Page
     mixins: [DrawMixin]
     middlewares: [doTextareaVerticalAlign, doVerticalAlign]
-  frame: React.createClass do
+  frame: React.createFactory React.createClass do
     displayName: \ReactODP.Frame
     mixins: [DrawMixin]
     middlewares: [doTextareaVerticalAlign, removeLineHeight]
-  text-box: React.createClass do
+  text-box: React.createFactory React.createClass do
     displayName: \ReactODP.TextBox
     mixins: [DrawMixin]
     middlewares: [doTextareaVerticalAlign, doVerticalAlign]
-  image: React.createClass do
+  image: React.createFactory React.createClass do
     displayName: \ReactODP.Image
     mixins: [DrawMixin]
     middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
-  p: React.createClass do
+  p: React.createFactory React.createClass do
     displayName: \ReactODP.P
     mixins: [DrawMixin]
     middlewares: [doTextareaVerticalAlign, doVerticalAlign, removeLineHeight]
-  span: React.createClass do
+  span: React.createFactory React.createClass do
     displayName: \ReactODP.Span
     mixins: [DrawMixin]
     middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
-  line-break: React.createClass do
+  line-break: React.createFactory React.createClass do
     displayName: \ReactODP.LineBreak
     mixins: [DrawMixin]
     getDefaultProps: ->
       htmlTag: \br
-  presentation: React.createClass do
+  presentation: React.createFactory React.createClass do
     displayName: \ReactODP.Presentation
     mixins: [DrawMixin]
-  vertical-aligner: React.createClass do
+  vertical-aligner: React.createFactory React.createClass do
     displayName: \ReactODP.VerticalAligner
     mixins: [DrawMixin]
     getDefaultProps: ->

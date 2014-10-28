@@ -1,7 +1,7 @@
 React = require 'react'
-Character = require './Character'
-Popup = require '../UI/Popup'
-Menu = require '../UI/Menu'
+Character = React.createFactory require './Character'
+Popup = React.createFactory require '../UI/Popup'
+Menu = React.createFactory require '../UI/Menu'
 API = require '../api'
 
 { div, i, span } = React.DOM

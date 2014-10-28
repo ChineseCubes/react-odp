@@ -1,5 +1,5 @@
 React = require 'react'
-Book  = require './Book'
+Book  = React.createFactory require './Book'
 
 { div, span } = React.DOM
 { onClick } = require './CUBE/utils'

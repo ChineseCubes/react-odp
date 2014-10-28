@@ -1,5 +1,5 @@
 React = require 'react'
-Button = require './Button'
+Button = React.createFactory require './Button'
 
 { div } = React.DOM
 { onClick } = require '../utils'
@@ -10,8 +10,9 @@ Menu = React.createClass do
     buttons: []
     onButtonClick: -> ...
   render: ->
-    @transferPropsTo div do
-      className: 'menu'
+    className = "menu #{@props.className}"
+    div do
+      @props <<< { className }
       div do
         className: 'buttons'
         for let idx, btn of @props.buttons

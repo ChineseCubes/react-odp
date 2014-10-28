@@ -1,8 +1,8 @@
 React        = require 'react'
-DotsDetector = require './react-dots-detector'
+DotsDetector = React.createFactory require './react-dots-detector'
 Data         = require './CUBE/data'
-Book         = require './Book'
-Reader       = require './Reader'
+Book         = React.createFactory require './Book'
+Reader       = React.createFactory require './Reader'
 ReactVTT     = require 'react-vtt'
 require 'react-vtt/dest/ReactVTT.css'
 
@@ -10,7 +10,7 @@ require 'react-vtt/dest/ReactVTT.css'
 <- $
 React.initializeTouchEvents true
 # dots per cm
-dots = React.renderComponent do
+dots = React.render do
   DotsDetector unit: \cm
   $ \#detector .get!0
 # read book data
@@ -35,7 +35,7 @@ if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
     ..pages = [RegExp.$1]
     ..auto-fit = off
 
-reader = React.renderComponent do
+reader = React.render do
   Reader props
   $ \#app .get!0
 

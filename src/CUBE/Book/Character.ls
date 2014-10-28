@@ -1,5 +1,5 @@
 React = require 'react'
-Popup = require '../UI/Popup'
+Popup = React.createFactory require '../UI/Popup'
 
 { div, span } = React.DOM
 

@@ -8,8 +8,9 @@ Definition = React.createClass do
     word: null
     definition: null
   render: ->
-    @transferPropsTo dl do
-      className: 'definition'
+    className = "definition #{@props.className}"
+    dl do
+      @props <<< { className }
       if @props.word and @props.definition
         * dt {}, @props.word
           dd {}, @props.definition

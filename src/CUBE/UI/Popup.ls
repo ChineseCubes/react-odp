@@ -5,8 +5,9 @@ React = require 'react'
 Popup = React.createClass do
   displayName: 'CUBE.UI.Popup'
   render: ->
-    @transferPropsTo div do
-      className: 'popup'
+    className = "popup #{@props.class}"
+    div do
+      @props <<< { className }
       span {}, @props.children
 
 module.exports = Popup

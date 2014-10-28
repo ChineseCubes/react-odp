@@ -1,11 +1,14 @@
 React     = require 'react'
 ReactVTT  = require 'react-vtt'
 ODP       = require './ODP'
-Button    = require './CUBE/UI/Button'
+Button    = React.createFactory require './CUBE/UI/Button'
+Book      = require './CUBE/Book'
+
+AudioControl = React.createFactory Book.AudioControl
+Playground   = React.createFactory Book.Playground
 
 { div, i, small } = React.DOM
 { onClick } = require './CUBE/utils'
-{ Playground, AudioControl } = require './CUBE/Book'
 { Howler, Howl } = require 'howler'
 
 Book = React.createClass do

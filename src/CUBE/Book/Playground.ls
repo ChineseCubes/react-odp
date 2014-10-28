@@ -1,9 +1,9 @@
 $ = require 'jquery'
 React = require 'react'
-Button = require '../UI/Button'
-Sentence = require './Sentence'
-Settings = require './Settings'
-Definition = require './Definition'
+Button = React.createFactory require '../UI/Button'
+Sentence = React.createFactory require './Sentence'
+Settings = React.createFactory require './Settings'
+Definition = React.createFactory require './Definition'
 
 { nav, div, i, span, a } = React.DOM
 { onClick } = require '../utils'

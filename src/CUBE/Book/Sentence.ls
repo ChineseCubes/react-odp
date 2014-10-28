@@ -1,7 +1,7 @@
 React = require 'react'
 API = require '../api'
-Word = require './Word'
-Stroker = require './Stroker'
+Word = React.createFactory require './Word'
+Stroker = React.createFactory require './Stroker'
 
 { nav, div, i, span, a } = React.DOM
 { onClick } = require '../utils'
@@ -19,8 +19,9 @@ Sentence = React.createClass do
   render: ->
     data = @props.data
     words = data?childrenOfDepth(0) or []
-    @transferPropsTo div do
-      className: 'sentence'
+    className = "sentence #{@props.className}"
+    div do
+      @props <<< { className }
       Stroker do
         key: "stroker"
         ref: "stroker"
