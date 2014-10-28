@@ -4,6 +4,7 @@ ODP       = require './ODP'
 Button    = React.createFactory require './CUBE/UI/Button'
 Book      = require './CUBE/Book'
 
+IsolatedCue  = React.createFactory ReactVTT.IsolatedCue
 AudioControl = React.createFactory Book.AudioControl
 Playground   = React.createFactory Book.Playground
 
@@ -184,7 +185,7 @@ Book = React.createClass do
               delete props.data.text
               ODP.components.span do
                 props
-                ReactVTT.IsolatedCue do
+                IsolatedCue do
                   target: "#{setup.path}/audio.vtt.json"
                   match: text
                   currentTime: ~>

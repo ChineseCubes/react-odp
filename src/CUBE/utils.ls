@@ -1,12 +1,14 @@
-say-it = (text, lang = \en-US) ->
-  syn = try window.speechSynthesis
-  utt = try window.SpeechSynthesisUtterance
-  return if not syn or not utt
-  u = new utt text
-    ..lang = lang
-    ..volume = 1.0
-    ..rate = 1.0
-  syn.speak u
+say-it = (text, lang = \en-US) !->
+  setTimeout ->
+    syn = try window.speechSynthesis
+    utt = try window.SpeechSynthesisUtterance
+    return unless syn and utt
+    u = new utt text
+      ..lang = lang
+      ..volume = 1.0
+      ..rate = 1.0
+    syn.speak u
+  , 0
 
 unslash = -> "#{it.replace /\/$/ ''}"
 

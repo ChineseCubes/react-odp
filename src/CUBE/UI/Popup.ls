@@ -5,7 +5,7 @@ React = require 'react'
 Popup = React.createClass do
   displayName: 'CUBE.UI.Popup'
   render: ->
-    className = "popup #{@props.class}"
+    className = "popup #{@props.className}"
     div do
       @props <<< { className }
       span {}, @props.children

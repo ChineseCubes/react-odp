@@ -17,7 +17,7 @@
     "howler": "^1.1.25",
     "jquery": "^2.1.1",
     "lodash": "^2.4.1",
-    "react-vtt": "^0.1.8",
+    "react-vtt": "^0.1.9",
     "vtt.js": "^0.11.11"
   },
   "devDependencies": {
