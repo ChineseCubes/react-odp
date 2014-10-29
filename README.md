@@ -9,6 +9,14 @@ npm install
 npm start
 ```
 
+## Generate EPUB (WIP)
+
+```bash
+./src/build/pack.ls [dir]
+```
+
+Will generate `.[dir].build/` for later use.
+
 ## Notes
 
 * `vtt.js` in `package.json` is necessary for `gen.ls` now,
