@@ -40,10 +40,12 @@
     "gulp-webpack": "^0.3.0",
     "json-stable-stringify": "^1.0.0",
     "main-bower-files": "^1.0.2",
+    "map-stream": "^0.1.0",
     "nib": "^1.0.2",
     "react": "^0.12.0-rc1",
     "request": "^2.44.0",
     "style-loader": "^0.8.0",
+    "vinyl-fs": "^0.3.10",
     "xmldom": "^0.1.19"
   }
 }
