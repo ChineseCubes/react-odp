@@ -45,7 +45,7 @@ content = (new XMLSerializer).serializeToString content
 tpl-path = path.resolve __dirname, 'epub/page.jade'
 result = jade.renderFile tpl-path, { content }
 
-if yes # breautify!
+if yes # beautify!
   tidy result, { indent: on }, console.log
 else
   console.log result

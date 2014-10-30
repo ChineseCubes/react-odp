@@ -7,6 +7,8 @@ require! {
   'vinyl-fs': vinyl
   'map-stream': map
   cpr
+  jade
+  htmltidy: { tidy }
   '../CUBE/data': Data
   './epub/utils': utils
   './epub': { pack }
@@ -76,6 +78,20 @@ copy-more = ->
     next! if ++counter is build.needs.length
 
 next = ->
+##
+# generate TOC.xhtml
+  source = path.resolve __dirname, 'epub/TOC.jade'
+  dest = path.resolve build.path, 'TOC.xhtml'
+  files = for idx from 1 to num-pages
+    path: "page#idx.xhtml"
+    title: if idx is 1 then 'Cover' else "Page #idx"
+  result = jade.renderFile source, { files }
+  err, html <- tidy result, indent: on
+  throw err if err
+  err <- fs.writeFile dest, html
+  throw err if err
+  console.log "write #{rel dest}"
+
 ##
 # should generate font subsets here
 ##
