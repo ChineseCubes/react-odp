@@ -34,11 +34,15 @@ files-with-id = ->
 manifest = ->
   ele = @ele 'manifest'
   for file in files-with-id it
-    ele.nod do
-      'item'
+    props =
       href: file.path
       id: file.id
       'media-type': mime.lookup file.ext
+    if /TOC\.xhtml$/exec file.path
+      props <<< properties: 'nav scripted'
+    else if /\.xhtml$/exec file.path
+      props <<< properties: 'scripted'
+    ele.nod 'item', props
   this
 
 spine = ->

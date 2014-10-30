@@ -1,28 +1,31 @@
 #!/usr/bin/env lsc
 require! {
+  child_process: { exec }
   fs
   path
   xmlbuilder: { create }
   'vinyl-fs': vinyl
   'map-stream': map
   cpr
+  '../CUBE/data': Data
   './epub/utils': utils
   './epub': { pack }
 }
 
+rel = -> path.relative process.cwd!, it
 
-
+##
+# arguments
 { filename, argv } = utils.argv!
 
 if argv.length isnt 1
   console.log "Usage: #filename [path]"
   process.exit 0
 
-
-
-rel = -> path.relative process.cwd!, it
-
+##
+# prepare the build dir
 basename = path.basename argv.0
+
 build =
   path: path.resolve ".#basename.build"
   # will create `strokes` and `js` later
@@ -35,35 +38,69 @@ build =
 fs.mkdirSync build.path unless fs.existsSync build.path
 console.log "mkdir #{rel build.path}"
 
+##
+# copy the book
 source = path.resolve argv.0
 dest = path.resolve build.path, \data
 err, files <- cpr source, dest, build.cpr-options
 throw err if err
 console.log "cp -R #{rel source} #{rel dest}"
 
-counter = 0
-for let dep in build.needs
-  source = path.resolve dep
-  console.warn "need #{rel source}" unless fs.existsSync source
-  dest = path.resolve build.path, dep
-  err, files <- cpr source, dest, build.cpr-options
+##
+# generate page*.xhtml
+{ attrs } <- Data.getMasterPage dest
+num-pages = attrs['TOTAL-PAGES']
+
+todo = [1 to num-pages]
+gen = path.resolve __dirname, './gen.ls'
+:render let
+  unless idx = todo.shift!
+    copy-more!
+    return
+  err <- exec "#gen #dest #idx > #{build.path}/page#idx.xhtml"
   throw err if err
-  console.log "cp -R #{rel source} #{rel dest}"
-  next! if ++counter is build.needs.length
+  console.log "#{rel gen} #{rel dest} #idx > #{rel build.path}/page#idx.xhtml"
+  render!
+
+##
+# copy other dependancies
+copy-more = ->
+  counter = 0
+  for let dep in build.needs
+    source = path.resolve dep
+    console.warn "need #{rel source}" unless fs.existsSync source
+    dest = path.resolve build.path, dep
+    err, files <- cpr source, dest, build.cpr-options
+    throw err if err
+    console.log "cp -R #{rel source} #{rel dest}"
+    next! if ++counter is build.needs.length
 
 next = ->
+##
+# should generate font subsets here
+##
+
+##
+# should build main js here
+##
+
+##
+# generate metadata for EPUB
   files = []
-  vinyl.src "#{build.path}/**"
+  vinyl
+    .src [
+      "#{build.path}/**"
+      "!#{build.path}/META-INF/*"
+      "!#{build.path}/mimetype"
+      "!#{build.path}/package.opf"
+    ]
     .pipe map (file, cb) ->
       files.push path.relative(build.path, file.path)
       cb null, file
     .on \end ->
       ocf = pack do
         files
-        spine:
-          * 'page1.xhtml'
-          * 'page2.xhtml'
-          * 'page3.xhtml'
+        spine: for idx from 1 to num-pages => "page#idx.xhtml"
         metadata:
           title: 'Little Red Cap Demo v5'
           creator: 'Audrey Tang'

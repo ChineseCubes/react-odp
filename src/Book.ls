@@ -12,6 +12,8 @@ Playground   = React.createFactory Book.Playground
 { onClick } = require './CUBE/utils'
 { Howler, Howl } = require 'howler'
 
+win = try window
+
 Book = React.createClass do
   displayName: \CUBE.Book
   getDefaultProps: ->
@@ -46,8 +48,8 @@ Book = React.createClass do
   componentDidMount: ->
     @state.audio?sprite @state.sprite
   resize: (dpcm, width, height) ->
-    #return 0.98 if not @props.auto-fit
-    $window = $ window
+    return 0.98 unless win
+    $window = $ win
     {setup} = @props.master-page
     ratio     = setup.ratio
     px-width  = setup.width  * @props.dpcm

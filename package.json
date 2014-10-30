@@ -39,6 +39,7 @@
     "gulp-stylus": "^1.3.3",
     "gulp-util": "^2.2.20",
     "gulp-webpack": "^0.3.0",
+    "jade": "^1.7.0",
     "json-stable-stringify": "^1.0.0",
     "main-bower-files": "^1.0.2",
     "map-stream": "^0.1.0",
