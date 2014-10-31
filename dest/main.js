@@ -14,7 +14,7 @@
       dots = React.render(DotsDetector({
         unit: 'cm'
       }), $('#detector').get()[0]);
-      return Data.getMasterPage('./LRRH/', function(mp){
+      return Data.getMasterPage('./data/', function(mp){
         var setup;
         setup = mp.setup;
         return Data.getPresentation(mp, function(data){

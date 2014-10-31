@@ -1,5 +1,5 @@
 (function(){
-  var React, ReactVTT, ODP, Button, Book, IsolatedCue, AudioControl, Playground, ref$, div, i, small, onClick, Howler, Howl;
+  var React, ReactVTT, ODP, Button, Book, IsolatedCue, AudioControl, Playground, ref$, div, i, small, onClick, Howler, Howl, win;
   React = require('react');
   ReactVTT = require('react-vtt');
   ODP = require('./ODP');
@@ -11,6 +11,11 @@
   ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small;
   onClick = require('./CUBE/utils').onClick;
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
+  win = (function(){
+    try {
+      return window;
+    } catch (e$) {}
+  }());
   Book = React.createClass({
     displayName: 'CUBE.Book',
     getDefaultProps: function(){
@@ -65,7 +70,10 @@
     },
     resize: function(dpcm, width, height){
       var $window, setup, ratio, pxWidth, pxHeight;
-      $window = $(window);
+      if (!win) {
+        return 0.98;
+      }
+      $window = $(win);
       setup = this.props.masterPage.setup;
       ratio = setup.ratio;
       pxWidth = setup.width * this.props.dpcm;

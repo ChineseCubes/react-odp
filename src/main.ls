@@ -14,7 +14,7 @@ dots = React.render do
   DotsDetector unit: \cm
   $ \#detector .get!0
 # read book data
-{setup}:mp <- Data.getMasterPage './LRRH/'
+{setup}:mp <- Data.getMasterPage './data/'
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
 vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt.json"

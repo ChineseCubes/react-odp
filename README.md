@@ -15,7 +15,7 @@ npm start
 ./src/build/pack.ls [dir]
 ```
 
-Will generate `.[dir].build/` for later use.
+It will generate `[dir].epub`.
 
 ## Notes
 

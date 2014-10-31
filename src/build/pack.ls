@@ -6,6 +6,7 @@ require! {
   xmlbuilder: { create }
   'vinyl-fs': vinyl
   'map-stream': map
+  cp: _cp
   cpr
   jade
   htmltidy: { tidy }
@@ -31,11 +32,44 @@ basename = path.basename argv.0
 build =
   path: path.resolve ".#basename.build"
   # will create `strokes` and `js` later
-  needs: <[css fonts images]>
-  cpr-options:
-    delete-first: yes
-    overwrite:    yes
-    confirm:      yes
+  needs: <[js css fonts images]>
+
+cp = (src, dest, done) ->
+  _cp src, dest, ->
+    console.log "cp #{rel src} #{rel dest}"
+    done ...
+
+cp-r = (src, dest, done) ->
+  cpr src, dest, { delete-first: on, overwrite: on, confirm: on }, ->
+    console.log "cp -R #{rel src} #{rel dest}"
+    done ...
+
+gen-page = let gen = path.resolve __dirname, './gen.ls'
+  (src, dest, idx, done) ->
+    exec "#gen #dest #idx > #src/page#idx.xhtml", ->
+      console.log "#{rel gen} #{rel dest} #idx > #{rel src}/page#idx.xhtml"
+      done ...
+
+write = (dest, file, done) ->
+  fs.writeFile dest, file, ->
+    console.log "write #{rel dest}"
+    done ...
+
+font-subset = (src, dest, done) ->
+  exec do
+    "/usr/bin/env bash perl -Mutf8 -CSD -nE 's/[\\x00-\\xff]//g; $_{$_}++ for split //; END { say for qw[Open(\"#src\") Select(0u3000)]; printf qq[SelectMore(0u%04x) #%s\\n], $_, chr $_ for grep { $_ > 10000 } map ord, sort keys %_; say for qw[SelectInvert() Clear() Generate(\"#dest\")]} ' */dict.json *xhtml | fontforge -script"
+    cwd: path.dirname dest
+    ->
+      console.log "write #{rel dest}"
+      done ...
+
+zip = (src, dest, done) ->
+  exec do
+    "zip -rX #dest ./*"
+    cwd: src
+    ->
+      console.log "zip #{rel dest}"
+      done ...
 
 fs.mkdirSync build.path unless fs.existsSync build.path
 console.log "mkdir #{rel build.path}"
@@ -44,9 +78,8 @@ console.log "mkdir #{rel build.path}"
 # copy the book
 source = path.resolve argv.0
 dest = path.resolve build.path, \data
-err, files <- cpr source, dest, build.cpr-options
+err, files <- cp-r source, dest
 throw err if err
-console.log "cp -R #{rel source} #{rel dest}"
 
 ##
 # generate page*.xhtml
@@ -54,27 +87,43 @@ console.log "cp -R #{rel source} #{rel dest}"
 num-pages = attrs['TOTAL-PAGES']
 
 todo = [1 to num-pages]
-gen = path.resolve __dirname, './gen.ls'
 :render let
   unless idx = todo.shift!
-    copy-more!
+    copy-statics!
     return
-  err <- exec "#gen #dest #idx > #{build.path}/page#idx.xhtml"
+  err <- gen-page build.path, dest, idx
   throw err if err
-  console.log "#{rel gen} #{rel dest} #idx > #{rel build.path}/page#idx.xhtml"
   render!
 
 ##
 # copy other dependancies
+copy-statics = ->
+  # META-INF/
+  source = path.resolve __dirname, 'epub/META-INF'
+  dest = path.resolve build.path, 'META-INF'
+  err, files <- cp-r source, dest
+  throw err if err
+  # mimetype and more
+  files = <[mimetype]>
+  :copy let
+    unless file = files.shift!
+      copy-more!
+      return
+    source = path.resolve __dirname, 'epub', file
+    dest = path.resolve build.path, file
+    err <- cp source, dest
+    throw err if err
+    copy!
+
 copy-more = ->
+  # css, js, fonts ...
   counter = 0
   for let dep in build.needs
-    source = path.resolve dep
+    source = path.resolve __dirname, '../../', dep
     console.warn "need #{rel source}" unless fs.existsSync source
     dest = path.resolve build.path, dep
-    err, files <- cpr source, dest, build.cpr-options
+    err, files <- cp-r source, dest
     throw err if err
-    console.log "cp -R #{rel source} #{rel dest}"
     next! if ++counter is build.needs.length
 
 next = ->
@@ -88,13 +137,15 @@ next = ->
   result = jade.renderFile source, { files }
   err, html <- tidy result, indent: on
   throw err if err
-  err <- fs.writeFile dest, html
+  err <- write dest, html
   throw err if err
-  console.log "write #{rel dest}"
 
 ##
-# should generate font subsets here
-##
+# generate font subset
+  source = path.resolve __dirname, 'epub', 'SourceHanSansTW-Regular.ttf'
+  dest = path.resolve build.path, 'fonts', 'Noto-subset.ttf'
+  err <- font-subset source, dest
+  throw err if err
 
 ##
 # should build main js here
@@ -118,10 +169,10 @@ next = ->
         files
         spine: for idx from 1 to num-pages => "page#idx.xhtml"
         metadata:
-          title: 'Little Red Cap Demo v5'
-          creator: 'Audrey Tang'
+          title: 'Little Red Cap Demo'
+          creator: 'caasi Huang'
           language: 'zh-Hant'
-          identifier: 'LittleRedCapDemo'
+          identifier: basename
           date: '2014-07-12'
           publisher: 'Locus Publishing Company'
           contributors:
@@ -130,6 +181,9 @@ next = ->
             * 'caasi Huang'
           rights: 'Locus Publishing Company all righths reserved.'
       dest = path.resolve build.path, \package.opf
-      fs.writeFile dest, ocf, (err) ->
-        throw err if err
-        console.log "write #{rel dest}"
+      err <- write dest, ocf
+      throw err if err
+      source = path.resolve build.path
+      dest = path.resolve build.path, "../#{basename}.epub"
+      err <- zip source, dest
+      throw err if err

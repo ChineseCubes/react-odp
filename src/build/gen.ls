@@ -46,7 +46,9 @@ tpl-path = path.resolve __dirname, 'epub/page.jade'
 result = jade.renderFile tpl-path, { content }
 
 if yes # beautify!
-  tidy result, { indent: on }, console.log
+  err, html <- tidy result, { indent: on }
+  throw err if err
+  console.log html
 else
   console.log result
 

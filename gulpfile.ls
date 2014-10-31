@@ -39,7 +39,7 @@ gulp.task \js:vendor <[bower]> ->
     .pipe gulp.dest "#{path.build}/js"
 
 gulp.task \js:app ->
-  gulp.src ["#{path.src}/**/*.ls", "!#{path.src}/build/*.ls"]
+  gulp.src ["#{path.src}/**/*.ls", "!#{path.src}/build/**/*"]
     .pipe livescript!
     .pipe gulp.dest "#{path.dest}/"
 
