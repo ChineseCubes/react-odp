@@ -31,8 +31,8 @@ basename = path.basename argv.0
 
 build =
   path: path.resolve ".#basename.build"
-  # will create `strokes` and `js` later
-  needs: <[js css fonts images]>
+  # XXX: will create `strokes` later
+  needs: <[js css fonts strokes]>
 
 cp = (src, dest, done) ->
   _cp src, dest, ->
