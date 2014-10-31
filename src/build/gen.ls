@@ -20,7 +20,8 @@ pages = Array::slice.call argv, 1
 if not book or not pages.length
   console.log "Usage: #filename [book path] [page id] [another id] [more id] ..."
   process.exit 0
-book = path.resolve book
+# must use relative path
+book = path.normalize book
 
 
 

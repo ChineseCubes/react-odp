@@ -6,6 +6,7 @@
   "scripts": {
     "start": "gulp",
     "prepublish": "gulp build",
+    "LRRH": "src/build/pack.ls ./LRRH",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -46,9 +46,12 @@ cp-r = (src, dest, done) ->
 
 gen-page = let gen = path.resolve __dirname, './gen.ls'
   (src, dest, idx, done) ->
-    exec "#gen #dest #idx > #src/page#idx.xhtml", ->
-      console.log "#{rel gen} #{rel dest} #idx > #{rel src}/page#idx.xhtml"
-      done ...
+    exec do
+      "#gen #{path.relative dest, src} #idx > #dest/page#idx.xhtml"
+      cwd: dest
+      ->
+        console.log "#{rel gen} #{rel src} #idx > #{rel dest}/page#idx.xhtml"
+        done ...
 
 write = (dest, file, done) ->
   fs.writeFile dest, file, ->
@@ -91,7 +94,7 @@ todo = [1 to num-pages]
   unless idx = todo.shift!
     copy-statics!
     return
-  err <- gen-page build.path, dest, idx
+  err <- gen-page dest, build.path, idx
   throw err if err
   render!
 
