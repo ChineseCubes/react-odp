@@ -43,36 +43,49 @@ gulp.task \js:app ->
     .pipe livescript!
     .pipe gulp.dest "#{path.dest}/"
 
+webpack-options =
+  module:
+    loaders:
+      * test: /\.css$/ loader: \style!css
+      ...
+  externals:
+    'vtt.js': \WebVTT
+    zhStrokeData: \zhStrokeData
+  resolve:
+    alias:
+      request: 'browser-request'
+react-patch = -> gulp-replace 'node.innerHTML = html;', """
+  if (document.contentType === "application/xhtml+xml") {
+    var dom = new DOMParser().parseFromString(html, 'text/html');
+    html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\\/body>$/, '');
+  }
+  else if (document.xmlVersion) {
+    var dom = document.implementation.createHTMLDocument('');
+    dom.body.innerHTML = html;
+    html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\\/body>$/, '');
+  }
+  node.innerHTML = html;
+"""
 gulp.task \webpack <[js:app]> ->
   gulp.src "#{path.dest}/main.js"
     .pipe webpack do
-      context: "#{path.dest}/"
-      output:
-        filename: 'build.js'
-      module:
-        loaders:
-          * test: /\.css$/ loader: \style!css
-          ...
-      externals:
-        'vtt.js': \WebVTT
-        zhStrokeData: \zhStrokeData
-      resolve:
-        alias:
-          request: 'browser-request'
-    .pipe gulp-replace 'node.innerHTML = html;', """
-      if (document.contentType === "application/xhtml+xml") {
-        var dom = new DOMParser().parseFromString(html, 'text/html');
-        html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\\/body>$/, '');
-      }
-      else if (document.xmlVersion) {
-        var dom = document.implementation.createHTMLDocument('');
-        dom.body.innerHTML = html;
-        html = new XMLSerializer().serializeToString(dom.body).replace(/^<body[^>]*>/, '').replace(/<\\/body>$/, '');
-      }
-      node.innerHTML = html;
-    """
+      {
+        context: "#{path.dest}/"
+        output:
+          filename: 'build.js'
+      } <<< webpack-options
+    .pipe react-patch!
     .pipe gulp.dest "#{path.build}/js"
     .pipe connect.reload!
+  gulp.src "#{path.dest}/epub.js"
+    .pipe webpack do
+      {
+        context: "#{path.dest}/"
+        output:
+          filename: 'epub.js'
+      } <<< webpack-options
+    .pipe react-patch!
+    .pipe gulp.dest "#{path.build}/js"
 
 gulp.task \css:vendor <[bower]> ->
   gulp.src main-bower-files!

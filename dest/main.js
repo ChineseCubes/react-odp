@@ -20,7 +20,7 @@
         return Data.getPresentation(mp, function(data){
           return Data.Segmentations(data, setup.path, function(segs){
             return ReactVTT.parse(setup.path + "/audio.vtt.json", function(vtt){
-              var $win, props, x$, reader;
+              var $win, props, reader;
               $win = $(window);
               props = {
                 masterPage: mp,
@@ -32,9 +32,7 @@
                 height: $win.height()
               };
               if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
-                x$ = props;
-                x$.pages = [RegExp.$1];
-                x$.autoFit = false;
+                props.pages = [RegExp.$1];
               }
               reader = React.render(Reader(props), $('#app').get()[0]);
               return $win.resize(function(){

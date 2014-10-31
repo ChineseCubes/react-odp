@@ -31,9 +31,7 @@ props =
   height: $win.height!
 
 if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
-  props
-    ..pages = [RegExp.$1]
-    ..auto-fit = off
+  props.pages = [RegExp.$1]
 
 reader = React.render do
   Reader props
