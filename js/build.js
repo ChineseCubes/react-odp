@@ -405,8 +405,8 @@
 	                    break;
 	                  }
 	                }
+	                delete props.data.text;
 	              }
-	              delete props.data.text;
 	              return ODP.components.span(props, IsolatedCue({
 	                target: setup.path + "/audio.vtt.json",
 	                match: text,

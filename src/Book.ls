@@ -184,7 +184,7 @@ Book = React.createClass do
                       start: cue.startTime
                       end:   cue.endTime
                     break
-              delete props.data.text
+                delete props.data.text
               ODP.components.span do
                 props
                 IsolatedCue do
