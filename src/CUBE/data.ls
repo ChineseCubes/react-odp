@@ -134,9 +134,10 @@ class Segmentations
           s.children.push keywords[r.0]
           str = str.replace r.0, ''
         ++idx
-    if keys.length isnt idx
-      console.warn 'the translations of sentences are not match'
-      console.log keys, values
+    # FIXME: should warn this when build
+    #if keys.length isnt idx
+    #  console.warn 'the translations of sentences are not match'
+    #  console.log keys, values
     @data = zipObject keys, values
     done? this
   get: ->

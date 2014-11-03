@@ -58,6 +58,14 @@ write = (dest, file, done) ->
     console.log "write #{rel dest}"
     done ...
 
+fetch-moedict = (src, done) ->
+  exec do
+    "./fetch-moedict.ls #src"
+    cwd: __dirname
+    ->
+      console.log "fetch characters from moedict.tw"
+      done ...
+
 font-subset = (src, dest, done) ->
   exec do
     "/usr/bin/env bash perl -Mutf8 -CSD -nE 's/[\\x00-\\xff]//g; $_{$_}++ for split //; END { say for qw[Open(\"#src\") Select(0u3000)]; printf qq[SelectMore(0u%04x) #%s\\n], $_, chr $_ for grep { $_ > 10000 } map ord, sort keys %_; say for qw[SelectInvert() Clear() Generate(\"#dest\")]} ' */dict.json *xhtml | fontforge -script"
@@ -82,6 +90,13 @@ console.log "mkdir #{rel build.path}"
 source = path.resolve argv.0
 dest = path.resolve build.path, \data
 err, files <- cp-r source, dest
+throw err if err and err.0.code isnt \ENOENT
+
+##
+# get data from moedict.tw
+# XXX: should create dict.json before packing
+source = path.resolve build.path, 'data'
+err <- fetch-moedict source
 throw err if err
 
 ##
@@ -172,7 +187,7 @@ next = ->
         files
         spine: for idx from 1 to num-pages => "page#idx.xhtml"
         metadata:
-          title: 'Little Red Cap Demo'
+          title: basename
           creator: 'caasi Huang'
           language: 'zh-Hant'
           identifier: basename

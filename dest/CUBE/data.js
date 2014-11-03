@@ -236,10 +236,6 @@
             return ++idx;
           }
         });
-        if (keys.length !== idx) {
-          console.warn('the translations of sentences are not match');
-          console.log(keys, values);
-        }
         this$.data = zipObject(keys, values);
         return typeof done === 'function' ? done(this$) : void 8;
       });
