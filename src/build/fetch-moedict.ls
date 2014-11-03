@@ -44,7 +44,7 @@ for c in chars
 /**/
 /**/
 for let c in chars
-  err, res, body <- request "https://www.moedict.tw/~#c.json"
+  err, res, body <- request "https://www.moedict.tw/~#{ encodeURIComponent c }.json"
   fetched[c] = if not err and res.statusCode is 200
     process.stdout.write c.green
     moe = JSON.parse body
