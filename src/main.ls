@@ -6,6 +6,11 @@ Reader       = React.createFactory require './Reader'
 ReactVTT     = require 'react-vtt'
 require 'react-vtt/dest/ReactVTT.css'
 
+parse = (filename, done) ->
+  ReactVTT
+    .parse filename, -> done ...
+    .error -> done null
+
 <- window.requestAnimationFrame
 <- $
 React.initializeTouchEvents true
@@ -17,7 +22,7 @@ dots = React.render do
 {setup}:mp <- Data.getMasterPage './data/'
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
-vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt.json"
+vtt  <- parse "#{setup.path}/audio.vtt.json"
 
 $win = $ window
 

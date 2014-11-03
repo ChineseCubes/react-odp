@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
-	  var React, DotsDetector, Data, Book, Reader, ReactVTT;
+	  var React, DotsDetector, Data, Book, Reader, ReactVTT, parse;
 	  React = __webpack_require__(6);
 	  DotsDetector = React.createFactory(__webpack_require__(1));
 	  Data = __webpack_require__(4);
@@ -53,6 +53,13 @@
 	  Reader = React.createFactory(__webpack_require__(3));
 	  ReactVTT = __webpack_require__(7);
 	  __webpack_require__(12);
+	  parse = function(filename, done){
+	    return ReactVTT.parse(filename, function(){
+	      return done.apply(this, arguments);
+	    }).error(function(){
+	      return done(null);
+	    });
+	  };
 	  window.requestAnimationFrame(function(){
 	    return $(function(){
 	      var dots;
@@ -65,7 +72,7 @@
 	        setup = mp.setup;
 	        return Data.getPresentation(mp, function(data){
 	          return Data.Segmentations(data, setup.path, function(segs){
-	            return ReactVTT.parse(setup.path + "/audio.vtt.json", function(vtt){
+	            return parse(setup.path + "/audio.vtt.json", function(vtt){
 	              var $win, props, reader;
 	              $win = $(window);
 	              props = {
@@ -1248,10 +1255,10 @@
 	        ? {
 	          textareaVerticalAlign: style.textareaVerticalAlign
 	        }
-	        : {
+	        : (child.attrs.className = 'aligned', {
 	          display: 'inline-block',
 	          verticalAlign: style.textareaVerticalAlign
-	        });
+	        }));
 	    }
 	  };
 	  doVerticalAlign = function(it){
@@ -1362,7 +1369,7 @@
 	        style.backgroundImage = "url(" + attrs.href + ")";
 	      }
 	      props = {
-	        className: data.namespace + " " + data.name,
+	        className: data.namespace + " " + data.name + " " + (attrs.className || ''),
 	        style: style
 	      };
 	      for (key in attrs) {

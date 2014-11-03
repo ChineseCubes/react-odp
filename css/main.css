@@ -93,6 +93,10 @@ a img {
   font-family: 'cwTeX Q KaiZH';
   src: url("../fonts/cwTeX-Q-KaiZH-subset.ttf");
 }
+@font-face {
+  font-family: 'Noto Sans T Chinese';
+  src: url "../fonts/Noto-subset.ttf";
+}
 html {
   font-family: "Noto Sans", "Noto Sans T Chinese", "Noto Sans S Chinese", "儷黑體", "微軟正黑體", "cwTex Q KaiZH", sans-serif;
   font-size: 18px;

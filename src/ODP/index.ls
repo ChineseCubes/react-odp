@@ -16,7 +16,8 @@ doTextareaVerticalAlign = ->
       textarea-vertical-align: style.textarea-vertical-align
     # change children into inline-blocks
     else
-      display:        \inline-block
+      child.attrs.className = \aligned
+      display: \inline-block
       vertical-align: style.textarea-vertical-align
   it
 doVerticalAlign = ->
@@ -28,8 +29,8 @@ doVerticalAlign = ->
     namespace: 'helper'
     attrs:
       style:
-        display:        \inline-block
-        height:         \100%
+        display: \inline-block
+        height:  \100%
         vertical-align: style.textarea-vertical-align
     children: []
   it
@@ -73,7 +74,7 @@ DrawMixin =
     #style = mapValues style, (v, k) ~> v?split(/\s+/)map(~> @scaleStyle it, k)join ' '
     style <<< background-image: "url(#{attrs.href})" if attrs.href
     props =
-      className: "#{data.namespace} #{data.name}"
+      className: "#{data.namespace} #{data.name} #{attrs.className or ''}"
       style: style
     for key, attr of attrs => props[key] = attr if /^on.*$/test key
     child-props-list = for let i, child of data.children

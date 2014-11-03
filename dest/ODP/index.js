@@ -25,10 +25,10 @@
         ? {
           textareaVerticalAlign: style.textareaVerticalAlign
         }
-        : {
+        : (child.attrs.className = 'aligned', {
           display: 'inline-block',
           verticalAlign: style.textareaVerticalAlign
-        });
+        }));
     }
   };
   doVerticalAlign = function(it){
@@ -139,7 +139,7 @@
         style.backgroundImage = "url(" + attrs.href + ")";
       }
       props = {
-        className: data.namespace + " " + data.name,
+        className: data.namespace + " " + data.name + " " + (attrs.className || ''),
         style: style
       };
       for (key in attrs) {
