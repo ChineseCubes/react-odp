@@ -1227,7 +1227,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
-	  var React, camelFromHyphenated, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, renderProps, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents;
+	  var React, camelFromHyphenated, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, renderProps, doTextareaVerticalAlign, fromVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents;
 	  React = __webpack_require__(6);
 	  camelFromHyphenated = __webpack_require__(5).camelFromHyphenated;
 	  ref$ = __webpack_require__(19), isArray = ref$.isArray, isString = ref$.isString, isNumber = ref$.isNumber, filter = ref$.filter, map = ref$.map, mapValues = ref$.mapValues, cloneDeep = ref$.cloneDeep;
@@ -1249,37 +1249,47 @@
 	      var ref$, ref1$;
 	      import$((ref1$ = (ref$ = child.attrs).style) != null
 	        ? ref1$
-	        : ref$.style = {}, it.name === 'frame'
-	        ? {
-	          textareaVerticalAlign: style.textareaVerticalAlign
-	        }
-	        : (child.attrs.className = 'aligned', {
-	          display: 'inline-block',
-	          verticalAlign: style.textareaVerticalAlign
-	        }));
+	        : ref$.style = {}, it.name === 'frame' ? {
+	        textareaVerticalAlign: style.textareaVerticalAlign
+	      } : void 8);
+	    }
+	  };
+	  fromVerticalAlign = function(it){
+	    switch (it) {
+	    case 'top':
+	      return 'flex-start';
+	    case 'middle':
+	      return 'center';
+	    case 'bottom':
+	      return 'flex-end';
+	    default:
+	      return 'flex-start';
 	    }
 	  };
 	  doVerticalAlign = function(it){
-	    var ref$, ref1$, style;
+	    var style, ref$, x$;
 	    if ((it != null ? it.name : void 8) === 'frame') {
 	      return;
 	    }
-	    if (!(it != null && ((ref$ = it.attrs) != null && ((ref1$ = ref$.style) != null && ref1$.textareaVerticalAlign)))) {
+	    style = it != null ? (ref$ = it.attrs) != null ? ref$.style : void 8 : void 8;
+	    if (!(style != null && style.textareaVerticalAlign)) {
 	      return;
 	    }
-	    style = it.attrs.style;
-	    it.children.unshift({
-	      name: 'vertical-aligner',
-	      namespace: 'helper',
-	      attrs: {
-	        style: {
-	          display: 'inline-block',
-	          height: '100%',
-	          verticalAlign: style.textareaVerticalAlign
-	        }
-	      },
+	    x$ = it.attrs.style;
+	    x$.display = 'flex';
+	    x$.flexDirection = 'column';
+	    x$.justifyContent = fromVerticalAlign(style.textareaVerticalAlign);
+	    /**
+	    it.children.unshift do
+	      name: 'vertical-aligner'
+	      namespace: 'helper'
+	      attrs:
+	        style:
+	          display: \inline-block
+	          height:  \100%
+	          vertical-align: style.textarea-vertical-align
 	      children: []
-	    });
+	    /**/
 	    return it;
 	  };
 	  removeLineHeight = function(it){

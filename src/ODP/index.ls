@@ -13,17 +13,28 @@ doTextareaVerticalAlign = ->
   for let i, child of it.children
     # pass the style one level down
     (child.attrs.style ?= {}) <<< if it.name is \frame
+      #display: \table
       textarea-vertical-align: style.textarea-vertical-align
     # change children into inline-blocks
-    else
-      child.attrs.className = \aligned
-      display: \inline-block
-      vertical-align: style.textarea-vertical-align
+    #else
+    #  display: \inline-block
+    #  vertical-align: style.textarea-vertical-align
   it
+from-vertical-align = ->
+  switch it
+  | \top    => \flex-start
+  | \middle => \center
+  | \bottom => \flex-end
+  | _       => \flex-start
 doVerticalAlign = ->
   return if it?name is \frame
-  return if not it?attrs?style?textarea-vertical-align
-  style = it.attrs.style
+  style = it?attrs?style
+  return if not style?textarea-vertical-align
+  it.attrs.style
+    ..display = \flex
+    ..flex-direction = \column
+    ..justify-content = from-vertical-align style.textarea-vertical-align
+  /**
   it.children.unshift do
     name: 'vertical-aligner'
     namespace: 'helper'
@@ -33,6 +44,7 @@ doVerticalAlign = ->
         height:  \100%
         vertical-align: style.textarea-vertical-align
     children: []
+  /**/
   it
 removeLineHeight = ->
   delete it?attrs?style?line-height
