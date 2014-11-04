@@ -6,7 +6,7 @@
   "scripts": {
     "start": "gulp",
     "prepublish": "gulp build",
-    "LRRH": "src/build/pack.ls ./LRRH",
+    "pack": "./src/build/pack.ls ./LRRH ./擁抱一 ./我是好愛讀",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

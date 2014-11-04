@@ -1,3 +1,5 @@
+@import 'nib'
+
 html, body, #wrap
   width  100%
   height 100%
@@ -35,10 +37,15 @@ body
       white-space nowrap
     &.line-break
       position static
-  //.aligned
-  //  display: block
-  //  &:nth-of-type(1)
-  //    display: inline-block
+  .aligned
+    display flex
+    flex-direction column
+    &.top
+      justify-content flex-start
+    &.middle
+      justify-content center
+    &.bottom
+      justify-content flex-end
 
 // tricks for master page
 .frame > .image

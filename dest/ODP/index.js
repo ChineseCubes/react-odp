@@ -39,18 +39,15 @@
     }
   };
   doVerticalAlign = function(it){
-    var style, ref$, x$;
+    var attrs, ref$;
     if ((it != null ? it.name : void 8) === 'frame') {
       return;
     }
-    style = it != null ? (ref$ = it.attrs) != null ? ref$.style : void 8 : void 8;
-    if (!(style != null && style.textareaVerticalAlign)) {
+    attrs = it != null ? it.attrs : void 8;
+    if (!(attrs != null && ((ref$ = attrs.style) != null && ref$.textareaVerticalAlign))) {
       return;
     }
-    x$ = it.attrs.style;
-    x$.display = 'flex';
-    x$.flexDirection = 'column';
-    x$.justifyContent = fromVerticalAlign(style.textareaVerticalAlign);
+    attrs.className = "aligned " + attrs.style.textareaVerticalAlign;
     /**
     it.children.unshift do
       name: 'vertical-aligner'

@@ -28,12 +28,9 @@ from-vertical-align = ->
   | _       => \flex-start
 doVerticalAlign = ->
   return if it?name is \frame
-  style = it?attrs?style
-  return if not style?textarea-vertical-align
-  it.attrs.style
-    ..display = \flex
-    ..flex-direction = \column
-    ..justify-content = from-vertical-align style.textarea-vertical-align
+  attrs = it?attrs
+  return if not attrs?style?textarea-vertical-align
+  attrs.className = "aligned #{attrs.style.textarea-vertical-align}"
   /**
   it.children.unshift do
     name: 'vertical-aligner'
