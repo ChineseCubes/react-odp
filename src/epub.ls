@@ -5,6 +5,11 @@ Book         = React.createFactory require './Book'
 ReactVTT     = require 'react-vtt'
 require 'react-vtt/dest/ReactVTT.css'
 
+get-vtt = (filename, done) ->
+  ReactVTT
+    .parse filename, done
+    .error -> done null
+
 <- window.requestAnimationFrame
 React.initializeTouchEvents true
 # dots per cm
@@ -15,7 +20,7 @@ dots = React.render do
 {setup}:mp <- Data.getMasterPage './data/'
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
-vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt.json"
+vtt  <- get-vtt "#{setup.path}/audio.vtt.json"
 
 props =
   master-page: mp

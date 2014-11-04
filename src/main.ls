@@ -6,9 +6,9 @@ Reader       = React.createFactory require './Reader'
 ReactVTT     = require 'react-vtt'
 require 'react-vtt/dest/ReactVTT.css'
 
-parse = (filename, done) ->
+get-vtt = (filename, done) ->
   ReactVTT
-    .parse filename, -> done ...
+    .parse filename, done
     .error -> done null
 
 <- window.requestAnimationFrame
@@ -22,7 +22,7 @@ dots = React.render do
 {setup}:mp <- Data.getMasterPage './data/'
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
-vtt  <- parse "#{setup.path}/audio.vtt.json"
+vtt  <- get-vtt "#{setup.path}/audio.vtt.json"
 
 $win = $ window
 

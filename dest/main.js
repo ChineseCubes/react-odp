@@ -1,5 +1,5 @@
 (function(){
-  var React, DotsDetector, Data, Book, Reader, ReactVTT, parse;
+  var React, DotsDetector, Data, Book, Reader, ReactVTT, getVtt;
   React = require('react');
   DotsDetector = React.createFactory(require('./react-dots-detector'));
   Data = require('./CUBE/data');
@@ -7,10 +7,8 @@
   Reader = React.createFactory(require('./Reader'));
   ReactVTT = require('react-vtt');
   require('react-vtt/dest/ReactVTT.css');
-  parse = function(filename, done){
-    return ReactVTT.parse(filename, function(){
-      return done.apply(this, arguments);
-    }).error(function(){
+  getVtt = function(filename, done){
+    return ReactVTT.parse(filename, done).error(function(){
       return done(null);
     });
   };
@@ -26,7 +24,7 @@
         setup = mp.setup;
         return Data.getPresentation(mp, function(data){
           return Data.Segmentations(data, setup.path, function(segs){
-            return parse(setup.path + "/audio.vtt.json", function(vtt){
+            return getVtt(setup.path + "/audio.vtt.json", function(vtt){
               var $win, props, reader;
               $win = $(window);
               props = {

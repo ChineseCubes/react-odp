@@ -1,11 +1,16 @@
 (function(){
-  var React, DotsDetector, Data, Book, ReactVTT;
+  var React, DotsDetector, Data, Book, ReactVTT, getVtt;
   React = require('react');
   DotsDetector = React.createFactory(require('./react-dots-detector'));
   Data = require('./CUBE/data');
   Book = React.createFactory(require('./Book'));
   ReactVTT = require('react-vtt');
   require('react-vtt/dest/ReactVTT.css');
+  getVtt = function(filename, done){
+    return ReactVTT.parse(filename, done).error(function(){
+      return done(null);
+    });
+  };
   window.requestAnimationFrame(function(){
     var dots;
     React.initializeTouchEvents(true);
@@ -17,7 +22,7 @@
       setup = mp.setup;
       return Data.getPresentation(mp, function(data){
         return Data.Segmentations(data, setup.path, function(segs){
-          return ReactVTT.parse(setup.path + "/audio.vtt.json", function(vtt){
+          return getVtt(setup.path + "/audio.vtt.json", function(vtt){
             var props;
             props = {
               masterPage: mp,

@@ -25,10 +25,15 @@ book = path.normalize book
 
 
 
+get-vtt = (filename, done) ->
+  ReactVTT
+    .parse filename, done
+    .error -> done null
+
 { setup }:mp <- Data.getMasterPage book
 data <- Data.getPresentation mp
 segs <- Data.Segmentations data, setup.path
-vtt  <- ReactVTT.parse "#{setup.path}/audio.vtt.json"
+#vtt  <- get-vtt "#{setup.path}/audio.vtt.json"
 
 content =
   React.renderToString do
@@ -36,7 +41,7 @@ content =
       master-page: mp
       data: data
       segs: segs
-      vtt:  vtt
+      #vtt:  vtt
       pages: pages
       auto-fit: off
 content = (new DOMParser).parseFromString content, 'text/html'

@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
-	  var React, DotsDetector, Data, Book, Reader, ReactVTT, parse;
+	  var React, DotsDetector, Data, Book, Reader, ReactVTT, getVtt;
 	  React = __webpack_require__(6);
 	  DotsDetector = React.createFactory(__webpack_require__(1));
 	  Data = __webpack_require__(4);
@@ -53,10 +53,8 @@
 	  Reader = React.createFactory(__webpack_require__(3));
 	  ReactVTT = __webpack_require__(7);
 	  __webpack_require__(12);
-	  parse = function(filename, done){
-	    return ReactVTT.parse(filename, function(){
-	      return done.apply(this, arguments);
-	    }).error(function(){
+	  getVtt = function(filename, done){
+	    return ReactVTT.parse(filename, done).error(function(){
 	      return done(null);
 	    });
 	  };
@@ -72,7 +70,7 @@
 	        setup = mp.setup;
 	        return Data.getPresentation(mp, function(data){
 	          return Data.Segmentations(data, setup.path, function(segs){
-	            return parse(setup.path + "/audio.vtt.json", function(vtt){
+	            return getVtt(setup.path + "/audio.vtt.json", function(vtt){
 	              var $win, props, reader;
 	              $win = $(window);
 	              props = {
