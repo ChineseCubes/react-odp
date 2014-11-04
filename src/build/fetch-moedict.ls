@@ -1,26 +1,30 @@
 #!/usr/bin/env lsc
-require! <[fs request colors]>
-{filter, unique, omit} = require \lodash
-stringify = require \json-stable-stringify
-Data      = require '../CUBE/data'
-{ unslash } = require '../CUBE/utils'
+require! {
+  fs
+  path
+  request
+  colors
+  lodash: { filter, unique, omit }
+  'json-stable-stringify': stringify
+  '../CUBE/data': Data
+}
 
 if not process.argv.2
   {1:filename} = /.*\/(.*)/exec process.argv.1
   console.log "Usage: ./#filename [book path]"
   process.exit 0
 
-path = unslash process.argv.2
-path-master = "#path/masterpage.json"
+src = path.resolve process.argv.2
+src-master = "#src/masterpage.json"
 
-if not fs.existsSync path-master
+if not fs.existsSync src-master
   console.error "masterpage.json not found"
   process.exit 1
 
 chars = ''
-{setup}:mp = Data.patchMasterPage require path-master
+{setup}:mp = Data.patchMasterPage require src-master
 for i from 1 to setup.total-pages
-  page = Data.patchPageJSON require "#path/page#i.json"
+  page = Data.patchPageJSON require "#src/page#i.json"
   Data.traverse page, ->
     chars += it.text if it.text
 
@@ -58,5 +62,5 @@ for let c in chars
   if ++counter is chars.length
     process.stdout.write "\n"
     result = omit fetched, (!)
-    fs.writeFileSync "#path/dict.json", stringify(result, space: 2)
+    fs.writeFileSync "#src/dict.json", stringify(result, space: 2)
 /**/
