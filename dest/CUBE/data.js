@@ -1,5 +1,5 @@
 (function(){
-  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, Data;
+  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, Data;
   try {
     fs = require('fs');
   } catch (e$) {}
@@ -11,7 +11,7 @@
     }
   });
   ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, flatten = ref$.flatten, max = ref$.max, min = ref$.min, map = ref$.map, zipObject = ref$.zipObject;
-  ref$ = require('./utils'), unslash = ref$.unslash, tagless = ref$.strip, splitNamespace = ref$.splitNamespace, camelFromHyphenated = ref$.camelFromHyphenated;
+  ref$ = require('./utils'), unslash = ref$.unslash, tagless = ref$.strip, splitNamespace = ref$.splitNamespace, camelFromHyphenated = ref$.camelFromHyphenated, notoName = ref$.notoName;
   slice = Array.prototype.slice;
   shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
   masterPage = {
@@ -332,6 +332,9 @@
             break;
           case !in$(name, propNames):
             newAttrs[name] = v;
+            break;
+          case name !== 'fontFamily':
+            newAttrs.style[name] = notoName(v);
             break;
           default:
             newAttrs.style[name] = v;

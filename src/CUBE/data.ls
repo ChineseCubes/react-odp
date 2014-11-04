@@ -9,6 +9,7 @@ fs ?= readFile: (path, done) ->
   strip:tagless
   splitNamespace
   camelFromHyphenated
+  noto-name
 } = require './utils'
 slice = Array::slice
 
@@ -196,6 +197,7 @@ Data =
         | name is 'pageWidth'  => new-attrs.width       = v
         | name is 'pageHeight' => new-attrs.height      = v
         | name in prop-names   => new-attrs[name]       = v
+        | name is 'fontFamily' => new-attrs.style[name] = noto-name v
         | otherwise            => new-attrs.style[name] = v
       new-attrs
         ..href = "#path/#{new-attrs.href}" if new-attrs.href

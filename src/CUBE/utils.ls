@@ -43,6 +43,12 @@ camel-from-hyphenated = ->
 
 onClick = if (try \ontouchstart of window) then \onTouchStart else \onClick
 
+noto-name = ->
+  it.replace do
+    /Noto Sans ([S|T]) Chinese\s?(\w+)?/g
+    (, form, style) ->
+      "NotoSansHan#{form.toLowerCase!}#{if style then "-#style" else ''}"
+
 module.exports = {
   say-it
   unslash
@@ -50,4 +56,5 @@ module.exports = {
   split-namespace
   camel-from-hyphenated
   onClick
+  noto-name
 }

@@ -1,5 +1,5 @@
 (function(){
-  var sayIt, unslash, strip, splitNamespace, camelFromHyphenated, onClick;
+  var sayIt, unslash, strip, splitNamespace, camelFromHyphenated, onClick, notoName;
   sayIt = function(text, lang){
     lang == null && (lang = 'en-US');
     setTimeout(function(){
@@ -55,12 +55,18 @@
       return 'ontouchstart' in window;
     } catch (e$) {}
   }()) ? 'onTouchStart' : 'onClick';
+  notoName = function(it){
+    return it.replace(/Noto Sans ([S|T]) Chinese\s?(\w+)?/g, function(arg$, form, style){
+      return "NotoSansHan" + form.toLowerCase() + (style ? "-" + style : '');
+    });
+  };
   module.exports = {
     sayIt: sayIt,
     unslash: unslash,
     strip: strip,
     splitNamespace: splitNamespace,
     camelFromHyphenated: camelFromHyphenated,
-    onClick: onClick
+    onClick: onClick,
+    notoName: notoName
   };
 }).call(this);
