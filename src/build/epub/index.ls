@@ -12,15 +12,15 @@ metadata = ->
     | k is 'contributors'
       for i, contrib of v
         ele.nod 'dc:contributor', { id: "contrib#i" }, contrib
+    | k.match /^rendition:/
+      ele.nod 'meta', { property: k }, v
     | otherwise
       console.warn "#k is not a valid element." unless k in metadata-elements
       ele.nod "dc:#k", { id: k }, v
   ele
     ..nod 'meta', { property: 'dcterms:modified' }, moment!toISOString!
-    ..nod 'meta', { property: 'rendition:layout' }, 'pre-paginated'
     # XXX: orientation should be configurable
     ..nod 'meta', { property: 'rendition:orientation' }, 'landscape'
-    ..nod 'meta', { property: 'rendition:spread' }, 'none'
   this
 
 files-with-id = ->

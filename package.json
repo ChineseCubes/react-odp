@@ -6,7 +6,7 @@
   "scripts": {
     "start": "gulp",
     "prepublish": "gulp build",
-    "pack": "./src/build/pack.ls ./LRRH ./擁抱一 ./我是好愛讀",
+    "pack": "./src/build/pack.ls ./*.odp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -52,6 +52,7 @@
     "nib": "^1.0.2",
     "request": "^2.44.0",
     "style-loader": "^0.8.0",
+    "unzip": "^0.1.11",
     "vinyl-fs": "^0.3.10",
     "xmlbuilder": "^2.4.4",
     "xmldom": "^0.1.19"

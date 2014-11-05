@@ -3,7 +3,8 @@ require! {
   child_process: { exec }
   fs
   path
-  xmlbuilder: { create }
+  request
+  unzip
   'vinyl-fs': vinyl
   'map-stream': map
   colors
@@ -27,36 +28,42 @@ if argv.length is 0
   process.exit 0
 
 :main let
-  return unless arg = argv.shift!
-  basename = path.basename arg
+  return unless arg = argv.shift!       # break
+  return main! unless arg.match /.odp$/ # continue
+  basename = path.basename arg, '.odp'
+
+  console.log '''
+ _____ _   _                 _____ _____ _____ _____ _____
+|     | |_|_|___ ___ ___ ___|     |  |  | __  |   __|   __|
+|   --|   | |   | -_|_ -| -_|   --|  |  | __ -|   __|__   |
+|_____|_|_|_|_|_|___|___|___|_____|_____|_____|_____|_____|
+  '''magenta
+  # http://patorjk.com/software/taag/#p=display&f=Rectangles&t=ChineseCUBES
 
   ##
   # prepare the build dir
   build =
     path: path.resolve ".#basename.build"
+    data: path.resolve ".#basename.build/data"
     # XXX: will create `strokes` later
     needs: <[js css fonts strokes]>
 
-  fs.mkdirSync build.path unless fs.existsSync build.path
-  console.log "#{'mkdir'magenta} #{rel build.path}"
-
   ##
-  # copy the book
-  src = path.resolve basename
-  dst = path.resolve build.path, \data
-  err, files <- cp-r src, dst
-  throw err if err and err.0.code isnt \ENOENT
+  # convert and unzip
+  src = path.resolve arg
+  dst = build.data
+  <- convert src, dst
 
   ##
   # get data from moedict.tw
   # XXX: should create dict.json before packing
-  src = path.resolve build.path, 'data'
+  src = build.data
   err <- fetch-moedict src
   throw err if err
 
   ##
   # generate page*.xhtml
-  { attrs } <- Data.getMasterPage dst
+  { attrs } <- Data.getMasterPage build.data
   num-pages = attrs['TOTAL-PAGES']
 
   todo = [1 to num-pages]
@@ -122,6 +129,7 @@ if argv.length is 0
     vinyl
       .src [
         "#{build.path}/**"
+        "!#{build.path}/**/.*"
         "!#{build.path}/META-INF/*"
         "!#{build.path}/mimetype"
         "!#{build.path}/package.opf"
@@ -133,18 +141,7 @@ if argv.length is 0
         ocf = pack do
           files
           spine: for idx from 1 to num-pages => "page#idx.xhtml"
-          metadata:
-            title: basename
-            creator: 'caasi Huang'
-            language: 'zh-Hant'
-            identifier: basename
-            date: '2014-07-12'
-            publisher: 'Locus Publishing Company'
-            contributors:
-              * 'Audrey Tang'
-              * 'Alice Huang'
-              * 'caasi Huang'
-            rights: 'Locus Publishing Company all righths reserved.'
+          metadata: require path.resolve build.data, 'metadata.json'
         dst = path.resolve build.path, \package.opf
         err <- write dst, ocf
         throw err if err
@@ -156,54 +153,62 @@ if argv.length is 0
 
 ##
 # helpers
+function convert src, dst, done
+  console.log "#{'convert'magenta} and #{'unzip'magenta} #{rel src}"
+  request {
+    method: \POST
+    uri: 'http://www.dev.chinesecubes.com/sandbox/odpConvert.php'
+    #encoding: \binary
+  }
+    ..form!append \file fs.createReadStream src
+    ..pipe unzip.Extract path: dst
+    ..on \end done
+
 function cp src, dst, done
-  _cp src, dst, ->
-    console.log "#{'cp'magenta} #{rel src} #{rel dst}"
-    done ...
+  console.log "#{'cp'magenta} #{rel src} #{rel dst}"
+  _cp src, dst, done
 
 function cp-r src, dst, done
-  _cpr src, dst, { delete-first: on, overwrite: on, confirm: on }, ->
-    console.log "#{'cp'magenta} -R #{rel src} #{rel dst}"
-    done ...
+  console.log "#{'cp'magenta} -R #{rel src} #{rel dst}"
+  _cpr src, dst, { delete-first: on, overwrite: on, confirm: on }, done
 
 gen = path.resolve __dirname, './gen.ls'
 function gen-page src, dst, idx, done
+  console.log "#{(rel gen)magenta} #{rel src} #idx > #{rel dst}/page#idx.xhtml"
   exec do
     "#gen #{path.relative dst, src} #idx > #dst/page#idx.xhtml"
     cwd: dst
     (err, stdout, stderr) ->
-      console.log "#{(rel gen)magenta} #{rel src} #idx > #{rel dst}/page#idx.xhtml"
       process.stdout.write stdout
       done ...
 
 function write dst, file, done
-  fs.writeFile dst, file, ->
-    console.log "#{'write'magenta} #{rel dst}"
-    done ...
+  console.log "#{'write'magenta} #{rel dst}"
+  fs.writeFile dst, file, done
 
 function fetch-moedict src, done
+  console.log "#{'fetch'magenta} characters from moedict.tw"
   exec do
     "#{path.resolve __dirname, 'fetch-moedict.ls'} #src"
     (err, stdout, stderr) ->
-      console.log "fetch characters from moedict.tw"magenta
       process.stdout.write stdout
       done ...
 
 function font-subset src, dst, done
+  console.log "#{'generate'magenta} #{rel dst}"
   exec do
     "/usr/bin/env bash perl -Mutf8 -CSD -nE 's/[\\x00-\\xff]//g; $_{$_}++ for split //; END { say for qw[Open(\"#src\") Select(0u3000)]; printf qq[SelectMore(0u%04x) #%s\\n], $_, chr $_ for grep { $_ > 10000 } map ord, sort keys %_; say for qw[SelectInvert() Clear() Generate(\"#dst\")]} ' */dict.json *xhtml | fontforge -script"
     cwd: path.dirname dst
     (err, stdout, stderr) ->
-      console.log "#{'generate'magenta} #{rel dst}"
       process.stdout.write stdout
       done ...
 
 function zip src, dst, done
+  console.log "#{'zip'magenta} #{rel dst}"
   exec do
-    "zip -rX #dst ./*"
+    "zip -9 -rX --exclude=*.DS_Store* #dst ./*"
     cwd: src
     (err, stdout, stderr) ->
-      console.log "#{'zip'magenta} #{rel dst}"
       process.stdout.write stdout
       done ...
 
