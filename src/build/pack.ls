@@ -1,6 +1,7 @@
 #!/usr/bin/env lsc
 require! {
   child_process: { exec }
+  shellwords: { escape }
   fs
   path
   request
@@ -176,7 +177,7 @@ gen = path.resolve __dirname, './gen.ls'
 function gen-page src, dst, idx, done
   console.log "#{(rel gen)magenta} #{rel src} #idx > #{rel dst}/page#idx.xhtml"
   exec do
-    "#gen #{path.relative dst, src} #idx > #dst/page#idx.xhtml"
+    "#gen #{escape path.relative dst, src} #idx > #{escape dst}/page#idx.xhtml"
     cwd: dst
     (err, stdout, stderr) ->
       process.stdout.write stdout
@@ -189,7 +190,7 @@ function write dst, file, done
 function fetch-moedict src, done
   console.log "#{'fetch'magenta} characters from moedict.tw"
   exec do
-    "#{path.resolve __dirname, 'fetch-moedict.ls'} #src"
+    "#{path.resolve __dirname, 'fetch-moedict.ls'} #{escape src}"
     (err, stdout, stderr) ->
       process.stdout.write stdout
       done ...
@@ -206,7 +207,7 @@ function font-subset src, dst, done
 function zip src, dst, done
   console.log "#{'zip'magenta} #{rel dst}"
   exec do
-    "zip -9 -rX --exclude=*.DS_Store* #dst ./*"
+    "zip -9 -rX --exclude=*.DS_Store* #{escape dst} ./*"
     cwd: src
     (err, stdout, stderr) ->
       process.stdout.write stdout

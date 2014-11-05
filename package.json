@@ -51,6 +51,7 @@
     "moment": "^2.8.3",
     "nib": "^1.0.2",
     "request": "^2.44.0",
+    "shellwords": "^0.1.0",
     "style-loader": "^0.8.0",
     "unzip": "^0.1.11",
     "vinyl-fs": "^0.3.10",
