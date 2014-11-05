@@ -333,9 +333,6 @@
           case !in$(name, propNames):
             newAttrs[name] = v;
             break;
-          case name !== 'fontFamily':
-            newAttrs.style[name] = notoName(v);
-            break;
           default:
             newAttrs.style[name] = v;
           }

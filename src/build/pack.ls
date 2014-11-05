@@ -119,8 +119,8 @@ if argv.length is 0
 
   ##
   # generate font subset
-    src = path.resolve __dirname, 'epub', 'SourceHanSansTW-Regular.ttf'
-    dst = path.resolve build.path, 'fonts', 'Noto-subset.ttf'
+    src = path.resolve __dirname, 'epub', 'NotoSansCJKsc-Medium.otf'
+    dst = path.resolve build.path, 'fonts', 'NotoSansCJKsc-Medium-subset.otf'
     err <- font-subset src, dst
     throw err if err
 
@@ -198,8 +198,8 @@ function fetch-moedict src, done
 function font-subset src, dst, done
   console.log "#{'generate'magenta} #{rel dst}"
   exec do
-    "/usr/bin/env bash perl -Mutf8 -CSD -nE 's/[\\x00-\\xff]//g; $_{$_}++ for split //; END { say for qw[Open(\"#src\") Select(0u3000)]; printf qq[SelectMore(0u%04x) #%s\\n], $_, chr $_ for grep { $_ > 10000 } map ord, sort keys %_; say for qw[SelectInvert() Clear() Generate(\"#dst\")]} ' */dict.json *xhtml | fontforge -script"
-    cwd: path.dirname dst
+    "FONTFORGE_LANGUAGE=ff; perl -Mutf8 -CSD -nE 's/[\\x00-\\xff]//g; $_{$_}++ for split //; END { say for qw[Open(\"#src\") Select(0u3000)]; printf qq[SelectMore(0u%04x) #%s\\n], $_, chr $_ for grep { $_ > 10000 and $_ <= 65280 } map ord, sort keys %_; say for qw[SelectInvert() Clear() Generate(\"#dst\")]} ' */dict.json *xhtml | fontforge -script"
+    cwd: path.resolve path.dirname(dst), '../'
     (err, stdout, stderr) ->
       process.stdout.write stdout
       done ...
