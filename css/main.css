@@ -94,8 +94,60 @@ a img {
   src: url("../fonts/cwTeX-Q-KaiZH-subset.ttf");
 }
 @font-face {
+  font-family: 'Noto Sans S Chinese Thin';
+  src: local('Noto Sans CJK SC Thin'), local('NotoSansCJKsc-Thin'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans T Chinese Thin';
+  src: local('Noto Sans CJK TC Thin'), local('NotoSansCJKtc-Thin'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans S Chinese Light';
+  src: local('Noto Sans CJK SC Light'), local('NotoSansCJKsc-Light'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans T Chinese Light';
+  src: local('Noto Sans CJK TC Light'), local('NotoSansCJKtc-Light'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans S Chinese DemiLight';
+  src: local('Noto Sans CJK SC DemiLight'), local('NotoSansCJKsc-DemiLight'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans T Chinese DemiLight';
+  src: local('Noto Sans CJK TC DemiLight'), local('NotoSansCJKtc-DemiLight'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans S Chinese Regular';
+  src: local('Noto Sans CJK SC Regular'), local('NotoSansCJKsc-Regular'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans T Chinese Regular';
+  src: local('Noto Sans CJK TC Regular'), local('NotoSansCJKtc-Regular'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
   font-family: 'Noto Sans S Chinese Medium';
-  src: local('Noto Sans CJK SC Medium'), local('NotoSansCJKsc-Medium'), url("../fonts/NotoSansCJKsc-Medium-subset.otf") format('opentype');
+  src: local('Noto Sans CJK SC Medium'), local('NotoSansCJKsc-Medium'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans T Chinese Medium';
+  src: local('Noto Sans CJK TC Medium'), local('NotoSansCJKtc-Medium'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans S Chinese Bold';
+  src: local('Noto Sans CJK SC Bold'), local('NotoSansCJKsc-Bold'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans T Chinese Bold';
+  src: local('Noto Sans CJK TC Bold'), local('NotoSansCJKtc-Bold'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans S Chinese Black';
+  src: local('Noto Sans CJK SC Black'), local('NotoSansCJKsc-Black'), url("../fonts/Noto-subset.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans T Chinese Black';
+  src: local('Noto Sans CJK TC Black'), local('NotoSansCJKtc-Black'), url("../fonts/Noto-subset.ttf") format('truetype');
 }
 html {
   font-family: "Noto Sans", "Noto Sans T Chinese", "Noto Sans S Chinese", "儷黑體", "微軟正黑體", "cwTex Q KaiZH", sans-serif;
