@@ -55,11 +55,16 @@ if argv.length is 0
   dst = build.data
   <- convert src, dst
 
+  src = path.resolve build.data, '*.json'
+  err, stdout, stderr <- get-codepoints src
+  build.codepoints = for c in stdout.split /\s/ | c.length => parseInt c, 16
+
   ##
   # get data from moedict.tw
   # XXX: should create dict.json before packing
-  src = build.data
-  err <- fetch-moedict src
+  chars = (for build.codepoints => String.fromCharCode ..)join ''
+  dst = path.resolve build.data, 'dict.json'
+  err, stdout, stderr <- fetch-moedict chars, dst
   throw err if err
 
   ##
@@ -67,6 +72,7 @@ if argv.length is 0
   { attrs } <- Data.getMasterPage build.data
   num-pages = attrs['TOTAL-PAGES']
 
+  dst = build.path
   todo = [1 to num-pages]
   :render let
     return copy-statics! unless idx = todo.shift!
@@ -187,13 +193,17 @@ function write dst, file, done
   console.log "#{'write'magenta} #{rel dst}"
   fs.writeFile dst, file, done
 
-function fetch-moedict src, done
+function get-codepoints src, done
+  console.log "#{'get'magenta} codepoints from #{rel src}"
+  exec do
+    "cat #src | #{path.resolve __dirname, 'codepoints.ls'}"
+    done
+
+function fetch-moedict chars, dst, done
   console.log "#{'fetch'magenta} characters from moedict.tw"
   exec do
-    "#{path.resolve __dirname, 'fetch-moedict.ls'} #{escape src}"
-    (err, stdout, stderr) ->
-      process.stdout.write stdout
-      done ...
+    "echo #chars | #{path.resolve __dirname, 'fetch-moedict.ls'} > #dst"
+    done
 
 function font-subset src, dst, done
   console.log "#{'generate'magenta} #{rel dst}"

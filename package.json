@@ -53,6 +53,7 @@
     "request": "^2.44.0",
     "shellwords": "^0.1.0",
     "style-loader": "^0.8.0",
+    "through": "^2.3.6",
     "unzip": "^0.1.11",
     "vinyl-fs": "^0.3.10",
     "xmlbuilder": "^2.4.4",
