@@ -55,7 +55,7 @@ console.log '''
   dst = build.data
   <- convert src, dst
 
-  src = path.resolve build.data, '*.json'
+  src = path.resolve escape(build.data), '*.json'
   err, stdout, stderr <- get-codepoints src
   codepoints = for c in stdout.split /\s/ | c.length  => parseInt c, 16
   build.codepoints = codepoints.filter -> it > 10000
@@ -216,7 +216,7 @@ function get-codepoints src, done
 function fetch-moedict chars, dst, done
   console.log "#{'fetch'magenta} characters from moedict.tw"
   exec do
-    "echo #chars | #{path.resolve __dirname, 'fetch-moedict.ls'} > #dst"
+    "echo #chars | #{path.resolve __dirname, 'fetch-moedict.ls'} > #{escape dst}"
     done
 
 function font-subset src, dst, codepoints, done
@@ -237,7 +237,7 @@ function font-subset src, dst, codepoints, done
   fs.writeFileSync script-path, script
   console.log "#{'generate'magenta} #{rel dst}"
   exec do
-    "fontforge -script #script-path"
+    "fontforge -script #{escape script-path}"
     cwd: base
     done
 
