@@ -20,7 +20,7 @@ process.stdin
             'zh-TW': moe.title
             'zh-CN': moe.heteronyms.0.alt or moe.title
             pinyin:  moe.heteronyms.0.pinyin
-            en:      moe.translation?English?join(\,)?split(/,\w*?/) or ''
+            en:      moe.translation?English?join(\,)?split(/,\w*?/) or []
         if ++count is todo.length # end
           return @queue stringify fetched, space: 2
   .pipe process.stdout

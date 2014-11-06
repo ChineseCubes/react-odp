@@ -28,18 +28,19 @@ if argv.length is 0
   console.log "Usage: #filename [path]"
   process.exit 0
 
+console.log '''
+ _____ _____ _____ _____ _____         _
+|     |  |  | __  |   __| __  |___ ___| |_ ___
+|   --|  |  | __ -|   __| __ -| . | . | '_|_ -|
+|_____|_____|_____|_____|_____|___|___|_,_|___|
+'''magenta
+# http://patorjk.com/software/taag/#p=display&f=Rectangles&t=CUBEBooks
+
 :main let
   return unless arg = argv.shift!       # break
   return main! unless arg.match /.odp$/ # continue
   basename = path.basename arg, '.odp'
 
-  console.log '''
- _____ _   _                 _____ _____ _____ _____ _____
-|     | |_|_|___ ___ ___ ___|     |  |  | __  |   __|   __|
-|   --|   | |   | -_|_ -| -_|   --|  |  | __ -|   __|__   |
-|_____|_|_|_|_|_|___|___|___|_____|_____|_____|_____|_____|
-  '''magenta
-  # http://patorjk.com/software/taag/#p=display&f=Rectangles&t=ChineseCUBES
 
   ##
   # prepare the build dir
@@ -72,7 +73,7 @@ if argv.length is 0
   { attrs } <- Data.getMasterPage build.data
   num-pages = attrs['TOTAL-PAGES']
 
-  dst = build.path
+  dst = build.data
   todo = [1 to num-pages]
   :render let
     return copy-statics! unless idx = todo.shift!
@@ -111,6 +112,13 @@ if argv.length is 0
 
   next = ->
   ##
+  # generate font subset
+    src = path.resolve __dirname, 'epub', 'SourceHanSansTW-Regular.ttf'
+    dst = path.resolve build.path, 'fonts', 'Noto-subset.ttf'
+    err <- font-subset src, dst, build.codepoints
+    throw err if err
+
+  ##
   # generate TOC.xhtml
     src = path.resolve __dirname, 'epub/TOC.jade'
     dst = path.resolve build.path, 'TOC.xhtml'
@@ -124,13 +132,6 @@ if argv.length is 0
     throw err if err
 
   ##
-  # generate font subset
-    src = path.resolve __dirname, 'epub', 'SourceHanSansTW-Regular.ttf'
-    dst = path.resolve build.path, 'fonts', 'Noto-subset.ttf'
-    err <- font-subset src, dst
-    throw err if err
-
-  ##
   # generate metadata for EPUB
     files = []
     vinyl
@@ -140,6 +141,7 @@ if argv.length is 0
         "!#{build.path}/META-INF/*"
         "!#{build.path}/mimetype"
         "!#{build.path}/package.opf"
+        "!#{build.path}/subset.pe"
       ]
       .pipe map (file, cb) ->
         files.push path.relative(build.path, file.path)
@@ -164,7 +166,7 @@ function convert src, dst, done
   console.log "#{'convert'magenta} and #{'unzip'magenta} #{rel src}"
   request {
     method: \POST
-    uri: 'http://www.dev.chinesecubes.com/sandbox/odpConvert.php'
+    uri: 'http://192.168.11.15/sandbox/odpConvert.php'
     #encoding: \binary
   }
     ..form!append \file fs.createReadStream src
@@ -177,7 +179,7 @@ function cp src, dst, done
 
 function cp-r src, dst, done
   console.log "#{'cp'magenta} -R #{rel src} #{rel dst}"
-  _cpr src, dst, { delete-first: on, overwrite: on, confirm: on }, done
+  _cpr src, dst, { delete-first: off, overwrite: on, confirm: on }, done
 
 gen = path.resolve __dirname, './gen.ls'
 function gen-page src, dst, idx, done
@@ -185,9 +187,7 @@ function gen-page src, dst, idx, done
   exec do
     "#gen #{escape path.relative dst, src} #idx > #{escape dst}/page#idx.xhtml"
     cwd: dst
-    (err, stdout, stderr) ->
-      process.stdout.write stdout
-      done ...
+    done
 
 function write dst, file, done
   console.log "#{'write'magenta} #{rel dst}"
@@ -205,22 +205,31 @@ function fetch-moedict chars, dst, done
     "echo #chars | #{path.resolve __dirname, 'fetch-moedict.ls'} > #dst"
     done
 
-function font-subset src, dst, done
+function font-subset src, dst, codepoints, done
   console.log "#{'generate'magenta} #{rel dst}"
+  base = path.resolve path.dirname(dst), '../'
+  script-path = path.resolve base, 'subset.pe'
+  script = """
+    Open(\"#src\")
+    Select(0u3000)\n
+  """
+  for cp in codepoints when cp > 10000
+    script += "SelectMore(0u#{cp.toString 16})\n"
+  script += """
+    SelectInvert()
+    Clear()
+    Generate(\"#dst\")
+  """
+  fs.writeFileSync script-path, script
   exec do
-    "perl -Mutf8 -CSD -nE 's/[\\x00-\\xff]//g; $_{$_}++ for split //; END { say for qw[Open(\"#src\") Select(0u3000)]; printf qq[SelectMore(0u%04x) #%s\\n], $_, chr $_ for grep { $_ > 10000 } map ord, sort keys %_; say for qw[SelectInvert() Clear() Generate(\"#dst\")]} ' */dict.json *xhtml | fontforge -lang=ff -script"
-    cwd: path.resolve path.dirname(dst), '../'
-    (err, stdout, stderr) ->
-      process.stderr.write stderr
-      process.stdout.write stdout
-      done ...
+    "fontforge -script #script-path"
+    cwd: base
+    done
 
 function zip src, dst, done
   console.log "#{'zip'magenta} #{rel dst}"
   exec do
-    "zip -9 -rX --exclude=*.DS_Store* #{escape dst} ./*"
+    "zip -9 -rX #{escape dst} ./* --exclude \\*.DS_Store* \\subset.pe \\js/index.js"
     cwd: src
-    (err, stdout, stderr) ->
-      process.stdout.write stdout
-      done ...
+    done
 
