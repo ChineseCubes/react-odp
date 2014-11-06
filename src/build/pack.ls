@@ -47,8 +47,7 @@ console.log '''
   build =
     path: path.resolve ".#basename.build"
     data: path.resolve ".#basename.build/data"
-    # XXX: will create `strokes` later
-    needs: <[js css fonts strokes]>
+    needs: <[js css fonts]>
 
   ##
   # convert and unzip
@@ -58,7 +57,8 @@ console.log '''
 
   src = path.resolve build.data, '*.json'
   err, stdout, stderr <- get-codepoints src
-  build.codepoints = for c in stdout.split /\s/ | c.length => parseInt c, 16
+  codepoints = for c in stdout.split /\s/ | c.length  => parseInt c, 16
+  build.codepoints = codepoints.filter -> it > 10000
 
   ##
   # get data from moedict.tw
@@ -108,7 +108,18 @@ console.log '''
       console.warn "need #{rel src}" unless fs.existsSync src
       err, files <- cp-r src, dst
       throw err if err
-      next! if ++counter is build.needs.length
+      copy-strokes! if ++counter is build.needs.length
+
+  copy-strokes = ->
+    try fs.mkdirSync path.resolve build.path, 'strokes'
+    counter = 0
+    for let stroke in build.codepoints
+      stroke = "#{stroke.toString 16}.json"
+      src = path.resolve __dirname, '../../strokes', stroke
+      dst = path.resolve build.path, 'strokes', stroke
+      err <- cp src, dst
+      throw err if err and err.code isnt \ENOENT
+      next! if ++counter is build.codepoints.length
 
   next = ->
   ##
@@ -174,12 +185,15 @@ function convert src, dst, done
     ..on \end done
 
 function cp src, dst, done
+  unless fs.existsSync src # fail silently
+    console.log "#{'not found:'red} #{rel src}"
+    return done!
   console.log "#{'cp'magenta} #{rel src} #{rel dst}"
   _cp src, dst, done
 
 function cp-r src, dst, done
   console.log "#{'cp'magenta} -R #{rel src} #{rel dst}"
-  _cpr src, dst, { delete-first: off, overwrite: on, confirm: on }, done
+  _cpr src, dst, { delete-first: on, overwrite: on, confirm: on }, done
 
 gen = path.resolve __dirname, './gen.ls'
 function gen-page src, dst, idx, done
@@ -206,14 +220,14 @@ function fetch-moedict chars, dst, done
     done
 
 function font-subset src, dst, codepoints, done
-  console.log "#{'generate'magenta} #{rel dst}"
   base = path.resolve path.dirname(dst), '../'
   script-path = path.resolve base, 'subset.pe'
+  console.log "#{'generate'magenta} #script-path"
   script = """
     Open(\"#src\")
     Select(0u3000)\n
   """
-  for cp in codepoints when cp > 10000
+  for cp in codepoints
     script += "SelectMore(0u#{cp.toString 16})\n"
   script += """
     SelectInvert()
@@ -221,6 +235,7 @@ function font-subset src, dst, codepoints, done
     Generate(\"#dst\")
   """
   fs.writeFileSync script-path, script
+  console.log "#{'generate'magenta} #{rel dst}"
   exec do
     "fontforge -script #script-path"
     cwd: base
