@@ -55,7 +55,7 @@ console.log '''
   dst = build.data
   <- convert src, dst
 
-  src = path.resolve escape(build.data), '*.json'
+  src = path.resolve build.data, '*.json'
   err, stdout, stderr <- get-codepoints src
   codepoints = for c in stdout.split /\s/ | c.length  => parseInt c, 16
   build.codepoints = codepoints.filter -> it > 10000
@@ -209,6 +209,7 @@ function write dst, file, done
 
 function get-codepoints src, done
   console.log "#{'get'magenta} codepoints from #{rel src}"
+  src = (escape src)replace '\\*' -> '*'
   exec do
     "cat #src | #{path.resolve __dirname, 'codepoints.ls'}"
     done
