@@ -55,7 +55,7 @@ console.log '''
   dst = build.data
   <- convert src, dst
 
-  src = path.resolve build.data, '*.json'
+  src = path.resolve build.data, 'page*.json'
   err, stdout, stderr <- get-codepoints src
   codepoints = for c in stdout.split /\s/ | c.length  => parseInt c, 16
   build.codepoints = codepoints.filter -> it > 10000
@@ -175,14 +175,15 @@ console.log '''
 # helpers
 function convert src, dst, done
   console.log "#{'convert'magenta} and #{'unzip'magenta} #{rel src}"
+  extractor = unzip.Extract path: dst
+  extractor.on \close done
   request {
     method: \POST
     uri: 'http://192.168.11.15/sandbox/odpConvert.php'
     #encoding: \binary
   }
     ..form!append \file fs.createReadStream src
-    ..pipe unzip.Extract path: dst
-    ..on \end done
+    ..pipe extractor
 
 function cp src, dst, done
   unless fs.existsSync src # fail silently
@@ -215,7 +216,7 @@ function get-codepoints src, done
     done
 
 function fetch-moedict chars, dst, done
-  console.log "#{'fetch'magenta} characters from moedict.tw"
+  console.log "#chars | #{'fetch-moedict.ls'magenta} > #{rel dst}"
   exec do
     "echo #chars | #{path.resolve __dirname, 'fetch-moedict.ls'} > #{escape dst}"
     done
