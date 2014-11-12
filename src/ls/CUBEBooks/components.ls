@@ -126,6 +126,7 @@ Word = React.createClass do
   componentWillMount: ->
     if not @state.soundURI
       text = @props.data.flatten!map(~> it[@props.mode])join ''
+      return if text.length is 0
       err, data <~ API.Talks.get text
       throw err if err
       @state.soundURI = data.soundURI!

@@ -214,6 +214,9 @@
         text = this.props.data.flatten().map(function(it){
           return it[this$.props.mode];
         }).join('');
+        if (text.length === 0) {
+          return;
+        }
         return API.Talks.get(text, function(err, data){
           if (err) {
             throw err;
