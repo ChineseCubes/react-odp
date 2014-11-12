@@ -163,12 +163,15 @@ Word = React.createClass do
           disabled: [no, (data.children.length isnt 1), no]
           onChange: (it, name, actived, close) ~>
             | name is \pinyin
-              console.log @state.shoundURI
               if actived then try
-                Howler.iOSAutoEnable = false
-                new Howl do
-                  autoplay: on
-                  urls: [@state.soundURI]
+                if @state.soundURI
+                  Howler.iOSAutoEnable = false
+                  new Howl do
+                    autoplay: on
+                    urls: [@state.soundURI]
+                else # if no sound has been loaded
+                  text = data.flatten!map(~> it[@props.mode])join ''
+                  say-it text, lang @props.mode
               @setState pinyin: actived
             | name is \stroke and actived
               @props.onStroke(data.flatten!map (.zh_TW) .join(''), close)

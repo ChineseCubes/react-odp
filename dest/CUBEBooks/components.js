@@ -271,16 +271,23 @@
         buttons: ['pinyin', 'stroke', 'english'],
         disabled: [false, data.children.length !== 1, false],
         onChange: function(it, name, actived, close){
+          var text;
           switch (false) {
           case name !== 'pinyin':
-            console.log(this$.state.shoundURI);
             if (actived) {
               try {
-                Howler.iOSAutoEnable = false;
-                new Howl({
-                  autoplay: true,
-                  urls: [this$.state.soundURI]
-                });
+                if (this$.state.soundURI) {
+                  Howler.iOSAutoEnable = false;
+                  new Howl({
+                    autoplay: true,
+                    urls: [this$.state.soundURI]
+                  });
+                } else {
+                  text = data.flatten().map(function(it){
+                    return it[this$.props.mode];
+                  }).join('');
+                  sayIt(text, lang(this$.props.mode));
+                }
               } catch (e$) {}
             }
             return this$.setState({
