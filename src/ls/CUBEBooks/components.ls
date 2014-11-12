@@ -7,14 +7,16 @@ zhStrokeData = try require 'zhStrokeData'
 onClick = if (try \ontouchstart of window) then \onTouchStart else \onClick
 
 say-it = (text, lang = \en-US) ->
-  syn = try window.speechSynthesis
-  utt = try window.SpeechSynthesisUtterance
-  return if not syn or not utt
-  u = new utt text
-    ..lang = lang
-    ..volume = 1.0
-    ..rate = 1.0
-  syn.speak u
+  setTimeout ->
+    syn = try window.speechSynthesis
+    utt = try window.SpeechSynthesisUtterance
+    return if not syn or not utt
+    u = new utt text
+      ..lang = lang
+      ..volume = 1.0
+      ..rate = 1.0
+    syn.speak u
+  , 0
 
 AudioControl = React.createClass do
   displayName: \CUBEBooks.AudioControl
@@ -64,13 +66,7 @@ AudioControl = React.createClass do
           else
             @props.audio.pause! # pause every sprites
         | otherwise
-          syn = window.speechSynthesis
-          utt = window.SpeechSynthesisUtterance
-          u = new utt @props.text
-            ..lang = \zh-TW
-            ..volume = 1.0
-            ..rate = 1.0
-          syn.speak u
+          say-it @props.text, \zh-TW
         @props."#onClick".call this, it
 
 Character = React.createClass do
@@ -127,6 +123,12 @@ Word = React.createClass do
     pinyin:  off
     meaning: off
     soundURI: null
+  componentWillMount: ->
+    if not @state.soundURI
+      text = @props.data.flatten!map(~> it[@props.mode])join ''
+      err, data <~ API.Talks.get text
+      throw err if err
+      @state.soundURI = data.soundURI!
   componentDidUpdate: !(props, state) ->
     if state.cut is false and @state.cut is true
       @props.afterChildCut this
@@ -160,24 +162,17 @@ Word = React.createClass do
           disabled: [no, (data.children.length isnt 1), no]
           onChange: (it, name, actived, close) ~>
             | name is \pinyin
-              if actived
-                text = data.flatten!map(~> it[@props.mode])join ''
-                if not @state.soundURI
-                  say-it text, lang @props.mode
-                  err, data <~ API.Talks.get text
-                  throw err if err
-                  @state.soundURI = data.soundURI!
-                else try
-                  Howler.iOSAutoEnable = false
-                  new Howl do
-                    autoplay: on
-                    urls: [@state.soundURI]
+              console.log @state.shoundURI
+              if actived then try
+                Howler.iOSAutoEnable = false
+                new Howl do
+                  autoplay: on
+                  urls: [@state.soundURI]
               @setState pinyin: actived
             | name is \stroke and actived
               @props.onStroke(data.flatten!map (.zh_TW) .join(''), close)
             | name is \english
-              if actived
-                say-it data.short
+              if actived then say-it data.short
               @setState meaning: actived
       div do
         className: 'characters'

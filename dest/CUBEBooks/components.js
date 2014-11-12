@@ -16,26 +16,28 @@
     } catch (e$) {}
   }()) ? 'onTouchStart' : 'onClick';
   sayIt = function(text, lang){
-    var syn, utt, x$, u;
     lang == null && (lang = 'en-US');
-    syn = (function(){
-      try {
-        return window.speechSynthesis;
-      } catch (e$) {}
-    }());
-    utt = (function(){
-      try {
-        return window.SpeechSynthesisUtterance;
-      } catch (e$) {}
-    }());
-    if (!syn || !utt) {
-      return;
-    }
-    x$ = u = new utt(text);
-    x$.lang = lang;
-    x$.volume = 1.0;
-    x$.rate = 1.0;
-    return syn.speak(u);
+    return setTimeout(function(){
+      var syn, utt, x$, u;
+      syn = (function(){
+        try {
+          return window.speechSynthesis;
+        } catch (e$) {}
+      }());
+      utt = (function(){
+        try {
+          return window.SpeechSynthesisUtterance;
+        } catch (e$) {}
+      }());
+      if (!syn || !utt) {
+        return;
+      }
+      x$ = u = new utt(text);
+      x$.lang = lang;
+      x$.volume = 1.0;
+      x$.rate = 1.0;
+      return syn.speak(u);
+    }, 0);
   };
   AudioControl = React.createClass({
     displayName: 'CUBEBooks.AudioControl',
@@ -108,7 +110,7 @@
           height: '100%'
         }
       }, ref$[onClick + ""] = function(it){
-        var x$, syn, utt, y$, u;
+        var x$;
         switch (false) {
         case !this$.props.audio:
           if (this$.state.loading) {
@@ -123,13 +125,7 @@
           }
           break;
         default:
-          syn = window.speechSynthesis;
-          utt = window.SpeechSynthesisUtterance;
-          y$ = u = new utt(this$.props.text);
-          y$.lang = 'zh-TW';
-          y$.volume = 1.0;
-          y$.rate = 1.0;
-          syn.speak(u);
+          sayIt(this$.props.text, 'zh-TW');
         }
         return this$.props[onClick + ""].call(this$, it);
       }, ref$));
@@ -212,6 +208,20 @@
         soundURI: null
       };
     },
+    componentWillMount: function(){
+      var text, this$ = this;
+      if (!this.state.soundURI) {
+        text = this.props.data.flatten().map(function(it){
+          return it[this$.props.mode];
+        }).join('');
+        return API.Talks.get(text, function(err, data){
+          if (err) {
+            throw err;
+          }
+          return this$.state.soundURI = data.soundURI();
+        });
+      }
+    },
     componentDidUpdate: function(props, state){
       if (state.cut === false && this.state.cut === true) {
         this.props.afterChildCut(this);
@@ -258,30 +268,17 @@
         buttons: ['pinyin', 'stroke', 'english'],
         disabled: [false, data.children.length !== 1, false],
         onChange: function(it, name, actived, close){
-          var text;
           switch (false) {
           case name !== 'pinyin':
+            console.log(this$.state.shoundURI);
             if (actived) {
-              text = data.flatten().map(function(it){
-                return it[this$.props.mode];
-              }).join('');
-              if (!this$.state.soundURI) {
-                sayIt(text, lang(this$.props.mode));
-                API.Talks.get(text, function(err, data){
-                  if (err) {
-                    throw err;
-                  }
-                  return this$.state.soundURI = data.soundURI();
+              try {
+                Howler.iOSAutoEnable = false;
+                new Howl({
+                  autoplay: true,
+                  urls: [this$.state.soundURI]
                 });
-              } else {
-                try {
-                  Howler.iOSAutoEnable = false;
-                  new Howl({
-                    autoplay: true,
-                    urls: [this$.state.soundURI]
-                  });
-                } catch (e$) {}
-              }
+              } catch (e$) {}
             }
             return this$.setState({
               pinyin: actived
