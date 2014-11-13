@@ -136,7 +136,7 @@
     getDefaultProps: function(){
       return {
         data: null,
-        mode: 'zh_TW',
+        mode: 'zh-TW',
         pinyin: false
       };
     },
@@ -148,13 +148,13 @@
         className: 'comp character'
       }, div({
         className: "pronounciation " + actived
-      }, span(null, data.pinyin)), this.props.mode === 'zh_TW'
+      }, span(null, data.pinyin)), this.props.mode === 'zh-TW'
         ? div({
-          className: 'char zh_TW'
-        }, data.zh_TW)
+          className: 'char zh-TW'
+        }, data['zh-TW'])
         : div({
-          className: 'char zh_CN'
-        }, data.zh_CN));
+          className: 'char zh-CN'
+        }, data['zh-CN']));
     }
   });
   UndoCut = React.createClass({
@@ -183,7 +183,7 @@
     getDefaultProps: function(){
       return {
         data: null,
-        mode: 'zh_TW',
+        mode: 'zh-TW',
         menu: false,
         onStroke: function(){
           throw Error('unimplemented');
@@ -234,16 +234,8 @@
       return this.props.onChildClick(this);
     },
     render: function(){
-      var data, lang, actived, ref$, withHint, this$ = this;
+      var data, actived, ref$, withHint, this$ = this;
       data = this.props.data;
-      lang = function(it){
-        switch (it) {
-        case 'zh_TW':
-          return 'zh-TW';
-        case 'zh_CN':
-          return 'zh-CN';
-        }
-      };
       actived = this.state.meaning ? 'actived' : '';
       return div((ref$ = {
         className: 'comp word'
@@ -286,7 +278,7 @@
                   text = data.flatten().map(function(it){
                     return it[this$.props.mode];
                   }).join('');
-                  sayIt(text, lang(this$.props.mode));
+                  sayIt(text, this$.props.mode);
                 }
               } catch (e$) {}
             }
@@ -295,7 +287,7 @@
             });
           case !(name === 'stroke' && actived):
             return this$.props.onStroke(data.flatten().map(function(it){
-              return it.zh_TW;
+              return it['zh-TW'];
             }).join(''), close);
           case name !== 'english':
             if (actived) {
@@ -540,7 +532,7 @@
     },
     getInitialState: function(){
       return {
-        mode: 'zh_TW',
+        mode: 'zh-TW',
         focus: null,
         undo: []
       };
@@ -585,7 +577,7 @@
     },
     toggleMode: function(){
       return this.setState({
-        mode: this.state.mode === 'zh_TW' ? 'zh_CN' : 'zh_TW'
+        mode: this.state.mode === 'zh-TW' ? 'zh-CN' : 'zh-TW'
       });
     },
     toggleSettings: function(){
@@ -658,7 +650,7 @@
                     words: text,
                     play: true,
                     hide: false,
-                    strokeURI: data != null ? data.strokeURI() : void 8
+                    strokeURI: data != null ? data.strokeURI()[this$.state.mode] : void 8
                   });
                   return x$;
                 });
@@ -732,7 +724,7 @@
         className: 'right menu'
       }, a((ref$ = {
         className: 'item toggle chinese'
-      }, ref$[onClick + ""] = this.toggleMode, ref$), this.state.mode === 'zh_TW' ? '繁' : '简')))), UndoCut((ref$ = {
+      }, ref$[onClick + ""] = this.toggleMode, ref$), this.state.mode === 'zh-TW' ? '繁' : '简')))), UndoCut((ref$ = {
         actived: this.state.undo.length !== 0
       }, ref$[onClick + ""] = this.undo, ref$)), div({
         className: 'entry'

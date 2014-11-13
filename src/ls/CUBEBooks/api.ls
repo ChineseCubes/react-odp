@@ -27,28 +27,30 @@ class CubeList
   # BTW, the base64 decoding in Howler may also have problem.
   # Should patch it someday.
   soundURI: -> "#remote-talks/sentencesound/#{@id}.mp3"
-  getSoundDataURI: !(done) ->
-    err, data <- get-base64 @soundURI!
-    if err
-      then done err
-      # FIXME: use wrong MIME type for Howler
-      # https://github.com/goldfire/howler.js/issues/218
-      else done err, "data:audio/mp3;base64,#data"
+  #getSoundDataURI: !(done) ->
+  #  err, data <- get-base64 @soundURI!
+  #  if err
+  #    then done err
+  #    # FIXME: use wrong MIME type for Howler
+  #    # https://github.com/goldfire/howler.js/issues/218
+  #    else done err, "data:audio/mp3;base64,#data"
 
 class Cube extends CubeList
   ~> super it
   soundURI: -> "#remote-talks/cubesound/#{@id}.mp3"
-  strokeURI: -> "#remote-talks/cubestroke/#{@id}"
-  getSoundDataURI:  !(done) ->
-    err, data <- get-base64 @soundURI!
-    if err
-      then done err
-      else done err, "data:audio/mp3;base64,#data"
-  getStrokeDataURI: !(done) ->
-    err, data <- get-base64 @strokeURI!
-    if err
-      then done err
-      else done err, "data:image/gif;base64,#data"
+  strokeURI: ->
+    'zh-TW': "#remote-talks/cubestroke/#{@id}"
+    'zh-CN': "#remote-talks/cubestroke/#{@id}/chs"
+  #getSoundDataURI:  !(done) ->
+  #  err, data <- get-base64 @soundURI!
+  #  if err
+  #    then done err
+  #    else done err, "data:audio/mp3;base64,#data"
+  #getStrokeDataURI: !(done) ->
+  #  err, data <- get-base64 @strokeURI!
+  #  if err
+  #    then done err
+  #    else done err, "data:image/gif;base64,#data"
 
 class Book
   ~> this <<< it

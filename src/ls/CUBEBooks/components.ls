@@ -73,7 +73,7 @@ Character = React.createClass do
   displayName: 'CUBE.Character'
   getDefaultProps: ->
     data:   null
-    mode:   'zh_TW'
+    mode:   'zh-TW'
     pinyin: off
   render: ->
     data = @props.data
@@ -83,14 +83,14 @@ Character = React.createClass do
       div do
         className: "pronounciation #actived"
         span null data.pinyin
-      if @props.mode is 'zh_TW'
+      if @props.mode is 'zh-TW'
         div do
-          className: 'char zh_TW'
-          data.zh_TW
+          className: 'char zh-TW'
+          data['zh-TW']
       else
         div do
-          className: 'char zh_CN'
-          data.zh_CN
+          className: 'char zh-CN'
+          data['zh-CN']
 
 UndoCut = React.createClass do
   displayName: 'CUBE.UndoCut'
@@ -111,7 +111,7 @@ Word = React.createClass do
   displayName: 'CUBE.Word'
   getDefaultProps: ->
     data:    null
-    mode:    'zh_TW'
+    mode:    'zh-TW'
     menu:    off
     onStroke:      -> ...
     onChildCut:    -> ...
@@ -136,9 +136,6 @@ Word = React.createClass do
   click: -> @props.onChildClick this
   render: ->
     data = @props.data
-    lang = -> switch it
-      | \zh_TW => \zh-TW
-      | \zh_CN => \zh-CN
     actived = if @state.meaning then 'actived' else ''
     div do
       className: 'comp word'
@@ -171,10 +168,10 @@ Word = React.createClass do
                     urls: [@state.soundURI]
                 else # if no sound has been loaded
                   text = data.flatten!map(~> it[@props.mode])join ''
-                  say-it text, lang @props.mode
+                  say-it text, @props.mode
               @setState pinyin: actived
             | name is \stroke and actived
-              @props.onStroke(data.flatten!map (.zh_TW) .join(''), close)
+              @props.onStroke(data.flatten!map (~> it['zh-TW']) .join(''), close)
             | name is \english
               if actived then say-it data.short
               @setState meaning: actived
@@ -317,7 +314,7 @@ Sentence = React.createClass do
     stroke:   on
     sentence: on
   getInitialState: ->
-    mode:  'zh_TW'
+    mode:  'zh-TW'
     focus: null
     undo:  []
   componentWillReceiveProps: (props) ->
@@ -340,7 +337,7 @@ Sentence = React.createClass do
       @setState undo: []
       @refs.0?click!
   toggleMode: ->
-    @setState mode: if @state.mode is 'zh_TW' then 'zh_CN' else 'zh_TW'
+    @setState mode: if @state.mode is 'zh-TW' then 'zh-CN' else 'zh-TW'
   toggleSettings: ->
     $settings = $ @refs.settings.getDOMNode!
     $settings.animate height: if $settings.height! isnt 0 then 0 else 48
@@ -377,14 +374,14 @@ Sentence = React.createClass do
               return if not @refs.stroker
               stroker = @refs.stroker
               if stroker.state.hide
-                err, data <- API.Talks.get text
+                err, data <~ API.Talks.get text
                 stroker
                   ..onHide = -> close!
                   ..setState do
                     words: text
                     play:  yes
                     hide:  false
-                    strokeURI: data?strokeURI!
+                    strokeURI: data?strokeURI![@state.mode]
               else
                 close!
                 stroker
@@ -425,7 +422,7 @@ Sentence = React.createClass do
             a do
               className: 'item toggle chinese'
               "#onClick": @toggleMode
-              if @state.mode is 'zh_TW' then '繁' else '简'
+              if @state.mode is 'zh-TW' then '繁' else '简'
       UndoCut do
         actived: @state.undo.length isnt 0
         "#onClick": @undo

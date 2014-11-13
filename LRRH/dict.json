@@ -14,8 +14,8 @@
       "also pr. [yao1] for greater clarity when spelling out numbers digit by digit"
     ],
     "pinyin": "yī",
-    "zh_CN": "一",
-    "zh_TW": "一"
+    "zh-CN": "一",
+    "zh-TW": "一"
   },
   "上": {
     "en": [
@@ -32,8 +32,8 @@
       "to attend (class or university)​"
     ],
     "pinyin": "shàng",
-    "zh_CN": "上",
-    "zh_TW": "上"
+    "zh-CN": "上",
+    "zh-TW": "上"
   },
   "主": {
     "en": [
@@ -48,8 +48,8 @@
       "trump card (in card games)​"
     ],
     "pinyin": "zhǔ",
-    "zh_CN": "主",
-    "zh_TW": "主"
+    "zh-CN": "主",
+    "zh-TW": "主"
   },
   "也": {
     "en": [
@@ -59,8 +59,8 @@
       "(in Classical Chinese)​ final particle implying affirmation"
     ],
     "pinyin": "yě",
-    "zh_CN": "也",
-    "zh_TW": "也"
+    "zh-CN": "也",
+    "zh-TW": "也"
   },
   "了": {
     "en": [
@@ -71,8 +71,8 @@
       "to understand"
     ],
     "pinyin": "liǎo",
-    "zh_CN": "了",
-    "zh_TW": "了"
+    "zh-CN": "了",
+    "zh-TW": "了"
   },
   "事": {
     "en": [
@@ -85,8 +85,8 @@
       "<a href=\"#~樁\">樁</a>|桩[zhuang1]"
     ],
     "pinyin": "shì",
-    "zh_CN": "事",
-    "zh_TW": "事"
+    "zh-CN": "事",
+    "zh-TW": "事"
   },
   "人": {
     "en": [
@@ -97,8 +97,8 @@
       "<a href=\"#~位\">位</a>[wei4]"
     ],
     "pinyin": "rén",
-    "zh_CN": "人",
-    "zh_TW": "人"
+    "zh-CN": "人",
+    "zh-TW": "人"
   },
   "他": {
     "en": [
@@ -110,8 +110,8 @@
       "another"
     ],
     "pinyin": "tā",
-    "zh_CN": "他",
-    "zh_TW": "他"
+    "zh-CN": "他",
+    "zh-TW": "他"
   },
   "住": {
     "en": [
@@ -125,8 +125,8 @@
       " or coming to a halt)​"
     ],
     "pinyin": "zhù",
-    "zh_CN": "住",
-    "zh_TW": "住"
+    "zh-CN": "住",
+    "zh-TW": "住"
   },
   "來": {
     "en": [
@@ -137,8 +137,8 @@
       "next"
     ],
     "pinyin": "lái",
-    "zh_CN": "来",
-    "zh_TW": "來"
+    "zh-CN": "来",
+    "zh-TW": "來"
   },
   "個": {
     "en": [
@@ -149,8 +149,8 @@
       "classifier for people or objects in general"
     ],
     "pinyin": "gè",
-    "zh_CN": "个",
-    "zh_TW": "個"
+    "zh-CN": "个",
+    "zh-TW": "個"
   },
   "們": {
     "en": [
@@ -158,8 +158,8 @@
       " and nouns referring to individuals"
     ],
     "pinyin": "men",
-    "zh_CN": "们",
-    "zh_TW": "們"
+    "zh-CN": "们",
+    "zh-TW": "們"
   },
   "候": {
     "en": [
@@ -171,8 +171,8 @@
       "(old)​ period of five days"
     ],
     "pinyin": "hòu",
-    "zh_CN": "候",
-    "zh_TW": "候"
+    "zh-CN": "候",
+    "zh-TW": "候"
   },
   "兩": {
     "en": [
@@ -184,8 +184,8 @@
       " unit of weight equal to 50 grams (modern)​ or 1⁄16 of a catty <a href=\"#~斤\">斤</a>[jin1] (old)​"
     ],
     "pinyin": "liǎng",
-    "zh_CN": "两",
-    "zh_TW": "兩"
+    "zh-CN": "两",
+    "zh-TW": "兩"
   },
   "別": {
     "en": [
@@ -203,8 +203,8 @@
       "to stick (sth)​ in"
     ],
     "pinyin": "bié",
-    "zh_CN": "别",
-    "zh_TW": "別"
+    "zh-CN": "别",
+    "zh-TW": "別"
   },
   "到": {
     "en": [
@@ -216,8 +216,8 @@
       "(verb complement denoting completion or result of an action)​"
     ],
     "pinyin": "dào",
-    "zh_CN": "到",
-    "zh_TW": "到"
+    "zh-CN": "到",
+    "zh-TW": "到"
   },
   "去": {
     "en": [
@@ -233,8 +233,8 @@
       "(of a time or an event etc)​ just passed or elapsed"
     ],
     "pinyin": "qù",
-    "zh_CN": "去",
-    "zh_TW": "去"
+    "zh-CN": "去",
+    "zh-TW": "去"
   },
   "另": {
     "en": [
@@ -244,8 +244,8 @@
       "separately"
     ],
     "pinyin": "lìng",
-    "zh_CN": "另",
-    "zh_TW": "另"
+    "zh-CN": "另",
+    "zh-TW": "另"
   },
   "叫": {
     "en": [
@@ -257,8 +257,8 @@
       "by (indicates agent in the passive mood)​"
     ],
     "pinyin": "jiào",
-    "zh_CN": "叫",
-    "zh_TW": "叫"
+    "zh-CN": "叫",
+    "zh-TW": "叫"
   },
   "可": {
     "en": [
@@ -273,8 +273,8 @@
       "see <a href=\"#~可汗\">可汗</a>[ke4 han2]"
     ],
     "pinyin": "kě",
-    "zh_CN": "可",
-    "zh_TW": "可"
+    "zh-CN": "可",
+    "zh-TW": "可"
   },
   "吃": {
     "en": [
@@ -288,8 +288,8 @@
       "stammer"
     ],
     "pinyin": "chī",
-    "zh_CN": "吃",
-    "zh_TW": "吃"
+    "zh-CN": "吃",
+    "zh-TW": "吃"
   },
   "呀": {
     "en": [
@@ -297,8 +297,8 @@
       " expressing surprise or doubt)​"
     ],
     "pinyin": "yā",
-    "zh_CN": "呀",
-    "zh_TW": "呀"
+    "zh-CN": "呀",
+    "zh-TW": "呀"
   },
   "和": {
     "en": [
@@ -323,8 +323,8 @@
       "to blend"
     ],
     "pinyin": "hé",
-    "zh_CN": "和",
-    "zh_TW": "和"
+    "zh-CN": "和",
+    "zh-TW": "和"
   },
   "哪": {
     "en": [
@@ -335,8 +335,8 @@
       " followed by classifier or numeral-classifier)​"
     ],
     "pinyin": "nǎ",
-    "zh_CN": "哪",
-    "zh_TW": "哪"
+    "zh-CN": "哪",
+    "zh-TW": "哪"
   },
   "因": {
     "en": [
@@ -345,8 +345,8 @@
       "because"
     ],
     "pinyin": "yīn",
-    "zh_CN": "因",
-    "zh_TW": "因"
+    "zh-CN": "因",
+    "zh-TW": "因"
   },
   "在": {
     "en": [
@@ -357,8 +357,8 @@
       "(indicating an action in progress)​"
     ],
     "pinyin": "zài",
-    "zh_CN": "在",
-    "zh_TW": "在"
+    "zh-CN": "在",
+    "zh-TW": "在"
   },
   "大": {
     "en": [
@@ -379,8 +379,8 @@
       "see <a href=\"#~大夫\">大夫</a>[dai4 fu5]"
     ],
     "pinyin": "dà",
-    "zh_CN": "大",
-    "zh_TW": "大"
+    "zh-CN": "大",
+    "zh-TW": "大"
   },
   "天": {
     "en": [
@@ -389,8 +389,8 @@
       "heaven"
     ],
     "pinyin": "tiān",
-    "zh_CN": "天",
-    "zh_TW": "天"
+    "zh-CN": "天",
+    "zh-TW": "天"
   },
   "女": {
     "en": [
@@ -400,8 +400,8 @@
       "archaic variant of <a href=\"#~汝\">汝</a>[ru3]"
     ],
     "pinyin": "nǚ",
-    "zh_CN": "女",
-    "zh_TW": "女"
+    "zh-CN": "女",
+    "zh-TW": "女"
   },
   "奶": {
     "en": [
@@ -410,16 +410,16 @@
       "to breastfeed"
     ],
     "pinyin": "nǎi",
-    "zh_CN": "奶",
-    "zh_TW": "奶"
+    "zh-CN": "奶",
+    "zh-TW": "奶"
   },
   "她": {
     "en": [
       "she"
     ],
     "pinyin": "tā",
-    "zh_CN": "她",
-    "zh_TW": "她"
+    "zh-CN": "她",
+    "zh-TW": "她"
   },
   "好": {
     "en": [
@@ -438,8 +438,8 @@
       "to be prone to"
     ],
     "pinyin": "hǎo",
-    "zh_CN": "好",
-    "zh_TW": "好"
+    "zh-CN": "好",
+    "zh-TW": "好"
   },
   "妳": {
     "en": [
@@ -448,8 +448,8 @@
       "variant of <a href=\"#~你\">你</a>[ni3]"
     ],
     "pinyin": "nǐ",
-    "zh_CN": "<a href=\"#~你\">你</a>",
-    "zh_TW": "妳"
+    "zh-CN": "<a href=\"#~你\">你</a>",
+    "zh-TW": "妳"
   },
   "媽": {
     "en": [
@@ -458,8 +458,8 @@
       "mother"
     ],
     "pinyin": "mā",
-    "zh_CN": "妈",
-    "zh_TW": "媽"
+    "zh-CN": "妈",
+    "zh-TW": "媽"
   },
   "子": {
     "en": [
@@ -477,16 +477,16 @@
       "(noun suffix)​"
     ],
     "pinyin": "zǐ",
-    "zh_CN": "子",
-    "zh_TW": "子"
+    "zh-CN": "子",
+    "zh-TW": "子"
   },
   "孩": {
     "en": [
       "child"
     ],
     "pinyin": "hái",
-    "zh_CN": "孩",
-    "zh_TW": "孩"
+    "zh-CN": "孩",
+    "zh-TW": "孩"
   },
   "害": {
     "en": [
@@ -497,8 +497,8 @@
       "calamity"
     ],
     "pinyin": "hài",
-    "zh_CN": "害",
-    "zh_TW": "害"
+    "zh-CN": "害",
+    "zh-TW": "害"
   },
   "家": {
     "en": [
@@ -517,8 +517,8 @@
       "CL:<a href=\"#~個\">個</a>|个[ge4]"
     ],
     "pinyin": "jiā",
-    "zh_CN": "家",
-    "zh_TW": "家"
+    "zh-CN": "家",
+    "zh-TW": "家"
   },
   "小": {
     "en": [
@@ -528,8 +528,8 @@
       "young"
     ],
     "pinyin": "xiǎo",
-    "zh_CN": "小",
-    "zh_TW": "小"
+    "zh-CN": "小",
+    "zh-TW": "小"
   },
   "屋": {
     "en": [
@@ -539,8 +539,8 @@
       "<a href=\"#~個\">個</a>|个[ge4]"
     ],
     "pinyin": "wū",
-    "zh_CN": "屋",
-    "zh_TW": "屋"
+    "zh-CN": "屋",
+    "zh-TW": "屋"
   },
   "已": {
     "en": [
@@ -550,8 +550,8 @@
       "afterwards"
     ],
     "pinyin": "yǐ",
-    "zh_CN": "已",
-    "zh_TW": "已"
+    "zh-CN": "已",
+    "zh-TW": "已"
   },
   "帶": {
     "en": [
@@ -574,8 +574,8 @@
       "to raise"
     ],
     "pinyin": "dài",
-    "zh_CN": "带",
-    "zh_TW": "帶"
+    "zh-CN": "带",
+    "zh-TW": "帶"
   },
   "帽": {
     "en": [
@@ -583,8 +583,8 @@
       "cap"
     ],
     "pinyin": "mào",
-    "zh_CN": "帽",
-    "zh_TW": "帽"
+    "zh-CN": "帽",
+    "zh-TW": "帽"
   },
   "幫": {
     "en": [
@@ -603,8 +603,8 @@
       "secret society"
     ],
     "pinyin": "bāng",
-    "zh_CN": "帮",
-    "zh_TW": "幫"
+    "zh-CN": "帮",
+    "zh-TW": "幫"
   },
   "床": {
     "en": [
@@ -614,8 +614,8 @@
       "CL:<a href=\"#~張\">張</a>|张[zhang1]"
     ],
     "pinyin": "chuáng",
-    "zh_CN": "床",
-    "zh_TW": "床"
+    "zh-CN": "床",
+    "zh-TW": "床"
   },
   "後": {
     "en": [
@@ -627,8 +627,8 @@
       "later"
     ],
     "pinyin": "hòu",
-    "zh_CN": "<a href=\"#~后\">后</a>",
-    "zh_TW": "後"
+    "zh-CN": "<a href=\"#~后\">后</a>",
+    "zh-TW": "後"
   },
   "從": {
     "en": [
@@ -657,8 +657,8 @@
       "second cousin"
     ],
     "pinyin": "cóng",
-    "zh_CN": "从",
-    "zh_TW": "從"
+    "zh-CN": "从",
+    "zh-TW": "從"
   },
   "忙": {
     "en": [
@@ -668,8 +668,8 @@
       "to rush"
     ],
     "pinyin": "máng",
-    "zh_CN": "忙",
-    "zh_TW": "忙"
+    "zh-CN": "忙",
+    "zh-TW": "忙"
   },
   "快": {
     "en": [
@@ -689,8 +689,8 @@
       "pleasant"
     ],
     "pinyin": "kuài",
-    "zh_CN": "快",
-    "zh_TW": "快"
+    "zh-CN": "快",
+    "zh-TW": "快"
   },
   "怕": {
     "en": [
@@ -702,8 +702,8 @@
       "perhaps"
     ],
     "pinyin": "pà",
-    "zh_CN": "怕",
-    "zh_TW": "怕"
+    "zh-CN": "怕",
+    "zh-TW": "怕"
   },
   "想": {
     "en": [
@@ -715,8 +715,8 @@
       "to miss (feel wistful about the absence of sb or sth)​"
     ],
     "pinyin": "xiǎng",
-    "zh_CN": "想",
-    "zh_TW": "想"
+    "zh-CN": "想",
+    "zh-TW": "想"
   },
   "意": {
     "en": [
@@ -734,8 +734,8 @@
       "to anticipate"
     ],
     "pinyin": "yì",
-    "zh_CN": "意",
-    "zh_TW": "意"
+    "zh-CN": "意",
+    "zh-TW": "意"
   },
   "我": {
     "en": [
@@ -744,8 +744,8 @@
       "my"
     ],
     "pinyin": "wǒ",
-    "zh_CN": "我",
-    "zh_TW": "我"
+    "zh-CN": "我",
+    "zh-TW": "我"
   },
   "房": {
     "en": [
@@ -757,8 +757,8 @@
       "classifier for family members (or concubines)​"
     ],
     "pinyin": "fáng",
-    "zh_CN": "房",
-    "zh_TW": "房"
+    "zh-CN": "房",
+    "zh-TW": "房"
   },
   "找": {
     "en": [
@@ -771,8 +771,8 @@
       "to give change"
     ],
     "pinyin": "zhǎo",
-    "zh_CN": "找",
-    "zh_TW": "找"
+    "zh-CN": "找",
+    "zh-TW": "找"
   },
   "於": {
     "en": [
@@ -788,8 +788,8 @@
       "Ah!"
     ],
     "pinyin": "yú",
-    "zh_CN": "於",
-    "zh_TW": "於"
+    "zh-CN": "於",
+    "zh-TW": "於"
   },
   "是": {
     "en": [
@@ -800,8 +800,8 @@
       "to be"
     ],
     "pinyin": "shì",
-    "zh_CN": "是",
-    "zh_TW": "是"
+    "zh-CN": "是",
+    "zh-TW": "是"
   },
   "時": {
     "en": [
@@ -814,8 +814,8 @@
       "period"
     ],
     "pinyin": "shí",
-    "zh_CN": "时",
-    "zh_TW": "時"
+    "zh-CN": "时",
+    "zh-TW": "時"
   },
   "有": {
     "en": [
@@ -826,8 +826,8 @@
       "to be"
     ],
     "pinyin": "yǒu",
-    "zh_CN": "有",
-    "zh_TW": "有"
+    "zh-CN": "有",
+    "zh-TW": "有"
   },
   "服": {
     "en": [
@@ -846,8 +846,8 @@
       "dose (measure word for medicine)​"
     ],
     "pinyin": "fú",
-    "zh_CN": "服",
-    "zh_TW": "服"
+    "zh-CN": "服",
+    "zh-TW": "服"
   },
   "朵": {
     "en": [
@@ -858,8 +858,8 @@
       " clouds etc"
     ],
     "pinyin": "duǒ",
-    "zh_CN": "朵",
-    "zh_TW": "朵"
+    "zh-CN": "朵",
+    "zh-TW": "朵"
   },
   "林": {
     "en": [
@@ -871,16 +871,16 @@
       "a collection (of similar things)​"
     ],
     "pinyin": "lín",
-    "zh_CN": "林",
-    "zh_TW": "林"
+    "zh-CN": "林",
+    "zh-TW": "林"
   },
   "森": {
     "en": [
       "forest"
     ],
     "pinyin": "sēn",
-    "zh_CN": "森",
-    "zh_TW": "森"
+    "zh-CN": "森",
+    "zh-TW": "森"
   },
   "楚": {
     "en": [
@@ -896,8 +896,8 @@
       "punishment cane (old)​"
     ],
     "pinyin": "chǔ",
-    "zh_CN": "楚",
-    "zh_TW": "楚"
+    "zh-CN": "楚",
+    "zh-TW": "楚"
   },
   "樣": {
     "en": [
@@ -909,8 +909,8 @@
       "CL:<a href=\"#~個\">個</a>|个[ge4]"
     ],
     "pinyin": "yàng",
-    "zh_CN": "样",
-    "zh_TW": "樣"
+    "zh-CN": "样",
+    "zh-TW": "樣"
   },
   "沒": {
     "en": [
@@ -923,8 +923,8 @@
       "to inundate"
     ],
     "pinyin": "mò",
-    "zh_CN": "没",
-    "zh_TW": "沒"
+    "zh-CN": "没",
+    "zh-TW": "沒"
   },
   "清": {
     "en": [
@@ -939,8 +939,8 @@
       "to clean up or purge"
     ],
     "pinyin": "qīng",
-    "zh_CN": "清",
-    "zh_TW": "清"
+    "zh-CN": "清",
+    "zh-TW": "清"
   },
   "為": {
     "en": [
@@ -958,8 +958,8 @@
       "to"
     ],
     "pinyin": "wéi",
-    "zh_CN": "为",
-    "zh_TW": "為"
+    "zh-CN": "为",
+    "zh-TW": "為"
   },
   "然": {
     "en": [
@@ -971,8 +971,8 @@
       "-ly"
     ],
     "pinyin": "rán",
-    "zh_CN": "然",
-    "zh_TW": "然"
+    "zh-CN": "然",
+    "zh-TW": "然"
   },
   "牙": {
     "en": [
@@ -981,8 +981,8 @@
       "CL:<a href=\"#~顆\">顆</a>|颗[ke1]"
     ],
     "pinyin": "yá",
-    "zh_CN": "牙",
-    "zh_TW": "牙"
+    "zh-CN": "牙",
+    "zh-TW": "牙"
   },
   "物": {
     "en": [
@@ -992,8 +992,8 @@
       "abbr. for physics <a href=\"#~物理\">物理</a>"
     ],
     "pinyin": "wù",
-    "zh_CN": "物",
-    "zh_TW": "物"
+    "zh-CN": "物",
+    "zh-TW": "物"
   },
   "狼": {
     "en": [
@@ -1003,16 +1003,16 @@
       "<a href=\"#~條\">條</a>|条[tiao2]"
     ],
     "pinyin": "láng",
-    "zh_CN": "狼",
-    "zh_TW": "狼"
+    "zh-CN": "狼",
+    "zh-TW": "狼"
   },
   "獵": {
     "en": [
       "hunting"
     ],
     "pinyin": "liè",
-    "zh_CN": "猎",
-    "zh_TW": "獵"
+    "zh-CN": "猎",
+    "zh-TW": "獵"
   },
   "生": {
     "en": [
@@ -1025,8 +1025,8 @@
       "student"
     ],
     "pinyin": "shēng",
-    "zh_CN": "生",
-    "zh_TW": "生"
+    "zh-CN": "生",
+    "zh-TW": "生"
   },
   "病": {
     "en": [
@@ -1037,8 +1037,8 @@
       "defect"
     ],
     "pinyin": "bìng",
-    "zh_CN": "病",
-    "zh_TW": "病"
+    "zh-CN": "病",
+    "zh-TW": "病"
   },
   "的": {
     "en": [
@@ -1053,8 +1053,8 @@
       "clear"
     ],
     "pinyin": "dì",
-    "zh_CN": "的",
-    "zh_TW": "的"
+    "zh-CN": "的",
+    "zh-TW": "的"
   },
   "看": {
     "en": [
@@ -1078,8 +1078,8 @@
       "Watch out! (for a danger)​"
     ],
     "pinyin": "kàn",
-    "zh_CN": "看",
-    "zh_TW": "看"
+    "zh-CN": "看",
+    "zh-TW": "看"
   },
   "眼": {
     "en": [
@@ -1093,8 +1093,8 @@
       " pots etc)​"
     ],
     "pinyin": "yǎn",
-    "zh_CN": "眼",
-    "zh_TW": "眼"
+    "zh-CN": "眼",
+    "zh-TW": "眼"
   },
   "睛": {
     "en": [
@@ -1102,8 +1102,8 @@
       "eyeball"
     ],
     "pinyin": "jīng",
-    "zh_CN": "睛",
-    "zh_TW": "睛"
+    "zh-CN": "睛",
+    "zh-TW": "睛"
   },
   "穿": {
     "en": [
@@ -1118,8 +1118,8 @@
       "to thread"
     ],
     "pinyin": "chuān",
-    "zh_CN": "穿",
-    "zh_TW": "穿"
+    "zh-CN": "穿",
+    "zh-TW": "穿"
   },
   "等": {
     "en": [
@@ -1138,8 +1138,8 @@
       "once"
     ],
     "pinyin": "děng",
-    "zh_CN": "等",
-    "zh_TW": "等"
+    "zh-CN": "等",
+    "zh-TW": "等"
   },
   "紅": {
     "en": [
@@ -1150,8 +1150,8 @@
       "bonus"
     ],
     "pinyin": "hóng",
-    "zh_CN": "红",
-    "zh_TW": "紅"
+    "zh-CN": "红",
+    "zh-TW": "紅"
   },
   "給": {
     "en": [
@@ -1166,8 +1166,8 @@
       "to provide"
     ],
     "pinyin": "gěi",
-    "zh_CN": "给",
-    "zh_TW": "給"
+    "zh-CN": "给",
+    "zh-TW": "給"
   },
   "經": {
     "en": [
@@ -1186,8 +1186,8 @@
       "abbr. for economics <a href=\"#~經濟\">經濟</a>|经济[jing1 ji4]"
     ],
     "pinyin": "jīng",
-    "zh_CN": "经",
-    "zh_TW": "經"
+    "zh-CN": "经",
+    "zh-TW": "經"
   },
   "耳": {
     "en": [
@@ -1196,8 +1196,8 @@
       "and that is all (classical Chinese)​"
     ],
     "pinyin": "ěr",
-    "zh_CN": "耳",
-    "zh_TW": "耳"
+    "zh-CN": "耳",
+    "zh-TW": "耳"
   },
   "聲": {
     "en": [
@@ -1208,8 +1208,8 @@
       "classifier for sounds"
     ],
     "pinyin": "shēng",
-    "zh_CN": "声",
-    "zh_TW": "聲"
+    "zh-CN": "声",
+    "zh-TW": "聲"
   },
   "聽": {
     "en": [
@@ -1224,8 +1224,8 @@
       "to allow"
     ],
     "pinyin": "tīng",
-    "zh_CN": "<a href=\"#~听\">听</a>",
-    "zh_TW": "聽"
+    "zh-CN": "<a href=\"#~听\">听</a>",
+    "zh-TW": "聽"
   },
   "衣": {
     "en": [
@@ -1236,8 +1236,8 @@
       "to put on (clothes)​"
     ],
     "pinyin": "yī",
-    "zh_CN": "衣",
-    "zh_TW": "衣"
+    "zh-CN": "衣",
+    "zh-TW": "衣"
   },
   "裡": {
     "en": [
@@ -1248,8 +1248,8 @@
       "also written <a href=\"#~裏\">裏</a>|<a href=\"#~里\">里</a>[li3]"
     ],
     "pinyin": "lǐ",
-    "zh_CN": "<a href=\"#~里\">里</a>",
-    "zh_TW": "裡"
+    "zh-CN": "<a href=\"#~里\">里</a>",
+    "zh-TW": "裡"
   },
   "要": {
     "en": [
@@ -1269,8 +1269,8 @@
       "if"
     ],
     "pinyin": "yào",
-    "zh_CN": "要",
-    "zh_TW": "要"
+    "zh-CN": "要",
+    "zh-TW": "要"
   },
   "見": {
     "en": [
@@ -1282,8 +1282,8 @@
       "also written <a href=\"#~現\">現</a>|现[xian4]"
     ],
     "pinyin": "jiàn",
-    "zh_CN": "见",
-    "zh_TW": "見"
+    "zh-CN": "见",
+    "zh-TW": "見"
   },
   "起": {
     "en": [
@@ -1307,8 +1307,8 @@
       " group"
     ],
     "pinyin": "qǐ",
-    "zh_CN": "起",
-    "zh_TW": "起"
+    "zh-CN": "起",
+    "zh-TW": "起"
   },
   "趕": {
     "en": [
@@ -1323,8 +1323,8 @@
       "until"
     ],
     "pinyin": "gǎn",
-    "zh_CN": "赶",
-    "zh_TW": "趕"
+    "zh-CN": "赶",
+    "zh-TW": "趕"
   },
   "路": {
     "en": [
@@ -1338,8 +1338,8 @@
       "kind"
     ],
     "pinyin": "lù",
-    "zh_CN": "路",
-    "zh_TW": "路"
+    "zh-CN": "路",
+    "zh-TW": "路"
   },
   "躺": {
     "en": [
@@ -1347,8 +1347,8 @@
       "to lie down"
     ],
     "pinyin": "tǎng",
-    "zh_CN": "躺",
-    "zh_TW": "躺"
+    "zh-CN": "躺",
+    "zh-TW": "躺"
   },
   "逃": {
     "en": [
@@ -1357,8 +1357,8 @@
       "to flee"
     ],
     "pinyin": "táo",
-    "zh_CN": "逃",
-    "zh_TW": "逃"
+    "zh-CN": "逃",
+    "zh-TW": "逃"
   },
   "這": {
     "en": [
@@ -1368,8 +1368,8 @@
       " esp. in Beijing)​"
     ],
     "pinyin": "zhè",
-    "zh_CN": "这",
-    "zh_TW": "這"
+    "zh-CN": "这",
+    "zh-TW": "這"
   },
   "遇": {
     "en": [
@@ -1382,8 +1382,8 @@
       "chance"
     ],
     "pinyin": "yù",
-    "zh_CN": "遇",
-    "zh_TW": "遇"
+    "zh-CN": "遇",
+    "zh-TW": "遇"
   },
   "過": {
     "en": [
@@ -1399,8 +1399,8 @@
       "too-"
     ],
     "pinyin": "guò",
-    "zh_CN": "过",
-    "zh_TW": "過"
+    "zh-CN": "过",
+    "zh-TW": "過"
   },
   "邊": {
     "en": [
@@ -1414,8 +1414,8 @@
       "suffix of a noun of locality"
     ],
     "pinyin": "biān",
-    "zh_CN": "边",
-    "zh_TW": "邊"
+    "zh-CN": "边",
+    "zh-TW": "邊"
   },
   "那": {
     "en": [
@@ -1433,8 +1433,8 @@
       "old variant of <a href=\"#~挪\">挪</a>[nuo2]"
     ],
     "pinyin": "nà",
-    "zh_CN": "那",
-    "zh_TW": "那"
+    "zh-CN": "那",
+    "zh-TW": "那"
   },
   "隻": {
     "en": [
@@ -1444,8 +1444,8 @@
       " vessels etc"
     ],
     "pinyin": "zhī",
-    "zh_CN": "<a href=\"#~只\">只</a>",
-    "zh_TW": "隻"
+    "zh-CN": "<a href=\"#~只\">只</a>",
+    "zh-TW": "隻"
   },
   "離": {
     "en": [
@@ -1461,8 +1461,8 @@
       "☲"
     ],
     "pinyin": "lí",
-    "zh_CN": "<a href=\"#~离\">离</a>",
-    "zh_TW": "離"
+    "zh-CN": "<a href=\"#~离\">离</a>",
+    "zh-TW": "離"
   },
   "音": {
     "en": [
@@ -1475,8 +1475,8 @@
       "reading (phonetic value of a character)​"
     ],
     "pinyin": "yīn",
-    "zh_CN": "音",
-    "zh_TW": "音"
+    "zh-CN": "音",
+    "zh-TW": "音"
   },
   "食": {
     "en": [
@@ -1487,8 +1487,8 @@
       "to feed"
     ],
     "pinyin": "shí",
-    "zh_CN": "食",
-    "zh_TW": "食"
+    "zh-CN": "食",
+    "zh-TW": "食"
   },
   "齒": {
     "en": [
@@ -1496,7 +1496,7 @@
       "CL:<a href=\"#~顆\">顆</a>|颗[ke1]"
     ],
     "pinyin": "chǐ",
-    "zh_CN": "齿",
-    "zh_TW": "齒"
+    "zh-CN": "齿",
+    "zh-TW": "齒"
   }
 }

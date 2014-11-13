@@ -71,13 +71,13 @@
   c = Char = (function(){
     Char.displayName = 'Char';
     var prototype = Char.prototype, constructor = Char;
-    function Char(pinyin, zh_TW, zh_CN){
+    function Char(pinyin, arg$, arg1$){
       var this$ = this instanceof ctor$ ? this : new ctor$;
       this$.pinyin = pinyin;
-      this$.zh_TW = zh_TW;
-      this$.zh_CN = zh_CN != null
-        ? zh_CN
-        : this$.zh_TW;
+      this$['zh-TW'] = arg$;
+      this$['zh-CN'] = arg1$ != null
+        ? arg1$
+        : this$['zh-TW'];
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
     prototype.flatten = function(){
@@ -192,8 +192,8 @@
         moe = JSON.parse(data);
         for (c in moe) {
           x$ = moe[c];
-          x$.zh_TW = tagless(moe[c].zh_TW);
-          x$.zh_CN = tagless(moe[c].zh_CN);
+          x$['zh-TW'] = tagless(moe[c]['zh-TW']);
+          x$['zh-CN'] = tagless(moe[c]['zh-CN']);
           x$.pinyin = tagless(moe[c].pinyin);
           x$.en = x$.en.map(tagless);
         }
@@ -245,10 +245,10 @@
                 var moe, en;
                 moe = dict.get(it);
                 if (children.length === 1) {
-                  return Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe.zh_TW : void 8) || it, moe != null ? moe.zh_CN : void 8);
+                  return Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe['zh-TW'] : void 8) || it, moe != null ? moe['zh-CN'] : void 8);
                 } else {
                   en = slice.call(moe.en);
-                  return Node([Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe.zh_TW : void 8) || it, moe != null ? moe.zh_CN : void 8)], en.join(', '), en.sort(function(a, b){
+                  return Node([Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe['zh-TW'] : void 8) || it, moe != null ? moe['zh-CN'] : void 8)], en.join(', '), en.sort(function(a, b){
                     return a.length - b.length;
                   })[0]);
                 }

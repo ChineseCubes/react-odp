@@ -35,15 +35,6 @@
     prototype.soundURI = function(){
       return remoteTalks + "/sentencesound/" + this.id + ".mp3";
     };
-    prototype.getSoundDataURI = function(done){
-      getBase64(this.soundURI(), function(err, data){
-        if (err) {
-          return done(err);
-        } else {
-          return done(err, "data:audio/mp3;base64," + data);
-        }
-      });
-    };
     return CubeList;
   }());
   Cube = (function(superclass){
@@ -57,25 +48,10 @@
       return remoteTalks + "/cubesound/" + this.id + ".mp3";
     };
     prototype.strokeURI = function(){
-      return remoteTalks + "/cubestroke/" + this.id;
-    };
-    prototype.getSoundDataURI = function(done){
-      getBase64(this.soundURI(), function(err, data){
-        if (err) {
-          return done(err);
-        } else {
-          return done(err, "data:audio/mp3;base64," + data);
-        }
-      });
-    };
-    prototype.getStrokeDataURI = function(done){
-      getBase64(this.strokeURI(), function(err, data){
-        if (err) {
-          return done(err);
-        } else {
-          return done(err, "data:image/gif;base64," + data);
-        }
-      });
+      return {
+        'zh-TW': remoteTalks + "/cubestroke/" + this.id,
+        'zh-CN': remoteTalks + "/cubestroke/" + this.id + "/chs"
+      };
     };
     return Cube;
   }(CubeList));
