@@ -40,10 +40,10 @@ Sentence = React.createClass do
               hide:  text is null
             stroker = @refs.stroker
             if text
-              err, data <- API.Talks.get text
+              err, data <~ API.Talks.get text
               stroker
                 ..onHide = -> close!
-                ..setState state <<< strokeURI: data?strokeURI!
+                ..setState state <<< strokeURI: data?strokeURI![@props.mode]
             else
               stroker.setState state
           onChildCut: (comp) ~>

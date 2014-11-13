@@ -34,7 +34,7 @@ Word = React.createClass do
     if state.stroke isnt @state.stroke
       @props.onStroke do
         if @state.stroke
-          then @props.data.flatten!map (it['zh-TW']) .join ''
+          then @props.data.flatten!map(~> it['zh-TW'])join('')
           else null
         ~> # off switch for parent component
           @setState do

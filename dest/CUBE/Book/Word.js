@@ -47,7 +47,9 @@
         }).join(''), this.props.mode);
       }
       if (state.stroke !== this.state.stroke) {
-        this.props.onStroke(this.state.stroke ? this.props.data.flatten().map(it['zh-TW']).join('') : null, function(){
+        this.props.onStroke(this.state.stroke ? this.props.data.flatten().map(function(it){
+          return it['zh-TW'];
+        }).join('') : null, function(){
           return this$.setState({
             pinyin: false,
             stroke: false,

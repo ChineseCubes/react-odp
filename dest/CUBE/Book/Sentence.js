@@ -68,7 +68,7 @@
                   x$.onHide = function(){
                     return close();
                   };
-                  x$.setState((state.strokeURI = data != null ? data.strokeURI() : void 8, state));
+                  x$.setState((state.strokeURI = data != null ? data.strokeURI()[this$.props.mode] : void 8, state));
                   return x$;
                 });
               } else {
