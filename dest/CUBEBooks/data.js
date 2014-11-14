@@ -464,6 +464,9 @@
           lastIndex = re.lastIndex;
           words.push(r[0]);
         }
+        if (lastIndex !== str.length) {
+          words.push(str.substring(lastIndex));
+        }
         return words;
       }
     },
