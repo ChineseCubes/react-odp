@@ -229,6 +229,8 @@ Data =
           words.push str.substring lastIndex, r.index
         lastIndex = re.lastIndex
         words.push r.0
+      if lastIndex isnt str.length
+        words.push str.substring lastIndex
       words
   Segmentations: Segmentations
 
