@@ -379,31 +379,39 @@
       }
       return results$;
     },
-    segment: function(str, segs){
+    segment: function(str, segs, longest){
       var re, words, lastIndex, r;
       segs == null && (segs = []);
+      longest == null && (longest = true);
       switch (false) {
       case !!(str != null && str.length):
         return null;
       case segs.length !== 0:
         return [str.slice()];
       default:
-        segs.sort(function(a, b){
-          return a.length - b.length;
-        });
+        segs.sort(longest
+          ? function(a, b){
+            return b.length - a.length;
+          }
+          : function(a, b){
+            return a.length - b.length;
+          });
+        segs = segs.filter((function(it){
+          return it !== str;
+        }));
         re = Object.keys(punctuations).concat(segs).join('|') + "";
         re = new RegExp(re, 'g');
         words = [];
         lastIndex = 0;
         while (r = re.exec(str)) {
           if (lastIndex !== r.index) {
-            words.push(str.substring(lastIndex, r.index));
+            Array.prototype.push.apply(words, Array.prototype.slice.call(str.substring(lastIndex, r.index)));
           }
           lastIndex = re.lastIndex;
           words.push(r[0]);
         }
         if (lastIndex !== str.length) {
-          words.push(str.substring(lastIndex));
+          Array.prototype.push.apply(words, Array.prototype.slice.call(str.substring(lastIndex)));
         }
         return words;
       }
