@@ -258,11 +258,14 @@ utils =
     #  | otherwise => it
     #tmp.textContent or tmp.innerText or ''
   # segment: return segments
-  segment: (str, segs = []) ->
+  segment: (str, segs = [], longest = true) ->
     | not str?length   => null
     | segs.length is 0 => [str.slice!]
     | otherwise        =>
-      segs.sort (a, b) -> a.length - b.length
+      segs.sort if longest
+        then (a, b) -> b.length - a.length
+        else (a, b) -> a.length - b.length
+      segs .= filter (isnt str)
       re = "#{Object.keys(punctuations)concat(segs)join('|')}"
       re = new RegExp re, \g
       words = []
@@ -270,11 +273,11 @@ utils =
       while r = re.exec str
         if lastIndex isnt r.index
           # push skiped word
-          words.push str.substring lastIndex, r.index
+          Array::push.apply words, Array::slice.call str.substring lastIndex, r.index
         lastIndex = re.lastIndex
         words.push r.0
       if lastIndex isnt str.length
-        words.push str.substring lastIndex
+        Array::push.apply words, Array::slice.call str.substring lastIndex
       words
   Segmentations: Segmentations
 
