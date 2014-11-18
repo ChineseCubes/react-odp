@@ -48,7 +48,7 @@
       }
       if (state.stroke !== this.state.stroke) {
         this.props.onStroke(this.state.stroke ? this.props.data.flatten().map(function(it){
-          return it['zh-TW'];
+          return it[this$.props.mode];
         }).join('') : null, function(){
           return this$.setState({
             pinyin: false,

@@ -25,6 +25,7 @@ Sentence = React.createClass do
       Stroker do
         key: "stroker"
         ref: "stroker"
+        mode: @props.mode
       for let i, word of words
         id = (word.short / ' ')join '-'
         Word do
@@ -39,13 +40,13 @@ Sentence = React.createClass do
               play:  text isnt null
               hide:  text is null
             stroker = @refs.stroker
-            if text
-              err, data <~ API.Talks.get text
-              stroker
-                ..onHide = -> close!
-                ..setState state <<< strokeURI: data?strokeURI![@props.mode]
-            else
-              stroker.setState state
+            #if text
+            #  err, data <~ API.Talks.get text
+            #  stroker
+            #    ..onHide = -> close!
+            #    ..setState state <<< strokeURI: data?strokeURI![@props.mode]
+            #else
+            stroker.setState state
           onChildCut: (comp) ~>
             @props.onWordCut.call this, comp
           onChildClick: (comp) ~>

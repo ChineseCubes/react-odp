@@ -9,7 +9,8 @@ Data = require '../data'
 Stroker = React.createClass do
   displayName: 'ZhStrokeData.SpriteStroker'
   getDefaultProps: ->
-    path: './strokes/'
+    mode: 'zh-TW'
+    path: './arphic-strokes/'
   getInitialState: ->
     play: no
     hide: true
@@ -17,11 +18,11 @@ Stroker = React.createClass do
     stroker: null
     strokeURI: null
   componentWillUpdate: (props, state) ->
-    return if not state.words or @props.fallback
+    return if not state.words #or @props.fallback
     punc = new RegExp Object.keys(Data.punctuations)join('|'), \g
     state.words .= replace punc, ''
-    if @state.hide isnt state.hide and state.hide is true
-      @onHide.call this
+    #if @state.hide isnt state.hide and state.hide is true
+    #  @props.onHide.call this
   componentDidUpdate: (old-props, old-state) ->
     $container = $ @refs.container.getDOMNode!
     $container.empty!
@@ -32,17 +33,18 @@ Stroker = React.createClass do
       @state.stroker =
         new zh-stroke-data.SpriteStroker do
           @state.words
-          url:    @props.path
+          url:      "#{@props.path}/#{@props.mode}/"
+          dataType: \txt
           speed:  5000
           width:  215
           height: 215
     $container.append @state.stroker.dom-element
     if @state.play
       @state.play = no
-      @state.stroker
-        #..fastSeek 0 # FIXME
-        ..play!
-  onHide: -> ...
+      @state.stroker.promise.then ~>
+        @state.stroker.play!
+          #..fastSeek 0 # FIXME
+          #..play!
   render: ->
     div do
       className: 'stroker'

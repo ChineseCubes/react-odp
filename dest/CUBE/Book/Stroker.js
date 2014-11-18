@@ -14,7 +14,8 @@
     displayName: 'ZhStrokeData.SpriteStroker',
     getDefaultProps: function(){
       return {
-        path: './strokes/'
+        mode: 'zh-TW',
+        path: './arphic-strokes/'
       };
     },
     getInitialState: function(){
@@ -28,17 +29,14 @@
     },
     componentWillUpdate: function(props, state){
       var punc;
-      if (!state.words || this.props.fallback) {
+      if (!state.words) {
         return;
       }
       punc = new RegExp(Object.keys(Data.punctuations).join('|'), 'g');
-      state.words = state.words.replace(punc, '');
-      if (this.state.hide !== state.hide && state.hide === true) {
-        return this.onHide.call(this);
-      }
+      return state.words = state.words.replace(punc, '');
     },
     componentDidUpdate: function(oldProps, oldState){
-      var $container, x$;
+      var $container, this$ = this;
       $container = $(this.refs.container.getDOMNode());
       $container.empty();
       if (!this.state.words || this.state.words.length === 0 || this.state.strokeURI) {
@@ -46,7 +44,8 @@
       }
       if (!this.state.stroker || oldState.words !== this.state.words) {
         this.state.stroker = new zhStrokeData.SpriteStroker(this.state.words, {
-          url: this.props.path,
+          url: this.props.path + "/" + this.props.mode + "/",
+          dataType: 'txt',
           speed: 5000,
           width: 215,
           height: 215
@@ -55,13 +54,10 @@
       $container.append(this.state.stroker.domElement);
       if (this.state.play) {
         this.state.play = false;
-        x$ = this.state.stroker;
-        x$.play();
-        return x$;
+        return this.state.stroker.promise.then(function(){
+          return this$.state.stroker.play();
+        });
       }
-    },
-    onHide: function(){
-      throw Error('unimplemented');
     },
     render: function(){
       var ref$, this$ = this;

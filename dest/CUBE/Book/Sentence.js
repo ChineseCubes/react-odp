@@ -35,7 +35,8 @@
       className = "sentence " + this.props.className;
       return div((ref$ = this.props, ref$.className = className, ref$), Stroker({
         key: "stroker",
-        ref: "stroker"
+        ref: "stroker",
+        mode: this.props.mode
       }), (function(){
         var i$, results$ = [];
         for (i$ in words) {
@@ -61,19 +62,7 @@
                 hide: text === null
               };
               stroker = this$.refs.stroker;
-              if (text) {
-                return API.Talks.get(text, function(err, data){
-                  var x$;
-                  x$ = stroker;
-                  x$.onHide = function(){
-                    return close();
-                  };
-                  x$.setState((state.strokeURI = data != null ? data.strokeURI()[this$.props.mode] : void 8, state));
-                  return x$;
-                });
-              } else {
-                return stroker.setState(state);
-              }
+              return stroker.setState(state);
             },
             onChildCut: function(comp){
               return this$.props.onWordCut.call(this$, comp);
