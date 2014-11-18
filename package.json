@@ -6,7 +6,7 @@
   "scripts": {
     "start": "gulp",
     "prepublish": "gulp build",
-    "pack": "./src/build/pack.ls ./*.odp",
+    "pack": "./src/build/pack.ls ./books/*/*.odp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
