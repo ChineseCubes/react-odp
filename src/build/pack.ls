@@ -13,6 +13,7 @@ require! {
   cpr: _cpr
   jade
   htmltidy: { tidy }
+  'es6-promise': { Promise }
   '../CUBE/data': Data
   './epub/utils': utils
   './epub': { pack }
@@ -139,11 +140,17 @@ console.log '''
   next = ->
   ##
   # generate font subset
-    src = path.resolve __dirname, 'epub', 'SourceHanSansTW-Regular.ttf'
-    dst = path.resolve build.path, 'fonts', 'Noto-subset.ttf'
-    err <- font-subset src, dst, build.codepoints
-    throw err if err
+    weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
+    Promise
+      .all for weight in weights
+        p = Promise (resolve, reject) ->
+          src = path.resolve __dirname, 'epub', "SourceHanSansTW-#weight.ttf"
+          dst = path.resolve build.path, 'fonts', "Noto-#{weight}-Subset.ttf"
+          err <- font-subset src, dst, build.codepoints
+          unless err then resolve! else reject err
+      .then toc
 
+  toc = ->
   ##
   # generate TOC.xhtml
     src = path.resolve __dirname, 'epub/TOC.jade'

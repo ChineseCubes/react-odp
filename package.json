@@ -15,6 +15,7 @@
   "dependencies": {
     "browser-request": "^0.3.2",
     "buffer": "^2.7.0",
+    "es6-promise": "^2.0.0",
     "howler": "^1.1.25",
     "jquery": "^2.1.1",
     "lodash": "^2.4.1",
