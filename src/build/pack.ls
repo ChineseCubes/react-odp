@@ -42,234 +42,245 @@ console.log '''
   return main! unless arg.match /.odp$/ # continue
   basename = path.basename arg, '.odp'
 
-
   ##
-  # prepare the build dir
+  # shared globals
   build =
     path: path.resolve ".#basename.build"
     data: path.resolve ".#basename.build/data"
     needs: <[js css fonts]>
+    num-pages: 0
 
   ##
-  # convert and unzip
-  src = path.resolve arg
-  dst = build.data
-  <- convert src, dst
-
-  src = path.resolve build.data, 'page*.json'
-  err, stdout, stderr <- get-codepoints src
-  codepoints = for c in stdout.split /\s/ | c.length  => parseInt c, 16
-  build.codepoints = codepoints.filter -> it > 10000
-
-  ##
-  # get data from moedict.tw
-  # XXX: should create dict.json before packing
-  chars = (for build.codepoints => String.fromCharCode ..)join ''
-  dst = path.resolve build.data, 'dict.json'
-  err, stdout, stderr <- fetch-moedict chars, dst
-  throw err if err
-
-  ##
-  # generate page*.xhtml
-  { attrs } <- Data.getMasterPage build.data
-  num-pages = attrs['TOTAL-PAGES']
-
-  dst = build.data
-  todo = [1 to num-pages]
-  :render let
-    return copy-statics! unless idx = todo.shift!
-    err <- gen-page dst, build.path, idx
-    throw err if err
-    render!
-
-  ##
-  # copy other dependancies
-  copy-statics = ->
-    # META-INF/
-    src = path.resolve __dirname, 'epub/META-INF'
-    dst = path.resolve build.path, 'META-INF'
-    err, files <- cp-r src, dst
-    throw err if err
-    # mimetype and more
-    files = <[mimetype]>
-    :copy let
-      return copy-more! unless file = files.shift!
-      src = path.resolve __dirname, 'epub', file
-      dst = path.resolve build.path, file
-      err <- cp src, dst
-      throw err if err
-      copy!
-
-  copy-more = ->
-    # css, js, fonts ...
-    counter = 0
-    for let dep in build.needs
-      src = path.resolve __dirname, '../../', dep
-      dst = path.resolve build.path, dep
-      console.warn "need #{rel src}" unless fs.existsSync src
-      err, files <- cp-r src, dst
-      throw err if err
-      copy-strokes! if ++counter is build.needs.length
-
-  copy-strokes = ->
-    try fs.mkdirSync path.resolve build.path, 'strokes'
-    counter = 0
-    for let stroke in build.codepoints
-      stroke = "#{stroke.toString 16}.json"
-      src = path.resolve __dirname, '../../strokes', stroke
-      dst = path.resolve build.path, 'strokes', stroke
-      err <- cp src, dst
-      throw err if err and err.code isnt \ENOENT
-      copy-arphic-strokes! if ++counter is build.codepoints.length
-
-  copy-arphic-strokes = ->
-    langs = <[zh-TW zh-CN]>
-    try fs.mkdirSync path.resolve build.path, 'arphic-strokes'
-    counter = 0
-    for let lang in langs
-      base = path.resolve build.path, 'arphic-strokes', lang
-      try fs.mkdirSync base
-      for let stroke in build.codepoints
-        stroke = "#{stroke.toString 16}.txt"
-        src = path.resolve __dirname, '../../arphic-strokes', lang, stroke
-        dst = path.resolve base, stroke
-        err <- cp src, dst
-        throw err if err and err.code isnt \ENOENT
-        next! if ++counter is build.codepoints.length * 2
-
-  next = ->
-  ##
-  # generate font subset
-    weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
-    Promise
-      .all for weight in weights
-        p = Promise (resolve, reject) ->
+  # should use rsvp.js for better error handling
+  Promise.resolve!
+    .then ->
+      # convert and unzip
+      src = path.resolve arg
+      dst = build.data
+      convert src, dst
+    .then ->
+      src = path.resolve build.data, 'page*.json'
+      get-codepoints src
+    .then (stdout, stderr) ->
+      codepoints = for c in stdout.split /\s/ | c.length  => parseInt c, 16
+      build.codepoints = codepoints.filter -> it > 10000
+    .then ->
+      # get data from moedict.tw
+      # XXX: should create dict.json before packing
+      chars = (for build.codepoints => String.fromCharCode ..)join ''
+      dst = path.resolve build.data, 'dict.json'
+      fetch-moedict chars, dst
+    .then ->
+      get-master-page build.data
+    .then ({ attrs }) ->
+      # generate page*.xhtml
+      build.num-pages = attrs['TOTAL-PAGES']
+      dst = build.data
+      Promise.all do
+        for idx in [1 to build.num-pages]
+          gen-page dst, build.path, idx
+    .then ->
+      # META-INF/
+      src = path.resolve __dirname, 'epub/META-INF'
+      dst = path.resolve build.path, 'META-INF'
+      cp-r src, dst
+    .then ->
+      # mimetype and more
+      Promise.all do
+        for file in <[mimetype]>
+          src = path.resolve __dirname, 'epub', file
+          dst = path.resolve build.path, file
+          cp src, dst
+    .then ->
+      # css, js, fonts ...
+      counter = 0
+      Promise.all do
+        for dep in build.needs
+          src = path.resolve __dirname, '../../', dep
+          dst = path.resolve build.path, dep
+          console.warn "need #{rel src}" unless fs.existsSync src
+          cp-r src, dst
+    .then ->
+      console.log "#{'cp'magenta} strokes"
+      try fs.mkdirSync path.resolve build.path, 'strokes'
+      Promise.all do
+        for let stroke in build.codepoints
+          stroke = "#{stroke.toString 16}.json"
+          src = path.resolve __dirname, '../../strokes', stroke
+          dst = path.resolve build.path, 'strokes', stroke
+          cp src, dst, off
+    .then ->
+      console.log "#{'cp'magenta} arphic-strokes"
+      langs = <[zh-TW zh-CN]>
+      try fs.mkdirSync path.resolve build.path, 'arphic-strokes'
+      counter = 0
+      Promise.all do
+        for lang in langs
+          base = path.resolve build.path, 'arphic-strokes', lang
+          try fs.mkdirSync base
+          Promise.all do
+            for stroke in build.codepoints
+              stroke = "#{stroke.toString 16}.txt"
+              src = path.resolve __dirname, '../../arphic-strokes', lang, stroke
+              dst = path.resolve base, stroke
+              cp src, dst, off
+    .then ->
+      # generate font subset
+      weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
+      Promise.all do
+        for weight in weights
           src = path.resolve __dirname, 'epub', "SourceHanSansTW-#weight.ttf"
           dst = path.resolve build.path, 'fonts', "Noto-#{weight}-Subset.ttf"
-          err <- font-subset src, dst, build.codepoints
-          unless err then resolve! else reject err
-      .then toc
-
-  toc = ->
-  ##
-  # generate TOC.xhtml
-    src = path.resolve __dirname, 'epub/TOC.jade'
-    dst = path.resolve build.path, 'TOC.xhtml'
-    files = for idx from 1 to num-pages
-      path: "page#idx.xhtml"
-      title: if idx is 1 then 'Cover' else "Page #idx"
-    result = jade.renderFile src, { files }
-    err, html <- tidy result, indent: on
-    throw err if err
-    err <- write dst, html
-    throw err if err
-
-  ##
-  # generate metadata for EPUB
-    files = []
-    vinyl
-      .src [
-        "#{build.path}/**"
-        "!#{build.path}/**/.*"
-        "!#{build.path}/META-INF/*"
-        "!#{build.path}/mimetype"
-        "!#{build.path}/package.opf"
-        "!#{build.path}/subset.pe"
-      ]
-      .pipe map (file, cb) ->
-        files.push path.relative(build.path, file.path)
-        cb null, file
-      .on \end ->
-        ocf = pack do
-          files
-          spine: for idx from 1 to num-pages => "page#idx.xhtml"
-          metadata: require path.resolve build.data, 'metadata.json'
-        dst = path.resolve build.path, \package.opf
-        err <- write dst, ocf
-        throw err if err
-        src = path.resolve build.path
-        dst = path.resolve build.path, "../#{basename}.epub"
-        err <- zip src, dst
-        throw err if err
-        main!
+          font-subset src, dst, build.codepoints
+    .then -> new Promise (resolve, reject) ->
+      # generate TOC.xhtml
+      src = path.resolve __dirname, 'epub/TOC.jade'
+      dst = path.resolve build.path, 'TOC.xhtml'
+      files = for idx from 1 to build.num-pages
+        path: "page#idx.xhtml"
+        title: if idx is 1 then 'Cover' else "Page #idx"
+      result = jade.renderFile src, { files }
+      err, html <- tidy result, indent: on
+      return reject err if err
+      write dst, html .then resolve
+    .then ->
+      # generate metadata for EPUB
+      files = []
+      vinyl
+        .src [
+          "#{build.path}/**"
+          "!#{build.path}/**/.*"
+          "!#{build.path}/META-INF/*"
+          "!#{build.path}/mimetype"
+          "!#{build.path}/package.opf"
+          "!#{build.path}/subset.pe"
+        ]
+        .pipe map (file, cb) ->
+          files.push path.relative(build.path, file.path)
+          cb null, file
+        .on \end ->
+          ocf = pack do
+            files
+            spine: for idx from 1 to build.num-pages => "page#idx.xhtml"
+            metadata: require path.resolve build.data, 'metadata.json'
+          dst = path.resolve build.path, \package.opf
+          write dst, ocf
+            .then ->
+              src = path.resolve build.path
+              dst = path.resolve build.path, "../#{basename}.epub"
+              zip src, dst
+            .then main
+    .catch (err) ->
+      console.log err
 
 ##
 # helpers
-function convert src, dst, done
-  console.log "#{'convert'magenta} and #{'unzip'magenta} #{rel src}"
-  extractor = unzip.Extract path: dst
-  extractor.on \close done
-  request {
-    method: \POST
-    #uri: 'https://web-beta.chinesecubes.com/sandbox/odpConvert.php'
-    uri: 'http://192.168.11.15/sandbox/odpConvert.php'
-    #encoding: \binary
-  }
-    ..form!append \file fs.createReadStream src
-    ..pipe extractor
+function convert src, dst
+  new Promise (resolve, reject) ->
+    console.log "#{'convert'magenta} and #{'unzip'magenta} #{rel src}"
+    extractor = unzip.Extract path: dst
+    extractor.on \close -> resolve!
+    request {
+      method: \POST
+      uri: 'https://web-beta.chinesecubes.com/sandbox/odpConvert.php'
+      #uri: 'http://192.168.11.15/sandbox/odpConvert.php'
+      #encoding: \binary
+      #timeout: 20000ms
+    }
+      ..form!append \file fs.createReadStream src
+      ..on \error (err) -> reject err
+      ..pipe extractor
 
-function cp src, dst, done
-  unless fs.existsSync src # fail silently
-    console.log "#{'not found:'red} #{rel src}"
-    return done!
-  console.log "#{'cp'magenta} #{rel src} #{rel dst}"
-  _cp src, dst, done
+function cp src, dst, verbose = true
+  new Promise (resolve, reject) ->
+    unless fs.existsSync src # fail silently
+      console.warn "#{'not found:'yellow} #{rel src}" if verbose
+      return resolve!
+    console.log "#{'cp'magenta} #{rel src} #{rel dst}" if verbose
+    _cp src, dst, (err) ->
+      if not err or err.code is \ENOENT
+        then resolve!
+        else reject err
 
-function cp-r src, dst, done
-  console.log "#{'cp'magenta} -R #{rel src} #{rel dst}"
-  _cpr src, dst, { delete-first: on, overwrite: on, confirm: on }, done
+function cp-r src, dst
+  new Promise (resolve, reject) ->
+    console.log "#{'cp'magenta} -R #{rel src} #{rel dst}"
+    _cpr src, dst, {
+      delete-first: on
+      overwrite: on
+      confirm: on
+    }, (err, files) ->
+      unless err then resolve files else reject err
 
 gen = path.resolve __dirname, './gen.ls'
-function gen-page src, dst, idx, done
-  console.log "#{(rel gen)magenta} #{rel src} #idx > #{rel dst}/page#idx.xhtml"
-  exec do
-    "#gen #{escape path.relative dst, src} #idx > #{escape dst}/page#idx.xhtml"
-    cwd: dst
-    done
+function gen-page src, dst, idx
+  new Promise (resolve, reject) ->
+    console.log "#{(rel gen)magenta} #{rel src} #idx > #{rel dst}/page#idx.xhtml"
+    exec do
+      "#gen #{escape path.relative dst, src} #idx > #{escape dst}/page#idx.xhtml"
+      cwd: dst
+      (err, stdout, stderr) ->
+        unless err then resolve stdout, stderr else reject err
 
-function write dst, file, done
-  console.log "#{'write'magenta} #{rel dst}"
-  fs.writeFile dst, file, done
+function write dst, file
+  new Promise (resolve, reject) ->
+    console.log "#{'write'magenta} #{rel dst}"
+    fs.writeFile dst, file, (err) -> unless err then resolve! else reject err
 
-function get-codepoints src, done
-  console.log "#{'get'magenta} codepoints from #{rel src}"
-  src = (escape src)replace '\\*' -> '*'
-  exec do
-    "cat #src | #{path.resolve __dirname, 'codepoints.ls'}"
-    done
+function get-codepoints src
+  new Promise (resolve, reject) ->
+    console.log "#{'get'magenta} codepoints from #{rel src}"
+    target = (escape src)replace '\\*' -> '*'
+    exec do
+      "cat #target | #{path.resolve __dirname, 'codepoints.ls'}"
+      (err, stdout, stderr) ->
+        unless err then resolve stdout, stderr else reject err
 
-function fetch-moedict chars, dst, done
-  console.log "#chars | #{'fetch-moedict.ls'magenta} > #{rel dst}"
-  exec do
-    "echo #chars | #{path.resolve __dirname, 'fetch-moedict.ls'} > #{escape dst}"
-    done
+function fetch-moedict chars, dst
+  new Promise (resolve, reject) ->
+    console.log "#chars | #{'fetch-moedict.ls'magenta} > #{rel dst}"
+    exec do
+      "echo #chars | #{path.resolve __dirname, 'fetch-moedict.ls'} > #{escape dst}"
+      (err, stdout, stderr) ->
+        unless err then resolve stdout, stderr else reject err
 
-function font-subset src, dst, codepoints, done
-  base = path.resolve path.dirname(dst), '../'
-  script-path = path.resolve base, 'subset.pe'
-  console.log "#{'generate'magenta} #script-path"
-  script = """
-    Open(\"#src\")
-    Select(0u3000)\n
-  """
-  for cp in codepoints
-    script += "SelectMore(0u#{cp.toString 16})\n"
-  script += """
-    SelectInvert()
-    Clear()
-    Generate(\"#dst\")
-  """
-  fs.writeFileSync script-path, script
-  console.log "#{'generate'magenta} #{rel dst}"
-  exec do
-    "fontforge -script #{escape script-path}"
-    cwd: base
-    done
+function get-master-page src
+  new Promise (resolve, reject) ->
+    try
+      Data.getMasterPage src, resolve
+    catch err
+      reject err
 
-function zip src, dst, done
-  console.log "#{'zip'magenta} #{rel dst}"
-  exec do
-    "zip -9 -rX #{escape dst} ./* --exclude \\*.DS_Store* \\subset.pe \\js/index.js"
-    cwd: src
-    done
+function font-subset src, dst, codepoints
+  new Promise (resolve, reject) ->
+    base = path.resolve path.dirname(dst), '../'
+    script-path = path.resolve base, 'subset.pe'
+    console.log "#{'generate'magenta} #script-path"
+    script = """
+      Open(\"#src\")
+      Select(0u3000)\n
+    """
+    for cp in codepoints
+      script += "SelectMore(0u#{cp.toString 16})\n"
+    script += """
+      SelectInvert()
+      Clear()
+      Generate(\"#dst\")
+    """
+    fs.writeFileSync script-path, script
+    console.log "#{'generate'magenta} #{rel dst}"
+    exec do
+      "fontforge -script #{escape script-path}"
+      cwd: base
+      (err, stdout, stderr) ->
+        unless err then resolve stdout, stderr else reject err
+
+function zip src, dst
+  new Promise (resolve, reject) ->
+    console.log "#{'zip'magenta} #{rel dst}"
+    exec do
+      "zip -9 -rX #{escape dst} ./* --exclude \\*.DS_Store* \\subset.pe \\js/index.js"
+      cwd: src
+      (err, stdout, stderr) ->
+        unless err then resolve stdout, stderr else reject err
 
