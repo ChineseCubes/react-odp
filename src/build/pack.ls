@@ -119,7 +119,22 @@ console.log '''
       dst = path.resolve build.path, 'strokes', stroke
       err <- cp src, dst
       throw err if err and err.code isnt \ENOENT
-      next! if ++counter is build.codepoints.length
+      copy-arphic-strokes! if ++counter is build.codepoints.length
+
+  copy-arphic-strokes = ->
+    langs = <[zh-TW zh-CN]>
+    try fs.mkdirSync path.resolve build.path, 'arphic-strokes'
+    counter = 0
+    for let lang in langs
+      base = path.resolve build.path, 'arphic-strokes', lang
+      try fs.mkdirSync base
+      for let stroke in build.codepoints
+        stroke = "#{stroke.toString 16}.txt"
+        src = path.resolve __dirname, '../../arphic-strokes', lang, stroke
+        dst = path.resolve base, stroke
+        err <- cp src, dst
+        throw err if err and err.code isnt \ENOENT
+        next! if ++counter is build.codepoints.length * 2
 
   next = ->
   ##
@@ -179,6 +194,7 @@ function convert src, dst, done
   extractor.on \close done
   request {
     method: \POST
+    #uri: 'https://web-beta.chinesecubes.com/sandbox/odpConvert.php'
     uri: 'http://192.168.11.15/sandbox/odpConvert.php'
     #encoding: \binary
   }

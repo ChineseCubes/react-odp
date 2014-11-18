@@ -189,7 +189,7 @@
         keywords = import$({}, punctuations);
         re = null;
         Data.traverse(node, function(node, parents){
-          var ref$, ks, x$, s, str, r;
+          var ref$, ks, x$, s, str, lastIndex, r, i$, len$, char;
           if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
             return;
           }
@@ -223,15 +223,28 @@
               }), en.join(', '), shortest);
               return it.traditional;
             });
-            return re = new RegExp(Object.keys(punctuations).concat(re).join('|'));
+            return re = new RegExp(Object.keys(punctuations).concat(re).join('|'), 'g');
           } else {
             x$ = s = values[idx];
             x$.short = node.text;
             x$.definition = node.text;
             str = keys[idx] + "";
+            lastIndex = 0;
             while (r = re.exec(str)) {
+              if (lastIndex !== r.index) {
+                for (i$ = 0, len$ = (ref$ = Array.prototype.slice.call(str.substring(lastIndex, r.index))).length; i$ < len$; ++i$) {
+                  char = ref$[i$];
+                  Array.prototype.push.apply(s.children, keywords[char]);
+                }
+              }
+              lastIndex = re.lastIndex;
               s.children.push(keywords[r[0]]);
-              str = str.replace(r[0], '');
+            }
+            if (lastIndex !== str.length) {
+              for (i$ = 0, len$ = (ref$ = Array.prototype.slice.call(str.substring(lastIndex))).length; i$ < len$; ++i$) {
+                char = ref$[i$];
+                Array.prototype.push.apply(s.children, keywords[char]);
+              }
             }
             return ++idx;
           }

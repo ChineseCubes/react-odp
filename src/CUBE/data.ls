@@ -123,7 +123,7 @@ class Segmentations
               en.join ', '
               shortest
           it.traditional
-        re := new RegExp Object.keys(punctuations)concat(re)join '|'
+        re := new RegExp Object.keys(punctuations)concat(re)join('|'), \g
       else
         # fill the translation,
         (s = values[idx])
@@ -131,9 +131,17 @@ class Segmentations
           ..definition = node.text
         # and segment the sentence
         str = "#{keys[idx]}"
+        #console.warn re, str
+        lastIndex = 0
         while r = re.exec str
+          if lastIndex isnt r.index
+            for char in Array::slice.call str.substring lastIndex, r.index
+              Array::push.apply s.children, keywords[char]
+          lastIndex = re.lastIndex
           s.children.push keywords[r.0]
-          str = str.replace r.0, ''
+        if lastIndex isnt str.length
+          for char in Array::slice.call str.substring lastIndex
+            Array::push.apply s.children, keywords[char]
         ++idx
     # FIXME: should warn this when build
     #if keys.length isnt idx

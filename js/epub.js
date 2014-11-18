@@ -621,7 +621,7 @@
 	        keywords = import$({}, punctuations);
 	        re = null;
 	        Data.traverse(node, function(node, parents){
-	          var ref$, ks, x$, s, str, r;
+	          var ref$, ks, x$, s, str, lastIndex, r, i$, len$, char;
 	          if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
 	            return;
 	          }
@@ -655,15 +655,28 @@
 	              }), en.join(', '), shortest);
 	              return it.traditional;
 	            });
-	            return re = new RegExp(Object.keys(punctuations).concat(re).join('|'));
+	            return re = new RegExp(Object.keys(punctuations).concat(re).join('|'), 'g');
 	          } else {
 	            x$ = s = values[idx];
 	            x$.short = node.text;
 	            x$.definition = node.text;
 	            str = keys[idx] + "";
+	            lastIndex = 0;
 	            while (r = re.exec(str)) {
+	              if (lastIndex !== r.index) {
+	                for (i$ = 0, len$ = (ref$ = Array.prototype.slice.call(str.substring(lastIndex, r.index))).length; i$ < len$; ++i$) {
+	                  char = ref$[i$];
+	                  Array.prototype.push.apply(s.children, keywords[char]);
+	                }
+	              }
+	              lastIndex = re.lastIndex;
 	              s.children.push(keywords[r[0]]);
-	              str = str.replace(r[0], '');
+	            }
+	            if (lastIndex !== str.length) {
+	              for (i$ = 0, len$ = (ref$ = Array.prototype.slice.call(str.substring(lastIndex))).length; i$ < len$; ++i$) {
+	                char = ref$[i$];
+	                Array.prototype.push.apply(s.children, keywords[char]);
+	              }
 	            }
 	            return ++idx;
 	          }
@@ -27820,7 +27833,7 @@
 
 	"use strict";
 
-	var emptyObject = __webpack_require__(115);
+	var emptyObject = __webpack_require__(117);
 	var invariant = __webpack_require__(54);
 
 	/**
@@ -27979,11 +27992,11 @@
 
 	"use strict";
 
-	var CallbackQueue = __webpack_require__(116);
+	var CallbackQueue = __webpack_require__(115);
 	var PooledClass = __webpack_require__(59);
 	var ReactCurrentOwner = __webpack_require__(30);
 	var ReactPerf = __webpack_require__(40);
-	var Transaction = __webpack_require__(117);
+	var Transaction = __webpack_require__(116);
 
 	var assign = __webpack_require__(44);
 	var invariant = __webpack_require__(54);
@@ -31050,7 +31063,7 @@
 	"use strict";
 
 	var ReactUpdates = __webpack_require__(62);
-	var Transaction = __webpack_require__(117);
+	var Transaction = __webpack_require__(116);
 
 	var assign = __webpack_require__(44);
 	var emptyFunction = __webpack_require__(108);
@@ -32107,10 +32120,10 @@
 	var ReactInputSelection = __webpack_require__(132);
 	var SyntheticEvent = __webpack_require__(130);
 
-	var getActiveElement = __webpack_require__(153);
+	var getActiveElement = __webpack_require__(145);
 	var isTextInputElement = __webpack_require__(131);
 	var keyOf = __webpack_require__(70);
-	var shallowEqual = __webpack_require__(154);
+	var shallowEqual = __webpack_require__(146);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -32339,17 +32352,17 @@
 	var EventConstants = __webpack_require__(53);
 	var EventPluginUtils = __webpack_require__(25);
 	var EventPropagators = __webpack_require__(128);
-	var SyntheticClipboardEvent = __webpack_require__(145);
+	var SyntheticClipboardEvent = __webpack_require__(147);
 	var SyntheticEvent = __webpack_require__(130);
-	var SyntheticFocusEvent = __webpack_require__(146);
-	var SyntheticKeyboardEvent = __webpack_require__(147);
+	var SyntheticFocusEvent = __webpack_require__(148);
+	var SyntheticKeyboardEvent = __webpack_require__(149);
 	var SyntheticMouseEvent = __webpack_require__(135);
-	var SyntheticDragEvent = __webpack_require__(148);
-	var SyntheticTouchEvent = __webpack_require__(149);
-	var SyntheticUIEvent = __webpack_require__(150);
-	var SyntheticWheelEvent = __webpack_require__(151);
+	var SyntheticDragEvent = __webpack_require__(150);
+	var SyntheticTouchEvent = __webpack_require__(151);
+	var SyntheticUIEvent = __webpack_require__(152);
+	var SyntheticWheelEvent = __webpack_require__(153);
 
-	var getEventCharCode = __webpack_require__(152);
+	var getEventCharCode = __webpack_require__(154);
 
 	var invariant = __webpack_require__(54);
 	var keyOf = __webpack_require__(70);
@@ -33514,9 +33527,9 @@
 	"use strict";
 
 	var PooledClass = __webpack_require__(59);
-	var CallbackQueue = __webpack_require__(116);
+	var CallbackQueue = __webpack_require__(115);
 	var ReactPutListenerQueue = __webpack_require__(159);
-	var Transaction = __webpack_require__(117);
+	var Transaction = __webpack_require__(116);
 
 	var assign = __webpack_require__(44);
 	var emptyFunction = __webpack_require__(108);
@@ -33738,33 +33751,6 @@
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @providesModule emptyObject
-	 */
-
-	"use strict";
-
-	var emptyObject = {};
-
-	if ("production" !== process.env.NODE_ENV) {
-	  Object.freeze(emptyObject);
-	}
-
-	module.exports = emptyObject;
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
-
-/***/ },
-/* 116 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
 	 * @providesModule CallbackQueue
 	 */
 
@@ -33857,7 +33843,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
 
 /***/ },
-/* 117 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -34097,6 +34083,33 @@
 	};
 
 	module.exports = Transaction;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
+
+/***/ },
+/* 117 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule emptyObject
+	 */
+
+	"use strict";
+
+	var emptyObject = {};
+
+	if ("production" !== process.env.NODE_ENV) {
+	  Object.freeze(emptyObject);
+	}
+
+	module.exports = emptyObject;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
 
@@ -35573,7 +35586,7 @@
 
 	var containsNode = __webpack_require__(104);
 	var focusNode = __webpack_require__(167);
-	var getActiveElement = __webpack_require__(153);
+	var getActiveElement = __webpack_require__(145);
 
 	function isInDocument(node) {
 	  return containsNode(document.documentElement, node);
@@ -35801,7 +35814,7 @@
 
 	"use strict";
 
-	var SyntheticUIEvent = __webpack_require__(150);
+	var SyntheticUIEvent = __webpack_require__(152);
 	var ViewportMetrics = __webpack_require__(127);
 
 	var getEventModifierState = __webpack_require__(168);
@@ -36077,12 +36090,12 @@
 
 	"use strict";
 
-	var CallbackQueue = __webpack_require__(116);
+	var CallbackQueue = __webpack_require__(115);
 	var PooledClass = __webpack_require__(59);
 	var ReactBrowserEventEmitter = __webpack_require__(76);
 	var ReactInputSelection = __webpack_require__(132);
 	var ReactPutListenerQueue = __webpack_require__(159);
-	var Transaction = __webpack_require__(117);
+	var Transaction = __webpack_require__(116);
 
 	var assign = __webpack_require__(44);
 
@@ -36766,6 +36779,87 @@ node.innerHTML = html;
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
+	 * @providesModule getActiveElement
+	 * @typechecks
+	 */
+
+	/**
+	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
+	 * not safe to call document.activeElement if there is nothing focused.
+	 *
+	 * The activeElement will be null only if the document body is not yet defined.
+	 */
+	function getActiveElement() /*?DOMElement*/ {
+	  try {
+	    return document.activeElement || document.body;
+	  } catch (e) {
+	    return document.body;
+	  }
+	}
+
+	module.exports = getActiveElement;
+
+
+/***/ },
+/* 146 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule shallowEqual
+	 */
+
+	"use strict";
+
+	/**
+	 * Performs equality by iterating through keys on an object and returning
+	 * false when any key has values which are not strictly equal between
+	 * objA and objB. Returns true when the values of all keys are strictly equal.
+	 *
+	 * @return {boolean}
+	 */
+	function shallowEqual(objA, objB) {
+	  if (objA === objB) {
+	    return true;
+	  }
+	  var key;
+	  // Test for A's keys different from B.
+	  for (key in objA) {
+	    if (objA.hasOwnProperty(key) &&
+	        (!objB.hasOwnProperty(key) || objA[key] !== objB[key])) {
+	      return false;
+	    }
+	  }
+	  // Test for B's keys missing from A.
+	  for (key in objB) {
+	    if (objB.hasOwnProperty(key) && !objA.hasOwnProperty(key)) {
+	      return false;
+	    }
+	  }
+	  return true;
+	}
+
+	module.exports = shallowEqual;
+
+
+/***/ },
+/* 147 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
 	 * @providesModule SyntheticClipboardEvent
 	 * @typechecks static-only
 	 */
@@ -36805,7 +36899,7 @@ node.innerHTML = html;
 
 
 /***/ },
-/* 146 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36822,7 +36916,7 @@ node.innerHTML = html;
 
 	"use strict";
 
-	var SyntheticUIEvent = __webpack_require__(150);
+	var SyntheticUIEvent = __webpack_require__(152);
 
 	/**
 	 * @interface FocusEvent
@@ -36848,7 +36942,7 @@ node.innerHTML = html;
 
 
 /***/ },
-/* 147 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36865,9 +36959,9 @@ node.innerHTML = html;
 
 	"use strict";
 
-	var SyntheticUIEvent = __webpack_require__(150);
+	var SyntheticUIEvent = __webpack_require__(152);
 
-	var getEventCharCode = __webpack_require__(152);
+	var getEventCharCode = __webpack_require__(154);
 	var getEventKey = __webpack_require__(170);
 	var getEventModifierState = __webpack_require__(168);
 
@@ -36939,7 +37033,7 @@ node.innerHTML = html;
 
 
 /***/ },
-/* 148 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36982,7 +37076,7 @@ node.innerHTML = html;
 
 
 /***/ },
-/* 149 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36999,7 +37093,7 @@ node.innerHTML = html;
 
 	"use strict";
 
-	var SyntheticUIEvent = __webpack_require__(150);
+	var SyntheticUIEvent = __webpack_require__(152);
 
 	var getEventModifierState = __webpack_require__(168);
 
@@ -37034,7 +37128,7 @@ node.innerHTML = html;
 
 
 /***/ },
-/* 150 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37100,7 +37194,7 @@ node.innerHTML = html;
 
 
 /***/ },
-/* 151 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37165,7 +37259,7 @@ node.innerHTML = html;
 
 
 /***/ },
-/* 152 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37218,87 +37312,6 @@ node.innerHTML = html;
 	}
 
 	module.exports = getEventCharCode;
-
-
-/***/ },
-/* 153 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule getActiveElement
-	 * @typechecks
-	 */
-
-	/**
-	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
-	 * not safe to call document.activeElement if there is nothing focused.
-	 *
-	 * The activeElement will be null only if the document body is not yet defined.
-	 */
-	function getActiveElement() /*?DOMElement*/ {
-	  try {
-	    return document.activeElement || document.body;
-	  } catch (e) {
-	    return document.body;
-	  }
-	}
-
-	module.exports = getActiveElement;
-
-
-/***/ },
-/* 154 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule shallowEqual
-	 */
-
-	"use strict";
-
-	/**
-	 * Performs equality by iterating through keys on an object and returning
-	 * false when any key has values which are not strictly equal between
-	 * objA and objB. Returns true when the values of all keys are strictly equal.
-	 *
-	 * @return {boolean}
-	 */
-	function shallowEqual(objA, objB) {
-	  if (objA === objB) {
-	    return true;
-	  }
-	  var key;
-	  // Test for A's keys different from B.
-	  for (key in objA) {
-	    if (objA.hasOwnProperty(key) &&
-	        (!objB.hasOwnProperty(key) || objA[key] !== objB[key])) {
-	      return false;
-	    }
-	  }
-	  // Test for B's keys missing from A.
-	  for (key in objB) {
-	    if (objB.hasOwnProperty(key) && !objA.hasOwnProperty(key)) {
-	      return false;
-	    }
-	  }
-	  return true;
-	}
-
-	module.exports = shallowEqual;
 
 
 /***/ },
@@ -37527,7 +37540,7 @@ node.innerHTML = html;
 	 * @typechecks
 	 */
 
-	var performance = __webpack_require__(172);
+	var performance = __webpack_require__(171);
 
 	/**
 	 * Detect if we can use `window.performance.now()` and gracefully fallback to
@@ -37559,7 +37572,7 @@ node.innerHTML = html;
 	 * @typechecks
 	 */
 
-	var isNode = __webpack_require__(171);
+	var isNode = __webpack_require__(172);
 
 	/**
 	 * @param {*} object The object to check.
@@ -39878,7 +39891,7 @@ node.innerHTML = html;
 
 	"use strict";
 
-	var getEventCharCode = __webpack_require__(152);
+	var getEventCharCode = __webpack_require__(154);
 
 	/**
 	 * Normalization of deprecated HTML5 `key` values
@@ -39981,38 +39994,6 @@ node.innerHTML = html;
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @providesModule isNode
-	 * @typechecks
-	 */
-
-	/**
-	 * @param {*} object The object to check.
-	 * @return {boolean} Whether or not the object is a DOM node.
-	 */
-	function isNode(object) {
-	  return !!(object && (
-	    typeof Node === 'function' ? object instanceof Node :
-	      typeof object === 'object' &&
-	      typeof object.nodeType === 'number' &&
-	      typeof object.nodeName === 'string'
-	  ));
-	}
-
-	module.exports = isNode;
-
-
-/***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
 	 * @providesModule performance
 	 * @typechecks
 	 */
@@ -40031,6 +40012,38 @@ node.innerHTML = html;
 	}
 
 	module.exports = performance || {};
+
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule isNode
+	 * @typechecks
+	 */
+
+	/**
+	 * @param {*} object The object to check.
+	 * @return {boolean} Whether or not the object is a DOM node.
+	 */
+	function isNode(object) {
+	  return !!(object && (
+	    typeof Node === 'function' ? object instanceof Node :
+	      typeof object === 'object' &&
+	      typeof object.nodeType === 'number' &&
+	      typeof object.nodeName === 'string'
+	  ));
+	}
+
+	module.exports = isNode;
 
 
 /***/ },
