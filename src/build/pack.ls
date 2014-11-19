@@ -204,8 +204,8 @@ function convert src, dst
     extractor.on \close -> resolve!
     request {
       method: \POST
-      uri: 'https://web-beta.chinesecubes.com/sandbox/odpConvert.php'
-      #uri: 'http://192.168.11.15/sandbox/odpConvert.php'
+      #uri: 'https://web-beta.chinesecubes.com/sandbox/odpConvert.php'
+      uri: 'http://192.168.11.15/sandbox/odpConvert.php'
       #encoding: \binary
       #timeout: 20000ms
     }
@@ -238,13 +238,17 @@ gen = path.resolve __dirname, './gen.ls'
 function gen-page src, dst, idx
   new Promise (resolve, reject) ->
     console.log "#{(rel gen)magenta} #{rel src} #idx"
-    exec do
-      "#gen #{escape path.relative dst, src} #idx"
-      cwd: dst
-      (err, stdout, stderr) ->
-        return reject err if err
-        write "#dst/page#idx.xhtml", stdout
-          .then resolve, reject
+    :try-again let
+      exec do
+        "#gen #{escape path.relative dst, src} #idx"
+        cwd: dst
+        (err, stdout, stderr) ->
+          return reject err if err
+          if stdout.length isnt 1
+            write "#dst/page#idx.xhtml", stdout
+              .then resolve, reject
+          else # XXX: should find out the reason
+            try-again!
 
 function write dst, file
   new Promise (resolve, reject) ->
