@@ -13,6 +13,7 @@ npm start
 
 ```bash
 npm run pack
+npm run check
 ```
 
 ## Notes

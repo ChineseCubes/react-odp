@@ -45,6 +45,8 @@ console.log '''
   ##
   # shared globals
   build =
+    base: basename
+    src:  path.resolve arg
     path: path.resolve ".#basename.build"
     data: path.resolve ".#basename.build/data"
     needs: <[js css fonts]>
@@ -55,15 +57,13 @@ console.log '''
   Promise.resolve!
     .then ->
       # convert and unzip
-      src = path.resolve arg
-      dst = build.data
-      convert src, dst
+      convert build.src, build.data
     .then ->
       src = path.resolve build.data, 'page*.json'
       get-codepoints src
     .then (stdout, stderr) ->
       codepoints = for c in stdout.split /\s/ | c.length  => parseInt c, 16
-      build.codepoints = codepoints.filter -> it > 10000
+      build.codepoints = codepoints.filter -> 0x4e00 <= it <= 0xfaff
     .then ->
       # get data from moedict.tw
       # XXX: should create dict.json before packing
@@ -93,13 +93,35 @@ console.log '''
           cp src, dst
     .then ->
       # css, js, fonts ...
-      counter = 0
       Promise.all do
         for dep in build.needs
           src = path.resolve __dirname, '../../', dep
           dst = path.resolve build.path, dep
           console.warn "need #{rel src}" unless fs.existsSync src
           cp-r src, dst
+    .then ->
+      # speech
+      data =
+        "#{build.base}.mp3": 'audio.mp3'
+        "#{build.base}.vtt": 'audio.vtt'
+      var src, dst
+      ps =
+        for k, v of data
+          src = path.resolve path.dirname(build.src), k
+          dst = path.resolve build.path, 'data', v
+          cp src, dst
+      p = new Promise (resolve, reject) ->
+        err, vtt <- fs.readFile src
+        return reject err if err
+        vtt .= toString!
+        vtt .= replace /\ufeff/g, ''
+        vtt .= replace /\r\n?|\n/g, '\\n'
+        write(
+          path.resolve(build.path, 'data', 'audio.vtt.json')
+          "{\"webvtt\":\"#vtt\"}"
+        )then resolve
+      ps.push p
+      Promise.all ps #.catch -> console.warn 'speech not found'yellow
     .then ->
       console.log "#{'cp'magenta} strokes"
       try fs.mkdirSync path.resolve build.path, 'strokes'
@@ -113,7 +135,6 @@ console.log '''
       console.log "#{'cp'magenta} arphic-strokes"
       langs = <[zh-TW zh-CN]>
       try fs.mkdirSync path.resolve build.path, 'arphic-strokes'
-      counter = 0
       Promise.all do
         for lang in langs
           base = path.resolve build.path, 'arphic-strokes', lang
@@ -132,6 +153,7 @@ console.log '''
           src = path.resolve __dirname, 'epub', "SourceHanSansTW-#weight.ttf"
           dst = path.resolve build.path, 'fonts', "Noto-#{weight}-Subset.ttf"
           font-subset src, dst, build.codepoints
+            .catch -> console.log it.stack
     .then -> new Promise (resolve, reject) ->
       # generate TOC.xhtml
       src = path.resolve __dirname, 'epub/TOC.jade'
@@ -153,7 +175,7 @@ console.log '''
           "!#{build.path}/META-INF/*"
           "!#{build.path}/mimetype"
           "!#{build.path}/package.opf"
-          "!#{build.path}/subset.pe"
+          "!#{build.path}/*.pe"
         ]
         .pipe map (file, cb) ->
           files.push path.relative(build.path, file.path)
@@ -167,7 +189,7 @@ console.log '''
           write dst, ocf
             .then ->
               src = path.resolve build.path
-              dst = path.resolve build.path, "../#{basename}.epub"
+              dst = path.resolve build.path, "../#{build.base}.epub"
               zip src, dst
             .then main
     .catch (err) ->
@@ -215,12 +237,14 @@ function cp-r src, dst
 gen = path.resolve __dirname, './gen.ls'
 function gen-page src, dst, idx
   new Promise (resolve, reject) ->
-    console.log "#{(rel gen)magenta} #{rel src} #idx > #{rel dst}/page#idx.xhtml"
+    console.log "#{(rel gen)magenta} #{rel src} #idx"
     exec do
-      "#gen #{escape path.relative dst, src} #idx > #{escape dst}/page#idx.xhtml"
+      "#gen #{escape path.relative dst, src} #idx"
       cwd: dst
       (err, stdout, stderr) ->
-        unless err then resolve stdout, stderr else reject err
+        return reject err if err
+        write "#dst/page#idx.xhtml", stdout
+          .then resolve, reject
 
 function write dst, file
   new Promise (resolve, reject) ->
@@ -251,10 +275,11 @@ function get-master-page src
     catch err
       reject err
 
+count = 0
 function font-subset src, dst, codepoints
   new Promise (resolve, reject) ->
     base = path.resolve path.dirname(dst), '../'
-    script-path = path.resolve base, 'subset.pe'
+    script-path = path.resolve base, "#{count++}.pe"
     console.log "#{'generate'magenta} #script-path"
     script = """
       Open(\"#src\")
@@ -279,7 +304,7 @@ function zip src, dst
   new Promise (resolve, reject) ->
     console.log "#{'zip'magenta} #{rel dst}"
     exec do
-      "zip -9 -rX #{escape dst} ./* --exclude \\*.DS_Store* \\subset.pe \\js/index.js"
+      "zip -9 -rX #{escape dst} ./* --exclude \\*.DS_Store* \\*.pe \\js/index.js"
       cwd: src
       (err, stdout, stderr) ->
         unless err then resolve stdout, stderr else reject err
