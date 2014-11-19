@@ -51,7 +51,7 @@
 	  Data = __webpack_require__(3);
 	  Book = React.createFactory(__webpack_require__(2));
 	  ReactVTT = __webpack_require__(6);
-	  __webpack_require__(10);
+	  __webpack_require__(11);
 	  getVtt = function(filename, done){
 	    return ReactVTT.parse(filename, done).error(function(){
 	      return done(null);
@@ -158,7 +158,7 @@
 	  Playground = React.createFactory(Book.Playground);
 	  ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small;
 	  onClick = __webpack_require__(4).onClick;
-	  ref$ = __webpack_require__(12), Howler = ref$.Howler, Howl = ref$.Howl;
+	  ref$ = __webpack_require__(13), Howler = ref$.Howler, Howl = ref$.Howl;
 	  win = (function(){
 	    try {
 	      return window;
@@ -971,7 +971,7 @@
 	  React == null && (React = __webpack_require__(5));
 	  $ == null && ($ = __webpack_require__(48));
 	  _ == null && (_ = __webpack_require__(18));
-	  WebVTT == null && (WebVTT = __webpack_require__(13));
+	  WebVTT == null && (WebVTT = __webpack_require__(10));
 	  ref$ = React.DOM, p = ref$.p, span = ref$.span, ol = ref$.ol, li = ref$.li;
 	  filter = _.filter;
 	  slice = Array.prototype.slice;
@@ -1168,7 +1168,7 @@
 	  }
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)(module)))
 
 /***/ },
 /* 7 */
@@ -1468,10 +1468,16 @@
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = WebVTT;
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(11);
+	var content = __webpack_require__(12);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(14)(content);
@@ -1488,14 +1494,14 @@
 	}
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(19)();
 	exports.push([module.id, ".react-vtt {\n  -webkit-font-smoothing: antialiased;\n}\n.react-vtt.cues .cue {\n  position: relative;\n  display: inline-block;\n  white-space: nowrap;\n}\n.react-vtt.cues .cue .actived {\n  overflow: hidden;\n  position: absolute;\n  left: 0;\n  top: 0;\n  bottom: -0.5em;\n  color: #f90;\n}\n.react-vtt.isolated-cue {\n  display: inline-block;\n}\n", ""]);
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2854,12 +2860,6 @@
 
 
 /***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = WebVTT;
-
-/***/ },
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3103,9 +3103,9 @@
 	  $ = __webpack_require__(48);
 	  React = __webpack_require__(5);
 	  Button = React.createFactory(__webpack_require__(8));
-	  Sentence = React.createFactory(__webpack_require__(20));
-	  Settings = React.createFactory(__webpack_require__(21));
-	  Definition = React.createFactory(__webpack_require__(22));
+	  Sentence = React.createFactory(__webpack_require__(21));
+	  Settings = React.createFactory(__webpack_require__(22));
+	  Definition = React.createFactory(__webpack_require__(23));
 	  ref$ = React.DOM, nav = ref$.nav, div = ref$.div, i = ref$.i, span = ref$.span, a = ref$.a;
 	  onClick = __webpack_require__(4).onClick;
 	  Playground = React.createClass({
@@ -10601,7 +10601,7 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)(module), (function() { return this; }())))
 
 /***/ },
 /* 19 */
@@ -10626,6 +10626,22 @@
 
 /***/ },
 /* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
@@ -10717,7 +10733,7 @@
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
@@ -10750,7 +10766,7 @@
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
@@ -10773,22 +10789,6 @@
 	  });
 	  module.exports = Definition;
 	}).call(this);
-
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
 
 
 /***/ },
@@ -26687,7 +26687,7 @@
 	  Menu = React.createFactory(__webpack_require__(114));
 	  API = __webpack_require__(50);
 	  ref$ = React.DOM, div = ref$.div, i = ref$.i, span = ref$.span;
-	  ref$ = __webpack_require__(12), Howler = ref$.Howler, Howl = ref$.Howl;
+	  ref$ = __webpack_require__(13), Howler = ref$.Howler, Howl = ref$.Howl;
 	  ref$ = __webpack_require__(4), onClick = ref$.onClick, sayIt = ref$.sayIt;
 	  Word = React.createClass({
 	    displayName: 'CUBE.Book.Word',
@@ -31139,7 +31139,7 @@
 
 	"use strict";
 
-	var AutoFocusMixin = __webpack_require__(140);
+	var AutoFocusMixin = __webpack_require__(139);
 	var ReactBrowserComponentMixin = __webpack_require__(75);
 	var ReactCompositeComponent = __webpack_require__(28);
 	var ReactElement = __webpack_require__(31);
@@ -31209,7 +31209,7 @@
 	"use strict";
 
 	var EventConstants = __webpack_require__(57);
-	var LocalEventTrapMixin = __webpack_require__(139);
+	var LocalEventTrapMixin = __webpack_require__(140);
 	var ReactBrowserComponentMixin = __webpack_require__(75);
 	var ReactCompositeComponent = __webpack_require__(28);
 	var ReactElement = __webpack_require__(31);
@@ -31263,7 +31263,7 @@
 	"use strict";
 
 	var EventConstants = __webpack_require__(57);
-	var LocalEventTrapMixin = __webpack_require__(139);
+	var LocalEventTrapMixin = __webpack_require__(140);
 	var ReactBrowserComponentMixin = __webpack_require__(75);
 	var ReactCompositeComponent = __webpack_require__(28);
 	var ReactElement = __webpack_require__(31);
@@ -31314,7 +31314,7 @@
 
 	"use strict";
 
-	var AutoFocusMixin = __webpack_require__(140);
+	var AutoFocusMixin = __webpack_require__(139);
 	var DOMPropertyOperations = __webpack_require__(24);
 	var LinkedValueUtils = __webpack_require__(141);
 	var ReactBrowserComponentMixin = __webpack_require__(75);
@@ -31551,7 +31551,7 @@
 
 	"use strict";
 
-	var AutoFocusMixin = __webpack_require__(140);
+	var AutoFocusMixin = __webpack_require__(139);
 	var LinkedValueUtils = __webpack_require__(141);
 	var ReactBrowserComponentMixin = __webpack_require__(75);
 	var ReactCompositeComponent = __webpack_require__(28);
@@ -31739,7 +31739,7 @@
 
 	"use strict";
 
-	var AutoFocusMixin = __webpack_require__(140);
+	var AutoFocusMixin = __webpack_require__(139);
 	var DOMPropertyOperations = __webpack_require__(24);
 	var LinkedValueUtils = __webpack_require__(141);
 	var ReactBrowserComponentMixin = __webpack_require__(75);
@@ -32942,11 +32942,11 @@
 	"use strict";
 
 	var DOMProperty = __webpack_require__(53);
-	var ReactDefaultPerfAnalysis = __webpack_require__(156);
+	var ReactDefaultPerfAnalysis = __webpack_require__(155);
 	var ReactMount = __webpack_require__(38);
 	var ReactPerf = __webpack_require__(40);
 
-	var performanceNow = __webpack_require__(157);
+	var performanceNow = __webpack_require__(156);
 
 	function roundFloat(val) {
 	  return Math.floor(val * 100) / 100;
@@ -33238,7 +33238,7 @@
 	 * @typechecks
 	 */
 
-	var isTextNode = __webpack_require__(155);
+	var isTextNode = __webpack_require__(157);
 
 	/*jslint bitwise:true */
 
@@ -36356,6 +36356,37 @@ node.innerHTML = html;
 /* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule AutoFocusMixin
+	 * @typechecks static-only
+	 */
+
+	"use strict";
+
+	var focusNode = __webpack_require__(167);
+
+	var AutoFocusMixin = {
+	  componentDidMount: function() {
+	    if (this.props.autoFocus) {
+	      focusNode(this.getDOMNode());
+	    }
+	  }
+	};
+
+	module.exports = AutoFocusMixin;
+
+
+/***/ },
+/* 140 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014, Facebook, Inc.
 	 * All rights reserved.
@@ -36404,37 +36435,6 @@ node.innerHTML = html;
 	module.exports = LocalEventTrapMixin;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
-
-/***/ },
-/* 140 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule AutoFocusMixin
-	 * @typechecks static-only
-	 */
-
-	"use strict";
-
-	var focusNode = __webpack_require__(167);
-
-	var AutoFocusMixin = {
-	  componentDidMount: function() {
-	    if (this.props.autoFocus) {
-	      focusNode(this.getDOMNode());
-	    }
-	  }
-	};
-
-	module.exports = AutoFocusMixin;
-
 
 /***/ },
 /* 141 */
@@ -37326,35 +37326,6 @@ node.innerHTML = html;
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @providesModule isTextNode
-	 * @typechecks
-	 */
-
-	var isNode = __webpack_require__(171);
-
-	/**
-	 * @param {*} object The object to check.
-	 * @return {boolean} Whether or not the object is a DOM text node.
-	 */
-	function isTextNode(object) {
-	  return isNode(object) && object.nodeType == 3;
-	}
-
-	module.exports = isTextNode;
-
-
-/***/ },
-/* 156 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
 	 * @providesModule ReactDefaultPerfAnalysis
 	 */
 
@@ -37554,7 +37525,7 @@ node.innerHTML = html;
 
 
 /***/ },
-/* 157 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37569,7 +37540,7 @@ node.innerHTML = html;
 	 * @typechecks
 	 */
 
-	var performance = __webpack_require__(172);
+	var performance = __webpack_require__(171);
 
 	/**
 	 * Detect if we can use `window.performance.now()` and gracefully fallback to
@@ -37583,6 +37554,35 @@ node.innerHTML = html;
 	var performanceNow = performance.now.bind(performance);
 
 	module.exports = performanceNow;
+
+
+/***/ },
+/* 157 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule isTextNode
+	 * @typechecks
+	 */
+
+	var isNode = __webpack_require__(172);
+
+	/**
+	 * @param {*} object The object to check.
+	 * @return {boolean} Whether or not the object is a DOM text node.
+	 */
+	function isTextNode(object) {
+	  return isNode(object) && object.nodeType == 3;
+	}
+
+	module.exports = isTextNode;
 
 
 /***/ },
@@ -39994,38 +39994,6 @@ node.innerHTML = html;
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @providesModule isNode
-	 * @typechecks
-	 */
-
-	/**
-	 * @param {*} object The object to check.
-	 * @return {boolean} Whether or not the object is a DOM node.
-	 */
-	function isNode(object) {
-	  return !!(object && (
-	    typeof Node === 'function' ? object instanceof Node :
-	      typeof object === 'object' &&
-	      typeof object.nodeType === 'number' &&
-	      typeof object.nodeName === 'string'
-	  ));
-	}
-
-	module.exports = isNode;
-
-
-/***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
 	 * @providesModule performance
 	 * @typechecks
 	 */
@@ -40044,6 +40012,38 @@ node.innerHTML = html;
 	}
 
 	module.exports = performance || {};
+
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule isNode
+	 * @typechecks
+	 */
+
+	/**
+	 * @param {*} object The object to check.
+	 * @return {boolean} Whether or not the object is a DOM node.
+	 */
+	function isNode(object) {
+	  return !!(object && (
+	    typeof Node === 'function' ? object instanceof Node :
+	      typeof object === 'object' &&
+	      typeof object.nodeType === 'number' &&
+	      typeof object.nodeName === 'string'
+	  ));
+	}
+
+	module.exports = isNode;
 
 
 /***/ },

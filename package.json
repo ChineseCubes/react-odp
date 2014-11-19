@@ -7,6 +7,7 @@
     "start": "gulp",
     "prepublish": "gulp build",
     "pack": "./src/build/pack.ls ./books/*/*.odp",
+    "check": "ls -alh ./.*.build/*.xhtml | grep 1B || echo OK",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
