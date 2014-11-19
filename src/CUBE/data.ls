@@ -20,8 +20,8 @@ master-page =
       attrs:
         'style-name': \Mgr4
         'text-style-name': \MP4
-        x:      \26.16cm
-        y:      \0.35cm
+        x:      \25.16cm
+        y:      \1.35cm
         width:  \1.458cm
         height: \1.358cm
       children:
