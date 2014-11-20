@@ -112,7 +112,8 @@
         scale: this.state.scale,
         data: this.props.data,
         renderProps: function(props){
-          var pages, parents, data, attrs, key$, comp, text, hide, show, page, x$, i$, ref$, len$, cue;
+          var click, pages, parents, data, attrs, key$, comp, text, hide, show, page, x$, i$, ref$, len$, cue;
+          click = onClick === 'onClick' ? 'click' : 'touchstart';
           if (!this$.props.pages) {
             this$.props.pages = (function(){
               var i$, to$, results$ = [];
@@ -209,7 +210,7 @@
               $modal = $(modal);
               height = $modal.height();
               $('.office.presentation').css('opacity', 0.5);
-              $modal.fadeIn('fast').toggleClass('hidden', false).one('click', '.close', hide);
+              $modal.fadeIn('fast').toggleClass('hidden', false);
               $top = $((function(){
                 try {
                   return window;
@@ -218,11 +219,11 @@
               hideOnce = function(it){
                 if (!$.contains(modal, it.target)) {
                   hide();
-                  return $top.off('click', hideOnce);
+                  return $top.off(click, hideOnce);
                 }
               };
               return setTimeout(function(){
-                return $top.on('click', hideOnce);
+                return $top.on(click, hideOnce);
               }, 0);
             };
             page = this$[parents[1].name];

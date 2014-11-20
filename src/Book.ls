@@ -89,6 +89,7 @@ Book = React.createClass do
         scale: @state.scale
         data:  @props.data
         renderProps: (props) ~>
+          click = if onClick is \onClick then \click else \touchstart
           @props.pages = [1 to setup.total-pages] if not @props.pages
           pages = @props.pages.map (-> "page#it")
           parents = props.parents
@@ -152,13 +153,12 @@ Book = React.createClass do
                 .fadeIn \fast
                 # XXX: this state should be managed by React
                 .toggleClass 'hidden' off
-                .one \click \.close hide
               $top = $ try window
               hide-once = ~>
                 unless $.contains modal, it.target
                   hide!
-                  $top.off \click hide-once
-              setTimeout (-> $top.on \click hide-once), 0
+                  $top.off click, hide-once # check the begining of render()
+              setTimeout (-> $top.on click, hide-once), 0
               #$ @refs.modal.getDOMNode!
               #  .modal do
               #    detachable: false
