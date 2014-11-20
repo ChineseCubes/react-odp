@@ -38,14 +38,17 @@ c = class Char
   flatten: -> this
 o = class Node
   (@children = [], @definition = '', @short = '', @word-class = []) ~>
-  flatten: -> flatten <| for child in @children => child.flatten!
-  isLeaf:  -> not @children.0.leafs
+  flatten: -> flatten <| for @children => ..flatten!
+  toString: (mode) ->
+    | not mode in <[zh-TW zh-CN]> => ''
+    | otherwise                   => @flatten!map(-> it[mode])join('')
+  isLeaf:  -> not @children.0.isLeaf
   leafs:   ->
     | @isLeaf!  => [this]
-    | otherwise => flatten <| for child in @children => child.leafs!
+    | otherwise => flatten <| for @children => ..leafs!
   depth:   ->
     | @isLeaf!  => 0
-    | otherwise => 1 + (max <| for child in @children => child.depth!)
+    | otherwise => 1 + (max <| for @children => ..depth!)
   childrenOfDepth: (depth) ->
     | @isLeaf!   => [this]
     | depth is 0 => [this]

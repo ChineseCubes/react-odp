@@ -1,13 +1,15 @@
 (function(){
-  var React, Character, Popup, Menu, API, ref$, div, i, span, Howler, Howl, onClick, sayIt, Word;
+  var React, Character, Popup, Menu, API, Data, ref$, div, i, span, Howler, Howl, onClick, sayIt, punctuations, Word;
   React = require('react');
   Character = React.createFactory(require('./Character'));
   Popup = React.createFactory(require('../UI/Popup'));
   Menu = React.createFactory(require('../UI/Menu'));
   API = require('../api');
+  Data = require('../data');
   ref$ = React.DOM, div = ref$.div, i = ref$.i, span = ref$.span;
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
   ref$ = require('../utils'), onClick = ref$.onClick, sayIt = ref$.sayIt;
+  punctuations = Object.keys(Data.punctuations).join('');
   Word = React.createClass({
     displayName: 'CUBE.Book.Word',
     getDefaultProps: function(){
@@ -42,14 +44,10 @@
         this.props.onChildCut(this);
       }
       if (this.state.pinyin) {
-        sayIt(this.props.data.flatten().map(function(it){
-          return it[this$.props.mode];
-        }).join(''), this.props.mode);
+        sayIt(this.props.data.toString(this.props.mode), this.props.mode);
       }
       if (state.stroke !== this.state.stroke) {
-        this.props.onStroke(this.state.stroke ? this.props.data.flatten().map(function(it){
-          return it[this$.props.mode];
-        }).join('') : null, function(){
+        this.props.onStroke(this.state.stroke ? this.props.data.toString(this.props.mode) : null, function(){
           return this$.setState({
             pinyin: false,
             stroke: false,
@@ -67,7 +65,7 @@
     render: function(){
       var data, meaningStatus, ref$, menuStatus, withHint, pinyin, stroke, english, this$ = this;
       data = this.props.data;
-      meaningStatus = this.state.meaning ? '' : 'hidden';
+      meaningStatus = !this.state.meaning ? 'hidden' : '';
       return div((ref$ = {
         className: 'word'
       }, ref$[onClick + ""] = function(){
@@ -90,7 +88,7 @@
             });
           }
         }
-      })) : void 8, this.state.menu ? (withHint = this.state.pinyin || this.state.meaning ? 'with-hint' : '', pinyin = this.state.pinyin ? 'pinyin actived' : 'pinyin', stroke = this.state.stroke ? 'stroke actived' : 'stroke', data.children.length !== 1 && (stroke += ' hidden'), english = this.state.meaning ? 'english actived' : 'english', Menu({
+      })) : void 8, this.state.menu ? (withHint = this.state.pinyin || this.state.meaning ? 'with-hint' : '', pinyin = this.state.pinyin ? 'pinyin actived' : 'pinyin', data.isLeaf() && data.children[0].pinyin.length === 0 && (pinyin += ' hidden'), stroke = this.state.stroke ? 'stroke actived' : 'stroke', !data.isLeaf() && (stroke += ' hidden'), in$(data.toString(this.props.mode), punctuations) && (stroke += ' hidden'), english = this.state.meaning ? 'english actived' : 'english', data.short.length === 0 && (english += ' hidden'), Menu({
         className: "menu-learn " + withHint,
         buttons: [pinyin, stroke, english],
         onButtonClick: function(classes){
@@ -164,4 +162,9 @@
     }
   });
   module.exports = Word;
+  function in$(x, xs){
+    var i = -1, l = xs.length >>> 0;
+    while (++i < l) if (x === xs[i]) return true;
+    return false;
+  }
 }).call(this);

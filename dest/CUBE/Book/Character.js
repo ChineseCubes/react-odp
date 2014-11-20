@@ -18,9 +18,9 @@
       status = this.props.pinyin ? '' : 'hidden';
       return div({
         className: 'character'
-      }, Popup({
+      }, data.pinyin.length !== 0 ? Popup({
         className: "up pronounciation " + status
-      }, data != null ? data.pinyin : void 8), this.props.mode === 'zh-TW'
+      }, data.pinyin) : void 8, this.props.mode === 'zh-TW'
         ? div({
           className: 'char zh-TW'
         }, data != null ? data['zh-TW'] : void 8)

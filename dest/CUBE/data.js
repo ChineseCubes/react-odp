@@ -71,46 +71,54 @@
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
     prototype.flatten = function(){
-      var child;
       return flatten((function(){
-        var i$, ref$, len$, results$ = [];
+        var i$, x$, ref$, len$, results$ = [];
         for (i$ = 0, len$ = (ref$ = this.children).length; i$ < len$; ++i$) {
-          child = ref$[i$];
-          results$.push(child.flatten());
+          x$ = ref$[i$];
+          results$.push(x$.flatten());
         }
         return results$;
       }.call(this)));
     };
+    prototype.toString = function(mode){
+      var ref$;
+      switch (false) {
+      case (ref$ = !mode) !== 'zh-TW' && ref$ !== 'zh-CN':
+        return '';
+      default:
+        return this.flatten().map(function(it){
+          return it[mode];
+        }).join('');
+      }
+    };
     prototype.isLeaf = function(){
-      return !this.children[0].leafs;
+      return !this.children[0].isLeaf;
     };
     prototype.leafs = function(){
-      var child;
       switch (false) {
       case !this.isLeaf():
         return [this];
       default:
         return flatten((function(){
-          var i$, ref$, len$, results$ = [];
+          var i$, x$, ref$, len$, results$ = [];
           for (i$ = 0, len$ = (ref$ = this.children).length; i$ < len$; ++i$) {
-            child = ref$[i$];
-            results$.push(child.leafs());
+            x$ = ref$[i$];
+            results$.push(x$.leafs());
           }
           return results$;
         }.call(this)));
       }
     };
     prototype.depth = function(){
-      var child;
       switch (false) {
       case !this.isLeaf():
         return 0;
       default:
         return 1 + max((function(){
-          var i$, ref$, len$, results$ = [];
+          var i$, x$, ref$, len$, results$ = [];
           for (i$ = 0, len$ = (ref$ = this.children).length; i$ < len$; ++i$) {
-            child = ref$[i$];
-            results$.push(child.depth());
+            x$ = ref$[i$];
+            results$.push(x$.depth());
           }
           return results$;
         }.call(this)));

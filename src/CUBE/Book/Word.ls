@@ -1,12 +1,15 @@
 React = require 'react'
 Character = React.createFactory require './Character'
 Popup = React.createFactory require '../UI/Popup'
-Menu = React.createFactory require '../UI/Menu'
+Menu= React.createFactory require '../UI/Menu'
 API = require '../api'
+Data = require '../data'
 
 { div, i, span } = React.DOM
 { Howler, Howl } = require 'howler'
 { onClick, say-it } = require '../utils'
+
+punctuations = Object.keys Data.punctuations .join ''
 
 Word = React.createClass do
   displayName: 'CUBE.Book.Word'
@@ -29,12 +32,12 @@ Word = React.createClass do
       @props.onChildCut this
     if @state.pinyin
       say-it do
-        @props.data.flatten!map(~> it[@props.mode])join('')
+        @props.data.toString @props.mode
         @props.mode
     if state.stroke isnt @state.stroke
       @props.onStroke do
         if @state.stroke
-          then @props.data.flatten!map(~> it[@props.mode])join('')
+          then @props.data.toString @props.mode
           else null
         ~> # off switch for parent component
           @setState do
@@ -46,12 +49,13 @@ Word = React.createClass do
   click: -> @props.onChildClick this
   render: ->
     data = @props.data
-    meaning-status = if @state.meaning then '' else 'hidden'
+    meaning-status = unless @state.meaning then 'hidden' else ''
     div do
       className: 'word'
       "#onClick": ~> @click! unless @state.cut
       if @state.menu
-        menu-status = if data.children.length is 1 then 'hidden' else ''
+        menu-status =
+          if data.children.length is 1 then 'hidden' else ''
         Menu do
           className: 'menu-cut'
           buttons: ["cut #menu-status"]
@@ -65,9 +69,12 @@ Word = React.createClass do
         with-hint =
           if @state.pinyin or @state.meaning then 'with-hint' else ''
         pinyin = if @state.pinyin then 'pinyin actived' else 'pinyin'
+        pinyin += ' hidden' if data.isLeaf! and data.children.0.pinyin.length is 0
         stroke = if @state.stroke then 'stroke actived' else 'stroke'
-        stroke += ' hidden' if data.children.length isnt 1
+        stroke += ' hidden' if not data.isLeaf!
+        stroke += ' hidden' if data.toString(@props.mode) in punctuations
         english = if @state.meaning then 'english actived' else 'english'
+        english += ' hidden' if data.short.length is 0
         Menu do
           className: "menu-learn #with-hint"
           buttons: [pinyin , stroke, english]
