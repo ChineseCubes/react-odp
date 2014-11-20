@@ -107,9 +107,7 @@
       }, Playground({
         ref: 'playground',
         data: this.props.segs.get(this.state.text)
-      })), Button({
-        className: 'close'
-      }, '✖')), ODP.components.presentation({
+      }))), ODP.components.presentation({
         ref: 'presentation',
         scale: this.state.scale,
         data: this.props.data,
@@ -200,17 +198,32 @@
               });
             };
             show = function(){
-              var $modal, height;
+              var modal, $modal, height, $top, hideOnce;
               this$.setState({
                 text: text
               });
               this$.setState({
                 showText: false
               });
-              $modal = $(this$.refs.modal.getDOMNode());
+              modal = this$.refs.modal.getDOMNode();
+              $modal = $(modal);
               height = $modal.height();
               $('.office.presentation').css('opacity', 0.5);
-              return $modal.fadeIn('fast').toggleClass('hidden', false).one('click', '.close', hide);
+              $modal.fadeIn('fast').toggleClass('hidden', false).one('click', '.close', hide);
+              $top = $((function(){
+                try {
+                  return window;
+                } catch (e$) {}
+              }()));
+              hideOnce = function(it){
+                if (!$.contains(modal, it.target)) {
+                  hide();
+                  return $top.off('click', hideOnce);
+                }
+              };
+              return setTimeout(function(){
+                return $top.on('click', hideOnce);
+              }, 0);
             };
             page = this$[parents[1].name];
             if (!in$(text, page.sentences)) {

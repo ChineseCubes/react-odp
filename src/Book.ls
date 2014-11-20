@@ -84,9 +84,6 @@ Book = React.createClass do
           Playground do
             ref: \playground
             data: @props.segs.get @state.text
-        Button do
-          className: 'close'
-          '✖'
       ODP.components.presentation do
         ref: \presentation
         scale: @state.scale
@@ -147,7 +144,8 @@ Book = React.createClass do
             show = ~>
               @setState text: text
               @setState show-text: false
-              $modal = $ @refs.modal.getDOMNode!
+              modal = @refs.modal.getDOMNode!
+              $modal = $ modal
               height = $modal.height!
               $ '.office.presentation' .css \opacity 0.5
               $modal
@@ -155,6 +153,12 @@ Book = React.createClass do
                 # XXX: this state should be managed by React
                 .toggleClass 'hidden' off
                 .one \click \.close hide
+              $top = $ try window
+              hide-once = ~>
+                unless $.contains modal, it.target
+                  hide!
+                  $top.off \click hide-once
+              setTimeout (-> $top.on \click hide-once), 0
               #$ @refs.modal.getDOMNode!
               #  .modal do
               #    detachable: false
