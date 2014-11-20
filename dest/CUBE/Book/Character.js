@@ -19,7 +19,7 @@
       return div({
         className: 'character'
       }, data.pinyin.length !== 0 ? Popup({
-        className: "up pronounciation " + status
+        className: "down pronounciation " + status
       }, data.pinyin) : void 8, this.props.mode === 'zh-TW'
         ? div({
           className: 'char zh-TW'

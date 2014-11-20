@@ -109,7 +109,7 @@
   text-align: center;
   pointer-events: none;
   position: absolute;
-  bottom: 0.4rem;
+  top: 0;
   left: -100%;
   right: -100%;
 }
@@ -187,13 +187,10 @@
   position: absolute;
 }
 .word > .menu.menu-cut {
-  top: -1.6rem;
+  top: -4rem;
 }
 .word > .menu.menu-learn {
   bottom: -1.6rem;
-}
-.word > .menu.menu-learn.with-hint {
-  bottom: -3.6rem;
 }
 .word > .meaning {
   position: absolute;
@@ -202,7 +199,7 @@
 }
 .sentence {
   position: relative;
-  padding: 4rem 6rem;
+  padding: 8.4rem 5rem 6rem 5rem;
 }
 .settings {
   position: absolute;
@@ -257,8 +254,13 @@
 .playground > .undo.button {
   position: absolute;
   top: 1rem;
-  right: 2rem;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
   font-size: 2.4rem;
+}
+.playground .sentence > .word > .menu-cut {
+  top: -7.4rem;
 }
 .playground > .settings,
 .playground > .definition {
