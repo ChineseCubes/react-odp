@@ -62,7 +62,7 @@
   height: 3.2rem;
   line-height: 3.2rem;
   border-radius: 1.6rem;
-  background-color: #575f64;
+  background-color: #7c8284;
   text-align: center;
 }
 .button.hidden {
@@ -222,7 +222,7 @@
   vertical-align: middle;
   padding: 0 12px;
   border-left: 1px solid #f1f1f1;
-  color: #575f64;
+  color: #7c8284;
 }
 .definition {
   position: relative;
@@ -242,7 +242,7 @@
 }
 .definition > dt {
   height: auto;
-  background-color: #575f64;
+  background-color: #7c8284;
   color: #fff;
   border-radius: 0.3rem;
 }
