@@ -123,6 +123,9 @@ console.log '''
       ps.push p
       Promise.all ps #.catch -> console.warn 'speech not found'yellow
     .then ->
+      src = path.resolve build.path, 'data', 'audio.mp3'
+      mp3val src
+    .then ->
       console.log "#{'cp'magenta} strokes"
       try fs.mkdirSync path.resolve build.path, 'strokes'
       Promise.all do
@@ -278,6 +281,14 @@ function get-master-page src
       Data.getMasterPage src, resolve
     catch err
       reject err
+
+function mp3val src
+  new Promise (resolve, reject) ->
+    console.log "#{'mp3val'magenta} -f #{rel src}"
+    exec do
+      "mp3val -f #src"
+      (err, stdout, stderr) ->
+        unless err then resolve stdout, stderr else reject err
 
 count = 0
 function font-subset src, dst, codepoints
