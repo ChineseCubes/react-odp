@@ -20,6 +20,7 @@ Book = React.createClass do
     master-page: null
     data: null
     segs: null
+    audio: null
     vtt: null
     #pages: [1]
     pages: null
@@ -35,10 +36,9 @@ Book = React.createClass do
     page-number: 0
     show-text: true
   componentWillMount: ->
-    {setup} = @props.master-page
     audio = try
       Howler.iOSAutoEnable = false
-      new Howl urls: ["#{setup.path}/audio.mp3"]
+      new Howl urls: [@props.audio]
     if audio
       audio.on \end ~> @state.current-sprite = null
     # set audio and update sprites after prerendered content has been mounted

@@ -14,6 +14,7 @@ require! {
   jade
   htmltidy: { tidy }
   'es6-promise': { Promise }
+  datauri: { promises: datauri }
   '../CUBE/data': Data
   './epub/utils': utils
   './epub': { pack }
@@ -125,6 +126,11 @@ console.log '''
     .then ->
       src = path.resolve build.path, 'data', 'audio.mp3'
       mp3val src
+    .then ->
+      dst = path.resolve build.path, 'data', 'audio.mp3'
+      datauri dst .then do
+        -> write "#dst.json", "{\"mp3\":\"#{it.replace \mpeg -> \mp3}\"}"
+        -> console.log it
     .then ->
       console.log "#{'cp'magenta} strokes"
       try fs.mkdirSync path.resolve build.path, 'strokes'

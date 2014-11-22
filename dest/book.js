@@ -23,6 +23,7 @@
         masterPage: null,
         data: null,
         segs: null,
+        audio: null,
         vtt: null,
         pages: null,
         dpcm: 37.79527,
@@ -42,16 +43,15 @@
       };
     },
     componentWillMount: function(){
-      var setup, audio, this$ = this;
-      setup = this.props.masterPage.setup;
+      var audio, this$ = this;
       audio = (function(){
         try {
           Howler.iOSAutoEnable = false;
           return new Howl({
-            urls: [setup.path + "/audio.mp3"]
+            urls: [this.props.audio]
           });
         } catch (e$) {}
-      }());
+      }.call(this));
       if (audio) {
         audio.on('end', function(){
           return this$.state.currentSprite = null;

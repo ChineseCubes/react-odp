@@ -32,6 +32,7 @@
     "cp": "^0.1.1",
     "cpr": "^0.3.2",
     "css-loader": "^0.8.0",
+    "datauri": "^0.5.5",
     "gulp": "^3.7.0",
     "gulp-concat": "^2.1.7",
     "gulp-connect": "^2.0.6",

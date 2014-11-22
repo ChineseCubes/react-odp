@@ -5,6 +5,15 @@ Book         = React.createFactory require './Book'
 Reader       = React.createFactory require './Reader'
 ReactVTT     = require 'react-vtt'
 require 'react-vtt/dest/ReactVTT.css'
+request      = require 'request'
+
+get-mp3 = (filename, done) ->
+  err, res, body <- request filename
+  if err
+    console.warn err
+    done mp3: null
+  else
+    done JSON.parse body
 
 get-vtt = (filename, done) ->
   ReactVTT
@@ -20,9 +29,10 @@ dots = React.render do
   $ \#detector .get!0
 # read book data
 {setup}:mp <- Data.getMasterPage './data/'
-data <- Data.getPresentation mp
-segs <- Data.Segmentations data, setup.path
-vtt  <- get-vtt "#{setup.path}/audio.vtt.json"
+data    <- Data.getPresentation mp
+segs    <- Data.Segmentations data, setup.path
+{ mp3 } <- get-mp3 "#{setup.path}/audio.mp3.json"
+vtt     <- get-vtt "#{setup.path}/audio.vtt.json"
 
 $win = $ window
 
@@ -30,6 +40,7 @@ props =
   master-page: mp
   data: data
   segs: segs
+  audio: mp3 or "#{setup.path}/audio.mp3"
   vtt: vtt
   dpcm: dots.state.x
   width: $win.width!
