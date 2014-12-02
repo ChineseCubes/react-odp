@@ -155,6 +155,52 @@ class Segmentations
   get: ->
     @data[it]
 
+mode-selector =
+  name: \frame
+  namespace: \draw
+  attrs:
+    x: '2.45cm'
+    y: '17.85cm'
+    width:  '23.1cm'
+    height: '2.275cm'
+    style:
+      background-color: \#f00
+  children:
+    * name: \frame
+      namespace: \draw
+      attrs:
+        x: '0cm'
+        y: '0cm'
+        width:  '7.35cm'
+        height: '2.275cm'
+        style:
+          background-color: \#0f0
+      children: []
+    * name: \frame
+      namespace: \draw
+      attrs:
+        x: '7.875cm'
+        y: '0cm'
+        width:  '7.35cm'
+        height: '2.275cm'
+        style:
+          background-color: \#0f0
+      children: []
+    * name: \frame
+      namespace: \draw
+      attrs:
+        x: '15.75cm'
+        y: '0cm'
+        width:  '7.35cm'
+        height: '2.275cm'
+        style:
+          background-color: \#0f0
+      children: []
+with-mode-selector = (page) ->
+  page.children.push mode-selector
+  console.log page
+  page
+
 Data =
   Node: Node
   Char: Char
@@ -182,7 +228,9 @@ Data =
     pages = []
     counter = 0
     got-one = (data, i) ->
-      pages[i] = data
+      switch i
+        | 0 => pages[i] = data |> with-mode-selector
+        | _ => pages[i] = data
       counter += 1
       if counter is setup.total-pages
         done do

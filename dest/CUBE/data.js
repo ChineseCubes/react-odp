@@ -1,5 +1,5 @@
 (function(){
-  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, Data;
+  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, modeSelector, withModeSelector, Data;
   try {
     fs = require('fs');
   } catch (e$) {}
@@ -267,6 +267,66 @@
     };
     return Segmentations;
   }());
+  modeSelector = {
+    name: 'frame',
+    namespace: 'draw',
+    attrs: {
+      x: '2.45cm',
+      y: '17.85cm',
+      width: '23.1cm',
+      height: '2.275cm',
+      style: {
+        backgroundColor: '#f00'
+      }
+    },
+    children: [
+      {
+        name: 'frame',
+        namespace: 'draw',
+        attrs: {
+          x: '0cm',
+          y: '0cm',
+          width: '7.35cm',
+          height: '2.275cm',
+          style: {
+            backgroundColor: '#0f0'
+          }
+        },
+        children: []
+      }, {
+        name: 'frame',
+        namespace: 'draw',
+        attrs: {
+          x: '7.875cm',
+          y: '0cm',
+          width: '7.35cm',
+          height: '2.275cm',
+          style: {
+            backgroundColor: '#0f0'
+          }
+        },
+        children: []
+      }, {
+        name: 'frame',
+        namespace: 'draw',
+        attrs: {
+          x: '15.75cm',
+          y: '0cm',
+          width: '7.35cm',
+          height: '2.275cm',
+          style: {
+            backgroundColor: '#0f0'
+          }
+        },
+        children: []
+      }
+    ]
+  };
+  withModeSelector = function(page){
+    page.children.push(modeSelector);
+    console.log(page);
+    return page;
+  };
   Data = {
     Node: Node,
     Char: Char,
@@ -304,7 +364,14 @@
       pages = [];
       counter = 0;
       gotOne = function(data, i){
-        pages[i] = data;
+        switch (i) {
+        case 0:
+          pages[i] = withModeSelector(
+          data);
+          break;
+        default:
+          pages[i] = data;
+        }
         counter += 1;
         if (counter === setup.totalPages) {
           return done({
