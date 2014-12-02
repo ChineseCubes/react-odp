@@ -6,8 +6,9 @@ Button = React.createClass do
   displayName: 'CUBE.UI.Button'
   render: ->
     className = "button #{@props.className}"
+    { style } = @props
     div do
-      @props <<< { className }
+      @props <<< { className, style }
       div {}, @props.children
 
 module.exports = Button

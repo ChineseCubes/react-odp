@@ -5,6 +5,13 @@ React = require 'react'
   filter, map, mapValues, cloneDeep
 } = require 'lodash'
 
+scale-length = (scale, value, key = '') -> # without changing the unit
+  | key in <[opacity]>         => value
+  | isNumber value             => value * scale
+  | /^-?\d*\.?\d+%$/test value => value
+  | r = /^(-?\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/exec value
+    "#{+r.1 * scale}#{r.2 or ''}"
+  | otherwise                  => value
 renderProps = ->
   default-components[camelFromHyphenated it.data.name]? it
 doTextareaVerticalAlign = ->
@@ -52,13 +59,7 @@ makeInteractive = ->
   it
 
 DrawMixin =
-  scaleStyle: (value, key) -> # without changing the unit
-    | key in <[opacity]>      => value
-    | isNumber value          => value * @props.scale
-    | /^-?\d*\.?\d+%$/test value => value
-    | r = /^(-?\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/exec value
-      "#{+r.1 * @props.scale}#{r.2 or ''}"
-    | otherwise               => value
+  scaleStyle: (value, key) -> scale-length @props.scale, value, key
   getDefaultProps: ->
     defaultHtmlTag: 'div'
     scale:          1.0
@@ -144,4 +145,5 @@ module.exports =
   DrawMixin:   DrawMixin
   components:  default-components
   renderProps: renderProps
+  scale-length: scale-length
 

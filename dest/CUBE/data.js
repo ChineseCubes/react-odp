@@ -1,5 +1,5 @@
 (function(){
-  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, modeSelector, withModeSelector, Data;
+  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, modeSelectors, withModeSelectors, Data;
   try {
     fs = require('fs');
   } catch (e$) {}
@@ -267,63 +267,54 @@
     };
     return Segmentations;
   }());
-  modeSelector = {
+  modeSelectors = {
     name: 'frame',
     namespace: 'draw',
     attrs: {
       x: '2.45cm',
       y: '17.85cm',
       width: '23.1cm',
-      height: '2.275cm',
-      style: {
-        backgroundColor: '#f00'
-      }
+      height: '2.275cm'
     },
     children: [
       {
         name: 'frame',
         namespace: 'draw',
+        id: 'picture-book',
         attrs: {
           x: '0cm',
           y: '0cm',
           width: '7.35cm',
-          height: '2.275cm',
-          style: {
-            backgroundColor: '#0f0'
-          }
+          height: '2.275cm'
         },
         children: []
       }, {
         name: 'frame',
         namespace: 'draw',
+        id: 'read-to-me',
         attrs: {
           x: '7.875cm',
           y: '0cm',
           width: '7.35cm',
-          height: '2.275cm',
-          style: {
-            backgroundColor: '#0f0'
-          }
+          height: '2.275cm'
         },
         children: []
       }, {
         name: 'frame',
         namespace: 'draw',
+        id: 'learn-by-myself',
         attrs: {
           x: '15.75cm',
           y: '0cm',
           width: '7.35cm',
-          height: '2.275cm',
-          style: {
-            backgroundColor: '#0f0'
-          }
+          height: '2.275cm'
         },
         children: []
       }
     ]
   };
-  withModeSelector = function(page){
-    page.children.push(modeSelector);
+  withModeSelectors = function(page){
+    page.children.push(modeSelectors);
     console.log(page);
     return page;
   };
@@ -366,7 +357,7 @@
       gotOne = function(data, i){
         switch (i) {
         case 0:
-          pages[i] = withModeSelector(
+          pages[i] = withModeSelectors(
           data);
           break;
         default:

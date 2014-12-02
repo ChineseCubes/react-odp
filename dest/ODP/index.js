@@ -1,8 +1,24 @@
 (function(){
-  var React, camelFromHyphenated, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, renderProps, doTextareaVerticalAlign, fromVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents;
+  var React, camelFromHyphenated, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, scaleLength, renderProps, doTextareaVerticalAlign, fromVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents;
   React = require('react');
   camelFromHyphenated = require('../CUBE/utils').camelFromHyphenated;
   ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, isNumber = ref$.isNumber, filter = ref$.filter, map = ref$.map, mapValues = ref$.mapValues, cloneDeep = ref$.cloneDeep;
+  scaleLength = function(scale, value, key){
+    var r;
+    key == null && (key = '');
+    switch (false) {
+    case !in$(key, ['opacity']):
+      return value;
+    case !isNumber(value):
+      return value * scale;
+    case !/^-?\d*\.?\d+%$/.test(value):
+      return value;
+    case !(r = /^(-?\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/.exec(value)):
+      return +r[1] * scale + "" + (r[2] || '');
+    default:
+      return value;
+    }
+  };
   renderProps = function(it){
     var key$;
     return typeof defaultComponents[key$ = camelFromHyphenated(it.data.name)] === 'function' ? defaultComponents[key$](it) : void 8;
@@ -83,19 +99,7 @@
   };
   DrawMixin = {
     scaleStyle: function(value, key){
-      var r;
-      switch (false) {
-      case !in$(key, ['opacity']):
-        return value;
-      case !isNumber(value):
-        return value * this.props.scale;
-      case !/^-?\d*\.?\d+%$/.test(value):
-        return value;
-      case !(r = /^(-?\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/.exec(value)):
-        return +r[1] * this.props.scale + "" + (r[2] || '');
-      default:
-        return value;
-      }
+      return scaleLength(this.props.scale, value, key);
     },
     getDefaultProps: function(){
       return {
@@ -237,17 +241,18 @@
   module.exports = {
     DrawMixin: DrawMixin,
     components: defaultComponents,
-    renderProps: renderProps
+    renderProps: renderProps,
+    scaleLength: scaleLength
   };
-  function import$(obj, src){
-    var own = {}.hasOwnProperty;
-    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
-    return obj;
-  }
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;
     while (++i < l) if (x === xs[i]) return true;
     return false;
+  }
+  function import$(obj, src){
+    var own = {}.hasOwnProperty;
+    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+    return obj;
   }
   function importAll$(obj, src){
     for (var key in src) obj[key] = src[key];

@@ -155,7 +155,7 @@ class Segmentations
   get: ->
     @data[it]
 
-mode-selector =
+mode-selectors =
   name: \frame
   namespace: \draw
   attrs:
@@ -163,41 +163,36 @@ mode-selector =
     y: '17.85cm'
     width:  '23.1cm'
     height: '2.275cm'
-    style:
-      background-color: \#f00
   children:
     * name: \frame
       namespace: \draw
+      id: 'picture-book'
       attrs:
         x: '0cm'
         y: '0cm'
         width:  '7.35cm'
         height: '2.275cm'
-        style:
-          background-color: \#0f0
       children: []
     * name: \frame
       namespace: \draw
+      id: 'read-to-me'
       attrs:
         x: '7.875cm'
         y: '0cm'
         width:  '7.35cm'
         height: '2.275cm'
-        style:
-          background-color: \#0f0
       children: []
     * name: \frame
       namespace: \draw
+      id: 'learn-by-myself'
       attrs:
         x: '15.75cm'
         y: '0cm'
         width:  '7.35cm'
         height: '2.275cm'
-        style:
-          background-color: \#0f0
       children: []
-with-mode-selector = (page) ->
-  page.children.push mode-selector
+with-mode-selectors = (page) ->
+  page.children.push mode-selectors
   console.log page
   page
 
@@ -229,7 +224,7 @@ Data =
     counter = 0
     got-one = (data, i) ->
       switch i
-        | 0 => pages[i] = data |> with-mode-selector
+        | 0 => pages[i] = data |> with-mode-selectors
         | _ => pages[i] = data
       counter += 1
       if counter is setup.total-pages

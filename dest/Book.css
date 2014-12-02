@@ -507,3 +507,10 @@
   -webkit-border-radius: 3rem;
   border-radius: 3rem;
 }
+.picture-book,
+.read-to-me,
+.learn-by-myself {
+  position: absolute;
+  -webkit-border-radius: 1rem;
+  border-radius: 1rem;
+}

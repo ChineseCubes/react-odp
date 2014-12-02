@@ -5,9 +5,10 @@
   Button = React.createClass({
     displayName: 'CUBE.UI.Button',
     render: function(){
-      var className, ref$;
+      var className, style, ref$;
       className = "button " + this.props.className;
-      return div((ref$ = this.props, ref$.className = className, ref$), div({}, this.props.children));
+      style = this.props.style;
+      return div((ref$ = this.props, ref$.className = className, ref$.style = style, ref$), div({}, this.props.children));
     }
   });
   module.exports = Button;
