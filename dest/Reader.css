@@ -462,6 +462,9 @@
 .playground > .definition {
   display: none;
 }
+.enhanced-geometry {
+  position: absolute;
+}
 .modal {
   z-index: 2;
   position: fixed;

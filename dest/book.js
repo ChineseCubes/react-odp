@@ -1,9 +1,10 @@
 (function(){
-  var React, ReactVTT, ODP, Button, Book, IsolatedCue, AudioControl, Playground, ref$, div, i, small, onClick, Howler, Howl, win;
+  var React, ReactVTT, ODP, Button, CustomShape, Book, IsolatedCue, AudioControl, Playground, ref$, div, i, small, onClick, Howler, Howl, win;
   React = require('react');
   ReactVTT = require('react-vtt');
   ODP = require('./ODP');
   Button = React.createFactory(require('./CUBE/UI/Button'));
+  CustomShape = React.createFactory(require('./CUBE/CustomShape'));
   Book = require('./CUBE/Book');
   IsolatedCue = React.createFactory(ReactVTT.IsolatedCue);
   AudioControl = React.createFactory(Book.AudioControl);
@@ -274,6 +275,11 @@
                   return (((ref$ = this$.state.currentSprite) != null ? ref$[0] : void 8) || 0) / 1000 + (((ref$ = this$.state.audio) != null ? ref$.pos() : void 8) || 0);
                 }
               }));
+            }
+            break;
+          case data.name !== 'custom-shape':
+            if (this$.state.showText) {
+              return CustomShape(props);
             }
             break;
           case data.id !== 'picture-book':

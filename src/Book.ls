@@ -1,8 +1,9 @@
-React     = require 'react'
-ReactVTT  = require 'react-vtt'
-ODP       = require './ODP'
-Button    = React.createFactory require './CUBE/UI/Button'
-Book      = require './CUBE/Book'
+React       = require 'react'
+ReactVTT    = require 'react-vtt'
+ODP         = require './ODP'
+Button      = React.createFactory require './CUBE/UI/Button'
+CustomShape = React.createFactory require './CUBE/CustomShape'
+Book        = require './CUBE/Book'
 
 IsolatedCue  = React.createFactory ReactVTT.IsolatedCue
 AudioControl = React.createFactory Book.AudioControl
@@ -196,6 +197,8 @@ Book = React.createClass do
                   match: text
                   currentTime: ~>
                     (@state.current-sprite?0 or 0) / 1000 + (@state.audio?pos! or 0)
+          | data.name is 'custom-shape'
+            CustomShape props if @state.show-text
           | data.id is 'picture-book'
             console.log props, data
             Button do
