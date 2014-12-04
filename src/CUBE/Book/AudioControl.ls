@@ -1,4 +1,4 @@
-React = require 'react'
+React       = require 'react'
 
 { div } = React.DOM
 { say-it, onClick } = require '../utils'
@@ -9,8 +9,12 @@ AudioControl = React.createClass do
     id: 0
     audio: null
     text: '這頁沒有文字'
-    onMount: -> ...
-    "#onClick": -> ...
+    onMount: ->
+    onLoad: ->
+    onPlay: ->
+    onEnd: ->
+    onPause: ->
+    "#onClick": ->
   getInitialState: ->
     loading: true
     playing: false
@@ -21,8 +25,8 @@ AudioControl = React.createClass do
     @props.audio
       ..on \load  @onLoad
       ..on \play  @onPlay
-      ..on \pause @onStop
-      ..on \end   @onStop
+      ..on \end   @onEnd
+      ..on \pause @onPause
   componentDidMount: ->
     @props.onMount ...
   componentWillUnmount: ->
@@ -30,11 +34,20 @@ AudioControl = React.createClass do
     @props.audio
       ..off \load  @onLoad
       ..off \play  @onPlay
-      ..off \pause @onStop
-      ..off \end   @onStop
-  onLoad: -> @setState loading: false
-  onPlay: -> @setState playing: true
-  onStop: -> @setState playing: false
+      ..off \end   @onEnd
+      ..off \pause @onPause
+  onLoad: ->
+    @setState loading: false
+    @props.onLoad ...
+  onPlay: ->
+    @setState playing: true
+    @props.onPlay ...
+  onEnd: ->
+    @setState playing: false
+    @props.onEnd ...
+  onPause: ->
+    @setState playing: false
+    @props.onPause ...
   play: ->
     if @props.audio
       return if @state.loading

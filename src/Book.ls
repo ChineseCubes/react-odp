@@ -4,6 +4,7 @@ ODP         = require './ODP'
 Button      = React.createFactory require './CUBE/UI/Button'
 CustomShape = React.createFactory require './CUBE/CustomShape'
 Book        = require './CUBE/Book'
+NotifyMixin = require './CUBE/NotifyMixin'
 
 IsolatedCue  = React.createFactory ReactVTT.IsolatedCue
 AudioControl = React.createFactory Book.AudioControl
@@ -17,6 +18,7 @@ win = try window
 
 Book = React.createClass do
   displayName: \CUBE.Book
+  mixins: [NotifyMixin]
   getDefaultProps: ->
     master-page: null
     data: null
@@ -131,6 +133,8 @@ Book = React.createClass do
                     text: text
                     onMount: ->
                       book[parents.1.name]speak := ~> @play!
+                    onEnd: ~>
+                      @notify 'audio ended'
                     "#onClick": ~>
                       @state.current-sprite = @state.sprite[id]
             ++counter

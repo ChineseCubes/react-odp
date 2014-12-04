@@ -1,11 +1,12 @@
 (function(){
-  var React, ReactVTT, ODP, Button, CustomShape, Book, IsolatedCue, AudioControl, Playground, ref$, div, i, small, onClick, Howler, Howl, win;
+  var React, ReactVTT, ODP, Button, CustomShape, Book, NotifyMixin, IsolatedCue, AudioControl, Playground, ref$, div, i, small, onClick, Howler, Howl, win;
   React = require('react');
   ReactVTT = require('react-vtt');
   ODP = require('./ODP');
   Button = React.createFactory(require('./CUBE/UI/Button'));
   CustomShape = React.createFactory(require('./CUBE/CustomShape'));
   Book = require('./CUBE/Book');
+  NotifyMixin = require('./CUBE/NotifyMixin');
   IsolatedCue = React.createFactory(ReactVTT.IsolatedCue);
   AudioControl = React.createFactory(Book.AudioControl);
   Playground = React.createFactory(Book.Playground);
@@ -19,6 +20,7 @@
   }());
   Book = React.createClass({
     displayName: 'CUBE.Book',
+    mixins: [NotifyMixin],
     getDefaultProps: function(){
       return {
         masterPage: null,
@@ -182,6 +184,9 @@
                     return book[parents[1].name].speak = function(){
                       return this$.play();
                     };
+                  },
+                  onEnd: function(){
+                    return this$.notify('audio ended');
                   }
                 }, ref$[onClick + ""] = function(){
                   return this$.state.currentSprite = this$.state.sprite[id];

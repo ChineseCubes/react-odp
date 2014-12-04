@@ -11,12 +11,12 @@
         id: 0,
         audio: null,
         text: '這頁沒有文字',
-        onMount: function(){
-          throw Error('unimplemented');
-        }
-      }, ref$[onClick + ""] = function(){
-        throw Error('unimplemented');
-      }, ref$;
+        onMount: function(){},
+        onLoad: function(){},
+        onPlay: function(){},
+        onEnd: function(){},
+        onPause: function(){}
+      }, ref$[onClick + ""] = function(){}, ref$;
     },
     getInitialState: function(){
       return {
@@ -33,8 +33,8 @@
       x$ = this.props.audio;
       x$.on('load', this.onLoad);
       x$.on('play', this.onPlay);
-      x$.on('pause', this.onStop);
-      x$.on('end', this.onStop);
+      x$.on('end', this.onEnd);
+      x$.on('pause', this.onPause);
       return x$;
     },
     componentDidMount: function(){
@@ -48,24 +48,33 @@
       x$ = this.props.audio;
       x$.off('load', this.onLoad);
       x$.off('play', this.onPlay);
-      x$.off('pause', this.onStop);
-      x$.off('end', this.onStop);
+      x$.off('end', this.onEnd);
+      x$.off('pause', this.onPause);
       return x$;
     },
     onLoad: function(){
-      return this.setState({
+      this.setState({
         loading: false
       });
+      return this.props.onLoad.apply(this, arguments);
     },
     onPlay: function(){
-      return this.setState({
+      this.setState({
         playing: true
       });
+      return this.props.onPlay.apply(this, arguments);
     },
-    onStop: function(){
-      return this.setState({
+    onEnd: function(){
+      this.setState({
         playing: false
       });
+      return this.props.onEnd.apply(this, arguments);
+    },
+    onPause: function(){
+      this.setState({
+        playing: false
+      });
+      return this.props.onPause.apply(this, arguments);
     },
     play: function(){
       var x$;
