@@ -14,7 +14,6 @@ CustomShape = module.exports = React.createClass do
     height = scale-length scale, height
     x = scale-length scale, x
     y = scale-length scale, y
-    console.log @props, enhanced-path
     svg do
       className: 'enhanced-geometry'
       view-box: viewbox

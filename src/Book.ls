@@ -199,15 +199,6 @@ Book = React.createClass do
                     (@state.current-sprite?0 or 0) / 1000 + (@state.audio?pos! or 0)
           | data.name is 'custom-shape'
             CustomShape props if @state.show-text
-          | data.id is 'picture-book'
-            console.log props, data
-            Button do
-              className: 'picture-book'
-              style:
-                width:  ODP.scale-length props.scale, data.attrs.width
-                height: ODP.scale-length props.scale, data.attrs.height
-              onClick: -> console.warn 'picture-book'
-              '圖'
           | data.id is 'read-to-me'
             Button do
               className: 'read-to-me'
@@ -216,7 +207,7 @@ Book = React.createClass do
                 height: ODP.scale-length props.scale, data.attrs.height
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> console.warn 'read-to-me'
+              onClick: -> @notify 'read-to-me'
               '聽讀'
           | data.id is 'learn-by-myself'
             Button do
@@ -226,7 +217,7 @@ Book = React.createClass do
                 height: ODP.scale-length props.scale, data.attrs.height
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> console.warn 'learn-by-myself'
+              onClick: -> @notify 'learn-by-myself'
               '學習'
           | otherwise => ODP.renderProps props
 

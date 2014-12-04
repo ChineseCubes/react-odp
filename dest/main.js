@@ -51,7 +51,10 @@
                   vtt: vtt,
                   dpcm: dots.state.x,
                   width: $win.width(),
-                  height: $win.height()
+                  height: $win.height(),
+                  onNotify: function(it){
+                    return console.warn(it);
+                  }
                 };
                 if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
                   props.pages = [RegExp.$1];

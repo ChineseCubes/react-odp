@@ -45,6 +45,7 @@ props =
   dpcm: dots.state.x
   width: $win.width!
   height: $win.height!
+  onNotify: -> console.warn it
 
 if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
   props.pages = [RegExp.$1]

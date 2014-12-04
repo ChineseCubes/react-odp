@@ -282,18 +282,6 @@
               return CustomShape(props);
             }
             break;
-          case data.id !== 'picture-book':
-            console.log(props, data);
-            return Button({
-              className: 'picture-book',
-              style: {
-                width: ODP.scaleLength(props.scale, data.attrs.width),
-                height: ODP.scaleLength(props.scale, data.attrs.height)
-              },
-              onClick: function(){
-                return console.warn('picture-book');
-              }
-            }, '圖');
           case data.id !== 'read-to-me':
             return Button({
               className: 'read-to-me',
@@ -304,7 +292,7 @@
                 top: ODP.scaleLength(props.scale, data.attrs.y)
               },
               onClick: function(){
-                return console.warn('read-to-me');
+                return this.notify('read-to-me');
               }
             }, '聽讀');
           case data.id !== 'learn-by-myself':
@@ -317,7 +305,7 @@
                 top: ODP.scaleLength(props.scale, data.attrs.y)
               },
               onClick: function(){
-                return console.warn('learn-by-myself');
+                return this.notify('learn-by-myself');
               }
             }, '學習');
           default:

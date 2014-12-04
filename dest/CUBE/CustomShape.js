@@ -18,7 +18,6 @@
       height = scaleLength(scale, height);
       x = scaleLength(scale, x);
       y = scaleLength(scale, y);
-      console.log(this.props, enhancedPath);
       return svg({
         className: 'enhanced-geometry',
         viewBox: viewbox,
