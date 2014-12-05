@@ -1,53 +1,14 @@
 React       = require 'react'
 
 { div } = React.DOM
-{ say-it, onClick } = require '../utils'
+{ onClick } = require '../utils'
 
 AudioControl = React.createClass do
   displayName: \CUBE.Book.AudioControl
   getDefaultProps: ->
-    id: 0
-    audio: null
-    text: '這頁沒有文字'
-    onMount: ->
-    onLoad: ->
-    onPlay: ->
-    onEnd: ->
-    onPause: ->
-    "#onClick": ->
-  getInitialState: ->
-    loading: true
+    loading: false
     playing: false
-  componentWillMount: ->
-    if not @props.audio
-      @state.loading = false
-      return
-    @props.audio
-      ..on \load  @onLoad
-      ..on \play  @onPlay
-      ..on \end   @onEnd
-      ..on \pause @onPause
-  componentDidMount: ->
-    @props.onMount ...
-  componentWillUnmount: ->
-    return if not @props.audio
-    @props.audio
-      ..off \load  @onLoad
-      ..off \play  @onPlay
-      ..off \end   @onEnd
-      ..off \pause @onPause
-  onLoad: ->
-    @setState loading: false
-    @props.onLoad ...
-  onPlay: ->
-    @setState playing: true
-    @props.onPlay ...
-  onEnd: ->
-    @setState playing: false
-    @props.onEnd ...
-  onPause: ->
-    @setState playing: false
-    @props.onPause ...
+    "#onClick": ->
   play: ->
     if @props.audio
       return if @state.loading
@@ -63,14 +24,14 @@ AudioControl = React.createClass do
     @props["#onClick"] ...
   render: ->
     classes = 'audio-control'
-    classes += ' playing' if @state.playing
-    classes += ' loading' if @state.loading
+    classes += ' playing' if @props.playing
+    classes += ' loading' if @props.loading
     div do
       className: classes
       style:
         width:  '100%'
         height: '100%'
-      "#onClick": @play
+      "#onClick": ~> @props["#onClick"] ...
       div {} @props.children
 
 module.exports = AudioControl

@@ -23,8 +23,10 @@ Book = React.createClass do
     master-page: null
     data: null
     segs: null
-    audio: null
     vtt: null
+    loading: true
+    playing: false
+    current-time: ->
     #pages: [1]
     pages: null
     dpcm: 37.79527
@@ -32,24 +34,11 @@ Book = React.createClass do
     height: 768
   getInitialState: ->
     scale: @resize @props.dpcm, @props.width, @props.height
-    audio: null
-    sprite: {}
-    current-sprite: null
     text: ''
     page-number: 0
     show-text: true
-  componentWillMount: ->
-    audio = try
-      Howler.iOSAutoEnable = false
-      new Howl urls: [@props.audio]
-    if audio
-      audio.on \end ~> @state.current-sprite = null
-    # set audio and update sprites after prerendered content has been mounted
-    @setState audio: audio
   componentWillUpdate: (props, state) ->
     state.scale = @resize props.dpcm, props.width, props.height
-  componentDidMount: ->
-    @state.audio?sprite @state.sprite
   resize: (dpcm, width, height) ->
     return 0.98 unless win
     $window = $ win
@@ -64,7 +53,6 @@ Book = React.createClass do
   render: ->
     {setup} = @props.master-page
     counter = 0
-    ranges = []
     attrs = @props.data.attrs
     offset-x = "-#{@state.page-number * +(attrs.width.replace 'cm' '')}cm"
     div do
@@ -113,30 +101,16 @@ Book = React.createClass do
             delete attrs.href
             delete attrs["#onClick"]
             comp = let counter
-              text = ''
-              range = start: Infinity, end: -Infinity
-              while r = ranges.pop!
-                text = r.text + text
-                range
-                  ..start = r.start if r.start < range.start
-                  ..end   = r.end   if r.end   > range.end
-              id = "segment-#counter"
-              @state.sprite[id] =
-                [range.start * 1000, (range.end - range.start) * 1000]
-              if range.start < range.end
-                book = this
+              if counter isnt 0
                 ODP.components.image do
                   props
                   AudioControl do
-                    id: id
-                    audio: @state.audio
-                    text: text
-                    onMount: ->
-                      book[parents.1.name]speak := ~> @play!
-                    onEnd: ~>
-                      @notify 'audio ended'
+                    loading: @props.loading
+                    playing: @props.playing
                     "#onClick": ~>
-                      @state.current-sprite = @state.sprite[id]
+                      @notify unless @props.playing
+                        then action: \play, page-num: counter
+                        else action: \stop
             ++counter
             comp
           | data.name is 'span' and data.text
@@ -164,11 +138,6 @@ Book = React.createClass do
                   hide!
                   $top.off click, hide-once # check the begining of render()
               setTimeout (-> $top.on click, hide-once), 0
-              #$ @refs.modal.getDOMNode!
-              #  .modal do
-              #    detachable: false
-              #    onHide: ~> @setState show-text: true
-              #  .modal \show
             page = @[parents.1.name]
             unless text in page.sentences
               page
@@ -177,30 +146,16 @@ Book = React.createClass do
                   toggle: -> if it then show! else hide!
             attrs["#onClick"] = show
             attrs.style <<< display: \none if not @state.show-text
-            if not @state.audio
-              ranges.push do
-                text:  text
-                start: 0 # XXX: hack
-                end:   1
-              ODP.renderProps props
-            else
-              if @props.vtt
-                # search and remember ranges for later use
-                for cue in @props.vtt.cues
-                  if cue.text is text
-                    ranges.push do
-                      text:  text
-                      start: cue.startTime
-                      end:   cue.endTime
-                    break
-                delete props.data.text
+            if @props.vtt
+              delete props.data.text
               ODP.components.span do
                 props
                 IsolatedCue do
                   target: "#{setup.path}/audio.vtt.json"
                   match: text
-                  currentTime: ~>
-                    (@state.current-sprite?0 or 0) / 1000 + (@state.audio?pos! or 0)
+                  currentTime: @props.current-time
+            else
+              ODP.renderProps props
           | data.name is 'custom-shape'
             CustomShape props if @state.show-text
           | data.id is 'read-to-me'

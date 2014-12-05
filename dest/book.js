@@ -26,8 +26,10 @@
         masterPage: null,
         data: null,
         segs: null,
-        audio: null,
         vtt: null,
+        loading: true,
+        playing: false,
+        currentTime: function(){},
         pages: null,
         dpcm: 37.79527,
         width: 1024,
@@ -37,39 +39,13 @@
     getInitialState: function(){
       return {
         scale: this.resize(this.props.dpcm, this.props.width, this.props.height),
-        audio: null,
-        sprite: {},
-        currentSprite: null,
         text: '',
         pageNumber: 0,
         showText: true
       };
     },
-    componentWillMount: function(){
-      var audio, this$ = this;
-      audio = (function(){
-        try {
-          Howler.iOSAutoEnable = false;
-          return new Howl({
-            urls: [this.props.audio]
-          });
-        } catch (e$) {}
-      }.call(this));
-      if (audio) {
-        audio.on('end', function(){
-          return this$.state.currentSprite = null;
-        });
-      }
-      return this.setState({
-        audio: audio
-      });
-    },
     componentWillUpdate: function(props, state){
       return state.scale = this.resize(props.dpcm, props.width, props.height);
-    },
-    componentDidMount: function(){
-      var ref$;
-      return (ref$ = this.state.audio) != null ? ref$.sprite(this.state.sprite) : void 8;
     },
     resize: function(dpcm, width, height){
       var $window, setup, ratio, pxWidth, pxHeight;
@@ -88,10 +64,9 @@
       }
     },
     render: function(){
-      var setup, counter, ranges, attrs, offsetX, ref$, this$ = this;
+      var setup, counter, attrs, offsetX, ref$, this$ = this;
       setup = this.props.masterPage.setup;
       counter = 0;
-      ranges = [];
       attrs = this.props.data.attrs;
       offsetX = "-" + this.state.pageNumber * +attrs.width.replace('cm', '') + "cm";
       return div({
@@ -115,7 +90,7 @@
         scale: this.state.scale,
         data: this.props.data,
         renderProps: function(props){
-          var click, pages, parents, data, attrs, key$, comp, text, hide, show, page, x$, i$, ref$, len$, cue;
+          var click, pages, parents, data, attrs, key$, comp, text, hide, show, page, x$;
           click = onClick === 'onClick' ? 'click' : 'touchstart';
           if (!this$.props.pages) {
             this$.props.pages = (function(){
@@ -155,41 +130,20 @@
             delete attrs.href;
             delete attrs[onClick + ""];
             comp = (function(counter){
-              var text, range, r, x$, id, book, ref$, this$ = this;
-              text = '';
-              range = {
-                start: Infinity,
-                end: -Infinity
-              };
-              while (r = ranges.pop()) {
-                text = r.text + text;
-                x$ = range;
-                if (r.start < range.start) {
-                  x$.start = r.start;
-                }
-                if (r.end > range.end) {
-                  x$.end = r.end;
-                }
-              }
-              id = "segment-" + counter;
-              this.state.sprite[id] = [range.start * 1000, (range.end - range.start) * 1000];
-              if (range.start < range.end) {
-                book = this;
+              var ref$, this$ = this;
+              if (counter !== 0) {
                 return ODP.components.image(props, AudioControl((ref$ = {
-                  id: id,
-                  audio: this.state.audio,
-                  text: text,
-                  onMount: function(){
-                    var this$ = this;
-                    return book[parents[1].name].speak = function(){
-                      return this$.play();
-                    };
-                  },
-                  onEnd: function(){
-                    return this$.notify('audio ended');
-                  }
+                  loading: this.props.loading,
+                  playing: this.props.playing
                 }, ref$[onClick + ""] = function(){
-                  return this$.state.currentSprite = this$.state.sprite[id];
+                  return this$.notify(!this$.props.playing
+                    ? {
+                      action: 'play',
+                      pageNum: counter
+                    }
+                    : {
+                      action: 'stop'
+                    });
                 }, ref$)));
               }
             }.call(this$, counter));
@@ -250,36 +204,15 @@
             if (!this$.state.showText) {
               attrs.style.display = 'none';
             }
-            if (!this$.state.audio) {
-              ranges.push({
-                text: text,
-                start: 0,
-                end: 1
-              });
-              return ODP.renderProps(props);
-            } else {
-              if (this$.props.vtt) {
-                for (i$ = 0, len$ = (ref$ = this$.props.vtt.cues).length; i$ < len$; ++i$) {
-                  cue = ref$[i$];
-                  if (cue.text === text) {
-                    ranges.push({
-                      text: text,
-                      start: cue.startTime,
-                      end: cue.endTime
-                    });
-                    break;
-                  }
-                }
-                delete props.data.text;
-              }
+            if (this$.props.vtt) {
+              delete props.data.text;
               return ODP.components.span(props, IsolatedCue({
                 target: setup.path + "/audio.vtt.json",
                 match: text,
-                currentTime: function(){
-                  var ref$;
-                  return (((ref$ = this$.state.currentSprite) != null ? ref$[0] : void 8) || 0) / 1000 + (((ref$ = this$.state.audio) != null ? ref$.pos() : void 8) || 0);
-                }
+                currentTime: this$.props.currentTime
               }));
+            } else {
+              return ODP.renderProps(props);
             }
             break;
           case data.name !== 'custom-shape':
