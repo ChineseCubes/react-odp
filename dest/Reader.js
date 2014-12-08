@@ -64,9 +64,7 @@
           width: width,
           height: height
         }
-      }, Book((ref$ = this.props, ref$.ref = 'book', ref$.width = width, ref$.height = height, ref$.currentPage = this.state.page, ref$)), div({
-        className: 'navbar'
-      }), div((ref$ = {
+      }, Book((ref$ = this.props, ref$.ref = 'book', ref$.width = width, ref$.height = height, ref$.currentPage = this.state.page, ref$)), div((ref$ = {
         className: "prev " + (this.state.page === 0 ? 'hidden' : '')
       }, ref$[onClick + ""] = function(){
         return this$.page(this$.state.page - 1);

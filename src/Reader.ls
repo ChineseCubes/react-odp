@@ -41,8 +41,8 @@ Reader = React.createClass do
       className: 'reader'
       style: { width, height }
       Book @props <<< { ref: 'book', width, height, current-page: @state.page }
-      div do
-        className: 'navbar'
+      #div do
+      #  className: 'navbar'
       div do
         className: "prev #{if @state.page is 0 then 'hidden' else ''}"
         "#onClick": ~> @page @state.page - 1
