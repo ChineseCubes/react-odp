@@ -36,6 +36,7 @@ class Audio
   play: (page-num) ->
     count = 0
     ts = @texts[page-num]
+    return unless ts
     @current-text = ts[count]
     on-end = ~>
       if ++count < ts.length

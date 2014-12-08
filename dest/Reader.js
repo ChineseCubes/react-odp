@@ -35,10 +35,12 @@
       };
     },
     componentWillUpdate: function(_props, _state){
-      var pageCount;
+      var pageCount, ref$;
       if (this.state.page !== _state.page) {
         pageCount = this.props.data.children.length;
-        return _state.page = (pageCount + _state.page) % pageCount;
+        if (!(0 <= (ref$ = _state.page) && ref$ < pageCount)) {
+          return _state.page = this.state.page;
+        }
       }
     },
     page: function(page){

@@ -67,6 +67,9 @@
       var count, ts, onEnd, clean, x$, read, this$ = this;
       count = 0;
       ts = this.texts[pageNum];
+      if (!ts) {
+        return;
+      }
       this.currentText = ts[count];
       onEnd = function(){
         if (++count < ts.length) {

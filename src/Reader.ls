@@ -17,14 +17,15 @@ Reader = React.createClass do
     page-count = @props.data.children.length
     if page and 0 <= page < page-count
       @state.page = page
-    else
+    else # jump to the cover
       history.replaceState @state, \CᴜʙᴇBooks, '?0'
     window.onpopstate = ({ state }) ~> @setState state if state
   componentWillUpdate: (_props, _state) ->
     if @state.page isnt _state.page
       # guard
       page-count = @props.data.children.length
-      _state.page = (page-count + _state.page) % page-count
+      unless 0 <= _state.page < page-count
+        _state.page = @state.page # stay
   page: (page) ->
     state = page: page
     history.pushState state, \CᴜʙᴇBooks, "?#{page}"
