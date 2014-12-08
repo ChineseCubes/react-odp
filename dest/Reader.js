@@ -14,8 +14,39 @@
     },
     getInitialState: function(){
       return {
-        page: 1
+        page: 0
       };
+    },
+    componentWillMount: function(){
+      var page, this$ = this;
+      page = +window.location.search.replace('?', '');
+      if (page) {
+        this.state.page = page;
+      } else {
+        history.replaceState(this.state, 'CᴜʙᴇBooks', '?0');
+      }
+      return window.onpopstate = function(arg$){
+        var state;
+        state = arg$.state;
+        if (state) {
+          return this$.setState(state);
+        }
+      };
+    },
+    componentWillUpdate: function(_props, _state){
+      var pageCount;
+      if (this.state.page !== _state.page) {
+        pageCount = this.props.data.children.length;
+        return _state.page = (pageCount + _state.page) % pageCount;
+      }
+    },
+    page: function(page){
+      var state;
+      state = {
+        page: page
+      };
+      history.pushState(state, 'CᴜʙᴇBooks', "?" + page);
+      return this.setState(state);
     },
     render: function(){
       var setup, width, height, pageCount, ref$, this$ = this;
@@ -33,30 +64,16 @@
           width: width,
           height: height
         }
-      }, Book((ref$ = this.props, ref$.ref = 'book', ref$.width = width, ref$.height = height, ref$)), div({
+      }, Book((ref$ = this.props, ref$.ref = 'book', ref$.width = width, ref$.height = height, ref$.currentPage = this.state.page, ref$)), div({
         className: 'navbar'
       }), div((ref$ = {
-        className: "prev " + (this.state.page === 1 ? 'hidden' : '')
+        className: "prev " + (this.state.page === 0 ? 'hidden' : '')
       }, ref$[onClick + ""] = function(){
-        --this$.state.page;
-        if (this$.state.page < 1) {
-          this$.state.page = 1;
-        }
-        this$.refs.book["page" + this$.state.page].go();
-        return this$.setState({
-          page: this$.state.page
-        });
+        return this$.page(this$.state.page - 1);
       }, ref$), span()), div((ref$ = {
-        className: "next " + (this.state.page === pageCount ? 'hidden' : '')
+        className: "next " + (this.state.page === pageCount - 1 ? 'hidden' : '')
       }, ref$[onClick + ""] = function(){
-        ++this$.state.page;
-        if (this$.state.page > pageCount) {
-          this$.state.page = pageCount;
-        }
-        this$.refs.book["page" + this$.state.page].go();
-        return this$.setState({
-          page: this$.state.page
-        });
+        return this$.page(this$.state.page + 1);
       }, ref$), span()));
     }
   });

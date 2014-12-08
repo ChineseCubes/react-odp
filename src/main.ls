@@ -103,8 +103,8 @@ props =
       | \stop => audio.pause!
       | _     => console.warn "unknown notification: #it"
 
-if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
-  props.pages = [RegExp.$1]
+#if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
+#  props.pages = [RegExp.$1]
 
 reader = React.render do
   Reader props

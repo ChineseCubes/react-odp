@@ -31,6 +31,7 @@
         playing: false,
         currentTime: function(){},
         pages: null,
+        currentPage: 0,
         dpcm: 37.79527,
         width: 1024,
         height: 768
@@ -40,7 +41,6 @@
       return {
         scale: this.resize(this.props.dpcm, this.props.width, this.props.height),
         text: '',
-        pageNumber: 0,
         showText: true
       };
     },
@@ -68,7 +68,7 @@
       setup = this.props.masterPage.setup;
       counter = 0;
       attrs = this.props.data.attrs;
-      offsetX = "-" + this.state.pageNumber * +attrs.width.replace('cm', '') + "cm";
+      offsetX = "-" + this.props.currentPage * +attrs.width.replace('cm', '') + "cm";
       return div({
         className: 'main'
       }, div({
@@ -111,11 +111,6 @@
           case data.name !== 'page':
             attrs.x = offsetX;
             this$[key$ = attrs.name] == null && (this$[key$] = {
-              go: function(){
-                return this$.setState({
-                  pageNumber: +attrs.name.replace('page', '') - 1
-                });
-              },
               speak: function(){
                 throw Error('unimplemented');
               },

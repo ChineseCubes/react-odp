@@ -29,13 +29,13 @@ Book = React.createClass do
     current-time: ->
     #pages: [1]
     pages: null
+    current-page: 0
     dpcm: 37.79527
     width: 1024
     height: 768
   getInitialState: ->
     scale: @resize @props.dpcm, @props.width, @props.height
     text: ''
-    page-number: 0
     show-text: true
   componentWillUpdate: (props, state) ->
     state.scale = @resize props.dpcm, props.width, props.height
@@ -54,7 +54,7 @@ Book = React.createClass do
     {setup} = @props.master-page
     counter = 0
     attrs = @props.data.attrs
-    offset-x = "-#{@state.page-number * +(attrs.width.replace 'cm' '')}cm"
+    offset-x = "-#{@props.current-page * +(attrs.width.replace 'cm' '')}cm"
     div do
       className: 'main'
       div do
@@ -91,8 +91,6 @@ Book = React.createClass do
             attrs.x = offset-x
             # expose pages
             @[attrs.name] ?=
-              go: ~>
-                @setState page-number: +attrs.name.replace('page' '') - 1
               speak: -> ...
               sentences: []
               playgrounds: []

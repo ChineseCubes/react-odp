@@ -145,9 +145,6 @@
                     }
                   }
                 };
-                if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
-                  props.pages = [RegExp.$1];
-                }
                 reader = React.render(Reader(props), $('#app').get()[0]);
                 $win.resize(function(){
                   return reader.setProps({

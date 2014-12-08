@@ -10,7 +10,24 @@ Reader = React.createClass do
     width: 1024
     height: 768
   getInitialState: ->
-    page: 1
+    page: 0
+  componentWillMount: ->
+    #history.replaceState @state, \CᴜʙᴇBooks, "?#{@state.page}"
+    page = +window.location.search.replace '?', ''
+    if page
+      @state.page = page
+    else
+      history.replaceState @state, \CᴜʙᴇBooks, '?0'
+    window.onpopstate = ({ state }) ~> @setState state if state
+  componentWillUpdate: (_props, _state) ->
+    if @state.page isnt _state.page
+      # guard
+      page-count = @props.data.children.length
+      _state.page = (page-count + _state.page) % page-count
+  page: (page) ->
+    state = page: page
+    history.pushState state, \CᴜʙᴇBooks, "?#{page}"
+    @setState state
   render: ->
     { setup } = @props.master-page
     width = if @props.width / @props.height > setup.ratio
@@ -23,24 +40,16 @@ Reader = React.createClass do
     div do
       className: 'reader'
       style: { width, height }
-      Book @props <<< { ref: 'book', width, height }
+      Book @props <<< { ref: 'book', width, height, current-page: @state.page }
       div do
         className: 'navbar'
       div do
-        className: "prev #{if @state.page is 1 then 'hidden' else ''}"
-        "#onClick": ~>
-          --@state.page
-          @state.page = 1 if @state.page < 1
-          @refs.book["page#{@state.page}"].go!
-          @setState page: @state.page
+        className: "prev #{if @state.page is 0 then 'hidden' else ''}"
+        "#onClick": ~> @page @state.page - 1
         span!
       div do
-        className: "next #{if @state.page is page-count then 'hidden' else ''}"
-        "#onClick": ~>
-          ++@state.page
-          @state.page = page-count if @state.page > page-count
-          @refs.book["page#{@state.page}"].go!
-          @setState page: @state.page
+        className: "next #{if @state.page is page-count - 1 then 'hidden' else ''}"
+        "#onClick": ~> @page @state.page + 1
         span!
 
 module.exports = Reader
