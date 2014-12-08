@@ -1,6 +1,7 @@
 React        = require 'react'
 DotsDetector = React.createFactory require './react-dots-detector'
 Data         = require './CUBE/data'
+Audio        = require './Logic/Audio'
 Book         = React.createFactory require './Book'
 Reader       = React.createFactory require './Reader'
 ReactVTT     = require 'react-vtt'
@@ -20,23 +21,6 @@ get-vtt = (filename, done) ->
     .parse filename, done
     .error -> done null
 
-texts-from-data = (data) ->
-  texts = []
-  for child in data.children
-    if child.name is \page
-      page = []
-      for child in child.children
-        if child.name is \frame
-          for child in child.children
-            if child.name is \text-box
-              for child in child.children
-                if child.name is \p
-                  for child in child.children
-                    if child.name is \span and child.text
-                      page.push child.text
-      texts.push page
-  texts
-
 <- window.requestAnimationFrame
 <- $
 React.initializeTouchEvents true
@@ -51,36 +35,13 @@ segs    <- Data.Segmentations data, setup.path
 { mp3 } <- get-mp3 "#{setup.path}/audio.mp3.json"
 vtt     <- get-vtt "#{setup.path}/audio.vtt.json"
 
-##
-# everything about audio
-texts = texts-from-data data
-audio = try
-  Howler.iOSAutoEnable = false
-  new Howl urls: [mp3 or "#{setup.path}/audio.mp3"]
-sprites = {}
-for i, cue of vtt.cues
-  bgn = cue.startTime
-  end = cue.endTime
-  sprites[cue.text] = [bgn * 1000, (end - bgn) * 1000]
-audio.sprite sprites
-current-text = ''
-play = (page-num) ->
-  count = 0
-  ts = texts[page-num]
-  current-text := ts[count]
-  :read let
-    on-end = ->
-      if ++count < ts.length
-        current-text := ts[count]
-        setTimeout(read, 750)
-      else
-        current-text := ''
-    audio
-      ..stop current-text
-      ..play current-text
-      ..on \end on-end
-      ..on \pause -> audio.off \end on-end
-current-time = -> (sprites[current-text]?0 or 0) / 1000 + (audio?pos! or 0)
+on-stop = -> reader.setProps playing: false
+audio = Audio do
+  data, vtt, mp3
+  -> reader.setProps loading: false # onLoad
+  -> reader.setProps playing: true  # onPlay
+  on-stop                           # onEnd
+  on-stop                           # onPause
 
 ##
 # main
@@ -93,15 +54,11 @@ props =
   vtt: vtt
   loading: true
   playing: false
-  current-time: current-time
+  current-time: -> audio.time!
   dpcm: dots.state.x
   width: $win.width!
   height: $win.height!
-  onNotify: ->
-    switch it.action
-      | \play => play it.page-num
-      | \stop => audio.pause!
-      | _     => console.warn "unknown notification: #it"
+  onNotify: -> audio.process it
 
 #if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
 #  props.pages = [RegExp.$1]
@@ -116,10 +73,3 @@ $win.resize ->
   reader.setProps do
     width: $win.width!
     height: $win.height!
-
-on-stop = -> reader.setProps playing: false
-audio
-  ..on \load  -> reader.setProps loading: false
-  ..on \play  -> reader.setProps playing: true
-  ..on \end   on-stop
-  ..on \pause on-stop
