@@ -215,6 +215,19 @@
               return CustomShape(props);
             }
             break;
+          case data.id !== 'glossary':
+            return Button({
+              className: 'glossary',
+              style: {
+                width: ODP.scaleLength(props.scale, data.attrs.width),
+                height: ODP.scaleLength(props.scale, data.attrs.height),
+                left: ODP.scaleLength(props.scale, data.attrs.x),
+                top: ODP.scaleLength(props.scale, data.attrs.y)
+              },
+              onClick: function(){
+                return this.notify('glossary');
+              }
+            }, '詞彙');
           case data.id !== 'read-to-me':
             return Button({
               className: 'read-to-me',

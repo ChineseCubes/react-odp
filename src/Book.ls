@@ -156,6 +156,16 @@ Book = React.createClass do
               ODP.renderProps props
           | data.name is 'custom-shape'
             CustomShape props if @state.show-text
+          | data.id is 'glossary'
+            Button do
+              className: 'glossary'
+              style:
+                width:  ODP.scale-length props.scale, data.attrs.width
+                height: ODP.scale-length props.scale, data.attrs.height
+                left: ODP.scale-length props.scale, data.attrs.x
+                top:  ODP.scale-length props.scale, data.attrs.y
+              onClick: -> @notify 'glossary'
+              '詞彙'
           | data.id is 'read-to-me'
             Button do
               className: 'read-to-me'

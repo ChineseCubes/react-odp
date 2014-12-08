@@ -271,18 +271,28 @@
     name: 'frame',
     namespace: 'draw',
     attrs: {
-      x: '6.4125cm',
+      x: '2.45cm',
       y: '17.85cm',
-      width: '15.175cm',
+      width: '23.1cm',
       height: '2.275cm'
     },
     children: [
       {
         name: 'frame',
         namespace: 'draw',
-        id: 'read-to-me',
+        id: 'glossary',
         attrs: {
           x: '0cm',
+          y: '0cm',
+          width: '7.35cm',
+          height: '2.275cm'
+        }
+      }, {
+        name: 'frame',
+        namespace: 'draw',
+        id: 'read-to-me',
+        attrs: {
+          x: '7.875cm',
           y: '0cm',
           width: '7.35cm',
           height: '2.275cm'
@@ -293,7 +303,7 @@
         namespace: 'draw',
         id: 'learn-by-myself',
         attrs: {
-          x: '7.875cm',
+          x: '15.75cm',
           y: '0cm',
           width: '7.35cm',
           height: '2.275cm'
