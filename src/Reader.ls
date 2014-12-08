@@ -14,7 +14,8 @@ Reader = React.createClass do
   componentWillMount: ->
     #history.replaceState @state, \CᴜʙᴇBooks, "?#{@state.page}"
     page = +window.location.search.replace '?', ''
-    if page
+    page-count = @props.data.children.length
+    if page and 0 <= page < page-count
       @state.page = page
     else
       history.replaceState @state, \CᴜʙᴇBooks, '?0'

@@ -225,7 +225,10 @@
                 top: ODP.scaleLength(props.scale, data.attrs.y)
               },
               onClick: function(){
-                return this.notify('glossary');
+                return this.notify({
+                  action: 'click',
+                  mode: 'glossary'
+                });
               }
             }, '詞彙');
           case data.id !== 'read-to-me':
@@ -238,7 +241,10 @@
                 top: ODP.scaleLength(props.scale, data.attrs.y)
               },
               onClick: function(){
-                return this.notify('read-to-me');
+                return this.notify({
+                  action: 'click',
+                  mode: 'read-to-me'
+                });
               }
             }, '聽讀');
           case data.id !== 'learn-by-myself':
@@ -251,7 +257,10 @@
                 top: ODP.scaleLength(props.scale, data.attrs.y)
               },
               onClick: function(){
-                return this.notify('learn-by-myself');
+                return this.notify({
+                  action: 'click',
+                  mode: 'learn-by-myself'
+                });
               }
             }, '學習');
           default:

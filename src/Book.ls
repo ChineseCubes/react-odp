@@ -164,7 +164,7 @@ Book = React.createClass do
                 height: ODP.scale-length props.scale, data.attrs.height
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> @notify 'glossary'
+              onClick: -> @notify action: \click mode: 'glossary'
               '詞彙'
           | data.id is 'read-to-me'
             Button do
@@ -174,7 +174,7 @@ Book = React.createClass do
                 height: ODP.scale-length props.scale, data.attrs.height
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> @notify 'read-to-me'
+              onClick: -> @notify action: \click mode: 'read-to-me'
               '聽讀'
           | data.id is 'learn-by-myself'
             Button do
@@ -184,7 +184,7 @@ Book = React.createClass do
                 height: ODP.scale-length props.scale, data.attrs.height
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> @notify 'learn-by-myself'
+              onClick: -> @notify action: \click mode: 'learn-by-myself'
               '學習'
           | otherwise => ODP.renderProps props
 

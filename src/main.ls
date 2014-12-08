@@ -40,7 +40,11 @@ audio = Audio do
   data, vtt, mp3
   -> reader.setProps loading: false # onLoad
   -> reader.setProps playing: true  # onPlay
-  on-stop                           # onEnd
+  ->                                # onEnd
+    on-stop!
+    page = reader.state.page + 1
+    reader.page page
+    setTimeout (-> audio.play page), 750
   on-stop                           # onPause
 
 ##

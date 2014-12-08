@@ -50,8 +50,8 @@
       x$ = this$.audio;
       x$.on('load', onLoad);
       x$.on('play', onPlay);
-      x$.on('end', onEnd);
       x$.on('pause', onPause);
+      this$._onEnd = onEnd;
       this$.sprites = {};
       for (i in ref$ = vtt.cues) {
         cue = ref$[i];
@@ -64,27 +64,35 @@
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
     prototype.play = function(pageNum){
-      var count, ts, read, this$ = this;
+      var count, ts, onEnd, clean, x$, read, this$ = this;
       count = 0;
       ts = this.texts[pageNum];
       this.currentText = ts[count];
+      onEnd = function(){
+        if (++count < ts.length) {
+          this$.currentText = ts[count];
+          return setTimeout(read, 750);
+        } else {
+          this$.currentText = '';
+          clean();
+          return setTimeout(this$._onEnd, 0);
+        }
+      };
+      clean = function(){
+        var x$;
+        x$ = this$.audio;
+        x$.off('end', onEnd);
+        x$.off('pause', clean);
+        return x$;
+      };
+      x$ = this.audio;
+      x$.on('end', onEnd);
+      x$.on('pause', clean);
       read = function(){
-        var onEnd, x$;
-        onEnd = function(){
-          if (++count < ts.length) {
-            this$.currentText = ts[count];
-            return setTimeout(read, 750);
-          } else {
-            return this$.currentText = '';
-          }
-        };
+        var x$;
         x$ = this$.audio;
         x$.stop(this$.currentText);
         x$.play(this$.currentText);
-        x$.on('end', onEnd);
-        x$.on('pause', function(){
-          return this.audio.off('end', onEnd);
-        });
         return x$;
       };
       return read();

@@ -56,7 +56,15 @@
                   return reader.setProps({
                     playing: true
                   });
-                }, onStop, onStop);
+                }, function(){
+                  var page;
+                  onStop();
+                  page = reader.state.page + 1;
+                  reader.page(page);
+                  return setTimeout(function(){
+                    return audio.play(page);
+                  }, 750);
+                }, onStop);
                 $win = $(window);
                 props = {
                   masterPage: mp,

@@ -18,9 +18,10 @@
       };
     },
     componentWillMount: function(){
-      var page, this$ = this;
+      var page, pageCount, this$ = this;
       page = +window.location.search.replace('?', '');
-      if (page) {
+      pageCount = this.props.data.children.length;
+      if (page && (0 <= page && page < pageCount)) {
         this.state.page = page;
       } else {
         history.replaceState(this.state, 'CᴜʙᴇBooks', '?0');

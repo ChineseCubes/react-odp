@@ -24,8 +24,8 @@ class Audio
     @audio
       ..on \load  onLoad
       ..on \play  onPlay
-      ..on \end   onEnd
       ..on \pause onPause
+    @_onEnd = onEnd
     @sprites = {}
     for i, cue of vtt.cues
       bgn = cue.startTime
@@ -37,18 +37,25 @@ class Audio
     count = 0
     ts = @texts[page-num]
     @current-text = ts[count]
+    on-end = ~>
+      if ++count < ts.length
+        @current-text = ts[count]
+        setTimeout read, 750
+      else
+        @current-text = ''
+        clean!
+        setTimeout @_onEnd, 0
+    clean = ~>
+      @audio
+        ..off \end   on-end
+        ..off \pause clean
+    @audio
+      ..on \end   on-end
+      ..on \pause clean
     read = ~>
-      on-end = ~>
-        if ++count < ts.length
-          @current-text := ts[count]
-          setTimeout(read, 750)
-        else
-          @current-text := ''
       @audio
         ..stop @current-text
         ..play @current-text
-        ..on \end on-end
-        ..on \pause -> @audio.off \end on-end
     read!
   stop: -> @audio.pause!
   time: -> (@sprites[@current-text]?0 or 0) / 1000 + (@audio?pos! or 0)
