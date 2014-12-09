@@ -40,23 +40,29 @@
             var mp3;
             mp3 = arg$.mp3;
             return getVtt(setup.path + "/audio.vtt.json", function(vtt){
-              var onStop, audio, props, book;
-              onStop = function(){
-                return book.setProps({
-                  playing: false
-                });
-              };
+              var audio, props, page, book;
               audio = Audio(data, vtt, mp3, function(){
                 return book.setProps({
                   loading: false
                 });
               }, function(){
-                return {
-                  playing: book.setProps[true]
-                };
+                return book.setProps({
+                  playing: true
+                });
               }, function(){
-                return onstop();
-              }, onStop);
+                var next;
+                book.setProps({
+                  playing: false
+                });
+                localStorage.setItem('autoplay', true);
+                next = 1 + +localStorage.getItem('page');
+                return location.href = "page" + next + ".xhtml";
+              }, function(){
+                book.setProps({
+                  playing: false
+                });
+                return localStorage.setItem('autoplay', false);
+              });
               props = {
                 masterPage: mp,
                 data: data,
@@ -74,6 +80,13 @@
               };
               if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
                 props.pages = [RegExp.$1];
+                page = +RegExp.$1;
+                localStorage.setItem('page', page);
+                if (localStorage.getItem('autoplay')) {
+                  setTimeout(function(){
+                    return audio.play(page - 1);
+                  }, 750);
+                }
               }
               return book = React.render(Book(props), document.getElementById('app'));
             });

@@ -33,16 +33,22 @@ segs    <- Data.Segmentations data, setup.path
 { mp3 } <- get-mp3 "#{setup.path}/audio.mp3.json"
 vtt     <- get-vtt "#{setup.path}/audio.vtt.json"
 
-on-stop = -> book.setProps playing: false
 audio = Audio do
   data, vtt, mp3
-  -> book.setProps loading: false # onLoad
-  -> book.setProps.playing: true  # onPlay
-  ->                              # onEnd
-    onstop!
+  -> #onLoad
+    book.setProps loading: false
+  -> #onPlay
+    book.setProps playing: true
+  -> # onEnd
+    book.setProps playing: false
+    localStorage.setItem \autoplay, on
+    next = 1 + +localStorage.getItem \page
+    location.href = "page#next.xhtml"
     # then goto next page
     # and autoplay
-  on-stop                         # onPause
+  -> # onPause
+    book.setProps playing: false
+    localStorage.setItem 'autoplay', off
 
 props =
   master-page: mp
@@ -53,10 +59,17 @@ props =
   playing: false
   current-time: -> audio.time!
   dpcm: dots.state.x
-  onNotify: -> audio.process it
+  onNotify: ->
+    audio.process it
 
 if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
   props.pages = [RegExp.$1]
+  page = +RegExp.$1
+  localStorage.setItem \page, page
+  if localStorage.getItem \autoplay
+    setTimeout do
+      -> audio.play page - 1
+      750
 
 book = React.render do
   Book props
