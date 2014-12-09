@@ -1,8 +1,9 @@
 (function(){
-  var React, DotsDetector, Data, Book, ReactVTT, request, getMp3, getVtt;
+  var React, DotsDetector, Data, Audio, Book, ReactVTT, request, getMp3, getVtt;
   React = require('react');
   DotsDetector = React.createFactory(require('./react-dots-detector'));
   Data = require('./CUBE/data');
+  Audio = require('./Logic/Audio');
   Book = React.createFactory(require('./Book'));
   ReactVTT = require('react-vtt');
   require('react-vtt/dest/ReactVTT.css');
@@ -39,19 +40,42 @@
             var mp3;
             mp3 = arg$.mp3;
             return getVtt(setup.path + "/audio.vtt.json", function(vtt){
-              var props;
+              var onStop, audio, props, book;
+              onStop = function(){
+                return book.setProps({
+                  playing: false
+                });
+              };
+              audio = Audio(data, vtt, mp3, function(){
+                return book.setProps({
+                  loading: false
+                });
+              }, function(){
+                return {
+                  playing: book.setProps[true]
+                };
+              }, function(){
+                return onstop();
+              }, onStop);
               props = {
                 masterPage: mp,
                 data: data,
                 segs: segs,
-                audio: mp3 || setup.path + "/audio.mp3",
                 vtt: vtt,
-                dpcm: dots.state.x
+                loading: true,
+                playing: false,
+                currentTime: function(){
+                  return audio.time();
+                },
+                dpcm: dots.state.x,
+                onNotify: function(it){
+                  return audio.process(it);
+                }
               };
               if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
                 props.pages = [RegExp.$1];
               }
-              return React.render(Book(props), document.getElementById('app'));
+              return book = React.render(Book(props), document.getElementById('app'));
             });
           });
         });

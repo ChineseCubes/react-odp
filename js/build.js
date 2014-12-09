@@ -269,9 +269,8 @@
 	      }
 	    },
 	    render: function(){
-	      var setup, counter, attrs, offsetX, ref$, this$ = this;
+	      var setup, attrs, offsetX, ref$, this$ = this;
 	      setup = this.props.masterPage.setup;
-	      counter = 0;
 	      attrs = this.props.data.attrs;
 	      offsetX = "-" + this.props.currentPage * +attrs.width.replace('cm', '') + "cm";
 	      return div({
@@ -295,7 +294,7 @@
 	        scale: this.state.scale,
 	        data: this.props.data,
 	        renderProps: function(props){
-	          var click, pages, parents, data, attrs, key$, comp, text, hide, show, page, x$;
+	          var click, pages, parents, data, attrs, key$, ref$, text, hide, show, page, x$;
 	          click = onClick === 'onClick' ? 'click' : 'touchstart';
 	          if (!this$.props.pages) {
 	            this$.props.pages = (function(){
@@ -329,26 +328,19 @@
 	          case !(data.name === 'image' && attrs.name === 'activity'):
 	            delete attrs.href;
 	            delete attrs[onClick + ""];
-	            comp = (function(counter){
-	              var ref$, this$ = this;
-	              if (counter !== 0) {
-	                return ODP.components.image(props, AudioControl((ref$ = {
-	                  loading: this.props.loading,
-	                  playing: this.props.playing
-	                }, ref$[onClick + ""] = function(){
-	                  return this$.notify(!this$.props.playing
-	                    ? {
-	                      action: 'play',
-	                      pageNum: counter
-	                    }
-	                    : {
-	                      action: 'stop'
-	                    });
-	                }, ref$)));
-	              }
-	            }.call(this$, counter));
-	            ++counter;
-	            return comp;
+	            return ODP.components.image(props, AudioControl((ref$ = {
+	              loading: this$.props.loading,
+	              playing: this$.props.playing
+	            }, ref$[onClick + ""] = function(){
+	              return this$.notify(!this$.props.playing
+	                ? {
+	                  action: 'play',
+	                  pageNum: props.data.attrs.pageNum
+	                }
+	                : {
+	                  action: 'stop'
+	                });
+	            }, ref$)));
 	          case !(data.name === 'span' && data.text):
 	            text = props.data.text;
 	            hide = function(){
@@ -577,7 +569,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
-	  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, modeSelectors, withModeSelectors, Data;
+	  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, createAudioProps, c, Char, o, Node, punctuations, Dict, Segmentations, modeSelectors, withModeSelectors, Data;
 	  try {
 	    fs = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fs\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	  } catch (e$) {}
@@ -592,29 +584,32 @@
 	  ref$ = __webpack_require__(9), unslash = ref$.unslash, tagless = ref$.strip, splitNamespace = ref$.splitNamespace, camelFromHyphenated = ref$.camelFromHyphenated, notoName = ref$.notoName;
 	  slice = Array.prototype.slice;
 	  shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
-	  masterPage = {
-	    children: {
-	      name: 'draw:frame',
-	      attrs: {
-	        'style-name': 'Mgr4',
-	        'text-style-name': 'MP4',
-	        x: '25.16cm',
-	        y: '1.35cm',
-	        width: '1.458cm',
-	        height: '1.358cm'
-	      },
-	      children: [{
-	        name: 'draw:image',
+	  createAudioProps = function(idx){
+	    return {
+	      children: {
+	        name: 'draw:frame',
 	        attrs: {
-	          name: 'activity',
-	          href: '../images/play.png',
-	          'on-click': function(){
-	            throw Error('unimplemented');
-	          },
-	          'font-size': '1cm'
-	        }
-	      }]
-	    }
+	          'style-name': 'Mgr4',
+	          'text-style-name': 'MP4',
+	          x: '25.16cm',
+	          y: '1.35cm',
+	          width: '1.458cm',
+	          height: '1.358cm'
+	        },
+	        children: [{
+	          name: 'draw:image',
+	          attrs: {
+	            name: 'activity',
+	            href: '../images/play.png',
+	            'page-num': idx,
+	            'on-click': function(){
+	              throw Error('unimplemented');
+	            },
+	            'font-size': '1cm'
+	          }
+	        }]
+	      }
+	    };
 	  };
 	  c = Char = (function(){
 	    Char.displayName = 'Char';
@@ -922,7 +917,7 @@
 	        height: height,
 	        totalPages: attrs['TOTAL-PAGES']
 	      };
-	      return import$(mp, masterPage);
+	      return mp;
 	    },
 	    getPresentation: function(masterPage, done){
 	      var setup, path, pages, counter, gotOne, i$, to$, results$ = [];
@@ -965,10 +960,14 @@
 	      }
 	    },
 	    patchPageJSON: function(data, path){
-	      var propNames;
+	      var propNames, name, idx;
 	      path == null && (path = '');
 	      propNames = ['name', 'x', 'y', 'width', 'height', 'href', 'data', 'onClick', 'onTouchStart'];
-	      data.children = data.children.concat(masterPage.children);
+	      name = data.attrs['DRAW:NAME'];
+	      if (name !== 'page1') {
+	        idx = +name.replace('page', '');
+	        data.children = data.children.concat(createAudioProps(idx - 1).children);
+	      }
 	      return Data.transform(data, function(attrs, nodeName, parents){
 	        var newAttrs, k, v, name, x$;
 	        attrs == null && (attrs = {});
@@ -986,6 +985,9 @@
 	            newAttrs.height = v;
 	            break;
 	          case !in$(name, propNames):
+	            newAttrs[name] = v;
+	            break;
+	          case name !== 'pageNum':
 	            newAttrs[name] = v;
 	            break;
 	          default:
@@ -16143,9 +16145,9 @@
 	var ReactInstanceHandles = __webpack_require__(41);
 	var ReactPerf = __webpack_require__(45);
 
-	var containsNode = __webpack_require__(111);
+	var containsNode = __webpack_require__(109);
 	var deprecated = __webpack_require__(50);
-	var getReactRootElementInContainer = __webpack_require__(112);
+	var getReactRootElementInContainer = __webpack_require__(110);
 	var instantiateReactComponent = __webpack_require__(74);
 	var invariant = __webpack_require__(63);
 	var shouldUpdateReactComponent = __webpack_require__(78);
@@ -16838,9 +16840,9 @@
 	"use strict";
 
 	var ReactComponent = __webpack_require__(32);
-	var ReactMultiChildUpdateTypes = __webpack_require__(109);
+	var ReactMultiChildUpdateTypes = __webpack_require__(111);
 
-	var flattenChildren = __webpack_require__(110);
+	var flattenChildren = __webpack_require__(112);
 	var instantiateReactComponent = __webpack_require__(74);
 	var shouldUpdateReactComponent = __webpack_require__(78);
 
@@ -31788,7 +31790,7 @@
 	var ReactPerf = __webpack_require__(45);
 	var ReactReconcileTransaction = __webpack_require__(142);
 
-	var getReactRootElementInContainer = __webpack_require__(112);
+	var getReactRootElementInContainer = __webpack_require__(110);
 	var invariant = __webpack_require__(63);
 	var setInnerHTML = __webpack_require__(143);
 
@@ -34077,6 +34079,93 @@
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
+	 * @providesModule containsNode
+	 * @typechecks
+	 */
+
+	var isTextNode = __webpack_require__(162);
+
+	/*jslint bitwise:true */
+
+	/**
+	 * Checks if a given DOM node contains or is another DOM node.
+	 *
+	 * @param {?DOMNode} outerNode Outer DOM node.
+	 * @param {?DOMNode} innerNode Inner DOM node.
+	 * @return {boolean} True if `outerNode` contains or is `innerNode`.
+	 */
+	function containsNode(outerNode, innerNode) {
+	  if (!outerNode || !innerNode) {
+	    return false;
+	  } else if (outerNode === innerNode) {
+	    return true;
+	  } else if (isTextNode(outerNode)) {
+	    return false;
+	  } else if (isTextNode(innerNode)) {
+	    return containsNode(outerNode, innerNode.parentNode);
+	  } else if (outerNode.contains) {
+	    return outerNode.contains(innerNode);
+	  } else if (outerNode.compareDocumentPosition) {
+	    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
+	  } else {
+	    return false;
+	  }
+	}
+
+	module.exports = containsNode;
+
+
+/***/ },
+/* 110 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule getReactRootElementInContainer
+	 */
+
+	"use strict";
+
+	var DOC_NODE_TYPE = 9;
+
+	/**
+	 * @param {DOMElement|DOMDocument} container DOM element that may contain
+	 *                                           a React component
+	 * @return {?*} DOM element that may have the reactRoot ID, or null.
+	 */
+	function getReactRootElementInContainer(container) {
+	  if (!container) {
+	    return null;
+	  }
+
+	  if (container.nodeType === DOC_NODE_TYPE) {
+	    return container.documentElement;
+	  } else {
+	    return container.firstChild;
+	  }
+	}
+
+	module.exports = getReactRootElementInContainer;
+
+
+/***/ },
+/* 111 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
 	 * @providesModule ReactMultiChildUpdateTypes
 	 */
 
@@ -34103,7 +34192,7 @@
 
 
 /***/ },
-/* 110 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -34173,93 +34262,6 @@
 	module.exports = flattenChildren;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(54)))
-
-/***/ },
-/* 111 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule containsNode
-	 * @typechecks
-	 */
-
-	var isTextNode = __webpack_require__(162);
-
-	/*jslint bitwise:true */
-
-	/**
-	 * Checks if a given DOM node contains or is another DOM node.
-	 *
-	 * @param {?DOMNode} outerNode Outer DOM node.
-	 * @param {?DOMNode} innerNode Inner DOM node.
-	 * @return {boolean} True if `outerNode` contains or is `innerNode`.
-	 */
-	function containsNode(outerNode, innerNode) {
-	  if (!outerNode || !innerNode) {
-	    return false;
-	  } else if (outerNode === innerNode) {
-	    return true;
-	  } else if (isTextNode(outerNode)) {
-	    return false;
-	  } else if (isTextNode(innerNode)) {
-	    return containsNode(outerNode, innerNode.parentNode);
-	  } else if (outerNode.contains) {
-	    return outerNode.contains(innerNode);
-	  } else if (outerNode.compareDocumentPosition) {
-	    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
-	  } else {
-	    return false;
-	  }
-	}
-
-	module.exports = containsNode;
-
-
-/***/ },
-/* 112 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule getReactRootElementInContainer
-	 */
-
-	"use strict";
-
-	var DOC_NODE_TYPE = 9;
-
-	/**
-	 * @param {DOMElement|DOMDocument} container DOM element that may contain
-	 *                                           a React component
-	 * @return {?*} DOM element that may have the reactRoot ID, or null.
-	 */
-	function getReactRootElementInContainer(container) {
-	  if (!container) {
-	    return null;
-	  }
-
-	  if (container.nodeType === DOC_NODE_TYPE) {
-	    return container.documentElement;
-	  } else {
-	    return container.firstChild;
-	  }
-	}
-
-	module.exports = getReactRootElementInContainer;
-
 
 /***/ },
 /* 113 */
@@ -36427,7 +36429,7 @@
 
 	var ReactDOMSelection = __webpack_require__(170);
 
-	var containsNode = __webpack_require__(111);
+	var containsNode = __webpack_require__(109);
 	var focusNode = __webpack_require__(171);
 	var getActiveElement = __webpack_require__(150);
 
@@ -40077,7 +40079,7 @@ node.innerHTML = html;
 	"use strict";
 
 	var Danger = __webpack_require__(178);
-	var ReactMultiChildUpdateTypes = __webpack_require__(109);
+	var ReactMultiChildUpdateTypes = __webpack_require__(111);
 
 	var getTextContentAccessor = __webpack_require__(139);
 	var invariant = __webpack_require__(63);

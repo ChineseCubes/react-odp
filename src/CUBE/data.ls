@@ -14,7 +14,7 @@ fs ?= readFile: (path, done) ->
 slice = Array::slice
 
 shadow = '0 0 5px 5px rgba(0,0,0,0.1);'
-master-page =
+create-audio-props = (idx) ->
   children:
     * name: 'draw:frame'
       attrs:
@@ -29,6 +29,7 @@ master-page =
           attrs:
             name: 'activity'
             href: '../images/play.png'
+            'page-num': idx
             'on-click': -> ...
             'font-size': '1cm'
         ...
@@ -215,7 +216,7 @@ Data =
       width:  width
       height: height
       total-pages: attrs['TOTAL-PAGES']
-    mp <<< master-page
+    mp
   getPresentation: ({setup}:master-page, done) ->
     path = unslash setup.path
     pages = []
@@ -240,7 +241,10 @@ Data =
       got-one Data.patchPageJSON(JSON.parse(data), path), i - 1
   patchPageJSON: (data, path = '') ->
     prop-names = <[name x y width height href data onClick onTouchStart]>
-    data.children = data.children.concat master-page.children
+    name = data.attrs['DRAW:NAME']
+    if name isnt \page1
+      idx = +name.replace 'page', ''
+      data.children = data.children.concat create-audio-props(idx - 1)children
     Data.transform data, (attrs = {}, node-name, parents) ->
       new-attrs = style: {}
       for k, v of attrs
@@ -249,6 +253,7 @@ Data =
         | name is 'pageWidth'  => new-attrs.width       = v
         | name is 'pageHeight' => new-attrs.height      = v
         | name in prop-names   => new-attrs[name]       = v
+        | name is 'pageNum'    => new-attrs[name]       = v
         #| name is 'fontFamily' => new-attrs.style[name] = noto-name v
         | otherwise            => new-attrs.style[name] = v
       new-attrs

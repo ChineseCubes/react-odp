@@ -52,7 +52,6 @@ Book = React.createClass do
       height / px-height
   render: ->
     {setup} = @props.master-page
-    counter = 0
     attrs = @props.data.attrs
     offset-x = "-#{@props.current-page * +(attrs.width.replace 'cm' '')}cm"
     div do
@@ -98,19 +97,15 @@ Book = React.createClass do
           | data.name is 'image' and attrs.name is 'activity'
             delete attrs.href
             delete attrs["#onClick"]
-            comp = let counter
-              if counter isnt 0
-                ODP.components.image do
-                  props
-                  AudioControl do
-                    loading: @props.loading
-                    playing: @props.playing
-                    "#onClick": ~>
-                      @notify unless @props.playing
-                        then action: \play, page-num: counter
-                        else action: \stop
-            ++counter
-            comp
+            ODP.components.image do
+              props
+              AudioControl do
+                loading: @props.loading
+                playing: @props.playing
+                "#onClick": ~>
+                  @notify unless @props.playing
+                    then action: \play, page-num: props.data.attrs.page-num
+                    else action: \stop
           | data.name is 'span' and data.text
             text = props.data.text
             hide = ~>

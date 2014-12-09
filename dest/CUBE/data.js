@@ -1,5 +1,5 @@
 (function(){
-  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, masterPage, c, Char, o, Node, punctuations, Dict, Segmentations, modeSelectors, withModeSelectors, Data;
+  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, createAudioProps, c, Char, o, Node, punctuations, Dict, Segmentations, modeSelectors, withModeSelectors, Data;
   try {
     fs = require('fs');
   } catch (e$) {}
@@ -14,29 +14,32 @@
   ref$ = require('./utils'), unslash = ref$.unslash, tagless = ref$.strip, splitNamespace = ref$.splitNamespace, camelFromHyphenated = ref$.camelFromHyphenated, notoName = ref$.notoName;
   slice = Array.prototype.slice;
   shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
-  masterPage = {
-    children: {
-      name: 'draw:frame',
-      attrs: {
-        'style-name': 'Mgr4',
-        'text-style-name': 'MP4',
-        x: '25.16cm',
-        y: '1.35cm',
-        width: '1.458cm',
-        height: '1.358cm'
-      },
-      children: [{
-        name: 'draw:image',
+  createAudioProps = function(idx){
+    return {
+      children: {
+        name: 'draw:frame',
         attrs: {
-          name: 'activity',
-          href: '../images/play.png',
-          'on-click': function(){
-            throw Error('unimplemented');
-          },
-          'font-size': '1cm'
-        }
-      }]
-    }
+          'style-name': 'Mgr4',
+          'text-style-name': 'MP4',
+          x: '25.16cm',
+          y: '1.35cm',
+          width: '1.458cm',
+          height: '1.358cm'
+        },
+        children: [{
+          name: 'draw:image',
+          attrs: {
+            name: 'activity',
+            href: '../images/play.png',
+            'page-num': idx,
+            'on-click': function(){
+              throw Error('unimplemented');
+            },
+            'font-size': '1cm'
+          }
+        }]
+      }
+    };
   };
   c = Char = (function(){
     Char.displayName = 'Char';
@@ -344,7 +347,7 @@
         height: height,
         totalPages: attrs['TOTAL-PAGES']
       };
-      return import$(mp, masterPage);
+      return mp;
     },
     getPresentation: function(masterPage, done){
       var setup, path, pages, counter, gotOne, i$, to$, results$ = [];
@@ -387,10 +390,14 @@
       }
     },
     patchPageJSON: function(data, path){
-      var propNames;
+      var propNames, name, idx;
       path == null && (path = '');
       propNames = ['name', 'x', 'y', 'width', 'height', 'href', 'data', 'onClick', 'onTouchStart'];
-      data.children = data.children.concat(masterPage.children);
+      name = data.attrs['DRAW:NAME'];
+      if (name !== 'page1') {
+        idx = +name.replace('page', '');
+        data.children = data.children.concat(createAudioProps(idx - 1).children);
+      }
       return Data.transform(data, function(attrs, nodeName, parents){
         var newAttrs, k, v, name, x$;
         attrs == null && (attrs = {});
@@ -408,6 +415,9 @@
             newAttrs.height = v;
             break;
           case !in$(name, propNames):
+            newAttrs[name] = v;
+            break;
+          case name !== 'pageNum':
             newAttrs[name] = v;
             break;
           default:

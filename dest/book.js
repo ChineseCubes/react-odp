@@ -64,9 +64,8 @@
       }
     },
     render: function(){
-      var setup, counter, attrs, offsetX, ref$, this$ = this;
+      var setup, attrs, offsetX, ref$, this$ = this;
       setup = this.props.masterPage.setup;
-      counter = 0;
       attrs = this.props.data.attrs;
       offsetX = "-" + this.props.currentPage * +attrs.width.replace('cm', '') + "cm";
       return div({
@@ -90,7 +89,7 @@
         scale: this.state.scale,
         data: this.props.data,
         renderProps: function(props){
-          var click, pages, parents, data, attrs, key$, comp, text, hide, show, page, x$;
+          var click, pages, parents, data, attrs, key$, ref$, text, hide, show, page, x$;
           click = onClick === 'onClick' ? 'click' : 'touchstart';
           if (!this$.props.pages) {
             this$.props.pages = (function(){
@@ -124,26 +123,19 @@
           case !(data.name === 'image' && attrs.name === 'activity'):
             delete attrs.href;
             delete attrs[onClick + ""];
-            comp = (function(counter){
-              var ref$, this$ = this;
-              if (counter !== 0) {
-                return ODP.components.image(props, AudioControl((ref$ = {
-                  loading: this.props.loading,
-                  playing: this.props.playing
-                }, ref$[onClick + ""] = function(){
-                  return this$.notify(!this$.props.playing
-                    ? {
-                      action: 'play',
-                      pageNum: counter
-                    }
-                    : {
-                      action: 'stop'
-                    });
-                }, ref$)));
-              }
-            }.call(this$, counter));
-            ++counter;
-            return comp;
+            return ODP.components.image(props, AudioControl((ref$ = {
+              loading: this$.props.loading,
+              playing: this$.props.playing
+            }, ref$[onClick + ""] = function(){
+              return this$.notify(!this$.props.playing
+                ? {
+                  action: 'play',
+                  pageNum: props.data.attrs.pageNum
+                }
+                : {
+                  action: 'stop'
+                });
+            }, ref$)));
           case !(data.name === 'span' && data.text):
             text = props.data.text;
             hide = function(){
