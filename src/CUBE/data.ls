@@ -192,7 +192,6 @@ mode-selectors =
       children: []
 with-mode-selectors = (page) ->
   page.children.push mode-selectors
-  console.log page
   page
 
 Data =

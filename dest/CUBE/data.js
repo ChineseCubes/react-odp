@@ -314,7 +314,6 @@
   };
   withModeSelectors = function(page){
     page.children.push(modeSelectors);
-    console.log(page);
     return page;
   };
   Data = {
