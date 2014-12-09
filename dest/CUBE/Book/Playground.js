@@ -19,7 +19,7 @@
     },
     getInitialState: function(){
       return {
-        mode: 'zh-TW',
+        mode: 'zh-CN',
         focus: null,
         undo: []
       };

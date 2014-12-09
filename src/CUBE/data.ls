@@ -103,15 +103,15 @@ class Segmentations
       else if node.attrs.data
         # prepare the RegExp for segmentation
         ks = slice.call node.attrs.data
-        ks.sort (a, b) -> b.traditional.length - a.traditional.length
+        ks.sort (a, b) -> b.simplified.length - a.simplified.length
         re := ks.map ->
-          str = it.traditional
+          str = it.simplified
           en = tagless it.translation .split /\//
           shortest = slice.call(en)sort((a, b) -> a.length - b.length)0
           children = slice.call str
           # use `map` as `each`
           # FIXME: too much
-          keywords[it.traditional] =
+          keywords[it.simplified] =
             Node do
               children.map ->
                 moe = dict.get it
@@ -125,7 +125,7 @@ class Segmentations
                     en.sort((a, b) -> a.length - b.length)0
               en.join ', '
               shortest
-          it.traditional
+          it.simplified
         re := new RegExp Object.keys(punctuations)concat(re)join('|'), \g
       else
         # fill the translation,

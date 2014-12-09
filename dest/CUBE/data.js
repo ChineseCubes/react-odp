@@ -207,17 +207,17 @@
           } else if (node.attrs.data) {
             ks = slice.call(node.attrs.data);
             ks.sort(function(a, b){
-              return b.traditional.length - a.traditional.length;
+              return b.simplified.length - a.simplified.length;
             });
             re = ks.map(function(it){
               var str, en, shortest, children;
-              str = it.traditional;
+              str = it.simplified;
               en = tagless(it.translation).split(/\//);
               shortest = slice.call(en).sort(function(a, b){
                 return a.length - b.length;
               })[0];
               children = slice.call(str);
-              keywords[it.traditional] = Node(children.map(function(it){
+              keywords[it.simplified] = Node(children.map(function(it){
                 var moe, en;
                 moe = dict.get(it);
                 if (children.length === 1) {
@@ -229,7 +229,7 @@
                   })[0]);
                 }
               }), en.join(', '), shortest);
-              return it.traditional;
+              return it.simplified;
             });
             return re = new RegExp(Object.keys(punctuations).concat(re).join('|'), 'g');
           } else {

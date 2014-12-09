@@ -15,7 +15,7 @@ Playground = React.createClass do
     image:    ''
     sentence: on
   getInitialState: ->
-    mode:  'zh-TW'
+    mode:  'zh-CN'
     focus: null
     undo:  []
   componentWillReceiveProps: (props) ->

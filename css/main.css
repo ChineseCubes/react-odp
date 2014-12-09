@@ -158,7 +158,7 @@ a img {
   src: local('Noto Sans CJK TC Black'), local('NotoSansCJKtc-Black'), url("../fonts/Noto-Heavy-Subset.ttf") format('truetype');
 }
 html {
-  font-family: "LiHei Pro", "Heiti TC", "Heiti SC", "Noto Sans", "Noto Sans T Chinese", "Noto Sans S Chinese", "微軟正黑體", "cwTex Q KaiZH", sans-serif;
+  font-family: "LiHei Pro", "Heiti SC", "Heiti TC", "Noto Sans", "Noto Sans S Chinese", "Noto Sans T Chinese", "微軟正黑體", "cwTex Q KaiZH", sans-serif;
   font-size: 18px;
 }
 small {
