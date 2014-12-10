@@ -288,7 +288,9 @@
           x: '0cm',
           y: '0cm',
           width: '7.35cm',
-          height: '2.275cm'
+          height: '2.275cm',
+          'line-height': '2.275cm',
+          'font-size': '1.1cm'
         }
       }, {
         name: 'frame',
@@ -298,7 +300,9 @@
           x: '7.875cm',
           y: '0cm',
           width: '7.35cm',
-          height: '2.275cm'
+          height: '2.275cm',
+          'line-height': '2.275cm',
+          'font-size': '1.1cm'
         },
         children: []
       }, {
@@ -309,7 +313,9 @@
           x: '15.75cm',
           y: '0cm',
           width: '7.35cm',
-          height: '2.275cm'
+          height: '2.275cm',
+          'line-height': '2.275cm',
+          'font-size': '1.1cm'
         },
         children: []
       }

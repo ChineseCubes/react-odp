@@ -513,7 +513,18 @@
 .glossary,
 .read-to-me,
 .learn-by-myself {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  background-color: transparent;
   position: absolute;
-  -webkit-border-radius: 1rem;
-  border-radius: 1rem;
+}
+.glossary {
+  background-image: url("../img/dot1.svg");
+}
+.read-to-me {
+  background-image: url("../img/dot2.svg");
+}
+.learn-by-myself {
+  background-image: url("../img/dot3.svg");
 }

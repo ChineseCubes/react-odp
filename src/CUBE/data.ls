@@ -173,6 +173,8 @@ mode-selectors =
         y: '0cm'
         width:  '7.35cm'
         height: '2.275cm'
+        'line-height': '2.275cm'
+        'font-size': '1.1cm'
     * name: \frame
       namespace: \draw
       id: 'read-to-me'
@@ -181,6 +183,8 @@ mode-selectors =
         y: '0cm'
         width:  '7.35cm'
         height: '2.275cm'
+        'line-height': '2.275cm'
+        'font-size': '1.1cm'
       children: []
     * name: \frame
       namespace: \draw
@@ -190,6 +194,8 @@ mode-selectors =
         y: '0cm'
         width:  '7.35cm'
         height: '2.275cm'
+        'line-height': '2.275cm'
+        'font-size': '1.1cm'
       children: []
 with-mode-selectors = (page) ->
   page.children.push mode-selectors
