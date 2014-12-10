@@ -24,6 +24,7 @@ Book = React.createClass do
     data: null
     segs: null
     vtt: null
+    autoplay: off
     loading: true
     playing: false
     current-time: ->
@@ -94,7 +95,7 @@ Book = React.createClass do
               sentences: []
               playgrounds: []
             ODP.renderProps props if attrs.name in pages
-          | data.name is 'image' and attrs.name is 'activity'
+          | data.name is 'image' and attrs.name is 'activity' and not @props.autoplay
             delete attrs.href
             delete attrs["#onClick"]
             ODP.components.image do
@@ -159,7 +160,7 @@ Book = React.createClass do
                 height: ODP.scale-length props.scale, data.attrs.height
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> @notify action: \click mode: 'glossary'
+              onClick: -> @notify action: \mode data: 'glossary'
               '詞彙'
           | data.id is 'read-to-me'
             Button do
@@ -169,7 +170,7 @@ Book = React.createClass do
                 height: ODP.scale-length props.scale, data.attrs.height
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> @notify action: \click mode: 'read-to-me'
+              onClick: -> @notify action: \mode data: 'read-to-me'
               '聽讀'
           | data.id is 'learn-by-myself'
             Button do
@@ -179,7 +180,7 @@ Book = React.createClass do
                 height: ODP.scale-length props.scale, data.attrs.height
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> @notify action: \click mode: 'learn-by-myself'
+              onClick: -> @notify action: \mode data: 'learn-by-myself'
               '學習'
           | otherwise => ODP.renderProps props
 

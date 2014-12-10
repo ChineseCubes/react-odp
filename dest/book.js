@@ -27,6 +27,7 @@
         data: null,
         segs: null,
         vtt: null,
+        autoplay: false,
         loading: true,
         playing: false,
         currentTime: function(){},
@@ -120,7 +121,7 @@
               return ODP.renderProps(props);
             }
             break;
-          case !(data.name === 'image' && attrs.name === 'activity'):
+          case !(data.name === 'image' && attrs.name === 'activity' && !this$.props.autoplay):
             delete attrs.href;
             delete attrs[onClick + ""];
             return ODP.components.image(props, AudioControl((ref$ = {
@@ -218,8 +219,8 @@
               },
               onClick: function(){
                 return this.notify({
-                  action: 'click',
-                  mode: 'glossary'
+                  action: 'mode',
+                  data: 'glossary'
                 });
               }
             }, '詞彙');
@@ -234,8 +235,8 @@
               },
               onClick: function(){
                 return this.notify({
-                  action: 'click',
-                  mode: 'read-to-me'
+                  action: 'mode',
+                  data: 'read-to-me'
                 });
               }
             }, '聽讀');
@@ -250,8 +251,8 @@
               },
               onClick: function(){
                 return this.notify({
-                  action: 'click',
-                  mode: 'learn-by-myself'
+                  action: 'mode',
+                  data: 'learn-by-myself'
                 });
               }
             }, '學習');

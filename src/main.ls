@@ -42,9 +42,10 @@ audio = Audio do
   -> reader.setProps playing: true  # onPlay
   ->                                # onEnd
     on-stop!
-    page = reader.state.page + 1
-    reader.page page
-    setTimeout (-> audio.play page), 750
+    if reader.props.autoplay
+      page = reader.state.page + 1
+      reader.page page
+      setTimeout (-> audio.play page), 750
   on-stop                           # onPause
 
 ##
@@ -56,13 +57,31 @@ props =
   data: data
   segs: segs
   vtt: vtt
+  autoplay: off
   loading: true
   playing: false
   current-time: -> audio.time!
   dpcm: dots.state.x
   width: $win.width!
   height: $win.height!
-  onNotify: -> audio.process it
+  onNotify: ->
+    switch it.action
+      | \mode
+        switch it.data
+          | \glossary
+            console.log 'should jump to the glossary page'
+          | \read-to-me
+            console.log 'autoplay: on'
+            reader
+              ..setProps autoplay: on
+              ..page 1
+            audio.play 1
+          | \learn-by-myself
+            console.log 'autoplay off'
+            reader
+              ..setProps autoplay: off
+              ..page 1
+      | _     => audio.process it
 
 #if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
 #  props.pages = [RegExp.$1]

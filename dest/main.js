@@ -59,11 +59,13 @@
                 }, function(){
                   var page;
                   onStop();
-                  page = reader.state.page + 1;
-                  reader.page(page);
-                  return setTimeout(function(){
-                    return audio.play(page);
-                  }, 750);
+                  if (reader.props.autoplay) {
+                    page = reader.state.page + 1;
+                    reader.page(page);
+                    return setTimeout(function(){
+                      return audio.play(page);
+                    }, 750);
+                  }
                 }, onStop);
                 $win = $(window);
                 props = {
@@ -71,6 +73,7 @@
                   data: data,
                   segs: segs,
                   vtt: vtt,
+                  autoplay: false,
                   loading: true,
                   playing: false,
                   currentTime: function(){
@@ -80,7 +83,33 @@
                   width: $win.width(),
                   height: $win.height(),
                   onNotify: function(it){
-                    return audio.process(it);
+                    var x$, y$;
+                    switch (it.action) {
+                    case 'mode':
+                      switch (it.data) {
+                      case 'glossary':
+                        return console.log('should jump to the glossary page');
+                      case 'read-to-me':
+                        console.log('autoplay: on');
+                        x$ = reader;
+                        x$.setProps({
+                          autoplay: true
+                        });
+                        x$.page(1);
+                        return audio.play(1);
+                      case 'learn-by-myself':
+                        console.log('autoplay off');
+                        y$ = reader;
+                        y$.setProps({
+                          autoplay: false
+                        });
+                        y$.page(1);
+                        return y$;
+                      }
+                      break;
+                    default:
+                      return audio.process(it);
+                    }
                   }
                 };
                 reader = React.render(Reader(props), $('#app').get()[0]);
