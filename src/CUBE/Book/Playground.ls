@@ -20,6 +20,7 @@ Playground = React.createClass do
     undo:  []
   componentWillReceiveProps: (props) ->
     if @props.data?short isnt props.data?short
+      #@props.data?log-all!
       @undoAll!
       @setState @getInitialState!{focus}
       $(@refs.settings.getDOMNode!)height 0

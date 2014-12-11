@@ -36,9 +36,13 @@ master-page =
 c = class Char
   (@pinyin = '', @['zh-TW'] = '', @['zh-CN'] = @['zh-TW']) ~>
   flatten: -> this
+  log-all: ->
 o = class Node
   (@children = [], @definition = '', @short = '', @word-class = []) ~>
   flatten: -> flatten <| for @children => ..flatten!
+  log-all: ->
+    console.log "#{@toString('zh-CN')}, #{@short}"
+    for child in @children => child.log-all!
   toString: (mode) ->
     | not mode in <[zh-TW zh-CN]> => ''
     | otherwise                   => @flatten!map(-> it[mode])join('')

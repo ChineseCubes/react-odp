@@ -53,6 +53,7 @@
     prototype.flatten = function(){
       return this;
     };
+    prototype.logAll = function(){};
     return Char;
   }());
   o = Node = (function(){
@@ -79,6 +80,15 @@
         }
         return results$;
       }.call(this)));
+    };
+    prototype.logAll = function(){
+      var i$, ref$, len$, child, results$ = [];
+      console.log(this.toString('zh-CN') + ", " + this.short);
+      for (i$ = 0, len$ = (ref$ = this.children).length; i$ < len$; ++i$) {
+        child = ref$[i$];
+        results$.push(child.logAll());
+      }
+      return results$;
     };
     prototype.toString = function(mode){
       var ref$;
