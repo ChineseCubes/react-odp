@@ -746,7 +746,7 @@
 	    function Segmentations(node, path, done){
 	      var this$ = this instanceof ctor$ ? this : new ctor$;
 	      Dict(path, function(dict){
-	        var keys, values, idx, keywords, re;
+	        var keys, values, idx, keywords, re, patch;
 	        keys = [];
 	        values = [];
 	        idx = 0;
@@ -813,6 +813,82 @@
 	            return ++idx;
 	          }
 	        });
+	        patch = function(node){
+	          var i$, ref$, len$, child;
+	          node.short = (function(){
+	            switch (node.short) {
+	            case 'few':
+	              return 'little';
+	            case 'pure':
+	              return 'white';
+	            case 'floriculture':
+	              return 'to plant a flower';
+	            case 'kind':
+	              return 'to plant';
+	            case '把[ba3]':
+	              return 'flower';
+	            case 'chance':
+	              return 'to meet';
+	            case 'youth':
+	              return 'green';
+	            case 'to hop':
+	              return 'to jump';
+	            case 'variant of 叫[jiao4]':
+	              return 'to call';
+	            case 'next':
+	              return 'to come';
+	            case '1':
+	              return 'one';
+	            case 'classifier for birds and certain animals, one of a pair, some utensils, vessels etc':
+	              return 'classifier for birds and certain animals';
+	            case 'variant of 鵝|鹅[e2]':
+	              return 'goose';
+	            case 'see 大夫[dai4 fu5]':
+	              return 'big';
+	            case 'Shuili township in Nantou county 南投縣|南投县[Nan2 tou2 xian4], central Taiwan':
+	              return 'in the water';
+	            case 'home':
+	              return 'inside';
+	            case 'to walk':
+	              return 'to swim';
+	            case 'to ask':
+	              return 'to invite';
+	            case 'rapidly':
+	              return 'classifier for livestock';
+	            case 'classifier for objects':
+	              return 'head, classifier for livestock';
+	            case 'very':
+	              return 'old';
+	            case 'raft':
+	              return 'to line up';
+	            case 'so':
+	              return 'well';
+	            case 'with':
+	              return 'together';
+	            case 'group':
+	              return 'to initiate (action)';
+	            case 'from':
+	              return 'go';
+	            case 'other':
+	              return 'he';
+	            case 'metropolis':
+	              return 'all';
+	            case 'variant of 是[shi4]':
+	              return 'is, are';
+	            case 'so':
+	              return 'good';
+	            default:
+	              return node.short;
+	            }
+	          }());
+	          if (node.children) {
+	            for (i$ = 0, len$ = (ref$ = node.children).length; i$ < len$; ++i$) {
+	              child = ref$[i$];
+	              patch(child);
+	            }
+	          }
+	        };
+	        values.map(patch);
 	        this$.data = zipObject(keys, values);
 	        return typeof done === 'function' ? done(this$) : void 8;
 	      });
@@ -17131,7 +17207,7 @@
 	var ReactPropTypeLocationNames = __webpack_require__(70);
 
 	var deprecated = __webpack_require__(47);
-	var emptyFunction = __webpack_require__(112);
+	var emptyFunction = __webpack_require__(110);
 
 	/**
 	 * Collection of methods that allow declaration and validation of props that are
@@ -17487,9 +17563,9 @@
 
 	var ReactElement = __webpack_require__(33);
 	var ReactInstanceHandles = __webpack_require__(38);
-	var ReactMarkupChecksum = __webpack_require__(110);
+	var ReactMarkupChecksum = __webpack_require__(111);
 	var ReactServerRenderingTransaction =
-	  __webpack_require__(111);
+	  __webpack_require__(112);
 
 	var instantiateReactComponent = __webpack_require__(71);
 	var invariant = __webpack_require__(60);
@@ -27959,7 +28035,7 @@
 
 	"use strict";
 
-	var emptyFunction = __webpack_require__(112);
+	var emptyFunction = __webpack_require__(110);
 
 	/**
 	 * Similar to invariant but only logs a warning if the condition is not met.
@@ -29075,7 +29151,7 @@
 	"use strict";
 
 	var assign = __webpack_require__(46);
-	var emptyFunction = __webpack_require__(112);
+	var emptyFunction = __webpack_require__(110);
 	var invariant = __webpack_require__(60);
 	var joinClasses = __webpack_require__(120);
 	var warning = __webpack_require__(58);
@@ -31493,7 +31569,7 @@
 
 	var EventConstants = __webpack_require__(59);
 
-	var emptyFunction = __webpack_require__(112);
+	var emptyFunction = __webpack_require__(110);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -31555,7 +31631,7 @@
 	"use strict";
 
 	var ReactDOMIDOperations = __webpack_require__(138);
-	var ReactMarkupChecksum = __webpack_require__(110);
+	var ReactMarkupChecksum = __webpack_require__(111);
 	var ReactMount = __webpack_require__(40);
 	var ReactPerf = __webpack_require__(42);
 	var ReactReconcileTransaction = __webpack_require__(139);
@@ -31681,7 +31757,7 @@
 	var Transaction = __webpack_require__(119);
 
 	var assign = __webpack_require__(46);
-	var emptyFunction = __webpack_require__(112);
+	var emptyFunction = __webpack_require__(110);
 
 	var RESET_BATCHED_UPDATES = {
 	  initialize: emptyFunction,
@@ -34045,6 +34121,44 @@
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
+	 * @providesModule emptyFunction
+	 */
+
+	function makeEmptyFunction(arg) {
+	  return function() {
+	    return arg;
+	  };
+	}
+
+	/**
+	 * This function accepts and discards inputs; it has no side effects. This is
+	 * primarily useful idiomatically for overridable function endpoints which
+	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+	 */
+	function emptyFunction() {}
+
+	emptyFunction.thatReturns = makeEmptyFunction;
+	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+	emptyFunction.thatReturnsThis = function() { return this; };
+	emptyFunction.thatReturnsArgument = function(arg) { return arg; };
+
+	module.exports = emptyFunction;
+
+
+/***/ },
+/* 111 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
 	 * @providesModule ReactMarkupChecksum
 	 */
 
@@ -34086,7 +34200,7 @@
 
 
 /***/ },
-/* 111 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34109,7 +34223,7 @@
 	var Transaction = __webpack_require__(119);
 
 	var assign = __webpack_require__(46);
-	var emptyFunction = __webpack_require__(112);
+	var emptyFunction = __webpack_require__(110);
 
 	/**
 	 * Provides a `CallbackQueue` queue for collecting `onDOMReady` callbacks
@@ -34200,44 +34314,6 @@
 	PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 	module.exports = ReactServerRenderingTransaction;
-
-
-/***/ },
-/* 112 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule emptyFunction
-	 */
-
-	function makeEmptyFunction(arg) {
-	  return function() {
-	    return arg;
-	  };
-	}
-
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	function emptyFunction() {}
-
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function() { return this; };
-	emptyFunction.thatReturnsArgument = function(arg) { return arg; };
-
-	module.exports = emptyFunction;
 
 
 /***/ },
@@ -35991,7 +36067,7 @@
 	var PooledClass = __webpack_require__(61);
 
 	var assign = __webpack_require__(46);
-	var emptyFunction = __webpack_require__(112);
+	var emptyFunction = __webpack_require__(110);
 	var getEventTarget = __webpack_require__(145);
 
 	/**
@@ -36432,7 +36508,7 @@
 	var SyntheticUIEvent = __webpack_require__(154);
 	var ViewportMetrics = __webpack_require__(129);
 
-	var getEventModifierState = __webpack_require__(170);
+	var getEventModifierState = __webpack_require__(169);
 
 	/**
 	 * @interface MouseEvent
@@ -36519,7 +36595,7 @@
 	"use strict";
 
 	var CSSPropertyOperations = __webpack_require__(76);
-	var DOMChildrenOperations = __webpack_require__(169);
+	var DOMChildrenOperations = __webpack_require__(170);
 	var DOMPropertyOperations = __webpack_require__(26);
 	var ReactMount = __webpack_require__(40);
 	var ReactPerf = __webpack_require__(42);
@@ -37233,7 +37309,7 @@ node.innerHTML = html;
 	 * @typechecks
 	 */
 
-	var emptyFunction = __webpack_require__(112);
+	var emptyFunction = __webpack_require__(110);
 
 	/**
 	 * Upstream version of event listener. Does not take into account specific
@@ -37578,7 +37654,7 @@ node.innerHTML = html;
 
 	var getEventCharCode = __webpack_require__(156);
 	var getEventKey = __webpack_require__(171);
-	var getEventModifierState = __webpack_require__(170);
+	var getEventModifierState = __webpack_require__(169);
 
 	/**
 	 * @interface KeyboardEvent
@@ -37710,7 +37786,7 @@ node.innerHTML = html;
 
 	var SyntheticUIEvent = __webpack_require__(154);
 
-	var getEventModifierState = __webpack_require__(170);
+	var getEventModifierState = __webpack_require__(169);
 
 	/**
 	 * @interface TouchEvent
@@ -39783,6 +39859,57 @@ node.innerHTML = html;
 /* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/**
+	 * Copyright 2013 Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule getEventModifierState
+	 * @typechecks static-only
+	 */
+
+	"use strict";
+
+	/**
+	 * Translation from modifier key to the associated property in the event.
+	 * @see http://www.w3.org/TR/DOM-Level-3-Events/#keys-Modifiers
+	 */
+
+	var modifierKeyToProp = {
+	  'Alt': 'altKey',
+	  'Control': 'ctrlKey',
+	  'Meta': 'metaKey',
+	  'Shift': 'shiftKey'
+	};
+
+	// IE8 does not implement getModifierState so we simply map it to the only
+	// modifier keys exposed by the event itself, does not support Lock-keys.
+	// Currently, all major browsers except Chrome seems to support Lock-keys.
+	function modifierStateGetter(keyArg) {
+	  /*jshint validthis:true */
+	  var syntheticEvent = this;
+	  var nativeEvent = syntheticEvent.nativeEvent;
+	  if (nativeEvent.getModifierState) {
+	    return nativeEvent.getModifierState(keyArg);
+	  }
+	  var keyProp = modifierKeyToProp[keyArg];
+	  return keyProp ? !!nativeEvent[keyProp] : false;
+	}
+
+	function getEventModifierState(nativeEvent) {
+	  return modifierStateGetter;
+	}
+
+	module.exports = getEventModifierState;
+
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-2014, Facebook, Inc.
 	 * All rights reserved.
@@ -39956,57 +40083,6 @@ node.innerHTML = html;
 	module.exports = DOMChildrenOperations;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(51)))
-
-/***/ },
-/* 170 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013 Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule getEventModifierState
-	 * @typechecks static-only
-	 */
-
-	"use strict";
-
-	/**
-	 * Translation from modifier key to the associated property in the event.
-	 * @see http://www.w3.org/TR/DOM-Level-3-Events/#keys-Modifiers
-	 */
-
-	var modifierKeyToProp = {
-	  'Alt': 'altKey',
-	  'Control': 'ctrlKey',
-	  'Meta': 'metaKey',
-	  'Shift': 'shiftKey'
-	};
-
-	// IE8 does not implement getModifierState so we simply map it to the only
-	// modifier keys exposed by the event itself, does not support Lock-keys.
-	// Currently, all major browsers except Chrome seems to support Lock-keys.
-	function modifierStateGetter(keyArg) {
-	  /*jshint validthis:true */
-	  var syntheticEvent = this;
-	  var nativeEvent = syntheticEvent.nativeEvent;
-	  if (nativeEvent.getModifierState) {
-	    return nativeEvent.getModifierState(keyArg);
-	  }
-	  var keyProp = modifierKeyToProp[keyArg];
-	  return keyProp ? !!nativeEvent[keyProp] : false;
-	}
-
-	function getEventModifierState(nativeEvent) {
-	  return modifierStateGetter;
-	}
-
-	module.exports = getEventModifierState;
-
 
 /***/ },
 /* 171 */
@@ -40283,7 +40359,7 @@ node.innerHTML = html;
 	var ExecutionEnvironment = __webpack_require__(49);
 
 	var createNodesFromMarkup = __webpack_require__(178);
-	var emptyFunction = __webpack_require__(112);
+	var emptyFunction = __webpack_require__(110);
 	var getMarkupWrap = __webpack_require__(179);
 	var invariant = __webpack_require__(60);
 

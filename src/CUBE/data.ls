@@ -154,6 +154,44 @@ class Segmentations
     #if keys.length isnt idx
     #  console.warn 'the translations of sentences are not match'
     #  console.log keys, values
+    patch = (node) !->
+      node.short = switch node.short
+        | 'few'                    => 'little'
+        | 'pure'                   => 'white'
+        | 'floriculture'           => 'to plant a flower'
+        | 'kind'                   => 'to plant'
+        | '把[ba3]'                => 'flower'
+        | 'chance'                 => 'to meet'
+        | 'youth'                  => 'green'
+        | 'to hop'                 => 'to jump'
+        | 'variant of 叫[jiao4]'   => 'to call'
+        | 'next'                   => 'to come'
+        | '1'                      => 'one'
+        | 'classifier for birds and certain animals, one of a pair, some utensils, vessels etc'
+          'classifier for birds and certain animals'
+        | 'variant of 鵝|鹅[e2]'   => 'goose'
+        | 'see 大夫[dai4 fu5]'     => 'big'
+        | 'Shuili township in Nantou county 南投縣|南投县[Nan2 tou2 xian4], central Taiwan'
+          'in the water'
+        | 'home'                   => 'inside'
+        | 'to walk'                => 'to swim'
+        | 'to ask'                 => 'to invite'
+        | 'rapidly'                => 'classifier for livestock'
+        | 'classifier for objects' => 'head, classifier for livestock'
+        | 'very'                   => 'old'
+        | 'raft'                   => 'to line up'
+        | 'so'                     => 'well'
+        | 'with'                   => 'together'
+        | 'group'                  => 'to initiate (action)'
+        | 'from'                   => 'go'
+        | 'other'                  => 'he'
+        | 'metropolis'             => 'all'
+        | 'variant of 是[shi4]'    => 'is, are'
+        | 'so'                     => 'good'
+        | otherwise                => node.short
+      if node.children
+        for child in node.children => patch child
+    values.map patch
     @data = zipObject keys, values
     done? this
   get: ->

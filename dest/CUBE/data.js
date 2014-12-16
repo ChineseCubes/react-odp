@@ -200,7 +200,7 @@
     function Segmentations(node, path, done){
       var this$ = this instanceof ctor$ ? this : new ctor$;
       Dict(path, function(dict){
-        var keys, values, idx, keywords, re;
+        var keys, values, idx, keywords, re, patch;
         keys = [];
         values = [];
         idx = 0;
@@ -267,6 +267,82 @@
             return ++idx;
           }
         });
+        patch = function(node){
+          var i$, ref$, len$, child;
+          node.short = (function(){
+            switch (node.short) {
+            case 'few':
+              return 'little';
+            case 'pure':
+              return 'white';
+            case 'floriculture':
+              return 'to plant a flower';
+            case 'kind':
+              return 'to plant';
+            case '把[ba3]':
+              return 'flower';
+            case 'chance':
+              return 'to meet';
+            case 'youth':
+              return 'green';
+            case 'to hop':
+              return 'to jump';
+            case 'variant of 叫[jiao4]':
+              return 'to call';
+            case 'next':
+              return 'to come';
+            case '1':
+              return 'one';
+            case 'classifier for birds and certain animals, one of a pair, some utensils, vessels etc':
+              return 'classifier for birds and certain animals';
+            case 'variant of 鵝|鹅[e2]':
+              return 'goose';
+            case 'see 大夫[dai4 fu5]':
+              return 'big';
+            case 'Shuili township in Nantou county 南投縣|南投县[Nan2 tou2 xian4], central Taiwan':
+              return 'in the water';
+            case 'home':
+              return 'inside';
+            case 'to walk':
+              return 'to swim';
+            case 'to ask':
+              return 'to invite';
+            case 'rapidly':
+              return 'classifier for livestock';
+            case 'classifier for objects':
+              return 'head, classifier for livestock';
+            case 'very':
+              return 'old';
+            case 'raft':
+              return 'to line up';
+            case 'so':
+              return 'well';
+            case 'with':
+              return 'together';
+            case 'group':
+              return 'to initiate (action)';
+            case 'from':
+              return 'go';
+            case 'other':
+              return 'he';
+            case 'metropolis':
+              return 'all';
+            case 'variant of 是[shi4]':
+              return 'is, are';
+            case 'so':
+              return 'good';
+            default:
+              return node.short;
+            }
+          }());
+          if (node.children) {
+            for (i$ = 0, len$ = (ref$ = node.children).length; i$ < len$; ++i$) {
+              child = ref$[i$];
+              patch(child);
+            }
+          }
+        };
+        values.map(patch);
         this$.data = zipObject(keys, values);
         return typeof done === 'function' ? done(this$) : void 8;
       });
