@@ -165,6 +165,9 @@ small {
   font-size: 1.1ex;
   font-weight: 900;
 }
+.book-selector {
+  position: fixed;
+}
 html,
 body,
 #wrap {
