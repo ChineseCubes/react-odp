@@ -15,7 +15,7 @@ process.stdin
       for let c in todo
         switch c
           | \种
-            fetched[c] =
+            fetched[\種] =
               'zh-TW': \種
               'zh-CN': \种
               pinyin: 'zhǒng'
@@ -23,7 +23,7 @@ process.stdin
             if ++count is todo.length
               return @queue stringify fetched, space: 2
           | \见
-            fetched[c] =
+            fetched[\見] =
               'zh-TW': \見
               'zh-CN': \见
               pinyin: 'jiàn'
@@ -31,7 +31,7 @@ process.stdin
             if ++count is todo.length
               return @queue stringify fetched, space: 2
           | \来
-            fetched[c] =
+            fetched[\來] =
               'zh-TW': \來
               'zh-CN': \来
               pinyin: 'lái'
@@ -39,7 +39,7 @@ process.stdin
             if ++count is todo.length
               return @queue stringify fetched, space: 2
           | \鹅
-            fetched[c] =
+            fetched[\鵝] =
               'zh-TW': \鵝
               'zh-CN': \鹅
               pinyin: 'é'
@@ -47,7 +47,7 @@ process.stdin
             if ++count is todo.length
               return @queue stringify fetched, space: 2
           | \请
-            fetched[c] =
+            fetched[\請] =
               'zh-TW': \請
               'zh-CN': \请
               pinyin: 'qǐng'
@@ -55,7 +55,7 @@ process.stdin
             if ++count is todo.length
               return @queue stringify fetched, space: 2
           | \头
-            fetched[c] =
+            fetched[\頭] =
               'zh-TW': \頭
               'zh-CN': \头
               pinyin: 'tóu'
@@ -63,7 +63,7 @@ process.stdin
             if ++count is todo.length
               return @queue stringify fetched, space: 2
           | \队
-            fetched[c] =
+            fetched[\隊] =
               'zh-TW': \隊
               'zh-CN': \队
               pinyin: 'duì'
@@ -71,7 +71,7 @@ process.stdin
             if ++count is todo.length
               return @queue stringify fetched, space: 2
           | \们
-            fetched[c] =
+            fetched[\們] =
               'zh-TW': \們
               'zh-CN': \们
               pinyin: 'mén'
