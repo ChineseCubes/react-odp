@@ -224,7 +224,7 @@
                   data: 'glossary'
                 });
               }
-            }, '詞彙');
+            });
           case data.id !== 'read-to-me':
             return Button({
               className: 'read-to-me',
@@ -240,7 +240,7 @@
                   data: 'read-to-me'
                 });
               }
-            }, '聽讀');
+            });
           case data.id !== 'learn-by-myself':
             return Button({
               className: 'learn-by-myself',
@@ -256,7 +256,7 @@
                   data: 'learn-by-myself'
                 });
               }
-            }, '學習');
+            });
           default:
             return ODP.renderProps(props);
           }
