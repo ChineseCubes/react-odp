@@ -145,6 +145,7 @@ Book = React.createClass do
               ODP.components.span do
                 props
                 IsolatedCue do
+                  key: text
                   target: "#{setup.path}/audio.vtt.json"
                   match: text
                   currentTime: @props.current-time

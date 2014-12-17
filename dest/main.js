@@ -53,7 +53,10 @@
           var book;
           book = it.target.value;
           return initBook(reader, host + "/books/" + book + "/", function(it){
-            return reader = it;
+            reader = it;
+            return setTimeout(function(){
+              return reader.page(0);
+            }, 0);
           });
         }
       }, (function(){

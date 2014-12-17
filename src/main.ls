@@ -43,7 +43,12 @@ BookSelector = React.createClass do
       name: 'book-selector'
       onChange: ~>
         book = it.target.value
-        init-book reader, "#host/books/#book/", (-> reader := it)
+        init-book do
+          reader
+          "#host/books/#book/"
+          ->
+            reader := it
+            setTimeout (-> reader.page 0), 0
       for key of @state.books
         option do
           key: key

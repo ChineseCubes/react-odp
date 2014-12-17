@@ -195,6 +195,7 @@
             if (this$.props.vtt) {
               delete props.data.text;
               return ODP.components.span(props, IsolatedCue({
+                key: text,
                 target: setup.path + "/audio.vtt.json",
                 match: text,
                 currentTime: this$.props.currentTime
