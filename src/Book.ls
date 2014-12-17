@@ -95,7 +95,8 @@ Book = React.createClass do
               sentences: []
               playgrounds: []
             ODP.renderProps props if attrs.name in pages
-          | data.name is 'image' and attrs.name is 'activity' and not @props.autoplay
+          #| data.name is 'image' and attrs.name is 'activity' and not @props.autoplay
+          | false
             delete attrs.href
             delete attrs["#onClick"]
             ODP.components.image do

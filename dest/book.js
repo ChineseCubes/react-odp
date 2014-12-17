@@ -121,7 +121,7 @@
               return ODP.renderProps(props);
             }
             break;
-          case !(data.name === 'image' && attrs.name === 'activity' && !this$.props.autoplay):
+          case !false:
             delete attrs.href;
             delete attrs[onClick + ""];
             return ODP.components.image(props, AudioControl((ref$ = {
