@@ -165,6 +165,9 @@ small {
   font-size: 1.1ex;
   font-weight: 900;
 }
+.book-selector {
+  position: fixed;
+}
 html,
 body,
 #wrap {
@@ -788,6 +791,11 @@ body {
   background-size: cover;
   background-color: transparent;
   position: absolute;
+}
+.glossary:hover,
+.read-to-me:hover,
+.learn-by-myself:hover {
+  background-color: transparent;
 }
 .glossary {
   background-image: url("../img/dot1.svg");

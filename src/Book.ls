@@ -146,6 +146,7 @@ Book = React.createClass do
               ODP.components.span do
                 props
                 IsolatedCue do
+                  key: text
                   target: "#{setup.path}/audio.vtt.json"
                   match: text
                   currentTime: @props.current-time
@@ -162,7 +163,6 @@ Book = React.createClass do
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
               onClick: -> @notify action: \mode data: 'glossary'
-              '詞彙'
           | data.id is 'read-to-me'
             Button do
               className: 'read-to-me'
@@ -172,7 +172,6 @@ Book = React.createClass do
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
               onClick: -> @notify action: \mode data: 'read-to-me'
-              '聽讀'
           | data.id is 'learn-by-myself'
             Button do
               className: 'learn-by-myself'
@@ -182,7 +181,6 @@ Book = React.createClass do
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
               onClick: -> @notify action: \mode data: 'learn-by-myself'
-              '學習'
           | otherwise => ODP.renderProps props
 
 module.exports = Book

@@ -195,6 +195,7 @@
             if (this$.props.vtt) {
               delete props.data.text;
               return ODP.components.span(props, IsolatedCue({
+                key: text,
                 target: setup.path + "/audio.vtt.json",
                 match: text,
                 currentTime: this$.props.currentTime
@@ -223,7 +224,7 @@
                   data: 'glossary'
                 });
               }
-            }, '詞彙');
+            });
           case data.id !== 'read-to-me':
             return Button({
               className: 'read-to-me',
@@ -239,7 +240,7 @@
                   data: 'read-to-me'
                 });
               }
-            }, '聽讀');
+            });
           case data.id !== 'learn-by-myself':
             return Button({
               className: 'learn-by-myself',
@@ -255,7 +256,7 @@
                   data: 'learn-by-myself'
                 });
               }
-            }, '學習');
+            });
           default:
             return ODP.renderProps(props);
           }

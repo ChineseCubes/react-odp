@@ -519,6 +519,11 @@
   background-color: transparent;
   position: absolute;
 }
+.glossary:hover,
+.read-to-me:hover,
+.learn-by-myself:hover {
+  background-color: transparent;
+}
 .glossary {
   background-image: url("../img/dot1.svg");
 }
