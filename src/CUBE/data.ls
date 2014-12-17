@@ -192,6 +192,7 @@ class Segmentations
       if node.children
         for child in node.children => patch child
     values.map patch
+    console.log values
     @data = zipObject keys, values
     done? this
   get: ->

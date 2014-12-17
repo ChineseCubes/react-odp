@@ -343,6 +343,7 @@
           }
         };
         values.map(patch);
+        console.log(values);
         this$.data = zipObject(keys, values);
         return typeof done === 'function' ? done(this$) : void 8;
       });

@@ -56,21 +56,21 @@ console.log '''
   ##
   # should use rsvp.js for better error handling
   Promise.resolve!
-    #.then ->
+    .then ->
       # convert and unzip
-      #convert build.src, build.data
+      convert build.src, build.data
     .then ->
       src = path.resolve build.data, 'page*.json'
       get-codepoints src
     .then (stdout, stderr) ->
       codepoints = for c in stdout.split /\s/ | c.length  => parseInt c, 16
       build.codepoints = codepoints.filter -> 0x4e00 <= it <= 0xfaff
-    #.then ->
+    .then ->
       # get data from moedict.tw
       # XXX: should create dict.json before packing
-      #chars = (for build.codepoints => String.fromCharCode ..)join ''
-      #dst = path.resolve build.data, 'dict.json'
-      #fetch-moedict chars, dst
+      chars = (for build.codepoints => String.fromCharCode ..)join ''
+      dst = path.resolve build.data, 'dict.json'
+      fetch-moedict chars, dst
     .then ->
       get-master-page build.data
     .then ({ attrs }) ->
