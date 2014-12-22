@@ -199,7 +199,7 @@
         idx = 0;
         keywords = import$({}, punctuations);
         re = null;
-        Data.traverse(node, function(node, parents){
+        Data.parse(node, function(node, parents){
           var ref$, ks, x$, s, str, lastIndex, r, i$, len$, char;
           if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
             return;
@@ -437,6 +437,43 @@
         return x$;
       });
     },
+    sentencesOf: function(presentation){
+      var sentences;
+      sentences = [];
+      Data.parse(presentation, function(node, parents){
+        if (node.name === 'span' && !in$('notes', parents)) {
+          return sentences.push(node.text);
+        }
+      });
+      return sentences;
+    },
+    segmentsOf: function(presentation){
+      var count, sgmnt, segments;
+      segments = [];
+      Data.parse(presentation, function(node, parents){
+        if (node.name === 'page') {
+          segments.push([]);
+          count = 0;
+          sgmnt = undefined;
+        }
+        if (node.name === 'span' && in$('notes', parents)) {
+          if (count++ % 2 === 0) {
+            return sgmnt = {
+              zh: node.text
+            };
+          } else {
+            return sgmnt.en = node.text;
+          }
+        }
+      }, function(node, parents){
+        if (node.name === 'page') {
+          if (sgmnt) {
+            return segments[segments.length - 1].push(sgmnt);
+          }
+        }
+      });
+      return segments;
+    },
     transform: function(node, onNode, parents){
       var child;
       onNode == null && (onNode = null);
@@ -456,21 +493,23 @@
           }())
       });
     },
-    traverse: function(node, onNode, parents){
-      var i$, ref$, len$, child, results$ = [];
+    parse: function(node, onEnter, onLeave, parents){
+      var i$, ref$, len$, child;
       parents == null && (parents = []);
-      if (!onNode) {
+      if (!node) {
         return;
       }
-      onNode(node, parents);
+      if (typeof onEnter === 'function') {
+        onEnter(node, parents);
+      }
       if (!node.children) {
         return;
       }
       for (i$ = 0, len$ = (ref$ = node.children).length; i$ < len$; ++i$) {
         child = ref$[i$];
-        results$.push(Data.traverse(child, onNode, parents.concat([node.name])));
+        Data.parse(child, onEnter, onLeave, parents.concat([node.name]));
       }
-      return results$;
+      return typeof onLeave === 'function' ? onLeave(node, parents) : void 8;
     },
     segment: function(str, segs, longest){
       var re, words, lastIndex, r;

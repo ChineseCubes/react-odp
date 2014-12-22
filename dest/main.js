@@ -90,7 +90,10 @@
                 var mp3;
                 mp3 = arg$.mp3;
                 return getVtt(setup.path + "/audio.vtt.json", function(vtt){
-                  var onStop, audio, props, reader;
+                  var x$, onStop, audio, props, reader;
+                  x$ = console;
+                  x$.log(Data.sentencesOf(data));
+                  x$.log(Data.segmentsOf(data));
                   onStop = function(){
                     return reader.setProps({
                       playing: false

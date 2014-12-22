@@ -95,7 +95,8 @@ class Segmentations
     idx = 0
     keywords = {} <<< punctuations
     re = null
-    Data.traverse node, (node, parents) ->
+    # XXX: may use onLeave
+    Data.parse node, (node, parents) ->
       return if not node.text and not node.attrs?data
       if parents.2 isnt 'notes'
         # prepare the root Node of this sentence
@@ -264,6 +265,31 @@ Data =
         | otherwise            => new-attrs.style[name] = v
       new-attrs
         ..href = "#path/#{new-attrs.href}" if new-attrs.href
+  sentences-of: (presentation) ->
+    sentences = []
+    Data.parse presentation, (node, parents) ->
+      if (node.name is \span) and not (\notes in parents)
+        sentences.push node.text
+    sentences
+  segments-of: (presentation) ->
+    var count, sgmnt
+    segments = []
+    Data.parse do
+      presentation
+      (node, parents) ->
+        if (node.name is \page)
+          segments.push []
+          count := 0
+          sgmnt := undefined
+        if (node.name is \span) and (\notes in parents)
+          if count++ % 2 is 0
+            sgmnt := zh: node.text
+          else
+            sgmnt.en = node.text
+      (node, parents) ->
+        if (node.name is \page)
+          segments[*-1]push sgmnt if sgmnt
+    segments
   transform: (node, onNode = null, parents = []) ->
     splitNamespace(node.name) <<< do
       text:      node.text
@@ -271,12 +297,19 @@ Data =
       children: if not node.children then [] else
         for child in node.children
           Data.transform child, onNode, parents.concat [node.name]
-  traverse: (node, onNode, parents = []) ->
-    return if not onNode
-    onNode node, parents
+  #traverse: (node, onNode, parents = []) ->
+  #  return if not onNode
+  #  onNode node, parents
+  #  return if not node.children
+  #  for child in node.children
+  #    Data.traverse child, onNode, parents.concat [node.name]
+  parse: (node, onEnter, onLeave, parents = []) ->
+    return if not node
+    onEnter? node, parents
     return if not node.children
     for child in node.children
-      Data.traverse child, onNode, parents.concat [node.name]
+      Data.parse child, onEnter, onLeave, parents.concat [node.name]
+    onLeave? node, parents
   segment: (str, segs = [], longest = true) ->
     | not str?length   => null
     | segs.length is 0 => [str.slice!]
