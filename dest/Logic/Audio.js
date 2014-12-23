@@ -36,8 +36,9 @@
   Audio = (function(){
     Audio.displayName = 'Audio';
     var prototype = Audio.prototype, constructor = Audio;
-    function Audio(presentation, vtt, mp3, onLoad, onPlay, onEnd, onPause){
+    function Audio(presentation, vtt, mp3, onLoad, onPlay, onEnd, onPause, onUpdate){
       var x$, i, ref$, cue, bgn, end, this$ = this instanceof ctor$ ? this : new ctor$;
+      this$.onUpdate = onUpdate;
       this$.texts = textsFromPresentation(presentation);
       this$.audio = (function(){
         try {
@@ -64,7 +65,14 @@
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
     prototype.play = function(pageNum){
-      var count, ts, onEnd, clean, x$, read, this$ = this;
+      var update, count, ts, onEnd, clean, x$, read, this$ = this;
+      update = function(){
+        if (typeof this$.onUpdate === 'function') {
+          this$.onUpdate(this$.time());
+        }
+        return this$.rid = requestAnimationFrame(update);
+      };
+      this.rid = requestAnimationFrame(update);
       count = 0;
       ts = this.texts[pageNum];
       if (!ts) {
@@ -101,6 +109,7 @@
       return read();
     };
     prototype.stop = function(){
+      cancelAnimationFrame(this.rid);
       return this.audio.pause();
     };
     prototype.time = function(){

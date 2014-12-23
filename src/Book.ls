@@ -28,7 +28,7 @@ Book = React.createClass do
     autoplay: off
     loading: true
     playing: false
-    current-time: ->
+    current-time: 0
     #pages: [1]
     pages: null
     current-page: 0
@@ -188,7 +188,7 @@ Book = React.createClass do
                   key: text
                   startTime
                   endTime
-                  current-time: @props.current-time!
+                  current-time: @props.current-time
                 }
                 @state.comps[text]
           | data.name is 'custom-shape'

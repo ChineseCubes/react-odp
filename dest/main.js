@@ -123,7 +123,11 @@
                         return audio.play(page);
                       }, 750);
                     }
-                  }, onStop);
+                  }, onStop, function(time){
+                    return reader.setProps({
+                      currentTime: time
+                    });
+                  });
                   props = {
                     masterPage: mp,
                     data: data,
@@ -132,9 +136,7 @@
                     autoplay: false,
                     loading: true,
                     playing: false,
-                    currentTime: function(){
-                      return audio.time();
-                    },
+                    currentTime: 0,
                     dpcm: dots.state.x,
                     width: $win.width(),
                     height: $win.height(),

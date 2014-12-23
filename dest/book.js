@@ -31,7 +31,7 @@
         autoplay: false,
         loading: true,
         playing: false,
-        currentTime: function(){},
+        currentTime: 0,
         pages: null,
         currentPage: 0,
         dpcm: 37.79527,
@@ -253,7 +253,7 @@
               key: text,
               startTime: startTime,
               endTime: endTime,
-              currentTime: this$.props.currentTime()
+              currentTime: this$.props.currentTime
             }, this$.state.comps[text]));
           case data.name !== 'custom-shape':
             if (this$.state.showText) {

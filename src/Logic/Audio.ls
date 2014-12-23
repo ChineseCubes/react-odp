@@ -16,7 +16,7 @@ texts-from-presentation = (p) ->
   texts
 
 class Audio
-  (presentation, vtt, mp3, onLoad, onPlay, onEnd, onPause) ~>
+  (presentation, vtt, mp3, onLoad, onPlay, onEnd, onPause, @onUpdate) ~>
     @texts = texts-from-presentation presentation
     @audio = try
       Howler.iOSAutoEnable = false
@@ -34,6 +34,10 @@ class Audio
     @audio.sprite @sprites
     @current-text = ''
   play: (page-num) ->
+    update = ~>
+      @onUpdate? @time!
+      @rid = requestAnimationFrame update
+    @rid = requestAnimationFrame update
     count = 0
     ts = @texts[page-num]
     return unless ts
@@ -58,7 +62,9 @@ class Audio
         ..stop @current-text
         ..play @current-text
     read!
-  stop: -> @audio.pause!
+  stop: ->
+    cancelAnimationFrame @rid
+    @audio.pause!
   time: -> (@sprites[@current-text]?0 or 0) / 1000 + (@audio?pos! or 0)
   process: ->
     switch it.action

@@ -99,6 +99,8 @@ init-book := (reader, uri, done) ->
         reader.page page
         setTimeout (-> audio.play page), 750
     on-stop                           # onPause
+    (time) ->                         # onUpdate
+      reader.setProps current-time: time
 
   ##
   # main
@@ -110,7 +112,7 @@ init-book := (reader, uri, done) ->
     autoplay: off
     loading: true
     playing: false
-    current-time: -> audio.time!
+    current-time: 0
     dpcm: dots.state.x
     width: $win.width!
     height: $win.height!
