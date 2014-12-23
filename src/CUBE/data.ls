@@ -266,10 +266,18 @@ Data =
       new-attrs
         ..href = "#path/#{new-attrs.href}" if new-attrs.href
   sentences-of: (presentation) ->
+    var str
     sentences = []
-    Data.parse presentation, (node, parents) ->
-      if (node.name is \span) and not (\notes in parents)
-        sentences.push node.text
+    Data.parse do
+      presentation
+      (node, parents) ->
+        if (node.name is \page)
+          str := ''
+        if (node.name is \span) and not (\notes in parents)
+          str := node.text
+      (node, parents) ->
+        if (node.name is \page)
+          sentences.push str
     sentences
   segments-of: (presentation) ->
     var count, sgmnt
@@ -288,7 +296,13 @@ Data =
             sgmnt.en = node.text
       (node, parents) ->
         if (node.name is \page)
-          segments[*-1]push sgmnt if sgmnt
+          if sgmnt
+            # XXX: backward compatible
+            if sgmnt.en is undefined
+              sgmnt
+                ..en = sgmnt.zh
+                ..zh = undefined
+            segments[*-1]push sgmnt
     segments
   transform: (node, onNode = null, parents = []) ->
     splitNamespace(node.name) <<< do
@@ -311,7 +325,7 @@ Data =
       Data.parse child, onEnter, onLeave, parents.concat [node.name]
     onLeave? node, parents
   segment: (str, segs = [], longest = true) ->
-    | not str?length   => null
+    | not str?length   => []
     | segs.length is 0 => [str.slice!]
     | otherwise        =>
       segs.sort if longest
@@ -324,12 +338,12 @@ Data =
       lastIndex = 0
       while r = re.exec str
         if lastIndex isnt r.index
-          # push skiped word
-          Array::push.apply words, Array::slice.call str.substring lastIndex, r.index
+          # push skipped word
+          words.push str.substring lastIndex, r.index
         lastIndex = re.lastIndex
         words.push r.0
       if lastIndex isnt str.length
-        Array::push.apply words, Array::slice.call str.substring lastIndex
+        words.push str.substring lastIndex
       words
   Segmentations: Segmentations
 

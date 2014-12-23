@@ -438,11 +438,18 @@
       });
     },
     sentencesOf: function(presentation){
-      var sentences;
+      var str, sentences;
       sentences = [];
       Data.parse(presentation, function(node, parents){
+        if (node.name === 'page') {
+          str = '';
+        }
         if (node.name === 'span' && !in$('notes', parents)) {
-          return sentences.push(node.text);
+          return str = node.text;
+        }
+      }, function(node, parents){
+        if (node.name === 'page') {
+          return sentences.push(str);
         }
       });
       return sentences;
@@ -466,8 +473,14 @@
           }
         }
       }, function(node, parents){
+        var x$;
         if (node.name === 'page') {
           if (sgmnt) {
+            if (sgmnt.en === undefined) {
+              x$ = sgmnt;
+              x$.en = sgmnt.zh;
+              x$.zh = undefined;
+            }
             return segments[segments.length - 1].push(sgmnt);
           }
         }
@@ -517,7 +530,7 @@
       longest == null && (longest = true);
       switch (false) {
       case !!(str != null && str.length):
-        return null;
+        return [];
       case segs.length !== 0:
         return [str.slice()];
       default:
@@ -537,13 +550,13 @@
         lastIndex = 0;
         while (r = re.exec(str)) {
           if (lastIndex !== r.index) {
-            Array.prototype.push.apply(words, Array.prototype.slice.call(str.substring(lastIndex, r.index)));
+            words.push(str.substring(lastIndex, r.index));
           }
           lastIndex = re.lastIndex;
           words.push(r[0]);
         }
         if (lastIndex !== str.length) {
-          Array.prototype.push.apply(words, Array.prototype.slice.call(str.substring(lastIndex)));
+          words.push(str.substring(lastIndex));
         }
         return words;
       }

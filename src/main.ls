@@ -79,9 +79,14 @@ init-book := (reader, uri, done) ->
   { mp3 } <- get-mp3 "#{setup.path}/audio.mp3.json"
   vtt     <- get-vtt "#{setup.path}/audio.vtt.json"
 
+  sentences = Data.sentences-of data
+  segments  = Data.segments-of data
+  parts = for i of sentences
+    Data.segment sentences[i], <[我想 擁抱]>
   console
-    ..log Data.sentences-of data
-    ..log Data.segments-of data
+    ..log sentences
+    ..log segments
+    ..log parts
 
   on-stop = -> reader.setProps playing: false
   audio = Audio do
