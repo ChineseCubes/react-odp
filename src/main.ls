@@ -36,7 +36,15 @@ BookSelector = React.createClass do
     books: []
   componentWillMount: ->
     err, res, body <~ request "#host/books/"
-    @setState books: JSON.parse body
+    books = JSON.parse body
+    book = Object.keys books .0
+    init-book do
+      reader
+      "#host/books/#book"
+      ->
+        reader := it
+        setTimeout (-> reader.page 0), 0
+    @setState books: books
   render: ->
     select do
       className: 'book-selector'
@@ -145,8 +153,6 @@ init-book := (reader, uri, done) ->
       $ \#app .get!0
 
   done reader
-
-init-book reader, "#host/books/sample-0.odp/", (-> reader := it)
 
 ##
 # events

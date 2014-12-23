@@ -39,8 +39,17 @@
     componentWillMount: function(){
       var this$ = this;
       return request(host + "/books/", function(err, res, body){
+        var books, book;
+        books = JSON.parse(body);
+        book = Object.keys(books)[0];
+        initBook(reader, host + "/books/" + book, function(it){
+          reader = it;
+          return setTimeout(function(){
+            return reader.page(0);
+          }, 0);
+        });
         return this$.setState({
-          books: JSON.parse(body)
+          books: books
         });
       });
     },
@@ -182,9 +191,6 @@
           });
         });
       };
-      initBook(reader, host + "/books/sample-0.odp/", function(it){
-        return reader = it;
-      });
       return $win.resize(function(){
         return reader.setProps({
           width: $win.width(),

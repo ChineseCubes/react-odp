@@ -288,21 +288,27 @@ Data =
         if (node.name is \page)
           segments.push []
           count := 0
-          sgmnt := undefined
         if (node.name is \span) and (\notes in parents)
-          if count++ % 2 is 0
-            sgmnt := zh: node.text
-          else
-            sgmnt.en = node.text
+          sgmnt := {} if not sgmnt
+          if count % 2 is 0
+            then sgmnt.zh = node.text
+            else sgmnt.en = node.text
       (node, parents) ->
-        if (node.name is \page)
-          if sgmnt
-            # XXX: backward compatible
-            if sgmnt.en is undefined
-              sgmnt
-                ..en = sgmnt.zh
-                ..zh = undefined
+        if (node.name is \span) and (\notes in parents)
+          if count % 2 is 1
             segments[*-1]push sgmnt
+            sgmnt := undefined
+          ++count
+        if (node.name is \page)
+          # XXX: backward compatible
+          # If sgmnt isnt undefined, there are no segment pairs in this page.
+          # So the segment may  be just an English transaltion of this page.
+          if sgmnt
+            sgmnt
+              ..en = sgmnt.zh
+              ..zh = undefined
+            segments[*-1]push sgmnt
+            sgmnt := undefined
     segments
   transform: (node, onNode = null, parents = []) ->
     splitNamespace(node.name) <<< do

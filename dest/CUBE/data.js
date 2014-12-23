@@ -461,27 +461,33 @@
         if (node.name === 'page') {
           segments.push([]);
           count = 0;
-          sgmnt = undefined;
         }
         if (node.name === 'span' && in$('notes', parents)) {
-          if (count++ % 2 === 0) {
-            return sgmnt = {
-              zh: node.text
-            };
+          if (!sgmnt) {
+            sgmnt = {};
+          }
+          if (count % 2 === 0) {
+            return sgmnt.zh = node.text;
           } else {
             return sgmnt.en = node.text;
           }
         }
       }, function(node, parents){
         var x$;
+        if (node.name === 'span' && in$('notes', parents)) {
+          if (count % 2 === 1) {
+            segments[segments.length - 1].push(sgmnt);
+            sgmnt = undefined;
+          }
+          ++count;
+        }
         if (node.name === 'page') {
           if (sgmnt) {
-            if (sgmnt.en === undefined) {
-              x$ = sgmnt;
-              x$.en = sgmnt.zh;
-              x$.zh = undefined;
-            }
-            return segments[segments.length - 1].push(sgmnt);
+            x$ = sgmnt;
+            x$.en = sgmnt.zh;
+            x$.zh = undefined;
+            segments[segments.length - 1].push(sgmnt);
+            return sgmnt = undefined;
           }
         }
       });
