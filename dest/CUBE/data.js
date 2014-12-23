@@ -437,22 +437,25 @@
         return x$;
       });
     },
-    sentencesOf: function(presentation){
-      var str, sentences;
-      sentences = [];
+    paragraphsOf: function(presentation){
+      var sentences, str, paragraphs;
+      paragraphs = [];
       Data.parse(presentation, function(node, parents){
         if (node.name === 'page') {
-          str = '';
+          sentences = [];
         }
-        if (node.name === 'span' && !in$('notes', parents)) {
+        if (node.name === 'span' && !in$('notes', parents) && node.text) {
           return str = node.text;
         }
       }, function(node, parents){
+        if (node.name === 'span' && !in$('notes', parents) && node.text) {
+          sentences.push(str);
+        }
         if (node.name === 'page') {
-          return sentences.push(str);
+          return paragraphs.push(sentences);
         }
       });
-      return sentences;
+      return paragraphs;
     },
     segmentsOf: function(presentation){
       var count, sgmnt, segments;
@@ -492,6 +495,32 @@
         }
       });
       return segments;
+    },
+    dictsOf: function(presentation){
+      var dict;
+      dict = [];
+      Data.parse(presentation, function(node, parents){
+        var d;
+        if (node.name === 'page') {
+          dict[dict.length] = [];
+        }
+        if (node.attrs.data) {
+          return dict[dict.length - 1] = (function(){
+            var i$, ref$, len$, results$ = [];
+            for (i$ = 0, len$ = (ref$ = node.attrs.data).length; i$ < len$; ++i$) {
+              d = ref$[i$];
+              results$.push({
+                'zh-TW': d.traditional,
+                'zh-CN': d.simplified,
+                pinyin: d.pinyin_marks,
+                en: tagless(d.translation).split(/\//)
+              });
+            }
+            return results$;
+          }());
+        }
+      });
+      return dict;
     },
     transform: function(node, onNode, parents){
       var child;

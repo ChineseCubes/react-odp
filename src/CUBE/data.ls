@@ -265,20 +265,26 @@ Data =
         | otherwise            => new-attrs.style[name] = v
       new-attrs
         ..href = "#path/#{new-attrs.href}" if new-attrs.href
-  sentences-of: (presentation) ->
-    var str
-    sentences = []
+  paragraphs-of: (presentation) ->
+    var sentences, str
+    paragraphs = []
     Data.parse do
       presentation
       (node, parents) ->
         if (node.name is \page)
-          str := ''
-        if (node.name is \span) and not (\notes in parents)
+          sentences := []
+        if (node.name is \span) and
+           not (\notes in parents) and
+           node.text
           str := node.text
       (node, parents) ->
-        if (node.name is \page)
+        if (node.name is \span) and
+           not (\notes in parents) and
+           node.text
           sentences.push str
-    sentences
+        if (node.name is \page)
+          paragraphs.push sentences
+    paragraphs
   segments-of: (presentation) ->
     var count, sgmnt
     segments = []
@@ -310,7 +316,7 @@ Data =
             segments[*-1]push sgmnt
             sgmnt := undefined
     segments
-  dict-of: (presentation) ->
+  dicts-of: (presentation) ->
     dict = []
     Data.parse do
       presentation

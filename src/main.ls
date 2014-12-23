@@ -5,7 +5,7 @@ Audio        = require './Logic/Audio'
 Book         = React.createFactory require './Book'
 Reader       = React.createFactory require './Reader'
 ReactVTT     = require 'react-vtt'
-require 'react-vtt/dest/ReactVTT.css'
+require 'react-vtt/dest/Cue.css'
 request      = require 'request'
 
 { select, option } = React.DOM
@@ -83,18 +83,10 @@ selector = React.render do
 init-book := (reader, uri, done) ->
   { setup }:mp <- Data.getMasterPage uri
   data    <- Data.getPresentation mp
-  segs    <- Data.Segmentations data, setup.path
+  #segs    <- Data.Segmentations data, setup.path
   { mp3 } <- get-mp3 "#{setup.path}/audio.mp3.json"
   vtt     <- get-vtt "#{setup.path}/audio.vtt.json"
-
-  sentences = Data.sentences-of data
-  segments  = Data.segments-of data
-  parts = for i of sentences
-    Data.segment sentences[i], <[我想 擁抱]>
-  console
-    ..log sentences
-    ..log segments
-    ..log parts
+  segs = []
 
   on-stop = -> reader.setProps playing: false
   audio = Audio do
@@ -140,6 +132,8 @@ init-book := (reader, uri, done) ->
               reader
                 ..setProps autoplay: off
                 ..page 1
+        | \cca
+          console.log it
         | _     => audio.process it
 
   #if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/

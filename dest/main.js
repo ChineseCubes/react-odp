@@ -7,7 +7,7 @@
   Book = React.createFactory(require('./Book'));
   Reader = React.createFactory(require('./Reader'));
   ReactVTT = require('react-vtt');
-  require('react-vtt/dest/ReactVTT.css');
+  require('react-vtt/dest/Cue.css');
   request = require('request');
   ref$ = React.DOM, select = ref$.select, option = ref$.option;
   $win = $(window);
@@ -94,98 +94,88 @@
           var setup;
           setup = mp.setup;
           return Data.getPresentation(mp, function(data){
-            return Data.Segmentations(data, setup.path, function(segs){
-              return getMp3(setup.path + "/audio.mp3.json", function(arg$){
-                var mp3;
-                mp3 = arg$.mp3;
-                return getVtt(setup.path + "/audio.vtt.json", function(vtt){
-                  var sentences, segments, parts, res$, i, x$, onStop, audio, props, reader;
-                  sentences = Data.sentencesOf(data);
-                  segments = Data.segmentsOf(data);
-                  res$ = [];
-                  for (i in sentences) {
-                    res$.push(Data.segment(sentences[i], ['我想', '擁抱']));
+            return getMp3(setup.path + "/audio.mp3.json", function(arg$){
+              var mp3;
+              mp3 = arg$.mp3;
+              return getVtt(setup.path + "/audio.vtt.json", function(vtt){
+                var segs, onStop, audio, props, reader;
+                segs = [];
+                onStop = function(){
+                  return reader.setProps({
+                    playing: false
+                  });
+                };
+                audio = Audio(data, vtt, mp3, function(){
+                  return reader.setProps({
+                    loading: false
+                  });
+                }, function(){
+                  return reader.setProps({
+                    playing: true
+                  });
+                }, function(){
+                  var page;
+                  onStop();
+                  if (reader.props.autoplay) {
+                    page = reader.state.page + 1;
+                    reader.page(page);
+                    return setTimeout(function(){
+                      return audio.play(page);
+                    }, 750);
                   }
-                  parts = res$;
-                  x$ = console;
-                  x$.log(sentences);
-                  x$.log(segments);
-                  x$.log(parts);
-                  onStop = function(){
-                    return reader.setProps({
-                      playing: false
-                    });
-                  };
-                  audio = Audio(data, vtt, mp3, function(){
-                    return reader.setProps({
-                      loading: false
-                    });
-                  }, function(){
-                    return reader.setProps({
-                      playing: true
-                    });
-                  }, function(){
-                    var page;
-                    onStop();
-                    if (reader.props.autoplay) {
-                      page = reader.state.page + 1;
-                      reader.page(page);
-                      return setTimeout(function(){
-                        return audio.play(page);
-                      }, 750);
-                    }
-                  }, onStop);
-                  props = {
-                    masterPage: mp,
-                    data: data,
-                    segs: segs,
-                    vtt: vtt,
-                    autoplay: false,
-                    loading: true,
-                    playing: false,
-                    currentTime: function(){
-                      return audio.time();
-                    },
-                    dpcm: dots.state.x,
-                    width: $win.width(),
-                    height: $win.height(),
-                    onNotify: function(it){
-                      var x$, y$;
-                      switch (it.action) {
-                      case 'mode':
-                        switch (it.data) {
-                        case 'glossary':
-                          return console.log('should jump to the glossary page');
-                        case 'read-to-me':
-                          console.log('autoplay: on');
-                          x$ = reader;
-                          x$.setProps({
-                            autoplay: true
-                          });
-                          x$.page(1);
-                          return audio.play(1);
-                        case 'learn-by-myself':
-                          console.log('autoplay off');
-                          y$ = reader;
-                          y$.setProps({
-                            autoplay: false
-                          });
-                          y$.page(1);
-                          return y$;
-                        }
-                        break;
-                      default:
-                        return audio.process(it);
+                }, onStop);
+                props = {
+                  masterPage: mp,
+                  data: data,
+                  segs: segs,
+                  vtt: vtt,
+                  autoplay: false,
+                  loading: true,
+                  playing: false,
+                  currentTime: function(){
+                    return audio.time();
+                  },
+                  dpcm: dots.state.x,
+                  width: $win.width(),
+                  height: $win.height(),
+                  onNotify: function(it){
+                    var x$, y$;
+                    switch (it.action) {
+                    case 'mode':
+                      switch (it.data) {
+                      case 'glossary':
+                        return console.log('should jump to the glossary page');
+                      case 'read-to-me':
+                        console.log('autoplay: on');
+                        x$ = reader;
+                        x$.setProps({
+                          autoplay: true
+                        });
+                        x$.page(1);
+                        return audio.play(1);
+                      case 'learn-by-myself':
+                        console.log('autoplay off');
+                        y$ = reader;
+                        y$.setProps({
+                          autoplay: false
+                        });
+                        y$.page(1);
+                        return y$;
                       }
+                      break;
+                    case 'cca':
+                      return console.log(it);
+                    default:
+                      return audio.process(it);
                     }
-                  };
-                  if (reader) {
-                    reader.setProps(props);
-                  } else {
-                    reader = React.render(Reader(props), $('#app').get()[0]);
                   }
-                  return done(reader);
-                });
+                };
+                if (reader) {
+                  reader.setProps(props);
+                } else {
+                  reader = React.render(Reader(props), $('#app').get()[0]);
+                }
+                return done(reader);
               });
             });
           });

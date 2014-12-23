@@ -1,16 +1,17 @@
 (function(){
-  var React, ReactVTT, ODP, Button, CustomShape, Book, NotifyMixin, IsolatedCue, AudioControl, Playground, ref$, div, i, small, onClick, Howler, Howl, win;
+  var React, ReactVTT, ODP, Data, Button, CustomShape, Book, NotifyMixin, Cue, AudioControl, Playground, ref$, div, i, small, span, onClick, Howler, Howl, win;
   React = require('react');
   ReactVTT = require('react-vtt');
   ODP = require('./ODP');
+  Data = require('./CUBE/data');
   Button = React.createFactory(require('./CUBE/UI/Button'));
   CustomShape = React.createFactory(require('./CUBE/CustomShape'));
   Book = require('./CUBE/Book');
   NotifyMixin = require('./CUBE/NotifyMixin');
-  IsolatedCue = React.createFactory(ReactVTT.IsolatedCue);
+  Cue = React.createFactory(ReactVTT.Cue);
   AudioControl = React.createFactory(Book.AudioControl);
   Playground = React.createFactory(Book.Playground);
-  ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small;
+  ref$ = React.DOM, div = ref$.div, i = ref$.i, small = ref$.small, span = ref$.span;
   onClick = require('./CUBE/utils').onClick;
   ref$ = require('howler'), Howler = ref$.Howler, Howl = ref$.Howl;
   win = (function(){
@@ -42,11 +43,20 @@
       return {
         scale: this.resize(this.props.dpcm, this.props.width, this.props.height),
         text: '',
-        showText: true
+        showText: true,
+        paragraphs: [],
+        segments: [],
+        dicts: []
       };
     },
+    componentWillMount: function(){
+      return this.state.comps = this.ccaComps(Data.paragraphsOf(this.props.data), Data.segmentsOf(this.props.data), Data.dictsOf(this.props.data));
+    },
     componentWillUpdate: function(props, state){
-      return state.scale = this.resize(props.dpcm, props.width, props.height);
+      state.scale = this.resize(props.dpcm, props.width, props.height);
+      if (this.props.data !== props.data) {
+        return state.comps = this.ccaComps(Data.paragraphsOf(props.data), Data.segmentsOf(props.data), Data.dictsOf(props.data));
+      }
     },
     resize: function(dpcm, width, height){
       var $window, setup, ratio, pxWidth, pxHeight;
@@ -62,6 +72,43 @@
         return width / pxWidth;
       } else {
         return height / pxHeight;
+      }
+    },
+    ccaComps: function(paragraphs, segments, dicts){
+      var comps, i, segs, i$, ref$, len$, sentence, children, j$, len1$;
+      comps = {};
+      for (i in paragraphs) {
+        segs = segments[i].map(fn$);
+        for (i$ = 0, len$ = (ref$ = paragraphs[i]).length; i$ < len$; ++i$) {
+          sentence = ref$[i$];
+          children = [];
+          for (j$ = 0, len1$ = Data.segment(sentence, segs).length; j$ < len1$; ++j$) {
+            (fn1$.call(this, Data.segment(sentence, segs)[j$], i, sentence));
+          }
+          comps[sentence] = span({}, children);
+        }
+      }
+      return comps;
+      function fn$(it){
+        return it.zh;
+      }
+      function fn1$(seg, i, sentence){
+        var this$ = this;
+        if (in$(seg, segs)) {
+          children.push(span({
+            style: {
+              cursor: 'pointer'
+            },
+            onClick: function(){
+              return this$.notify({
+                action: 'cca',
+                text: seg
+              });
+            }
+          }, seg));
+        } else {
+          children.push(seg);
+        }
       }
     },
     render: function(){
@@ -80,17 +127,12 @@
         className: 'settings'
       }, ref$[onClick + ""] = function(){
         return this$.refs.playground.toggleSettings();
-      }, ref$), 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
-        className: 'content'
-      }, Playground({
-        ref: 'playground',
-        data: this.props.segs.get(this.state.text)
-      }))), ODP.components.presentation({
+      }, ref$), 'Settings'), 'C', small(null, 'UBE'), 'Control')), ODP.components.presentation({
         ref: 'presentation',
         scale: this.state.scale,
         data: this.props.data,
         renderProps: function(props){
-          var click, pages, parents, data, attrs, key$, ref$, text, hide, show, page, x$;
+          var click, pages, parents, data, attrs, key$, ref$, text, hide, show, page, x$, startTime, endTime, i$, len$, cue;
           click = onClick === 'onClick' ? 'click' : 'touchstart';
           if (!this$.props.pages) {
             this$.props.pages = (function(){
@@ -188,22 +230,24 @@
                 }
               });
             }
-            attrs[onClick + ""] = show;
             if (!this$.state.showText) {
               attrs.style.display = 'none';
             }
-            if (this$.props.vtt) {
-              delete props.data.text;
-              return ODP.components.span(props, IsolatedCue({
-                key: text,
-                target: setup.path + "/audio.vtt.json",
-                match: text,
-                currentTime: this$.props.currentTime
-              }));
-            } else {
-              return ODP.renderProps(props);
+            delete props.data.text;
+            startTime = 0;
+            endTime = 0;
+            for (i$ = 0, len$ = (ref$ = this$.props.vtt.cues).length; i$ < len$; ++i$) {
+              cue = ref$[i$];
+              if (text === cue.text) {
+                startTime = cue.startTime, endTime = cue.endTime;
+              }
             }
-            break;
+            return ODP.components.span(props, Cue({
+              key: text,
+              startTime: startTime,
+              endTime: endTime,
+              currentTime: this$.props.currentTime()
+            }, this$.state.comps[text]));
           case data.name !== 'custom-shape':
             if (this$.state.showText) {
               return CustomShape(props);

@@ -6,7 +6,7 @@
   Audio = require('./Logic/Audio');
   Book = React.createFactory(require('./Book'));
   ReactVTT = require('react-vtt');
-  require('react-vtt/dest/ReactVTT.css');
+  require('react-vtt/dest/Cue.css');
   request = require('request');
   getMp3 = function(filename, done){
     return request(filename, function(err, res, body){

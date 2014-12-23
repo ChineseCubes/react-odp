@@ -1,16 +1,17 @@
 React       = require 'react'
 ReactVTT    = require 'react-vtt'
 ODP         = require './ODP'
+Data        = require './CUBE/data'
 Button      = React.createFactory require './CUBE/UI/Button'
 CustomShape = React.createFactory require './CUBE/CustomShape'
 Book        = require './CUBE/Book'
 NotifyMixin = require './CUBE/NotifyMixin'
 
-IsolatedCue  = React.createFactory ReactVTT.IsolatedCue
+Cue          = React.createFactory ReactVTT.Cue
 AudioControl = React.createFactory Book.AudioControl
 Playground   = React.createFactory Book.Playground
 
-{ div, i, small } = React.DOM
+{ div, i, small, span } = React.DOM
 { onClick } = require './CUBE/utils'
 { Howler, Howl } = require 'howler'
 
@@ -38,8 +39,21 @@ Book = React.createClass do
     scale: @resize @props.dpcm, @props.width, @props.height
     text: ''
     show-text: true
+    paragraphs: []
+    segments:   []
+    dicts:      []
+  componentWillMount: ->
+    @state.comps = @cca-comps do
+      Data.paragraphs-of @props.data
+      Data.segments-of   @props.data
+      Data.dicts-of      @props.data
   componentWillUpdate: (props, state) ->
     state.scale = @resize props.dpcm, props.width, props.height
+    if @props.data isnt props.data
+      state.comps = @cca-comps do
+        Data.paragraphs-of props.data
+        Data.segments-of   props.data
+        Data.dicts-of      props.data
   resize: (dpcm, width, height) ->
     return 0.98 unless win
     $window = $ win
@@ -51,10 +65,29 @@ Book = React.createClass do
       width / px-width
     else
       height / px-height
+  cca-comps: (paragraphs, segments, dicts) ->
+    comps = {}
+    for i of paragraphs
+      segs = segments[i]map (.zh)
+      for sentence in paragraphs[i]
+        children = []
+        for let seg in Data.segment sentence, segs
+          if seg in segs # FIXME: should not search again
+            children.push span do
+              style:
+                cursor: \pointer
+              onClick: ~>
+                @notify action: \cca text: seg
+              seg
+          else
+            children.push seg
+        comps[sentence] = span {} children
+    comps
   render: ->
-    {setup} = @props.master-page
+    { setup } = @props.master-page
     attrs = @props.data.attrs
     offset-x = "-#{@props.current-page * +(attrs.width.replace 'cm' '')}cm"
+
     div do
       className: 'main'
       div do
@@ -70,11 +103,11 @@ Book = React.createClass do
           'C'
           small null, 'UBE'
           'Control'
-        div do
-          className: 'content'
-          Playground do
-            ref: \playground
-            data: @props.segs.get @state.text
+        #div do
+        #  className: 'content'
+        #  Playground do
+        #    ref: \playground
+        #    data: @props.segs.get @state.text
       ODP.components.presentation do
         ref: \presentation
         scale: @state.scale
@@ -139,19 +172,24 @@ Book = React.createClass do
                 ..sentences.push text
                 ..playgrounds.push do
                   toggle: -> if it then show! else hide!
-            attrs["#onClick"] = show
+            #attrs["#onClick"] = show
             attrs.style <<< display: \none if not @state.show-text
-            if @props.vtt
-              delete props.data.text
-              ODP.components.span do
-                props
-                IsolatedCue do
+            delete props.data.text
+            startTime = 0
+            endTime = 0
+            for cue in @props.vtt.cues
+              if text is cue.text
+                { startTime, endTime } = cue
+            ODP.components.span do
+              props
+              Cue do
+                {
                   key: text
-                  target: "#{setup.path}/audio.vtt.json"
-                  match: text
-                  currentTime: @props.current-time
-            else
-              ODP.renderProps props
+                  startTime
+                  endTime
+                  current-time: @props.current-time!
+                }
+                @state.comps[text]
           | data.name is 'custom-shape'
             CustomShape props if @state.show-text
           | data.id is 'glossary'
