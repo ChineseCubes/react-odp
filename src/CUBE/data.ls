@@ -310,6 +310,21 @@ Data =
             segments[*-1]push sgmnt
             sgmnt := undefined
     segments
+  dict-of: (presentation) ->
+    dict = []
+    Data.parse do
+      presentation
+      (node, parents) ->
+        if (node.name is \page)
+          dict[*] = []
+        if (node.attrs.data)
+          dict[*-1] =
+            for d in node.attrs.data
+              'zh-TW': d.traditional
+              'zh-CN': d.simplified
+              pinyin:  d.pinyin_marks
+              en:      tagless d.translation .split /\//
+    dict
   transform: (node, onNode = null, parents = []) ->
     splitNamespace(node.name) <<< do
       text:      node.text
