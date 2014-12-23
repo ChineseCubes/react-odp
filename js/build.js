@@ -140,88 +140,91 @@
 	          var setup;
 	          setup = mp.setup;
 	          return Data.getPresentation(mp, function(data){
-	            return getMp3(setup.path + "/audio.mp3.json", function(arg$){
-	              var mp3;
-	              mp3 = arg$.mp3;
-	              return getVtt(setup.path + "/audio.vtt.json", function(vtt){
-	                var segs, onStop, audio, props, reader;
-	                segs = [];
-	                onStop = function(){
-	                  return reader.setProps({
-	                    playing: false
-	                  });
-	                };
-	                audio = Audio(data, vtt, mp3, function(){
-	                  return reader.setProps({
-	                    loading: false
-	                  });
-	                }, function(){
-	                  return reader.setProps({
-	                    playing: true
-	                  });
-	                }, function(){
-	                  var page;
-	                  onStop();
-	                  if (reader.props.autoplay) {
-	                    page = reader.state.page + 1;
-	                    reader.page(page);
-	                    return setTimeout(function(){
-	                      return audio.play(page);
-	                    }, 750);
-	                  }
-	                }, onStop);
-	                props = {
-	                  masterPage: mp,
-	                  data: data,
-	                  segs: segs,
-	                  vtt: vtt,
-	                  autoplay: false,
-	                  loading: true,
-	                  playing: false,
-	                  currentTime: function(){
-	                    return audio.time();
-	                  },
-	                  dpcm: dots.state.x,
-	                  width: $win.width(),
-	                  height: $win.height(),
-	                  onNotify: function(it){
-	                    var x$, y$;
-	                    switch (it.action) {
-	                    case 'mode':
-	                      switch (it.data) {
-	                      case 'glossary':
-	                        return console.log('should jump to the glossary page');
-	                      case 'read-to-me':
-	                        console.log('autoplay: on');
-	                        x$ = reader;
-	                        x$.setProps({
-	                          autoplay: true
-	                        });
-	                        x$.page(1);
-	                        return audio.play(1);
-	                      case 'learn-by-myself':
-	                        console.log('autoplay off');
-	                        y$ = reader;
-	                        y$.setProps({
-	                          autoplay: false
-	                        });
-	                        y$.page(1);
-	                        return y$;
-	                      }
-	                      break;
-	                    case 'cca':
-	                      return console.log(it);
-	                    default:
-	                      return audio.process(it);
+	            return Data.Segmentations(data, setup.path, function(segs){
+	              return getMp3(setup.path + "/audio.mp3.json", function(arg$){
+	                var mp3;
+	                mp3 = arg$.mp3;
+	                return getVtt(setup.path + "/audio.vtt.json", function(vtt){
+	                  var onStop, audio, props, reader;
+	                  onStop = function(){
+	                    return reader.setProps({
+	                      playing: false
+	                    });
+	                  };
+	                  audio = Audio(data, vtt, mp3, function(){
+	                    return reader.setProps({
+	                      loading: false
+	                    });
+	                  }, function(){
+	                    return reader.setProps({
+	                      playing: true
+	                    });
+	                  }, function(){
+	                    var page;
+	                    onStop();
+	                    if (reader.props.autoplay) {
+	                      page = reader.state.page + 1;
+	                      reader.page(page);
+	                      return setTimeout(function(){
+	                        return audio.play(page);
+	                      }, 750);
 	                    }
+	                  }, onStop);
+	                  props = {
+	                    masterPage: mp,
+	                    data: data,
+	                    segs: segs,
+	                    vtt: vtt,
+	                    autoplay: false,
+	                    loading: true,
+	                    playing: false,
+	                    currentTime: function(){
+	                      return audio.time();
+	                    },
+	                    dpcm: dots.state.x,
+	                    width: $win.width(),
+	                    height: $win.height(),
+	                    onNotify: function(it){
+	                      var x$, y$;
+	                      switch (it.action) {
+	                      case 'mode':
+	                        switch (it.data) {
+	                        case 'glossary':
+	                          return console.log('should jump to the glossary page');
+	                        case 'read-to-me':
+	                          console.log('autoplay: on');
+	                          x$ = reader;
+	                          x$.setProps({
+	                            autoplay: true
+	                          });
+	                          x$.page(1);
+	                          return audio.play(1);
+	                        case 'learn-by-myself':
+	                          console.log('autoplay off');
+	                          y$ = reader;
+	                          y$.setProps({
+	                            autoplay: false
+	                          });
+	                          y$.page(1);
+	                          return y$;
+	                        }
+	                        break;
+	                      case 'cca':
+	                        return reader.setProps({
+	                          text: it.text
+	                        });
+	                      default:
+	                        return audio.process(it);
+	                      }
+	                    }
+	                  };
+	                  if (reader) {
+	                    reader.setProps(props);
+	                  } else {
+	                    reader = React.render(Reader(props), $('#app').get()[0]);
 	                  }
-	                };
-	                if (reader) {
-	                  reader.setProps(props);
-	                } else {
-	                  reader = React.render(Reader(props), $('#app').get()[0]);
-	                }
-	                return done(reader);
+	                  return done(reader);
+	                });
 	              });
 	            });
 	          });
@@ -333,13 +336,13 @@
 	        currentPage: 0,
 	        dpcm: 37.79527,
 	        width: 1024,
-	        height: 768
+	        height: 768,
+	        text: ''
 	      };
 	    },
 	    getInitialState: function(){
 	      return {
 	        scale: this.resize(this.props.dpcm, this.props.width, this.props.height),
-	        text: '',
 	        showText: true,
 	        paragraphs: [],
 	        segments: [],
@@ -352,8 +355,46 @@
 	    componentWillUpdate: function(props, state){
 	      state.scale = this.resize(props.dpcm, props.width, props.height);
 	      if (this.props.data !== props.data) {
-	        return state.comps = this.ccaComps(Data.paragraphsOf(props.data), Data.segmentsOf(props.data), Data.dictsOf(props.data));
+	        state.comps = this.ccaComps(Data.paragraphsOf(props.data), Data.segmentsOf(props.data), Data.dictsOf(props.data));
 	      }
+	      if (this.props.text !== props.text) {
+	        if (props.text.length) {
+	          return this.show();
+	        }
+	      }
+	    },
+	    hide: function(){
+	      $('.office.presentation').css('opacity', 1);
+	      $(this.refs.modal.getDOMNode()).fadeOut('fast').toggleClass('hidden', true);
+	      return this.setState({
+	        showText: true
+	      });
+	    },
+	    show: function(){
+	      var click, modal, $modal, height, $top, hideOnce, this$ = this;
+	      click = onClick === 'onClick' ? 'click' : 'touchstart';
+	      modal = this.refs.modal.getDOMNode();
+	      $modal = $(modal);
+	      height = $modal.height();
+	      $('.office.presentation').css('opacity', 0.5);
+	      $modal.fadeIn('fast').toggleClass('hidden', false);
+	      $top = $((function(){
+	        try {
+	          return window;
+	        } catch (e$) {}
+	      }()));
+	      hideOnce = function(it){
+	        if (!$.contains(modal, it.target)) {
+	          this$.hide();
+	          return $top.off(click, hideOnce);
+	        }
+	      };
+	      setTimeout(function(){
+	        return $top.on(click, hideOnce);
+	      }, 0);
+	      return this.setState({
+	        showText: false
+	      });
 	    },
 	    resize: function(dpcm, width, height){
 	      var $window, setup, ratio, pxWidth, pxHeight;
@@ -424,13 +465,17 @@
 	        className: 'settings'
 	      }, ref$[onClick + ""] = function(){
 	        return this$.refs.playground.toggleSettings();
-	      }, ref$), 'Settings'), 'C', small(null, 'UBE'), 'Control')), ODP.components.presentation({
+	      }, ref$), 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
+	        className: 'content'
+	      }, Playground({
+	        ref: 'playground',
+	        data: this.props.segs.get(this.props.text)
+	      }))), ODP.components.presentation({
 	        ref: 'presentation',
 	        scale: this.state.scale,
 	        data: this.props.data,
 	        renderProps: function(props){
-	          var click, pages, parents, data, attrs, key$, ref$, text, hide, show, page, x$, startTime, endTime, i$, len$, cue;
-	          click = onClick === 'onClick' ? 'click' : 'touchstart';
+	          var pages, parents, data, attrs, key$, ref$, text, page, x$, startTime, endTime, i$, len$, cue;
 	          if (!this$.props.pages) {
 	            this$.props.pages = (function(){
 	              var i$, to$, results$ = [];
@@ -478,41 +523,6 @@
 	            }, ref$)));
 	          case !(data.name === 'span' && data.text):
 	            text = props.data.text;
-	            hide = function(){
-	              $('.office.presentation').css('opacity', 1);
-	              $(this$.refs.modal.getDOMNode()).fadeOut('fast').toggleClass('hidden', true);
-	              return this$.setState({
-	                showText: true
-	              });
-	            };
-	            show = function(){
-	              var modal, $modal, height, $top, hideOnce;
-	              this$.setState({
-	                text: text
-	              });
-	              this$.setState({
-	                showText: false
-	              });
-	              modal = this$.refs.modal.getDOMNode();
-	              $modal = $(modal);
-	              height = $modal.height();
-	              $('.office.presentation').css('opacity', 0.5);
-	              $modal.fadeIn('fast').toggleClass('hidden', false);
-	              $top = $((function(){
-	                try {
-	                  return window;
-	                } catch (e$) {}
-	              }()));
-	              hideOnce = function(it){
-	                if (!$.contains(modal, it.target)) {
-	                  hide();
-	                  return $top.off(click, hideOnce);
-	                }
-	              };
-	              return setTimeout(function(){
-	                return $top.on(click, hideOnce);
-	              }, 0);
-	            };
 	            page = this$[parents[1].name];
 	            if (!in$(text, page.sentences)) {
 	              x$ = page;
@@ -520,9 +530,9 @@
 	              x$.playgrounds.push({
 	                toggle: function(it){
 	                  if (it) {
-	                    return show();
+	                    return this$.show();
 	                  } else {
-	                    return hide();
+	                    return this$.hide();
 	                  }
 	                }
 	              });
@@ -707,7 +717,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
-	  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, createAudioProps, c, Char, o, Node, punctuations, Dict, Segmentations, modeSelectors, withModeSelectors, Data;
+	  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, createAudioProps, c, Char, o, Node, punctuations, Dict, shortest, Segmentations, modeSelectors, withModeSelectors, Data;
 	  try {
 	    fs = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fs\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	  } catch (e$) {}
@@ -895,81 +905,70 @@
 	    };
 	    return Dict;
 	  }());
+	  shortest = function(it){
+	    return it.sort(function(a, b){
+	      return a.length - b.length;
+	    })[0];
+	  };
 	  Segmentations = (function(){
 	    Segmentations.displayName = 'Segmentations';
 	    var prototype = Segmentations.prototype, constructor = Segmentations;
 	    function Segmentations(node, path, done){
 	      var this$ = this instanceof ctor$ ? this : new ctor$;
-	      Dict(path, function(dict){
-	        var keys, values, idx, keywords, re;
-	        keys = [];
-	        values = [];
-	        idx = 0;
-	        keywords = import$({}, punctuations);
-	        re = null;
-	        Data.parse(node, function(node, parents){
-	          var ref$, ks, x$, s, str, lastIndex, r, i$, len$, char;
-	          if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
-	            return;
-	          }
-	          if (parents[2] !== 'notes') {
-	            keys.push(node.text);
-	            return values.push(Node());
-	          } else if (node.attrs.data) {
-	            ks = slice.call(node.attrs.data);
-	            ks.sort(function(a, b){
-	              return b.traditional.length - a.traditional.length;
-	            });
-	            re = ks.map(function(it){
-	              var str, en, shortest, children;
-	              str = it.traditional;
-	              en = tagless(it.translation).split(/\//);
-	              shortest = slice.call(en).sort(function(a, b){
-	                return a.length - b.length;
-	              })[0];
-	              children = slice.call(str);
-	              keywords[it.traditional] = Node(children.map(function(it){
-	                var moe, en;
-	                moe = dict.get(it);
-	                if (children.length === 1) {
-	                  return Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe['zh-TW'] : void 8) || it, moe != null ? moe['zh-CN'] : void 8);
-	                } else {
-	                  en = slice.call(moe.en);
-	                  return Node([Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe['zh-TW'] : void 8) || it, moe != null ? moe['zh-CN'] : void 8)], en.join(', '), en.sort(function(a, b){
-	                    return a.length - b.length;
-	                  })[0]);
-	                }
-	              }), en.join(', '), shortest);
-	              return it.traditional;
-	            });
-	            return re = new RegExp(Object.keys(punctuations).concat(re).join('|'), 'g');
-	          } else {
-	            x$ = s = values[idx];
-	            x$.short = node.text;
-	            x$.definition = node.text;
-	            str = keys[idx] + "";
-	            lastIndex = 0;
-	            while (r = re.exec(str)) {
-	              if (lastIndex !== r.index) {
-	                for (i$ = 0, len$ = (ref$ = Array.prototype.slice.call(str.substring(lastIndex, r.index))).length; i$ < len$; ++i$) {
-	                  char = ref$[i$];
-	                  Array.prototype.push.apply(s.children, keywords[char]);
-	                }
-	              }
-	              lastIndex = re.lastIndex;
-	              s.children.push(keywords[r[0]]);
+	      this$.data = {};
+	      Dict(path, function(moe){
+	        var segments, dicts, i, segs, dict, words, enBySearch, i$, len$, seg, parts, tree;
+	        segments = Data.segmentsOf(node);
+	        dicts = Data.dictsOf(node);
+	        for (i in segments) {
+	          segs = segments[i];
+	          dict = dicts[i];
+	          words = dict.map(fn$);
+	          enBySearch = fn1$;
+	          for (i$ = 0, len$ = segs.length; i$ < len$; ++i$) {
+	            seg = segs[i$];
+	            parts = Data.segment(seg.zh, words);
+	            tree = Node(parts.map(fn2$), seg.en, seg.en);
+	            if (tree.children.length === 1) {
+	              tree.children = tree.children[0].children;
 	            }
-	            if (lastIndex !== str.length) {
-	              for (i$ = 0, len$ = (ref$ = Array.prototype.slice.call(str.substring(lastIndex))).length; i$ < len$; ++i$) {
-	                char = ref$[i$];
-	                Array.prototype.push.apply(s.children, keywords[char]);
-	              }
-	            }
-	            return ++idx;
+	            this$.data[seg.zh] = tree;
 	          }
-	        });
-	        this$.data = zipObject(keys, values);
+	        }
 	        return typeof done === 'function' ? done(this$) : void 8;
+	        function fn$(it){
+	          return it['zh-TW'];
+	        }
+	        function fn1$(it){
+	          var i$, ref$, len$, word;
+	          for (i$ = 0, len$ = (ref$ = dict).length; i$ < len$; ++i$) {
+	            word = ref$[i$];
+	            if (word['zh-TW'] === it) {
+	              return word.en;
+	            }
+	          }
+	          return [];
+	        }
+	        function fn2$(it){
+	          var def, en, char;
+	          if (it.length === 1) {
+	            def = moe.get(it);
+	            en = slice.call(def.en);
+	            return Node([Char(def != null ? def.pinyin : void 8, (def != null ? def['zh-TW'] : void 8) || it, def != null ? def['zh-CN'] : void 8)], en.join(', '), shortest(en));
+	          } else {
+	            en = slice.call(enBySearch(it));
+	            return Node((function(){
+	              var i$, ref$, len$, results$ = [];
+	              for (i$ = 0, len$ = (ref$ = it).length; i$ < len$; ++i$) {
+	                char = ref$[i$];
+	                def = moe.get(char);
+	                en = slice.call(def.en);
+	                results$.push(Node([Char(def != null ? def.pinyin : void 8, (def != null ? def['zh-TW'] : void 8) || char, def != null ? def['zh-CN'] : void 8)], en.join(', '), shortest(en)));
+	              }
+	              return results$;
+	            }()), en.join(', '), shortest(en));
+	          }
+	        }
 	      });
 	      return this$;
 	    } function ctor$(){} ctor$.prototype = prototype;
@@ -1307,15 +1306,15 @@
 	    Segmentations: Segmentations
 	  };
 	  module.exports = Data;
-	  function import$(obj, src){
-	    var own = {}.hasOwnProperty;
-	    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
-	    return obj;
-	  }
 	  function in$(x, xs){
 	    var i = -1, l = xs.length >>> 0;
 	    while (++i < l) if (x === xs[i]) return true;
 	    return false;
+	  }
+	  function import$(obj, src){
+	    var own = {}.hasOwnProperty;
+	    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+	    return obj;
 	  }
 	}).call(this);
 

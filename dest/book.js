@@ -36,13 +36,13 @@
         currentPage: 0,
         dpcm: 37.79527,
         width: 1024,
-        height: 768
+        height: 768,
+        text: ''
       };
     },
     getInitialState: function(){
       return {
         scale: this.resize(this.props.dpcm, this.props.width, this.props.height),
-        text: '',
         showText: true,
         paragraphs: [],
         segments: [],
@@ -55,8 +55,46 @@
     componentWillUpdate: function(props, state){
       state.scale = this.resize(props.dpcm, props.width, props.height);
       if (this.props.data !== props.data) {
-        return state.comps = this.ccaComps(Data.paragraphsOf(props.data), Data.segmentsOf(props.data), Data.dictsOf(props.data));
+        state.comps = this.ccaComps(Data.paragraphsOf(props.data), Data.segmentsOf(props.data), Data.dictsOf(props.data));
       }
+      if (this.props.text !== props.text) {
+        if (props.text.length) {
+          return this.show();
+        }
+      }
+    },
+    hide: function(){
+      $('.office.presentation').css('opacity', 1);
+      $(this.refs.modal.getDOMNode()).fadeOut('fast').toggleClass('hidden', true);
+      return this.setState({
+        showText: true
+      });
+    },
+    show: function(){
+      var click, modal, $modal, height, $top, hideOnce, this$ = this;
+      click = onClick === 'onClick' ? 'click' : 'touchstart';
+      modal = this.refs.modal.getDOMNode();
+      $modal = $(modal);
+      height = $modal.height();
+      $('.office.presentation').css('opacity', 0.5);
+      $modal.fadeIn('fast').toggleClass('hidden', false);
+      $top = $((function(){
+        try {
+          return window;
+        } catch (e$) {}
+      }()));
+      hideOnce = function(it){
+        if (!$.contains(modal, it.target)) {
+          this$.hide();
+          return $top.off(click, hideOnce);
+        }
+      };
+      setTimeout(function(){
+        return $top.on(click, hideOnce);
+      }, 0);
+      return this.setState({
+        showText: false
+      });
     },
     resize: function(dpcm, width, height){
       var $window, setup, ratio, pxWidth, pxHeight;
@@ -127,13 +165,17 @@
         className: 'settings'
       }, ref$[onClick + ""] = function(){
         return this$.refs.playground.toggleSettings();
-      }, ref$), 'Settings'), 'C', small(null, 'UBE'), 'Control')), ODP.components.presentation({
+      }, ref$), 'Settings'), 'C', small(null, 'UBE'), 'Control'), div({
+        className: 'content'
+      }, Playground({
+        ref: 'playground',
+        data: this.props.segs.get(this.props.text)
+      }))), ODP.components.presentation({
         ref: 'presentation',
         scale: this.state.scale,
         data: this.props.data,
         renderProps: function(props){
-          var click, pages, parents, data, attrs, key$, ref$, text, hide, show, page, x$, startTime, endTime, i$, len$, cue;
-          click = onClick === 'onClick' ? 'click' : 'touchstart';
+          var pages, parents, data, attrs, key$, ref$, text, page, x$, startTime, endTime, i$, len$, cue;
           if (!this$.props.pages) {
             this$.props.pages = (function(){
               var i$, to$, results$ = [];
@@ -181,41 +223,6 @@
             }, ref$)));
           case !(data.name === 'span' && data.text):
             text = props.data.text;
-            hide = function(){
-              $('.office.presentation').css('opacity', 1);
-              $(this$.refs.modal.getDOMNode()).fadeOut('fast').toggleClass('hidden', true);
-              return this$.setState({
-                showText: true
-              });
-            };
-            show = function(){
-              var modal, $modal, height, $top, hideOnce;
-              this$.setState({
-                text: text
-              });
-              this$.setState({
-                showText: false
-              });
-              modal = this$.refs.modal.getDOMNode();
-              $modal = $(modal);
-              height = $modal.height();
-              $('.office.presentation').css('opacity', 0.5);
-              $modal.fadeIn('fast').toggleClass('hidden', false);
-              $top = $((function(){
-                try {
-                  return window;
-                } catch (e$) {}
-              }()));
-              hideOnce = function(it){
-                if (!$.contains(modal, it.target)) {
-                  hide();
-                  return $top.off(click, hideOnce);
-                }
-              };
-              return setTimeout(function(){
-                return $top.on(click, hideOnce);
-              }, 0);
-            };
             page = this$[parents[1].name];
             if (!in$(text, page.sentences)) {
               x$ = page;
@@ -223,9 +230,9 @@
               x$.playgrounds.push({
                 toggle: function(it){
                   if (it) {
-                    return show();
+                    return this$.show();
                   } else {
-                    return hide();
+                    return this$.hide();
                   }
                 }
               });

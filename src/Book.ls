@@ -35,9 +35,9 @@ Book = React.createClass do
     dpcm: 37.79527
     width: 1024
     height: 768
+    text: ''
   getInitialState: ->
     scale: @resize @props.dpcm, @props.width, @props.height
-    text: ''
     show-text: true
     paragraphs: []
     segments:   []
@@ -54,6 +54,32 @@ Book = React.createClass do
         Data.paragraphs-of props.data
         Data.segments-of   props.data
         Data.dicts-of      props.data
+    if @props.text isnt props.text
+      if props.text.length
+        @show!
+  hide: ->
+    $ '.office.presentation' .css \opacity 1
+    $ @refs.modal.getDOMNode!
+      .fadeOut \fast
+      .toggleClass 'hidden' on
+    @setState show-text: true
+  show: ->
+    click = if onClick is \onClick then \click else \touchstart
+    modal = @refs.modal.getDOMNode!
+    $modal = $ modal
+    height = $modal.height!
+    $ '.office.presentation' .css \opacity 0.5
+    $modal
+      .fadeIn \fast
+      # XXX: this state should be managed by React
+      .toggleClass 'hidden' off
+    $top = $ try window
+    hide-once = ~>
+      unless $.contains modal, it.target
+        @hide!
+        $top.off click, hide-once # check the begining of render()
+    setTimeout (~> $top.on click, hide-once), 0
+    @setState show-text: false
   resize: (dpcm, width, height) ->
     return 0.98 unless win
     $window = $ win
@@ -103,17 +129,16 @@ Book = React.createClass do
           'C'
           small null, 'UBE'
           'Control'
-        #div do
-        #  className: 'content'
-        #  Playground do
-        #    ref: \playground
-        #    data: @props.segs.get @state.text
+        div do
+          className: 'content'
+          Playground do
+            ref: \playground
+            data: @props.segs.get @props.text
       ODP.components.presentation do
         ref: \presentation
         scale: @state.scale
         data:  @props.data
         renderProps: (props) ~>
-          click = if onClick is \onClick then \click else \touchstart
           @props.pages = [1 to setup.total-pages] if not @props.pages
           pages = @props.pages.map (-> "page#it")
           parents = props.parents
@@ -143,36 +168,12 @@ Book = React.createClass do
                     else action: \stop
           | data.name is 'span' and data.text
             text = props.data.text
-            hide = ~>
-              $ '.office.presentation' .css \opacity 1
-              $ @refs.modal.getDOMNode!
-                .fadeOut \fast
-                .toggleClass 'hidden' on
-              @setState show-text: true
-            show = ~>
-              @setState text: text
-              @setState show-text: false
-              modal = @refs.modal.getDOMNode!
-              $modal = $ modal
-              height = $modal.height!
-              $ '.office.presentation' .css \opacity 0.5
-              $modal
-                .fadeIn \fast
-                # XXX: this state should be managed by React
-                .toggleClass 'hidden' off
-              $top = $ try window
-              hide-once = ~>
-                unless $.contains modal, it.target
-                  hide!
-                  $top.off click, hide-once # check the begining of render()
-              setTimeout (-> $top.on click, hide-once), 0
             page = @[parents.1.name]
             unless text in page.sentences
               page
                 ..sentences.push text
                 ..playgrounds.push do
-                  toggle: -> if it then show! else hide!
-            #attrs["#onClick"] = show
+                  toggle: ~> if it then @show! else @hide!
             attrs.style <<< display: \none if not @state.show-text
             delete props.data.text
             startTime = 0

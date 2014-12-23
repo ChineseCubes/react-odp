@@ -83,10 +83,9 @@ selector = React.render do
 init-book := (reader, uri, done) ->
   { setup }:mp <- Data.getMasterPage uri
   data    <- Data.getPresentation mp
-  #segs    <- Data.Segmentations data, setup.path
+  segs    <- Data.Segmentations data, setup.path
   { mp3 } <- get-mp3 "#{setup.path}/audio.mp3.json"
   vtt     <- get-vtt "#{setup.path}/audio.vtt.json"
-  segs = []
 
   on-stop = -> reader.setProps playing: false
   audio = Audio do
@@ -133,7 +132,7 @@ init-book := (reader, uri, done) ->
                 ..setProps autoplay: off
                 ..page 1
         | \cca
-          console.log it
+          reader.setProps text: it.text
         | _     => audio.process it
 
   #if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/

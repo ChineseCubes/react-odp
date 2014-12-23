@@ -87,72 +87,53 @@ class Dict
   get: ->
     @data[it]
 
+shortest = -> it.sort((a, b) -> a.length - b.length)0
 class Segmentations
   (node, path, done) ~>
-    dict <~ Dict path
-    keys   = []
-    values = []
-    idx = 0
-    keywords = {} <<< punctuations
-    re = null
-    # XXX: may use onLeave
-    Data.parse node, (node, parents) ->
-      return if not node.text and not node.attrs?data
-      if parents.2 isnt 'notes'
-        # prepare the root Node of this sentence
-        keys.push node.text
-        values.push Node!
-      else if node.attrs.data
-        # prepare the RegExp for segmentation
-        ks = slice.call node.attrs.data
-        ks.sort (a, b) -> b.traditional.length - a.traditional.length
-        re := ks.map ->
-          str = it.traditional
-          en = tagless it.translation .split /\//
-          shortest = slice.call(en)sort((a, b) -> a.length - b.length)0
-          children = slice.call str
-          # use `map` as `each`
-          # FIXME: too much
-          keywords[it.traditional] =
-            Node do
-              children.map ->
-                moe = dict.get it
-                if children.length is 1
-                  Char moe?pinyin, (moe?['zh-TW'] or it), moe?['zh-CN']
-                else
-                  en = slice.call moe.en
+    # FIXME: should check the integrity of presentation
+    @data = {}
+    moe <~ Dict path
+    # FIXME: duplicated
+    segments   = Data.segments-of node
+    dicts      = Data.dicts-of node
+    for i of segments
+      segs = segments[i]
+      dict = dicts[i]
+      words = dict.map(-> it['zh-TW'])
+      en-by-search = ->
+        for word in dict
+          if word['zh-TW'] is it
+            return word.en
+        return []
+      for seg in segs
+        parts = Data.segment seg.zh, words
+        tree = Node do
+          parts.map ->
+            if it.length is 1
+              def = moe.get it
+              en = slice.call def.en
+              Node do
+                [Char def?pinyin, (def?['zh-TW'] or it), def?['zh-CN']]
+                en.join ', '
+                shortest en
+            else
+              en = slice.call en-by-search it
+              Node do
+                for char in it
+                  def = moe.get char
+                  en = slice.call def.en
                   Node do
-                    [Char moe?pinyin, (moe?['zh-TW'] or it), moe?['zh-CN']]
+                    [Char def?pinyin, (def?['zh-TW'] or char), def?['zh-CN']]
                     en.join ', '
-                    en.sort((a, b) -> a.length - b.length)0
-              en.join ', '
-              shortest
-          it.traditional
-        re := new RegExp Object.keys(punctuations)concat(re)join('|'), \g
-      else
-        # fill the translation,
-        (s = values[idx])
-          ..short = node.text
-          ..definition = node.text
-        # and segment the sentence
-        str = "#{keys[idx]}"
-        #console.warn re, str
-        lastIndex = 0
-        while r = re.exec str
-          if lastIndex isnt r.index
-            for char in Array::slice.call str.substring lastIndex, r.index
-              Array::push.apply s.children, keywords[char]
-          lastIndex = re.lastIndex
-          s.children.push keywords[r.0]
-        if lastIndex isnt str.length
-          for char in Array::slice.call str.substring lastIndex
-            Array::push.apply s.children, keywords[char]
-        ++idx
-    # FIXME: should warn this when build
-    #if keys.length isnt idx
-    #  console.warn 'the translations of sentences are not match'
-    #  console.log keys, values
-    @data = zipObject keys, values
+                    shortest en
+                en.join ', '
+                shortest en
+          seg.en
+          seg.en
+        if tree.children.length is 1
+          # keep tree.definition and tree.short
+          tree.children = tree.children.0.children
+        @data[seg.zh] = tree
     done? this
   get: ->
     @data[it]

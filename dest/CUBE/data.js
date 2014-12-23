@@ -1,5 +1,5 @@
 (function(){
-  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, createAudioProps, c, Char, o, Node, punctuations, Dict, Segmentations, modeSelectors, withModeSelectors, Data;
+  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, createAudioProps, c, Char, o, Node, punctuations, Dict, shortest, Segmentations, modeSelectors, withModeSelectors, Data;
   try {
     fs = require('fs');
   } catch (e$) {}
@@ -187,81 +187,70 @@
     };
     return Dict;
   }());
+  shortest = function(it){
+    return it.sort(function(a, b){
+      return a.length - b.length;
+    })[0];
+  };
   Segmentations = (function(){
     Segmentations.displayName = 'Segmentations';
     var prototype = Segmentations.prototype, constructor = Segmentations;
     function Segmentations(node, path, done){
       var this$ = this instanceof ctor$ ? this : new ctor$;
-      Dict(path, function(dict){
-        var keys, values, idx, keywords, re;
-        keys = [];
-        values = [];
-        idx = 0;
-        keywords = import$({}, punctuations);
-        re = null;
-        Data.parse(node, function(node, parents){
-          var ref$, ks, x$, s, str, lastIndex, r, i$, len$, char;
-          if (!node.text && !((ref$ = node.attrs) != null && ref$.data)) {
-            return;
-          }
-          if (parents[2] !== 'notes') {
-            keys.push(node.text);
-            return values.push(Node());
-          } else if (node.attrs.data) {
-            ks = slice.call(node.attrs.data);
-            ks.sort(function(a, b){
-              return b.traditional.length - a.traditional.length;
-            });
-            re = ks.map(function(it){
-              var str, en, shortest, children;
-              str = it.traditional;
-              en = tagless(it.translation).split(/\//);
-              shortest = slice.call(en).sort(function(a, b){
-                return a.length - b.length;
-              })[0];
-              children = slice.call(str);
-              keywords[it.traditional] = Node(children.map(function(it){
-                var moe, en;
-                moe = dict.get(it);
-                if (children.length === 1) {
-                  return Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe['zh-TW'] : void 8) || it, moe != null ? moe['zh-CN'] : void 8);
-                } else {
-                  en = slice.call(moe.en);
-                  return Node([Char(moe != null ? moe.pinyin : void 8, (moe != null ? moe['zh-TW'] : void 8) || it, moe != null ? moe['zh-CN'] : void 8)], en.join(', '), en.sort(function(a, b){
-                    return a.length - b.length;
-                  })[0]);
-                }
-              }), en.join(', '), shortest);
-              return it.traditional;
-            });
-            return re = new RegExp(Object.keys(punctuations).concat(re).join('|'), 'g');
-          } else {
-            x$ = s = values[idx];
-            x$.short = node.text;
-            x$.definition = node.text;
-            str = keys[idx] + "";
-            lastIndex = 0;
-            while (r = re.exec(str)) {
-              if (lastIndex !== r.index) {
-                for (i$ = 0, len$ = (ref$ = Array.prototype.slice.call(str.substring(lastIndex, r.index))).length; i$ < len$; ++i$) {
-                  char = ref$[i$];
-                  Array.prototype.push.apply(s.children, keywords[char]);
-                }
-              }
-              lastIndex = re.lastIndex;
-              s.children.push(keywords[r[0]]);
+      this$.data = {};
+      Dict(path, function(moe){
+        var segments, dicts, i, segs, dict, words, enBySearch, i$, len$, seg, parts, tree;
+        segments = Data.segmentsOf(node);
+        dicts = Data.dictsOf(node);
+        for (i in segments) {
+          segs = segments[i];
+          dict = dicts[i];
+          words = dict.map(fn$);
+          enBySearch = fn1$;
+          for (i$ = 0, len$ = segs.length; i$ < len$; ++i$) {
+            seg = segs[i$];
+            parts = Data.segment(seg.zh, words);
+            tree = Node(parts.map(fn2$), seg.en, seg.en);
+            if (tree.children.length === 1) {
+              tree.children = tree.children[0].children;
             }
-            if (lastIndex !== str.length) {
-              for (i$ = 0, len$ = (ref$ = Array.prototype.slice.call(str.substring(lastIndex))).length; i$ < len$; ++i$) {
-                char = ref$[i$];
-                Array.prototype.push.apply(s.children, keywords[char]);
-              }
-            }
-            return ++idx;
+            this$.data[seg.zh] = tree;
           }
-        });
-        this$.data = zipObject(keys, values);
+        }
         return typeof done === 'function' ? done(this$) : void 8;
+        function fn$(it){
+          return it['zh-TW'];
+        }
+        function fn1$(it){
+          var i$, ref$, len$, word;
+          for (i$ = 0, len$ = (ref$ = dict).length; i$ < len$; ++i$) {
+            word = ref$[i$];
+            if (word['zh-TW'] === it) {
+              return word.en;
+            }
+          }
+          return [];
+        }
+        function fn2$(it){
+          var def, en, char;
+          if (it.length === 1) {
+            def = moe.get(it);
+            en = slice.call(def.en);
+            return Node([Char(def != null ? def.pinyin : void 8, (def != null ? def['zh-TW'] : void 8) || it, def != null ? def['zh-CN'] : void 8)], en.join(', '), shortest(en));
+          } else {
+            en = slice.call(enBySearch(it));
+            return Node((function(){
+              var i$, ref$, len$, results$ = [];
+              for (i$ = 0, len$ = (ref$ = it).length; i$ < len$; ++i$) {
+                char = ref$[i$];
+                def = moe.get(char);
+                en = slice.call(def.en);
+                results$.push(Node([Char(def != null ? def.pinyin : void 8, (def != null ? def['zh-TW'] : void 8) || char, def != null ? def['zh-CN'] : void 8)], en.join(', '), shortest(en)));
+              }
+              return results$;
+            }()), en.join(', '), shortest(en));
+          }
+        }
       });
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
@@ -599,14 +588,14 @@
     Segmentations: Segmentations
   };
   module.exports = Data;
-  function import$(obj, src){
-    var own = {}.hasOwnProperty;
-    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
-    return obj;
-  }
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;
     while (++i < l) if (x === xs[i]) return true;
     return false;
+  }
+  function import$(obj, src){
+    var own = {}.hasOwnProperty;
+    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+    return obj;
   }
 }).call(this);
