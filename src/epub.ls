@@ -62,7 +62,18 @@ props =
   current-time: 0
   dpcm: dots.state.x
   onNotify: ->
+    console.log it
     switch it.action
+      | \mode
+        switch it.data
+          | \glossary
+            console.log 'should jump to glossary'
+          | \read-to-me
+            localStorage.setItem 'autoplay', on
+            location.href = 'page2.xhtml'
+          | \learn-by-myself
+            localStorage.setItem 'autoplay', off
+            location.href = 'page2.xhtml'
       | \cca
         book.setProps text: it.text
       | otherwise

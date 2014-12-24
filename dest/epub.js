@@ -77,7 +77,20 @@
                 currentTime: 0,
                 dpcm: dots.state.x,
                 onNotify: function(it){
+                  console.log(it);
                   switch (it.action) {
+                  case 'mode':
+                    switch (it.data) {
+                    case 'glossary':
+                      return console.log('should jump to glossary');
+                    case 'read-to-me':
+                      localStorage.setItem('autoplay', true);
+                      return location.href = 'page2.xhtml';
+                    case 'learn-by-myself':
+                      localStorage.setItem('autoplay', false);
+                      return location.href = 'page2.xhtml';
+                    }
+                    break;
                   case 'cca':
                     return book.setProps({
                       text: it.text
