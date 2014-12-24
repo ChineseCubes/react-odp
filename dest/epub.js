@@ -54,9 +54,10 @@
                 book.setProps({
                   playing: false
                 });
-                localStorage.setItem('autoplay', true);
-                next = 1 + +localStorage.getItem('page');
-                return location.href = "page" + next + ".xhtml";
+                if (localStorage.getItem('autoplay')) {
+                  next = 1 + +localStorage.getItem('page');
+                  return location.href = "page" + next + ".xhtml";
+                }
               }, function(){
                 book.setProps({
                   playing: false

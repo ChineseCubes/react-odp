@@ -41,11 +41,9 @@ audio = Audio do
     book.setProps playing: true
   -> # onEnd
     book.setProps playing: false
-    localStorage.setItem \autoplay, on
-    next = 1 + +localStorage.getItem \page
-    location.href = "page#next.xhtml"
-    # then goto next page
-    # and autoplay
+    if localStorage.getItem \autoplay
+      next = 1 + +localStorage.getItem \page
+      location.href = "page#next.xhtml"
   -> # onPause
     book.setProps playing: false
     localStorage.setItem 'autoplay', off
