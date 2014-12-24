@@ -175,7 +175,7 @@
         scale: this.state.scale,
         data: this.props.data,
         renderProps: function(props){
-          var pages, parents, data, attrs, key$, ref$, text, page, x$, startTime, endTime, i$, len$, cue;
+          var pages, parents, data, attrs, key$, ref$, text, page, x$, startTime, endTime, i$, ref1$, len$, cue;
           if (!this$.props.pages) {
             this$.props.pages = (function(){
               var i$, to$, results$ = [];
@@ -222,7 +222,7 @@
                 });
             }, ref$)));
           case !(data.name === 'span' && data.text):
-            text = props.data.text;
+            text = data.text;
             page = this$[parents[1].name];
             if (!in$(text, page.sentences)) {
               x$ = page;
@@ -240,21 +240,26 @@
             if (!this$.state.showText) {
               attrs.style.display = 'none';
             }
-            delete props.data.text;
             startTime = 0;
             endTime = 0;
-            for (i$ = 0, len$ = (ref$ = this$.props.vtt.cues).length; i$ < len$; ++i$) {
-              cue = ref$[i$];
-              if (text === cue.text) {
-                startTime = cue.startTime, endTime = cue.endTime;
+            if (this$.props.vtt) {
+              delete props.data.text;
+              for (i$ = 0, len$ = (ref$ = (ref1$ = this$.props.vtt) != null ? ref1$.cues : void 8).length; i$ < len$; ++i$) {
+                cue = ref$[i$];
+                if (text === cue.text) {
+                  startTime = cue.startTime, endTime = cue.endTime;
+                }
               }
+              return ODP.components.span(props, Cue({
+                key: text,
+                startTime: startTime,
+                endTime: endTime,
+                currentTime: this$.props.currentTime
+              }, this$.state.comps[text]));
+            } else {
+              return ODP.renderProps(props);
             }
-            return ODP.components.span(props, Cue({
-              key: text,
-              startTime: startTime,
-              endTime: endTime,
-              currentTime: this$.props.currentTime
-            }, this$.state.comps[text]));
+            break;
           case data.name !== 'custom-shape':
             if (this$.state.showText) {
               return CustomShape(props);

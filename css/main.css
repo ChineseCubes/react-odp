@@ -168,6 +168,9 @@ small {
 .book-selector {
   position: fixed;
 }
+.cue {
+  display: inline;
+}
 html,
 body,
 #wrap {

@@ -50,7 +50,7 @@ console.log '''
     src:  path.resolve arg
     path: path.resolve ".#basename.build"
     data: path.resolve ".#basename.build/data"
-    needs: <[js css fonts]>
+    needs: <[js css fonts img]>
     num-pages: 0
 
   ##

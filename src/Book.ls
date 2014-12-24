@@ -167,7 +167,7 @@ Book = React.createClass do
                     then action: \play, page-num: props.data.attrs.page-num
                     else action: \stop
           | data.name is 'span' and data.text
-            text = props.data.text
+            text = data.text
             page = @[parents.1.name]
             unless text in page.sentences
               page
@@ -175,22 +175,25 @@ Book = React.createClass do
                 ..playgrounds.push do
                   toggle: ~> if it then @show! else @hide!
             attrs.style <<< display: \none if not @state.show-text
-            delete props.data.text
             startTime = 0
             endTime = 0
-            for cue in @props.vtt.cues
-              if text is cue.text
-                { startTime, endTime } = cue
-            ODP.components.span do
-              props
-              Cue do
-                {
-                  key: text
-                  startTime
-                  endTime
-                  current-time: @props.current-time
-                }
-                @state.comps[text]
+            if @props.vtt
+              delete props.data.text
+              for cue in @props.vtt?cues
+                if text is cue.text
+                  { startTime, endTime } = cue
+              ODP.components.span do
+                props
+                Cue do
+                  {
+                    key: text
+                    startTime
+                    endTime
+                    current-time: @props.current-time
+                  }
+                  @state.comps[text]
+            else
+              ODP.renderProps props
           | data.name is 'custom-shape'
             CustomShape props if @state.show-text
           | data.id is 'glossary'

@@ -135,7 +135,8 @@ init-book := (reader, uri, done) ->
                 ..page 1
         | \cca
           reader.setProps text: it.text
-        | _     => audio.process it
+        | otherwise
+          audio.process it
 
   #if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
   #  props.pages = [RegExp.$1]

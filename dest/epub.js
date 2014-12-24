@@ -62,6 +62,10 @@
                   playing: false
                 });
                 return localStorage.setItem('autoplay', false);
+              }, function(time){
+                return book.setProps({
+                  currentTime: time
+                });
               });
               props = {
                 masterPage: mp,
@@ -70,12 +74,17 @@
                 vtt: vtt,
                 loading: true,
                 playing: false,
-                currentTime: function(){
-                  return audio.time();
-                },
+                currentTime: 0,
                 dpcm: dots.state.x,
                 onNotify: function(it){
-                  return audio.process(it);
+                  switch (it.action) {
+                  case 'cca':
+                    return book.setProps({
+                      text: it.text
+                    });
+                  default:
+                    return audio.process(it);
+                  }
                 }
               };
               if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {

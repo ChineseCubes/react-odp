@@ -49,6 +49,8 @@ audio = Audio do
   -> # onPause
     book.setProps playing: false
     localStorage.setItem 'autoplay', off
+  (time) ->
+    book.setProps current-time: time
 
 props =
   master-page: mp
@@ -57,10 +59,14 @@ props =
   vtt: vtt
   loading: true
   playing: false
-  current-time: -> audio.time!
+  current-time: 0
   dpcm: dots.state.x
   onNotify: ->
-    audio.process it
+    switch it.action
+      | \cca
+        book.setProps text: it.text
+      | otherwise
+        audio.process it
 
 if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
   props.pages = [RegExp.$1]
