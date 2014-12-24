@@ -62,6 +62,7 @@ Book = React.createClass do
     $ @refs.modal.getDOMNode!
       .fadeOut \fast
       .toggleClass 'hidden' on
+    @notify action: \cca, text: ''
     @setState show-text: true
   show: ->
     click = if onClick is \onClick then \click else \touchstart

@@ -66,6 +66,10 @@
     hide: function(){
       $('.office.presentation').css('opacity', 1);
       $(this.refs.modal.getDOMNode()).fadeOut('fast').toggleClass('hidden', true);
+      this.notify({
+        action: 'cca',
+        text: ''
+      });
       return this.setState({
         showText: true
       });
