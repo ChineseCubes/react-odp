@@ -11,7 +11,7 @@
   request = require('request');
   ref$ = React.DOM, select = ref$.select, option = ref$.option;
   $win = $(window);
-  host = 'http://cnl.linode.caasih.net';
+  host = 'http://localhost:8081';
   getMp3 = function(filename, done){
     return request(filename, function(err, res, body){
       if (err) {
@@ -39,10 +39,10 @@
     componentWillMount: function(){
       var this$ = this;
       return request(host + "/books/", function(err, res, body){
-        var books, book;
+        var books, alias;
         books = JSON.parse(body);
-        book = Object.keys(books)[0];
-        initBook(reader, host + "/books/" + book, function(it){
+        alias = books[0].alias;
+        initBook(reader, host + "/books/" + alias + "/", function(it){
           reader = it;
           return setTimeout(function(){
             return reader.page(0);
@@ -54,14 +54,14 @@
       });
     },
     render: function(){
-      var key, this$ = this;
+      var book, this$ = this;
       return select({
         className: 'book-selector',
         name: 'book-selector',
         onChange: function(it){
-          var book;
-          book = it.target.value;
-          return initBook(reader, host + "/books/" + book + "/", function(it){
+          var alias;
+          alias = it.target.value;
+          return initBook(reader, host + "/books/" + alias + "/", function(it){
             reader = it;
             return setTimeout(function(){
               return reader.page(0);
@@ -69,12 +69,13 @@
           });
         }
       }, (function(){
-        var results$ = [];
-        for (key in this.state.books) {
+        var i$, ref$, len$, results$ = [];
+        for (i$ = 0, len$ = (ref$ = this.state.books).length; i$ < len$; ++i$) {
+          book = ref$[i$];
           results$.push(option({
-            key: key,
-            value: key
-          }, key));
+            key: book.id,
+            value: book.alias
+          }, book.title));
         }
         return results$;
       }.call(this)));

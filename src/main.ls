@@ -15,7 +15,8 @@ request      = require 'request'
 ###
 var reader, init-book
 $win = $ window
-host = 'http://cnl.linode.caasih.net'
+#host = 'http://cnl.linode.caasih.net'
+host = 'http://localhost:8081'
 
 get-mp3 = (filename, done) ->
   err, res, body <- request filename
@@ -37,10 +38,10 @@ BookSelector = React.createClass do
   componentWillMount: ->
     err, res, body <~ request "#host/books/"
     books = JSON.parse body
-    book = Object.keys books .0
+    alias = books.0.alias
     init-book do
       reader
-      "#host/books/#book"
+      "#host/books/#alias/"
       ->
         reader := it
         setTimeout (-> reader.page 0), 0
@@ -50,18 +51,18 @@ BookSelector = React.createClass do
       className: 'book-selector'
       name: 'book-selector'
       onChange: ~>
-        book = it.target.value
+        alias = it.target.value
         init-book do
           reader
-          "#host/books/#book/"
+          "#host/books/#alias/"
           ->
             reader := it
             setTimeout (-> reader.page 0), 0
-      for key of @state.books
+      for book in @state.books
         option do
-          key: key
-          value: key
-          key
+          key: book.id
+          value: book.alias
+          book.title
 BookSelector = React.createFactory BookSelector
 ###
 # End of those helpers.
