@@ -11,7 +11,7 @@
   request = require('request');
   ref$ = React.DOM, select = ref$.select, option = ref$.option;
   $win = $(window);
-  host = 'http://localhost:8081';
+  host = 'http://cnl.linode.caasih.net';
   getMp3 = function(filename, done){
     return request(filename, function(err, res, body){
       if (err) {

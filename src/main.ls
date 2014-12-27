@@ -15,8 +15,8 @@ request      = require 'request'
 ###
 var reader, init-book
 $win = $ window
-#host = 'http://cnl.linode.caasih.net'
-host = 'http://localhost:8081'
+host = 'http://cnl.linode.caasih.net'
+#host = 'http://localhost:8081'
 
 get-mp3 = (filename, done) ->
   err, res, body <- request filename
