@@ -1,24 +1,31 @@
 #!/usr/bin/env lsc
 require! {
-  child_process: { exec }
-  shellwords: { escape }
   fs
   path
   request
   unzip
-  'vinyl-fs': vinyl
-  'map-stream': map
   colors
+  jade
   cp: _cp
   cpr: _cpr
-  jade
+  child_process: { exec }
+  shellwords: { escape }
   htmltidy: { tidy }
-  'es6-promise': { Promise }
+  rsvp: { Promise, all }:RSVP
   datauri: { promises: datauri }
+  'vinyl-fs': vinyl
+  'map-stream': map
+  'json-stable-stringify': stringify
   '../CUBE/data': Data
   './epub/utils': utils
   './epub': { pack }
+  './read-dir': read-dir
+  './read-file': read-file
+  './codepoints': codepoints
+  './moedict': moedict
 }
+
+RSVP.on \error console.log
 
 rel = -> path.relative process.cwd!, it
 
@@ -56,28 +63,31 @@ console.log '''
   ##
   # should use rsvp.js for better error handling
   Promise.resolve!
+    #.then ->
+    #  # convert and unzip
+    #  convert build.src, build.data
     .then ->
-      # convert and unzip
-      convert build.src, build.data
-    .then ->
-      src = path.resolve build.data, 'page*.json'
-      get-codepoints src
-    .then (stdout, stderr) ->
-      codepoints = for c in stdout.split /\s/ | c.length  => parseInt c, 16
-      build.codepoints = codepoints.filter -> 0x4e00 <= it <= 0xfaff
+      read-dir path.resolve build.data
+    .then (paths) ->
+      paths .= filter (is /page(\d+).json$/)
+      ps = for filepath in paths => read-file filepath, encoding: \utf8
+      all ps .then -> codepoints it.join ''
+    .then (cpts) ->
+      cpts = for c in cpts => parseInt c, 16
+      build.codepoints = cpts.filter -> 0x4e00 <= it <= 0xfaff
     .then ->
       # get data from moedict.tw
       # XXX: should create dict.json before packing
       chars = (for build.codepoints => String.fromCharCode ..)join ''
       dst = path.resolve build.data, 'dict.json'
-      fetch-moedict chars, dst
+      moedict chars .then -> write escape(dst), stringify it, space: 2
     .then ->
       get-master-page build.data
     .then ({ attrs }) ->
       # generate page*.xhtml
       build.num-pages = attrs['TOTAL-PAGES']
       dst = build.data
-      Promise.all do
+      all do
         for idx in [1 to build.num-pages]
           gen-page dst, build.path, idx
     .then ->
@@ -87,14 +97,14 @@ console.log '''
       cp-r src, dst
     .then ->
       # mimetype and more
-      Promise.all do
+      all do
         for file in <[mimetype]>
           src = path.resolve __dirname, 'epub', file
           dst = path.resolve build.path, file
           cp src, dst
     .then ->
       # css, js, fonts ...
-      Promise.all do
+      all do
         for dep in build.needs
           src = path.resolve __dirname, '../../', dep
           dst = path.resolve build.path, dep
@@ -122,7 +132,7 @@ console.log '''
           "{\"webvtt\":\"#vtt\"}"
         )then resolve
       ps.push p
-      Promise.all ps #.catch -> console.warn 'speech not found'yellow
+      all ps #.catch -> console.warn 'speech not found'yellow
     .then ->
       src = path.resolve build.path, 'data', 'audio.mp3'
       mp3val src
@@ -134,7 +144,7 @@ console.log '''
     .then ->
       console.log "#{'cp'magenta} strokes"
       try fs.mkdirSync path.resolve build.path, 'strokes'
-      Promise.all do
+      all do
         for let stroke in build.codepoints
           stroke = "#{stroke.toString 16}.json"
           src = path.resolve __dirname, '../../strokes', stroke
@@ -144,11 +154,11 @@ console.log '''
       console.log "#{'cp'magenta} arphic-strokes"
       langs = <[zh-TW zh-CN]>
       try fs.mkdirSync path.resolve build.path, 'arphic-strokes'
-      Promise.all do
+      all do
         for lang in langs
           base = path.resolve build.path, 'arphic-strokes', lang
           try fs.mkdirSync base
-          Promise.all do
+          all do
             for stroke in build.codepoints
               stroke = "#{stroke.toString 16}.txt"
               src = path.resolve __dirname, '../../arphic-strokes', lang, stroke
@@ -157,7 +167,7 @@ console.log '''
     .then ->
       # generate font subset
       weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
-      Promise.all do
+      all do
         for weight in weights
           src = path.resolve __dirname, 'epub', "SourceHanSansTW-#weight.ttf"
           dst = path.resolve build.path, 'fonts', "Noto-#{weight}-Subset.ttf"
@@ -264,6 +274,7 @@ function write dst, file
     console.log "#{'write'magenta} #{rel dst}"
     fs.writeFile dst, file, (err) -> unless err then resolve! else reject err
 
+/*
 function get-codepoints src
   new Promise (resolve, reject) ->
     console.log "#{'get'magenta} codepoints from #{rel src}"
@@ -280,6 +291,7 @@ function fetch-moedict chars, dst
       "echo #chars | #{path.resolve __dirname, 'fetch-moedict.ls'} > #{escape dst}"
       (err, stdout, stderr) ->
         unless err then resolve stdout, stderr else reject err
+*/
 
 function get-master-page src
   new Promise (resolve, reject) ->
