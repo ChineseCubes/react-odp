@@ -39,14 +39,12 @@ BookSelector = React.createClass do
     err, res, body <~ request "#host/books/"
     books = JSON.parse body
     alias = books.0.alias
-    /*
     init-book do
       reader
       "#host/books/#alias/"
       ->
         reader := it
         setTimeout (-> reader.page 0), 0
-    */
     @setState books: books
   render: ->
     select do
@@ -152,11 +150,6 @@ init-book := (reader, uri, done) ->
       $ \#app .get!0
 
   done reader
-
-init-book do
-  reader
-  'http://localhost:8080/data'
-  -> reader := it
 
 ##
 # events
