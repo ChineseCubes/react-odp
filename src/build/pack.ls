@@ -75,12 +75,12 @@ console.log '''
     .then (cpts) ->
       cpts = for c in cpts => parseInt c, 16
       build.codepoints = cpts.filter -> 0x4e00 <= it <= 0xfaff
-    .then ->
-      # get data from moedict.tw
-      # XXX: should create dict.json before packing
-      chars = (for build.codepoints => String.fromCharCode ..)join ''
-      dst = path.resolve build.data, 'dict.json'
-      moedict chars .then -> write escape(dst), stringify it, space: 2
+    #.then ->
+    #  # get data from moedict.tw
+    #  # XXX: should create dict.json before packing
+    #  chars = (for build.codepoints => String.fromCharCode ..)join ''
+    #  dst = path.resolve build.data, 'dict.json'
+    #  moedict chars .then -> write escape(dst), stringify it, space: 2
     .then ->
       get-master-page build.data
     .then ({ attrs }) ->
@@ -167,12 +167,19 @@ console.log '''
     .then ->
       # generate font subset
       weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
-      all do
+      ps =
         for weight in weights
           src = path.resolve __dirname, 'epub', "SourceHanSansTW-#weight.ttf"
-          dst = path.resolve build.path, 'fonts', "Noto-#{weight}-Subset.ttf"
+          dst = path.resolve build.path, 'fonts', "Noto-T-#{weight}-Subset.ttf"
           font-subset src, dst, build.codepoints
             .catch -> console.log it.stack
+      ps .= concat do
+        for weight in weights
+          src = path.resolve __dirname, 'epub', "SourceHanSansCN-#weight.ttf"
+          dst = path.resolve build.path, 'fonts', "Noto-S-#{weight}-Subset.ttf"
+          font-subset src, dst, build.codepoints
+            .catch -> console.log it.stack
+      all ps
     .then -> new Promise (resolve, reject) ->
       # generate TOC.xhtml
       src = path.resolve __dirname, 'epub/TOC.jade'

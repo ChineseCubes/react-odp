@@ -42,12 +42,14 @@
         var books, alias;
         books = JSON.parse(body);
         alias = books[0].alias;
-        initBook(reader, host + "/books/" + alias + "/", function(it){
-          reader = it;
-          return setTimeout(function(){
-            return reader.page(0);
-          }, 0);
-        });
+        /*
+        init-book do
+          reader
+          "#host/books/#alias/"
+          ->
+            reader := it
+            setTimeout (-> reader.page 0), 0
+        */
         return this$.setState({
           books: books
         });
@@ -187,6 +189,9 @@
           });
         });
       };
+      initBook(reader, 'http://localhost:8080/data', function(it){
+        return reader = it;
+      });
       return $win.resize(function(){
         return reader.setProps({
           width: $win.width(),

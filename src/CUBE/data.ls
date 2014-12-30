@@ -111,7 +111,9 @@ class Segmentations
           parts.map ->
             if it.length is 1
               def = moe.get it
-              en = slice.call def.en
+              en = if def
+                then slice.call def.en
+                else []
               Node do
                 [Char def?pinyin, (def?['zh-TW'] or it), def?['zh-CN']]
                 en.join ', '
@@ -121,7 +123,9 @@ class Segmentations
               Node do
                 for char in it
                   def = moe.get char
-                  en = slice.call def.en
+                  en = if def
+                    then slice.call def.en
+                    else []
                   Node do
                     [Char def?pinyin, (def?['zh-TW'] or char), def?['zh-CN']]
                     en.join ', '
