@@ -62,7 +62,7 @@
                 book.setProps({
                   playing: false
                 });
-                return localStorage.setItem('autoplay', false);
+                return localStorage.removeItem('autoplay');
               }, function(time){
                 return book.setProps({
                   currentTime: time
@@ -87,11 +87,14 @@
                       localStorage.setItem('autoplay', true);
                       return location.href = 'page2.xhtml';
                     case 'learn-by-myself':
-                      localStorage.setItem('autoplay', false);
+                      localStorage.removeItem('autoplay');
                       return location.href = 'page2.xhtml';
                     }
                     break;
                   case 'cca':
+                    if (it.text.length) {
+                      localStorage.removeItem('autoplay');
+                    }
                     return book.setProps({
                       text: it.text
                     });

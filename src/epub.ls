@@ -46,7 +46,7 @@ audio = Audio do
       location.href = "page#next.xhtml"
   -> # onPause
     book.setProps playing: false
-    localStorage.setItem \autoplay off
+    localStorage.removeItem \autoplay
   (time) ->
     book.setProps current-time: time
 
@@ -69,9 +69,11 @@ props =
             localStorage.setItem \autoplay on
             location.href = 'page2.xhtml'
           | \learn-by-myself
-            localStorage.setItem \autoplay off
+            localStorage.removeItem \autoplay
             location.href = 'page2.xhtml'
       | \cca
+        if it.text.length
+          localStorage.removeItem \autoplay
         book.setProps text: it.text
       | otherwise
         audio.process it
