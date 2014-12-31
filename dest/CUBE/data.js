@@ -30,7 +30,6 @@
           name: 'draw:image',
           attrs: {
             name: 'activity',
-            href: '../images/play.png',
             'page-num': idx,
             'on-click': function(){
               throw Error('unimplemented');

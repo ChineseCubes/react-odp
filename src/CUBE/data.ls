@@ -28,7 +28,6 @@ create-audio-props = (idx) ->
         * name: 'draw:image'
           attrs:
             name: 'activity'
-            href: '../images/play.png'
             'page-num': idx
             'on-click': -> ...
             'font-size': '1cm'

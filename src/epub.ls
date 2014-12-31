@@ -46,7 +46,7 @@ audio = Audio do
       location.href = "page#next.xhtml"
   -> # onPause
     book.setProps playing: false
-    localStorage.setItem 'autoplay', off
+    localStorage.setItem \autoplay off
   (time) ->
     book.setProps current-time: time
 
@@ -60,17 +60,16 @@ props =
   current-time: 0
   dpcm: dots.state.x
   onNotify: ->
-    console.log it
     switch it.action
       | \mode
         switch it.data
           | \glossary
             console.log 'should jump to glossary'
           | \read-to-me
-            localStorage.setItem 'autoplay', on
+            localStorage.setItem \autoplay on
             location.href = 'page2.xhtml'
           | \learn-by-myself
-            localStorage.setItem 'autoplay', off
+            localStorage.setItem \autoplay off
             location.href = 'page2.xhtml'
       | \cca
         book.setProps text: it.text
@@ -80,7 +79,7 @@ props =
 if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
   props.pages = [RegExp.$1]
   page = +RegExp.$1
-  localStorage.setItem \page, page
+  localStorage.page = page
   if localStorage.getItem \autoplay
     setTimeout do
       -> audio.play page - 1

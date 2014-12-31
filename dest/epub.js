@@ -78,7 +78,6 @@
                 currentTime: 0,
                 dpcm: dots.state.x,
                 onNotify: function(it){
-                  console.log(it);
                   switch (it.action) {
                   case 'mode':
                     switch (it.data) {
@@ -104,7 +103,7 @@
               if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
                 props.pages = [RegExp.$1];
                 page = +RegExp.$1;
-                localStorage.setItem('page', page);
+                localStorage.page = page;
                 if (localStorage.getItem('autoplay')) {
                   setTimeout(function(){
                     return audio.play(page - 1);

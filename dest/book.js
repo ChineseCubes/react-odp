@@ -269,9 +269,9 @@
               return CustomShape(props);
             }
             break;
-          case data.id !== 'glossary':
+          case !(data.id === 'glossary' || data.id === 'read-to-me' || data.id === 'learn-by-myself'):
             return Button({
-              className: 'glossary',
+              className: data.id,
               style: {
                 width: ODP.scaleLength(props.scale, data.attrs.width),
                 height: ODP.scaleLength(props.scale, data.attrs.height),
@@ -281,39 +281,7 @@
               onClick: function(){
                 return this.notify({
                   action: 'mode',
-                  data: 'glossary'
-                });
-              }
-            });
-          case data.id !== 'read-to-me':
-            return Button({
-              className: 'read-to-me',
-              style: {
-                width: ODP.scaleLength(props.scale, data.attrs.width),
-                height: ODP.scaleLength(props.scale, data.attrs.height),
-                left: ODP.scaleLength(props.scale, data.attrs.x),
-                top: ODP.scaleLength(props.scale, data.attrs.y)
-              },
-              onClick: function(){
-                return this.notify({
-                  action: 'mode',
-                  data: 'read-to-me'
-                });
-              }
-            });
-          case data.id !== 'learn-by-myself':
-            return Button({
-              className: 'learn-by-myself',
-              style: {
-                width: ODP.scaleLength(props.scale, data.attrs.width),
-                height: ODP.scaleLength(props.scale, data.attrs.height),
-                left: ODP.scaleLength(props.scale, data.attrs.x),
-                top: ODP.scaleLength(props.scale, data.attrs.y)
-              },
-              onClick: function(){
-                return this.notify({
-                  action: 'mode',
-                  data: 'learn-by-myself'
+                  data: data.id
                 });
               }
             });

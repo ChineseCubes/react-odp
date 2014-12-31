@@ -197,33 +197,17 @@ Book = React.createClass do
               ODP.renderProps props
           | data.name is 'custom-shape'
             CustomShape props if @state.show-text
-          | data.id is 'glossary'
+          | data.id is 'glossary' or
+            data.id is 'read-to-me' or
+            data.id is 'learn-by-myself'
             Button do
-              className: 'glossary'
+              className: data.id
               style:
                 width:  ODP.scale-length props.scale, data.attrs.width
                 height: ODP.scale-length props.scale, data.attrs.height
                 left: ODP.scale-length props.scale, data.attrs.x
                 top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> @notify action: \mode data: 'glossary'
-          | data.id is 'read-to-me'
-            Button do
-              className: 'read-to-me'
-              style:
-                width:  ODP.scale-length props.scale, data.attrs.width
-                height: ODP.scale-length props.scale, data.attrs.height
-                left: ODP.scale-length props.scale, data.attrs.x
-                top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> @notify action: \mode data: 'read-to-me'
-          | data.id is 'learn-by-myself'
-            Button do
-              className: 'learn-by-myself'
-              style:
-                width:  ODP.scale-length props.scale, data.attrs.width
-                height: ODP.scale-length props.scale, data.attrs.height
-                left: ODP.scale-length props.scale, data.attrs.x
-                top:  ODP.scale-length props.scale, data.attrs.y
-              onClick: -> @notify action: \mode data: 'learn-by-myself'
+              onClick: -> @notify action: \mode data: data.id
           | otherwise => ODP.renderProps props
 
 module.exports = Book
