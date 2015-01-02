@@ -9,6 +9,7 @@
   ReactVTT = require('react-vtt');
   require('react-vtt/dest/Cue.css');
   request = require('request');
+  require('./sandbox')();
   ref$ = React.DOM, select = ref$.select, option = ref$.option;
   $win = $(window);
   host = 'http://cnl.linode.caasih.net';

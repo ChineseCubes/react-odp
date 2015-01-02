@@ -1,13 +1,15 @@
 (function(){
-  var React, DotsDetector, Data, Audio, Book, ReactVTT, request, getMp3, getVtt;
+  var React, DotsDetector, Data, Audio, Storage, Book, ReactVTT, request, getMp3, getVtt;
   React = require('react');
   DotsDetector = React.createFactory(require('./react-dots-detector'));
   Data = require('./CUBE/data');
   Audio = require('./Logic/Audio');
+  Storage = require('./Logic/Storage');
   Book = React.createFactory(require('./Book'));
   ReactVTT = require('react-vtt');
   require('react-vtt/dest/Cue.css');
   request = require('request');
+  require('./sandbox')();
   getMp3 = function(filename, done){
     return request(filename, function(err, res, body){
       if (err) {
@@ -50,19 +52,25 @@
                   playing: true
                 });
               }, function(){
-                var next;
                 book.setProps({
                   playing: false
                 });
-                if (localStorage.getItem('autoplay')) {
-                  next = 1 + +localStorage.getItem('page');
-                  return location.href = "page" + next + ".xhtml";
-                }
+                return Storage.load('autoplay').then(function(autoplay){
+                  if (autoplay) {
+                    return Storage.load('page').then(function(page){
+                      var next;
+                      next = 1 + page;
+                      return Storage.save('page', next).then(function(){
+                        return location.href = "page" + next + ".xhtml";
+                      });
+                    });
+                  }
+                });
               }, function(){
                 book.setProps({
                   playing: false
                 });
-                return localStorage.removeItem('autoplay');
+                return Storage.save('autoplay', false);
               }, function(time){
                 return book.setProps({
                   currentTime: time
@@ -84,16 +92,18 @@
                     case 'glossary':
                       return console.log('should jump to glossary');
                     case 'read-to-me':
-                      localStorage.setItem('autoplay', true);
-                      return location.href = 'page2.xhtml';
+                      return Storage.save('autoplay', true).then(function(){
+                        return location.href = 'page2.xhtml';
+                      });
                     case 'learn-by-myself':
-                      localStorage.removeItem('autoplay');
-                      return location.href = 'page2.xhtml';
+                      return Storage.save('autoplay', false).then(function(){
+                        return location.href = 'page2.xhtml';
+                      });
                     }
                     break;
                   case 'cca':
                     if (it.text.length) {
-                      localStorage.removeItem('autoplay');
+                      Storage.save('autoplay', false);
                     }
                     return book.setProps({
                       text: it.text
@@ -106,12 +116,14 @@
               if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
                 props.pages = [RegExp.$1];
                 page = +RegExp.$1;
-                localStorage.page = page;
-                if (localStorage.getItem('autoplay')) {
-                  setTimeout(function(){
-                    return audio.play(page - 1);
-                  }, 750);
-                }
+                Storage.save('page', page);
+                Storage.load('autoplay').then(function(autoplay){
+                  if (autoplay) {
+                    return setTimeout(function(){
+                      return audio.play(page - 1);
+                    }, 750);
+                  }
+                });
               }
               return book = React.render(Book(props), document.getElementById('app'));
             });

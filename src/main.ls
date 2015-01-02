@@ -7,6 +7,7 @@ Reader       = React.createFactory require './Reader'
 ReactVTT     = require 'react-vtt'
 require 'react-vtt/dest/Cue.css'
 request      = require 'request'
+do require './sandbox'
 
 { select, option } = React.DOM
 
