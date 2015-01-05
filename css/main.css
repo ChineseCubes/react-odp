@@ -168,6 +168,9 @@ small {
 .book-selector {
   position: fixed;
 }
+.book-selector.disabled {
+  display: none;
+}
 .cue {
   display: inline;
 }

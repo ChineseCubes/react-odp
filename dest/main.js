@@ -1,5 +1,5 @@
 (function(){
-  var React, DotsDetector, Data, Audio, Book, Reader, ReactVTT, request, ref$, select, option, reader, initBook, $win, host, getMp3, getVtt, BookSelector;
+  var React, DotsDetector, Data, Audio, Book, Reader, ReactVTT, request, ref$, select, option, find, reader, initBook, $win, host, getMp3, getVtt, BookSelector;
   React = require('react');
   DotsDetector = React.createFactory(require('./react-dots-detector'));
   Data = require('./CUBE/data');
@@ -11,6 +11,7 @@
   request = require('request');
   require('./sandbox')();
   ref$ = React.DOM, select = ref$.select, option = ref$.option;
+  find = require('lodash').find;
   $win = $(window);
   host = 'http://cnl.linode.caasih.net';
   getMp3 = function(filename, done){
@@ -32,6 +33,11 @@
   };
   BookSelector = React.createClass({
     displayName: 'BookSelector',
+    getDefaultProps: function(){
+      return {
+        title: ''
+      };
+    },
     getInitialState: function(){
       return {
         books: []
@@ -40,9 +46,13 @@
     componentWillMount: function(){
       var this$ = this;
       return request(host + "/books/", function(err, res, body){
-        var books, alias;
+        var title, books, book, alias;
+        title = this$.props.title;
         books = JSON.parse(body);
-        alias = books[0].alias;
+        book = find(books, function(it){
+          return it.title === title;
+        });
+        alias = (book != null ? book.alias : void 8) || books[0].alias;
         initBook(reader, host + "/books/" + alias + "/", function(it){
           reader = it;
           return setTimeout(function(){
@@ -55,9 +65,10 @@
       });
     },
     render: function(){
-      var book, this$ = this;
+      var status, ref$, book, this$ = this;
+      status = (ref$ = this.props.title) != null && ref$.length ? ' disabled' : '';
       return select({
-        className: 'book-selector',
+        className: 'book-selector' + status,
         name: 'book-selector',
         onChange: function(it){
           var alias;
@@ -85,12 +96,15 @@
   BookSelector = React.createFactory(BookSelector);
   window.requestAnimationFrame(function(){
     return $(function(){
-      var dots, selector;
+      var dots, title, selector;
       React.initializeTouchEvents(true);
       dots = React.render(DotsDetector({
         unit: 'cm'
       }), $('#detector').get()[0]);
-      selector = React.render(BookSelector(), $('#selector').get()[0]);
+      title = /\?(.*)\/?/.exec(location.search) ? decodeURIComponent(RegExp.$1) : void 8;
+      selector = React.render(BookSelector({
+        title: title
+      }), $('#selector').get()[0]);
       initBook = function(reader, uri, done){
         return Data.getMasterPage(uri, function(mp){
           var setup;

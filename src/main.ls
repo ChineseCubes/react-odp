@@ -10,6 +10,7 @@ request      = require 'request'
 do require './sandbox'
 
 { select, option } = React.DOM
+{ find } = require 'lodash'
 
 ###
 # Here are some helpers.
@@ -32,14 +33,20 @@ get-vtt = (filename, done) ->
     .parse filename, done
     .error -> done null
 
+# XXX: workaround
 BookSelector = React.createClass do
   displayName: 'BookSelector'
+  getDefaultProps: ->
+    # XXX: moar workaround
+    title: ''
   getInitialState: ->
     books: []
   componentWillMount: ->
     err, res, body <~ request "#host/books/"
+    title = @props.title
     books = JSON.parse body
-    alias = books.0.alias
+    book = find books, (.title is title)
+    alias = book?alias or books.0.alias
     init-book do
       reader
       "#host/books/#alias/"
@@ -48,8 +55,9 @@ BookSelector = React.createClass do
         setTimeout (-> reader.page 0), 0
     @setState books: books
   render: ->
+    status = if @props.title?length then ' disabled' else ''
     select do
-      className: 'book-selector'
+      className: 'book-selector' + status
       name: 'book-selector'
       onChange: ~>
         alias = it.target.value
@@ -78,8 +86,11 @@ dots = React.render do
   DotsDetector unit: \cm
   $ \#detector .get!0
 
+title = if location.search is /\?(.*)\/?/
+  decodeURIComponent RegExp.$1
+
 selector = React.render do
-  BookSelector!
+  BookSelector { title }
   $ \#selector .get!0
 
 init-book := (reader, uri, done) ->
