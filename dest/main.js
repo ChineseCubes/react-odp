@@ -13,7 +13,7 @@
   ref$ = React.DOM, select = ref$.select, option = ref$.option;
   find = require('lodash').find;
   $win = $(window);
-  host = 'http://cnl.linode.caasih.net';
+  host = 'http://localhost:8081';
   getMp3 = function(filename, done){
     return request(filename, function(err, res, body){
       if (err) {
@@ -116,6 +116,7 @@
                 mp3 = arg$.mp3;
                 return getVtt(setup.path + "/audio.vtt.json", function(vtt){
                   var onStop, audio, props, reader;
+                  console.log(data);
                   onStop = function(){
                     return reader.setProps({
                       playing: false

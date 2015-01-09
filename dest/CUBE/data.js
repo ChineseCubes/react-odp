@@ -1,5 +1,5 @@
 (function(){
-  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, shadow, createAudioProps, c, Char, o, Node, punctuations, Dict, shortest, Segmentations, modeSelectors, withModeSelectors, Data;
+  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, c, Char, o, Node, punctuations, Dict, shortest, Segmentations, Data;
   try {
     fs = require('fs');
   } catch (e$) {}
@@ -13,33 +13,6 @@
   ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, flatten = ref$.flatten, max = ref$.max, min = ref$.min, map = ref$.map, zipObject = ref$.zipObject;
   ref$ = require('./utils'), unslash = ref$.unslash, tagless = ref$.strip, splitNamespace = ref$.splitNamespace, camelFromHyphenated = ref$.camelFromHyphenated, notoName = ref$.notoName;
   slice = Array.prototype.slice;
-  shadow = '0 0 5px 5px rgba(0,0,0,0.1);';
-  createAudioProps = function(idx){
-    return {
-      children: {
-        name: 'draw:frame',
-        attrs: {
-          'style-name': 'Mgr4',
-          'text-style-name': 'MP4',
-          x: '25.16cm',
-          y: '1.35cm',
-          width: '1.458cm',
-          height: '1.358cm'
-        },
-        children: [{
-          name: 'draw:image',
-          attrs: {
-            name: 'activity',
-            'page-num': idx,
-            'on-click': function(){
-              throw Error('unimplemented');
-            },
-            'font-size': '1cm'
-          }
-        }]
-      }
-    };
-  };
   c = Char = (function(){
     Char.displayName = 'Char';
     var prototype = Char.prototype, constructor = Char;
@@ -262,61 +235,6 @@
     };
     return Segmentations;
   }());
-  modeSelectors = {
-    name: 'frame',
-    namespace: 'draw',
-    attrs: {
-      x: '2.45cm',
-      y: '17.85cm',
-      width: '23.1cm',
-      height: '2.275cm'
-    },
-    children: [
-      {
-        name: 'frame',
-        namespace: 'draw',
-        id: 'glossary',
-        attrs: {
-          x: '0cm',
-          y: '0cm',
-          width: '7.35cm',
-          height: '2.275cm',
-          'line-height': '2.275cm',
-          'font-size': '1.1cm'
-        }
-      }, {
-        name: 'frame',
-        namespace: 'draw',
-        id: 'read-to-me',
-        attrs: {
-          x: '7.875cm',
-          y: '0cm',
-          width: '7.35cm',
-          height: '2.275cm',
-          'line-height': '2.275cm',
-          'font-size': '1.1cm'
-        },
-        children: []
-      }, {
-        name: 'frame',
-        namespace: 'draw',
-        id: 'learn-by-myself',
-        attrs: {
-          x: '15.75cm',
-          y: '0cm',
-          width: '7.35cm',
-          height: '2.275cm',
-          'line-height': '2.275cm',
-          'font-size': '1.1cm'
-        },
-        children: []
-      }
-    ]
-  };
-  withModeSelectors = function(page){
-    page.children.push(modeSelectors);
-    return page;
-  };
   Data = {
     Node: Node,
     Char: Char,
@@ -354,14 +272,7 @@
       pages = [];
       counter = 0;
       gotOne = function(data, i){
-        switch (i) {
-        case 0:
-          pages[i] = withModeSelectors(
-          data);
-          break;
-        default:
-          pages[i] = data;
-        }
+        pages[i] = data;
         counter += 1;
         if (counter === setup.totalPages) {
           return done({
@@ -383,51 +294,9 @@
       return results$;
       function fn$(i){
         return fs.readFile(path + "/page" + i + ".json", function(err, data){
-          return gotOne(Data.patchPageJSON(JSON.parse(data), path), i - 1);
+          return gotOne(JSON.parse(data), i - 1);
         });
       }
-    },
-    patchPageJSON: function(data, path){
-      var propNames, name, idx;
-      path == null && (path = '');
-      propNames = ['name', 'x', 'y', 'width', 'height', 'href', 'data', 'onClick', 'onTouchStart'];
-      name = data.attrs['DRAW:NAME'];
-      if (name !== 'page1') {
-        idx = +name.replace('page', '');
-        data.children = data.children.concat(createAudioProps(idx - 1).children);
-      }
-      return Data.transform(data, function(attrs, nodeName, parents){
-        var newAttrs, k, v, name, x$;
-        attrs == null && (attrs = {});
-        newAttrs = {
-          style: {}
-        };
-        for (k in attrs) {
-          v = attrs[k];
-          name = camelFromHyphenated(splitNamespace(k).name);
-          switch (false) {
-          case name !== 'pageWidth':
-            newAttrs.width = v;
-            break;
-          case name !== 'pageHeight':
-            newAttrs.height = v;
-            break;
-          case !in$(name, propNames):
-            newAttrs[name] = v;
-            break;
-          case name !== 'pageNum':
-            newAttrs[name] = v;
-            break;
-          default:
-            newAttrs.style[name] = v;
-          }
-        }
-        x$ = newAttrs;
-        if (newAttrs.href) {
-          x$.href = path + "/" + newAttrs.href;
-        }
-        return x$;
-      });
     },
     paragraphsOf: function(presentation){
       var sentences, str, paragraphs;

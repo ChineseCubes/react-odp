@@ -13,26 +13,6 @@ fs ?= readFile: (path, done) ->
 } = require './utils'
 slice = Array::slice
 
-shadow = '0 0 5px 5px rgba(0,0,0,0.1);'
-create-audio-props = (idx) ->
-  children:
-    * name: 'draw:frame'
-      attrs:
-        'style-name': \Mgr4
-        'text-style-name': \MP4
-        x:      \25.16cm
-        y:      \1.35cm
-        width:  \1.458cm
-        height: \1.358cm
-      children:
-        * name: 'draw:image'
-          attrs:
-            name: 'activity'
-            'page-num': idx
-            'on-click': -> ...
-            'font-size': '1cm'
-        ...
-
 c = class Char
   (@pinyin = '', @['zh-TW'] = '', @['zh-CN'] = @['zh-TW']) ~>
   flatten: -> this
@@ -141,51 +121,6 @@ class Segmentations
   get: ->
     @data[it]
 
-mode-selectors =
-  name: \frame
-  namespace: \draw
-  attrs:
-    x: '2.45cm'
-    y: '17.85cm'
-    width:  '23.1cm'
-    height: '2.275cm'
-  children:
-    * name: \frame
-      namespace: \draw
-      id: 'glossary'
-      attrs:
-        x: '0cm'
-        y: '0cm'
-        width:  '7.35cm'
-        height: '2.275cm'
-        'line-height': '2.275cm'
-        'font-size': '1.1cm'
-    * name: \frame
-      namespace: \draw
-      id: 'read-to-me'
-      attrs:
-        x: '7.875cm'
-        y: '0cm'
-        width:  '7.35cm'
-        height: '2.275cm'
-        'line-height': '2.275cm'
-        'font-size': '1.1cm'
-      children: []
-    * name: \frame
-      namespace: \draw
-      id: 'learn-by-myself'
-      attrs:
-        x: '15.75cm'
-        y: '0cm'
-        width:  '7.35cm'
-        height: '2.275cm'
-        'line-height': '2.275cm'
-        'font-size': '1.1cm'
-      children: []
-with-mode-selectors = (page) ->
-  page.children.push mode-selectors
-  page
-
 Data =
   Node: Node
   Char: Char
@@ -213,9 +148,7 @@ Data =
     pages = []
     counter = 0
     got-one = (data, i) ->
-      switch i
-        | 0 => pages[i] = data |> with-mode-selectors
-        | _ => pages[i] = data
+      pages[i] = data
       counter += 1
       if counter is setup.total-pages
         done do
@@ -229,26 +162,7 @@ Data =
           children:  pages
     for let i from 1 to setup.total-pages
       err, data <- fs.readFile "#path/page#i.json"
-      got-one Data.patchPageJSON(JSON.parse(data), path), i - 1
-  patchPageJSON: (data, path = '') ->
-    prop-names = <[name x y width height href data onClick onTouchStart]>
-    name = data.attrs['DRAW:NAME']
-    if name isnt \page1
-      idx = +name.replace 'page', ''
-      data.children = data.children.concat create-audio-props(idx - 1)children
-    Data.transform data, (attrs = {}, node-name, parents) ->
-      new-attrs = style: {}
-      for k, v of attrs
-        name = camelFromHyphenated splitNamespace(k)name
-        switch
-        | name is 'pageWidth'  => new-attrs.width       = v
-        | name is 'pageHeight' => new-attrs.height      = v
-        | name in prop-names   => new-attrs[name]       = v
-        | name is 'pageNum'    => new-attrs[name]       = v
-        #| name is 'fontFamily' => new-attrs.style[name] = noto-name v
-        | otherwise            => new-attrs.style[name] = v
-      new-attrs
-        ..href = "#path/#{new-attrs.href}" if new-attrs.href
+      got-one JSON.parse(data), i - 1
   paragraphs-of: (presentation) ->
     var sentences, str
     paragraphs = []
@@ -322,12 +236,6 @@ Data =
       children: if not node.children then [] else
         for child in node.children
           Data.transform child, onNode, parents.concat [node.name]
-  #traverse: (node, onNode, parents = []) ->
-  #  return if not onNode
-  #  onNode node, parents
-  #  return if not node.children
-  #  for child in node.children
-  #    Data.traverse child, onNode, parents.concat [node.name]
   parse: (node, onEnter, onLeave, parents = []) ->
     return if not node
     onEnter? node, parents
