@@ -116,7 +116,6 @@
                 mp3 = arg$.mp3;
                 return getVtt(setup.path + "/audio.vtt.json", function(vtt){
                   var onStop, audio, props, reader;
-                  console.log(data);
                   onStop = function(){
                     return reader.setProps({
                       playing: false

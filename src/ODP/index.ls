@@ -61,45 +61,20 @@ makeInteractive = ->
 DrawMixin =
   scaleStyle: (value, key) -> scale-length @props.scale, value, key
   getDefaultProps: ->
-    defaultHtmlTag: 'div'
     scale:          1.0
     parents:        []
     renderProps: renderProps
   applyMiddlewares: ->
     if isArray @middlewares then for f in @middlewares => f it
-  componentWillMount: -> @applyMiddlewares @props.data
-  componentWillReceiveProps: ({data}) -> @applyMiddlewares data
+  #componentWillMount: -> @applyMiddlewares @props.data
+  #componentWillReceiveProps: ({data}) -> @applyMiddlewares data
   render: ->
-    return if not data = @props.data
-    attrs = data.attrs
-    return React.DOM.div {} if attrs?style?display is \none and attrs.href
-    style =
-      left:   attrs?x      or \auto
-      top:    attrs?y      or \auto
-      width:  attrs?width  or \auto
-      height: attrs?height or \auto
-    style <<<< attrs?style # import all
-    style = mapValues style, @scaleStyle
-    # TODO:
+    return React.DOM.div {} if @props.style?display is \none and attrs.href
+    @props.style = mapValues ({} <<<< @props.style), @scaleStyle
+    # TODO: might be useful someday
     #style = mapValues style, (v, k) ~> v?split(/\s+/)map(~> @scaleStyle it, k)join ' '
-    style <<< background-image: "url(#{attrs.href})" if attrs.href
-    props =
-      className: "#{data.namespace} #{data.name} #{attrs.className or ''}"
-      style: style
-    for key, attr of attrs => props[key] = attr if /^on.*$/test key
-    child-props-list = for let i, child of data.children
-      key:     i
-      scale:   @props.scale
-      parents: @props.parents.concat [tag: data.name, name: attrs.name]
-      data:    cloneDeep child
-      renderProps: @props.renderProps
-    children = child-props-list
-      |> map _, @props.renderProps
-      |> filter
-    children.unshift data.text if data.text
-    React.DOM[@props.htmlTag or @props.defaultHtmlTag] do
-      props
-      children.concat @props.children
+    @props.style <<< background-image: "url(#{@props.href})" if @props.href
+    React.DOM[@props.htmlTag or \div] @props
 
 # act like React.DOM at v0.12
 default-components =
@@ -144,9 +119,25 @@ default-components =
       getDefaultProps: ->
         htmlTag: \br
 
+lookup = (node) -> default-components[node.namespace]?[node.name]
+render = (node, scale = 1.0, getComponent = lookup) ->
+  | not node => null
+  | otherwise
+    # clone props w/o cloning the children
+    props = cloneDeep node.attrs
+    props.scale = scale
+    props.className = "#{node.namespace} #{node.name} #{props.className or ''}"
+    children = for i, c of node.children
+      c.attrs.ref = i
+      render c, scale, getComponent
+    children.push node.text if node.text
+    comp = getComponent node
+    comp? props, children
+
 module.exports =
-  DrawMixin:   DrawMixin
-  components:  default-components
-  renderProps: renderProps
+  DrawMixin:    DrawMixin
+  components:   default-components
+  renderProps:  renderProps
   scale-length: scale-length
+  render:       render
 

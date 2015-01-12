@@ -157,7 +157,7 @@
       var setup, attrs, offsetX, ref$, this$ = this;
       setup = this.props.masterPage.setup;
       attrs = this.props.data.attrs;
-      offsetX = "-" + this.props.currentPage * +attrs.width.replace('cm', '') + "cm";
+      offsetX = "-" + this.props.currentPage * +attrs.style.width.replace('cm', '') + "cm";
       return div({
         className: 'main'
       }, div({
@@ -174,124 +174,85 @@
       }, Playground({
         ref: 'playground',
         data: this.props.segs.get(this.props.text)
-      }))), ODP.components.office.presentation({
-        ref: 'presentation',
-        scale: this.state.scale,
-        data: this.props.data,
-        renderProps: function(props){
-          var pages, parents, data, attrs, key$, ref$, text, page, x$, startTime, endTime, i$, ref1$, len$, cue;
-          if (!this$.props.pages) {
-            this$.props.pages = (function(){
-              var i$, to$, results$ = [];
-              for (i$ = 1, to$ = setup.totalPages; i$ <= to$; ++i$) {
-                results$.push(i$);
-              }
-              return results$;
-            }());
-          }
-          pages = this$.props.pages.map(function(it){
-            return "page" + it;
-          });
-          parents = props.parents;
-          data = props.data;
-          attrs = data.attrs;
-          switch (false) {
-          case data.name !== 'page':
-            attrs.x = offsetX;
-            this$[key$ = attrs.name] == null && (this$[key$] = {
-              speak: function(){
-                throw Error('unimplemented');
-              },
-              sentences: [],
-              playgrounds: []
-            });
-            if (in$(attrs.name, pages)) {
-              return ODP.renderProps(props);
-            }
-            break;
-          case !false:
-            delete attrs.href;
-            delete attrs[onClick + ""];
-            return ODP.components.draw.image(props, AudioControl((ref$ = {
-              loading: this$.props.loading,
-              playing: this$.props.playing
-            }, ref$[onClick + ""] = function(){
-              return this$.notify(!this$.props.playing
-                ? {
-                  action: 'play',
-                  pageNum: props.data.attrs.pageNum
-                }
-                : {
-                  action: 'stop'
-                });
-            }, ref$)));
-          case !(data.name === 'span' && data.text):
-            text = data.text;
-            page = this$[parents[1].name];
-            if (!in$(text, page.sentences)) {
-              x$ = page;
-              x$.sentences.push(text);
-              x$.playgrounds.push({
-                toggle: function(it){
-                  if (it) {
-                    return this$.show();
-                  } else {
-                    return this$.hide();
-                  }
-                }
-              });
-            }
-            if (!this$.state.showText) {
-              attrs.style.display = 'none';
-            }
-            startTime = 0;
-            endTime = 0;
-            if (this$.props.vtt) {
-              delete props.data.text;
-              for (i$ = 0, len$ = (ref$ = (ref1$ = this$.props.vtt) != null ? ref1$.cues : void 8).length; i$ < len$; ++i$) {
-                cue = ref$[i$];
-                if (text === cue.text) {
-                  startTime = cue.startTime, endTime = cue.endTime;
-                }
-              }
-              return ODP.components.text.span(props, Cue({
-                key: text,
-                startTime: startTime,
-                endTime: endTime,
-                currentTime: this$.props.currentTime
-              }, this$.state.comps[text]));
-            } else {
-              return ODP.renderProps(props);
-            }
-            break;
-          case data.name !== 'custom-shape':
-            if (this$.state.showText) {
-              return CustomShape(props);
-            }
-            break;
-          case !(data.id === 'glossary' || data.id === 'read-to-me' || data.id === 'learn-by-myself'):
-            return Button({
-              className: data.id,
-              style: {
-                width: ODP.scaleLength(props.scale, data.attrs.width),
-                height: ODP.scaleLength(props.scale, data.attrs.height),
-                left: ODP.scaleLength(props.scale, data.attrs.x),
-                top: ODP.scaleLength(props.scale, data.attrs.y)
-              },
-              onClick: function(){
-                return this.notify({
-                  action: 'mode',
-                  data: data.id
-                });
-              }
-            });
-          default:
-            return ODP.renderProps(props);
-          }
-        }
-      }));
+      }))), ODP.render(this.props.data, this.state.scale));
     }
   });
+  /*
+        ODP.components.office.presentation do
+          ref: \presentation
+          scale: @state.scale
+          data:  @props.data
+          renderProps: (props) ~>
+            @props.pages = [1 to setup.total-pages] if not @props.pages
+            pages = @props.pages.map (-> "page#it")
+            parents = props.parents
+            data  = props.data
+            attrs = data.attrs
+            switch
+            | data.name is 'page'
+              attrs.x = offset-x
+              # expose pages
+              @[attrs.name] ?=
+                speak: -> ...
+                sentences: []
+                playgrounds: []
+              ODP.renderProps props if attrs.name in pages
+            #| data.name is 'image' and attrs.name is 'activity' and not @props.autoplay
+            | false
+              delete attrs.href
+              delete attrs["#onClick"]
+              ODP.components.draw.image do
+                props
+                AudioControl do
+                  loading: @props.loading
+                  playing: @props.playing
+                  "#onClick": ~>
+                    @notify unless @props.playing
+                      then action: \play, page-num: props.data.attrs.page-num
+                      else action: \stop
+            | data.name is 'span' and data.text
+              text = data.text
+              page = @[parents.1.name]
+              unless text in page.sentences
+                page
+                  ..sentences.push text
+                  ..playgrounds.push do
+                    toggle: ~> if it then @show! else @hide!
+              attrs.style <<< display: \none if not @state.show-text
+              startTime = 0
+              endTime = 0
+              if @props.vtt
+                delete props.data.text
+                for cue in @props.vtt?cues
+                  if text is cue.text
+                    { startTime, endTime } = cue
+                ODP.components.text.span do
+                  props
+                  Cue do
+                    {
+                      key: text
+                      startTime
+                      endTime
+                      current-time: @props.current-time
+                    }
+                    @state.comps[text]
+              else
+                ODP.renderProps props
+            | data.name is 'custom-shape'
+              CustomShape props if @state.show-text
+            | data.id is 'glossary' or
+              data.id is 'read-to-me' or
+              data.id is 'learn-by-myself'
+              Button do
+                className: data.id
+                style:
+                  width:  ODP.scale-length props.scale, data.attrs.width
+                  height: ODP.scale-length props.scale, data.attrs.height
+                  left: ODP.scale-length props.scale, data.attrs.x
+                  top:  ODP.scale-length props.scale, data.attrs.y
+                onClick: -> @notify action: \mode data: data.id
+            | otherwise => ODP.renderProps props
+  */
   module.exports = Book;
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;

@@ -149,7 +149,7 @@
           x$.pinyin = tagless(moe[c].pinyin);
           x$.en = x$.en.map(tagless);
         }
-        this$.data = moe;
+        this$.data = moe || [];
         return typeof done === 'function' ? done(this$) : void 8;
       });
       return this$;
@@ -279,10 +279,12 @@
             name: 'presentation',
             namespace: 'office',
             attrs: {
-              x: '0',
-              y: '0',
-              width: '28cm',
-              height: '21cm'
+              style: {
+                left: '0cm',
+                top: '0cm',
+                width: '28cm',
+                height: '21cm'
+              }
             },
             children: pages
           });

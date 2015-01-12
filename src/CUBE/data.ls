@@ -61,7 +61,7 @@ class Dict
         ..['zh-CN']  = tagless moe[c]['zh-CN']
         ..pinyin = tagless moe[c]pinyin
         ..en .= map (tagless)
-    @data = moe
+    @data = moe or []
     done? this
   get: ->
     @data[it]
@@ -155,10 +155,11 @@ Data =
           name:      \presentation
           namespace: \office
           attrs:
-            x:      \0
-            y:      \0
-            width:  \28cm
-            height: \21cm
+            style:
+              left:   \0cm
+              top:    \0cm
+              width:  \28cm
+              height: \21cm
           children:  pages
     for let i from 1 to setup.total-pages
       err, data <- fs.readFile "#path/page#i.json"

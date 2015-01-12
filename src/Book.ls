@@ -113,7 +113,7 @@ Book = React.createClass do
   render: ->
     { setup } = @props.master-page
     attrs = @props.data.attrs
-    offset-x = "-#{@props.current-page * +(attrs.width.replace 'cm' '')}cm"
+    offset-x = "-#{@props.current-page * +(attrs.style.width.replace 'cm' '')}cm"
 
     div do
       className: 'main'
@@ -135,6 +135,8 @@ Book = React.createClass do
           Playground do
             ref: \playground
             data: @props.segs.get @props.text
+      ODP.render @props.data, @state.scale
+/*
       ODP.components.office.presentation do
         ref: \presentation
         scale: @state.scale
@@ -209,6 +211,7 @@ Book = React.createClass do
                 top:  ODP.scale-length props.scale, data.attrs.y
               onClick: -> @notify action: \mode data: data.id
           | otherwise => ODP.renderProps props
+*/
 
 module.exports = Book
 

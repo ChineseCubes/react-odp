@@ -1,5 +1,5 @@
 (function(){
-  var React, camelFromHyphenated, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, scaleLength, renderProps, doTextareaVerticalAlign, fromVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents;
+  var React, camelFromHyphenated, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, scaleLength, renderProps, doTextareaVerticalAlign, fromVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents, lookup, render;
   React = require('react');
   camelFromHyphenated = require('../CUBE/utils').camelFromHyphenated;
   ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, isNumber = ref$.isNumber, filter = ref$.filter, map = ref$.map, mapValues = ref$.mapValues, cloneDeep = ref$.cloneDeep;
@@ -103,7 +103,6 @@
     },
     getDefaultProps: function(){
       return {
-        defaultHtmlTag: 'div',
         scale: 1.0,
         parents: [],
         renderProps: renderProps
@@ -119,69 +118,16 @@
         return results$;
       }
     },
-    componentWillMount: function(){
-      return this.applyMiddlewares(this.props.data);
-    },
-    componentWillReceiveProps: function(arg$){
-      var data;
-      data = arg$.data;
-      return this.applyMiddlewares(data);
-    },
     render: function(){
-      var data, attrs, ref$, style, props, key, attr, childPropsList, res$, i$, children;
-      if (!(data = this.props.data)) {
-        return;
-      }
-      attrs = data.attrs;
-      if ((attrs != null ? (ref$ = attrs.style) != null ? ref$.display : void 8 : void 8) === 'none' && attrs.href) {
+      var ref$;
+      if (((ref$ = this.props.style) != null ? ref$.display : void 8) === 'none' && attrs.href) {
         return React.DOM.div({});
       }
-      style = {
-        left: (attrs != null ? attrs.x : void 8) || 'auto',
-        top: (attrs != null ? attrs.y : void 8) || 'auto',
-        width: (attrs != null ? attrs.width : void 8) || 'auto',
-        height: (attrs != null ? attrs.height : void 8) || 'auto'
-      };
-      if (attrs != null) {
-        importAll$(style, attrs.style);
+      this.props.style = mapValues(importAll$({}, this.props.style), this.scaleStyle);
+      if (this.props.href) {
+        this.props.style.backgroundImage = "url(" + this.props.href + ")";
       }
-      style = mapValues(style, this.scaleStyle);
-      if (attrs.href) {
-        style.backgroundImage = "url(" + attrs.href + ")";
-      }
-      props = {
-        className: data.namespace + " " + data.name + " " + (attrs.className || ''),
-        style: style
-      };
-      for (key in attrs) {
-        attr = attrs[key];
-        if (/^on.*$/.test(key)) {
-          props[key] = attr;
-        }
-      }
-      res$ = [];
-      for (i$ in data.children) {
-        res$.push((fn$.call(this, i$, data.children[i$])));
-      }
-      childPropsList = res$;
-      children = filter(
-      map(childPropsList, this.props.renderProps));
-      if (data.text) {
-        children.unshift(data.text);
-      }
-      return React.DOM[this.props.htmlTag || this.props.defaultHtmlTag](props, children.concat(this.props.children));
-      function fn$(i, child){
-        return {
-          key: i,
-          scale: this.props.scale,
-          parents: this.props.parents.concat([{
-            tag: data.name,
-            name: attrs.name
-          }]),
-          data: cloneDeep(child),
-          renderProps: this.props.renderProps
-        };
-      }
+      return React.DOM[this.props.htmlTag || 'div'](this.props);
     }
   };
   defaultComponents = {
@@ -244,11 +190,41 @@
       }))
     }
   };
+  lookup = function(node){
+    var ref$;
+    return (ref$ = defaultComponents[node.namespace]) != null ? ref$[node.name] : void 8;
+  };
+  render = function(node, scale, getComponent){
+    var props, children, res$, i, ref$, c, comp;
+    scale == null && (scale = 1.0);
+    getComponent == null && (getComponent = lookup);
+    switch (false) {
+    case !!node:
+      return null;
+    default:
+      props = cloneDeep(node.attrs);
+      props.scale = scale;
+      props.className = node.namespace + " " + node.name + " " + (props.className || '');
+      res$ = [];
+      for (i in ref$ = node.children) {
+        c = ref$[i];
+        c.attrs.ref = i;
+        res$.push(render(c, scale, getComponent));
+      }
+      children = res$;
+      if (node.text) {
+        children.push(node.text);
+      }
+      comp = getComponent(node);
+      return typeof comp === 'function' ? comp(props, children) : void 8;
+    }
+  };
   module.exports = {
     DrawMixin: DrawMixin,
     components: defaultComponents,
     renderProps: renderProps,
-    scaleLength: scaleLength
+    scaleLength: scaleLength,
+    render: render
   };
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;
