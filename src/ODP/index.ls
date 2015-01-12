@@ -13,7 +13,7 @@ scale-length = (scale, value, key = '') -> # without changing the unit
     "#{+r.1 * scale}#{r.2 or ''}"
   | otherwise                  => value
 renderProps = ->
-  default-components[camelFromHyphenated it.data.name]? it
+  default-components[camelFromHyphenated it.data.namespace]?[camelFromHyphenated it.data.name]? it
 doTextareaVerticalAlign = ->
   return if not it?attrs?style?textarea-vertical-align
   style= it.attrs.style
@@ -103,43 +103,46 @@ DrawMixin =
 
 # act like React.DOM at v0.12
 default-components =
-  page: React.createFactory React.createClass do
-    displayName: \ReactODP.Page
-    mixins: [DrawMixin]
-    middlewares: [doTextareaVerticalAlign, doVerticalAlign]
-  frame: React.createFactory React.createClass do
-    displayName: \ReactODP.Frame
-    mixins: [DrawMixin]
-    middlewares: [doTextareaVerticalAlign, removeLineHeight]
-  text-box: React.createFactory React.createClass do
-    displayName: \ReactODP.TextBox
-    mixins: [DrawMixin]
-    middlewares: [doTextareaVerticalAlign, doVerticalAlign]
-  image: React.createFactory React.createClass do
-    displayName: \ReactODP.Image
-    mixins: [DrawMixin]
-    middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
-  p: React.createFactory React.createClass do
-    displayName: \ReactODP.P
-    mixins: [DrawMixin]
-    middlewares: [doTextareaVerticalAlign, doVerticalAlign, removeLineHeight]
-  span: React.createFactory React.createClass do
-    displayName: \ReactODP.Span
-    mixins: [DrawMixin]
-    middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
-  line-break: React.createFactory React.createClass do
-    displayName: \ReactODP.LineBreak
-    mixins: [DrawMixin]
-    getDefaultProps: ->
-      htmlTag: \br
-  presentation: React.createFactory React.createClass do
-    displayName: \ReactODP.Presentation
-    mixins: [DrawMixin]
-  vertical-aligner: React.createFactory React.createClass do
-    displayName: \ReactODP.VerticalAligner
-    mixins: [DrawMixin]
-    getDefaultProps: ->
-      htmlTag: \span
+  office:
+    presentation: React.createFactory React.createClass do
+      displayName: \ReactODP.Presentation
+      mixins: [DrawMixin]
+  draw:
+    page: React.createFactory React.createClass do
+      displayName: \ReactODP.Page
+      mixins: [DrawMixin]
+      middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+    frame: React.createFactory React.createClass do
+      displayName: \ReactODP.Frame
+      mixins: [DrawMixin]
+      middlewares: [doTextareaVerticalAlign, removeLineHeight]
+    text-box: React.createFactory React.createClass do
+      displayName: \ReactODP.TextBox
+      mixins: [DrawMixin]
+      middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+    image: React.createFactory React.createClass do
+      displayName: \ReactODP.Image
+      mixins: [DrawMixin]
+      middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
+  text:
+    vertical-aligner: React.createFactory React.createClass do
+      displayName: \ReactODP.VerticalAligner
+      mixins: [DrawMixin]
+      getDefaultProps: ->
+        htmlTag: \span
+    p: React.createFactory React.createClass do
+      displayName: \ReactODP.P
+      mixins: [DrawMixin]
+      middlewares: [doTextareaVerticalAlign, doVerticalAlign, removeLineHeight]
+    span: React.createFactory React.createClass do
+      displayName: \ReactODP.Span
+      mixins: [DrawMixin]
+      middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
+    line-break: React.createFactory React.createClass do
+      displayName: \ReactODP.LineBreak
+      mixins: [DrawMixin]
+      getDefaultProps: ->
+        htmlTag: \br
 
 module.exports =
   DrawMixin:   DrawMixin

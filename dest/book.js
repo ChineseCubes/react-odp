@@ -174,7 +174,7 @@
       }, Playground({
         ref: 'playground',
         data: this.props.segs.get(this.props.text)
-      }))), ODP.components.presentation({
+      }))), ODP.components.office.presentation({
         ref: 'presentation',
         scale: this.state.scale,
         data: this.props.data,
@@ -212,7 +212,7 @@
           case !false:
             delete attrs.href;
             delete attrs[onClick + ""];
-            return ODP.components.image(props, AudioControl((ref$ = {
+            return ODP.components.draw.image(props, AudioControl((ref$ = {
               loading: this$.props.loading,
               playing: this$.props.playing
             }, ref$[onClick + ""] = function(){
@@ -254,7 +254,7 @@
                   startTime = cue.startTime, endTime = cue.endTime;
                 }
               }
-              return ODP.components.span(props, Cue({
+              return ODP.components.text.span(props, Cue({
                 key: text,
                 startTime: startTime,
                 endTime: endTime,

@@ -20,8 +20,8 @@
     }
   };
   renderProps = function(it){
-    var key$;
-    return typeof defaultComponents[key$ = camelFromHyphenated(it.data.name)] === 'function' ? defaultComponents[key$](it) : void 8;
+    var ref$, key$;
+    return (ref$ = defaultComponents[camelFromHyphenated(it.data.namespace)]) != null ? typeof ref$[key$ = camelFromHyphenated(it.data.name)] === 'function' ? ref$[key$](it) : void 8 : void 8;
   };
   doTextareaVerticalAlign = function(it){
     var ref$, ref1$, style, i$;
@@ -185,58 +185,64 @@
     }
   };
   defaultComponents = {
-    page: React.createFactory(React.createClass({
-      displayName: 'ReactODP.Page',
-      mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign]
-    })),
-    frame: React.createFactory(React.createClass({
-      displayName: 'ReactODP.Frame',
-      mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign, removeLineHeight]
-    })),
-    textBox: React.createFactory(React.createClass({
-      displayName: 'ReactODP.TextBox',
-      mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign]
-    })),
-    image: React.createFactory(React.createClass({
-      displayName: 'ReactODP.Image',
-      mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
-    })),
-    p: React.createFactory(React.createClass({
-      displayName: 'ReactODP.P',
-      mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign, removeLineHeight]
-    })),
-    span: React.createFactory(React.createClass({
-      displayName: 'ReactODP.Span',
-      mixins: [DrawMixin],
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
-    })),
-    lineBreak: React.createFactory(React.createClass({
-      displayName: 'ReactODP.LineBreak',
-      mixins: [DrawMixin],
-      getDefaultProps: function(){
-        return {
-          htmlTag: 'br'
-        };
-      }
-    })),
-    presentation: React.createFactory(React.createClass({
-      displayName: 'ReactODP.Presentation',
-      mixins: [DrawMixin]
-    })),
-    verticalAligner: React.createFactory(React.createClass({
-      displayName: 'ReactODP.VerticalAligner',
-      mixins: [DrawMixin],
-      getDefaultProps: function(){
-        return {
-          htmlTag: 'span'
-        };
-      }
-    }))
+    office: {
+      presentation: React.createFactory(React.createClass({
+        displayName: 'ReactODP.Presentation',
+        mixins: [DrawMixin]
+      }))
+    },
+    draw: {
+      page: React.createFactory(React.createClass({
+        displayName: 'ReactODP.Page',
+        mixins: [DrawMixin],
+        middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+      })),
+      frame: React.createFactory(React.createClass({
+        displayName: 'ReactODP.Frame',
+        mixins: [DrawMixin],
+        middlewares: [doTextareaVerticalAlign, removeLineHeight]
+      })),
+      textBox: React.createFactory(React.createClass({
+        displayName: 'ReactODP.TextBox',
+        mixins: [DrawMixin],
+        middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+      })),
+      image: React.createFactory(React.createClass({
+        displayName: 'ReactODP.Image',
+        mixins: [DrawMixin],
+        middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
+      }))
+    },
+    text: {
+      verticalAligner: React.createFactory(React.createClass({
+        displayName: 'ReactODP.VerticalAligner',
+        mixins: [DrawMixin],
+        getDefaultProps: function(){
+          return {
+            htmlTag: 'span'
+          };
+        }
+      })),
+      p: React.createFactory(React.createClass({
+        displayName: 'ReactODP.P',
+        mixins: [DrawMixin],
+        middlewares: [doTextareaVerticalAlign, doVerticalAlign, removeLineHeight]
+      })),
+      span: React.createFactory(React.createClass({
+        displayName: 'ReactODP.Span',
+        mixins: [DrawMixin],
+        middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
+      })),
+      lineBreak: React.createFactory(React.createClass({
+        displayName: 'ReactODP.LineBreak',
+        mixins: [DrawMixin],
+        getDefaultProps: function(){
+          return {
+            htmlTag: 'br'
+          };
+        }
+      }))
+    }
   };
   module.exports = {
     DrawMixin: DrawMixin,

@@ -135,7 +135,7 @@ Book = React.createClass do
           Playground do
             ref: \playground
             data: @props.segs.get @props.text
-      ODP.components.presentation do
+      ODP.components.office.presentation do
         ref: \presentation
         scale: @state.scale
         data:  @props.data
@@ -158,7 +158,7 @@ Book = React.createClass do
           | false
             delete attrs.href
             delete attrs["#onClick"]
-            ODP.components.image do
+            ODP.components.draw.image do
               props
               AudioControl do
                 loading: @props.loading
@@ -183,7 +183,7 @@ Book = React.createClass do
               for cue in @props.vtt?cues
                 if text is cue.text
                   { startTime, endTime } = cue
-              ODP.components.span do
+              ODP.components.text.span do
                 props
                 Cue do
                   {
