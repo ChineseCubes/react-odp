@@ -25,8 +25,8 @@
       };
     },
     componentWillReceiveProps: function(props){
-      var ref$;
-      if (((ref$ = this.props.data) != null ? ref$.short : void 8) !== ((ref$ = props.data) != null ? ref$.short : void 8)) {
+      var ref$, ref1$;
+      if (((ref$ = this.props.data) != null ? ref$.short : void 8) !== ((ref1$ = props.data) != null ? ref1$.short : void 8)) {
         this.undoAll();
         this.setState({
           focus: this.getInitialState().focus
@@ -35,18 +35,18 @@
       }
     },
     componentWillUpdate: function(props, state){
-      var ref$;
-      if (((ref$ = this.props.data) != null ? ref$.short : void 8) === ((ref$ = props.data) != null ? ref$.short : void 8)) {
+      var ref$, ref1$;
+      if (((ref$ = this.props.data) != null ? ref$.short : void 8) === ((ref1$ = props.data) != null ? ref1$.short : void 8)) {
         if (this.state.mode !== state.mode) {
           return console.log('mode will change');
         }
       }
     },
     componentDidUpdate: function(props, state){
-      var ref$;
-      if (((ref$ = this.props.data) != null ? ref$.short : void 8) !== ((ref$ = props.data) != null ? ref$.short : void 8)) {
-        if ((ref$ = this.refs.sentence.refs[0]) != null) {
-          ref$.click();
+      var ref$, ref1$, ref2$;
+      if (((ref$ = this.props.data) != null ? ref$.short : void 8) !== ((ref1$ = props.data) != null ? ref1$.short : void 8)) {
+        if ((ref2$ = this.refs.sentence.refs[0]) != null) {
+          ref2$.click();
         }
       }
       if (this.state.focus) {

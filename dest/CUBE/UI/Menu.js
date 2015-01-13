@@ -20,9 +20,9 @@
       return div((ref$ = this.props, ref$.className = className, ref$), div({
         className: 'buttons'
       }, (function(){
-        var i$, results$ = [];
-        for (i$ in this.props.buttons) {
-          results$.push((fn$.call(this, i$, this.props.buttons[i$])));
+        var i$, ref$, results$ = [];
+        for (i$ in ref$ = this.props.buttons) {
+          results$.push((fn$.call(this, i$, ref$[i$])));
         }
         return results$;
         function fn$(idx, btn){

@@ -1,9 +1,9 @@
 (function(){
-  var React, camelFromHyphenated, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, scaleLength, renderProps, doTextareaVerticalAlign, fromVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, DrawMixin, defaultComponents, lookup, render;
+  var React, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, camelFromHyphenated, scaleLength, fromVerticalAlign, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, scaleEverything, setImageHref, mixin, components, lookup, render, register;
   React = require('react');
-  camelFromHyphenated = require('../CUBE/utils').camelFromHyphenated;
   ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, isNumber = ref$.isNumber, filter = ref$.filter, map = ref$.map, mapValues = ref$.mapValues, cloneDeep = ref$.cloneDeep;
-  scaleLength = function(scale, value, key){
+  camelFromHyphenated = require('../CUBE/utils').camelFromHyphenated;
+  scaleLength = curry$(function(scale, value, key){
     var r;
     key == null && (key = '');
     switch (false) {
@@ -18,30 +18,7 @@
     default:
       return value;
     }
-  };
-  renderProps = function(it){
-    var ref$, key$;
-    return (ref$ = defaultComponents[camelFromHyphenated(it.data.namespace)]) != null ? typeof ref$[key$ = camelFromHyphenated(it.data.name)] === 'function' ? ref$[key$](it) : void 8 : void 8;
-  };
-  doTextareaVerticalAlign = function(it){
-    var ref$, ref1$, style, i$;
-    if (!(it != null && ((ref$ = it.attrs) != null && ((ref1$ = ref$.style) != null && ref1$.textareaVerticalAlign)))) {
-      return;
-    }
-    style = it.attrs.style;
-    for (i$ in it.children) {
-      (fn$.call(this, i$, it.children[i$]));
-    }
-    return it;
-    function fn$(i, child){
-      var ref$, ref1$;
-      import$((ref1$ = (ref$ = child.attrs).style) != null
-        ? ref1$
-        : ref$.style = {}, it.name === 'frame' ? {
-        textareaVerticalAlign: style.textareaVerticalAlign
-      } : void 8);
-    }
-  };
+  });
   fromVerticalAlign = function(it){
     switch (it) {
     case 'top':
@@ -54,190 +31,265 @@
       return 'flex-start';
     }
   };
+  doTextareaVerticalAlign = function(it){
+    var props, children, ref$, style, i$;
+    props = it.props, children = it.children;
+    switch (false) {
+    case !!(props != null && ((ref$ = props.style) != null && ref$.textareaVerticalAlign)):
+      return it;
+    case it.name === 'frame':
+      return it;
+    default:
+      style = props.style;
+      for (i$ in children) {
+        (fn$.call(this, i$, children[i$]));
+      }
+      return it;
+    }
+    function fn$(i, child){
+      var ref$, ref1$;
+      ((ref1$ = (ref$ = child.props).style) != null
+        ? ref1$
+        : ref$.style = {}).textareaVerticalAlign = style.textareaVerticalAlign;
+    }
+  };
   doVerticalAlign = function(it){
-    var attrs, ref$;
-    if ((it != null ? it.name : void 8) === 'frame') {
-      return;
+    var props, ref$;
+    props = it.props;
+    switch (false) {
+    case !!(props != null && ((ref$ = props.style) != null && ref$.textareaVerticalAlign)):
+      return it;
+    case (it != null ? it.name : void 8) !== 'frame':
+      return it;
+    default:
+      props.className += " aligned " + attrs.style.textareaVerticalAlign;
+      return it;
     }
-    attrs = it != null ? it.attrs : void 8;
-    if (!(attrs != null && ((ref$ = attrs.style) != null && ref$.textareaVerticalAlign))) {
-      return;
-    }
-    attrs.className = "aligned " + attrs.style.textareaVerticalAlign;
-    /**
-    it.children.unshift do
-      name: 'vertical-aligner'
-      namespace: 'helper'
-      attrs:
-        style:
-          display: \inline-block
-          height:  \100%
-          vertical-align: style.textarea-vertical-align
-      children: []
-    /**/
-    return it;
   };
   removeLineHeight = function(it){
-    var ref$, ref1$;
-    if (it != null) {
-      if ((ref$ = it.attrs) != null) {
-        if ((ref1$ = ref$.style) != null) {
-          delete ref1$.lineHeight;
-        }
+    var props, ref$;
+    props = it.props;
+    if (props != null) {
+      if ((ref$ = props.style) != null) {
+        delete ref$.lineHeight;
       }
     }
     return it;
   };
   makeInteractive = function(it){
-    var ref$;
-    if (it != null && ((ref$ = it.attrs) != null && ref$.onClick)) {
-      if ((ref$ = it.attrs.style) != null) {
+    var props, ref$;
+    props = it.props;
+    if (props != null && props.onClick) {
+      if ((ref$ = props.style) != null) {
         ref$.cursor = 'pointer';
       }
     }
     return it;
   };
-  DrawMixin = {
-    scaleStyle: function(value, key){
-      return scaleLength(this.props.scale, value, key);
-    },
+  scaleEverything = function(it){
+    var props;
+    props = it.props;
+    props.style = mapValues(import$({}, props.style), scaleLength(props.scale));
+    return it;
+  };
+  setImageHref = function(it){
+    var props;
+    props = it.props;
+    if (props.href) {
+      props.style.backgroundImage = "url(" + props.href + ")";
+    }
+    return it;
+  };
+  mixin = {
     getDefaultProps: function(){
       return {
         scale: 1.0,
-        parents: [],
-        renderProps: renderProps
+        namepath: []
       };
     },
-    applyMiddlewares: function(it){
-      var i$, ref$, len$, f, results$ = [];
-      if (isArray(this.middlewares)) {
-        for (i$ = 0, len$ = (ref$ = this.middlewares).length; i$ < len$; ++i$) {
-          f = ref$[i$];
-          results$.push(f(it));
-        }
-        return results$;
-      }
-    },
-    render: function(){
-      var ref$;
-      if (((ref$ = this.props.style) != null ? ref$.display : void 8) === 'none' && attrs.href) {
-        return React.DOM.div({});
-      }
-      this.props.style = mapValues(importAll$({}, this.props.style), this.scaleStyle);
-      if (this.props.href) {
-        this.props.style.backgroundImage = "url(" + this.props.href + ")";
-      }
+    doRender: function(){
       return React.DOM[this.props.htmlTag || 'div'](this.props);
     }
   };
-  defaultComponents = {
+  components = {
+    undefined: {},
     office: {
       presentation: React.createFactory(React.createClass({
         displayName: 'ReactODP.Presentation',
-        mixins: [DrawMixin]
+        mixins: [mixin],
+        render: function(){
+          scaleEverything(
+          this);
+          return this.doRender();
+        }
       }))
     },
     draw: {
       page: React.createFactory(React.createClass({
         displayName: 'ReactODP.Page',
-        mixins: [DrawMixin],
-        middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+        mixins: [mixin],
+        render: function(){
+          doVerticalAlign(
+          doTextareaVerticalAlign(
+          scaleEverything(
+          this)));
+          return this.doRender();
+        }
       })),
       frame: React.createFactory(React.createClass({
         displayName: 'ReactODP.Frame',
-        mixins: [DrawMixin],
-        middlewares: [doTextareaVerticalAlign, removeLineHeight]
+        mixins: [mixin],
+        render: function(){
+          removeLineHeight(
+          doTextareaVerticalAlign(
+          scaleEverything(
+          this)));
+          return this.doRender();
+        }
       })),
       textBox: React.createFactory(React.createClass({
         displayName: 'ReactODP.TextBox',
-        mixins: [DrawMixin],
-        middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+        mixins: [mixin],
+        render: function(){
+          doVerticalAlign(
+          doTextareaVerticalAlign(
+          scaleEverything(
+          this)));
+          return this.doRender();
+        }
       })),
       image: React.createFactory(React.createClass({
         displayName: 'ReactODP.Image',
-        mixins: [DrawMixin],
-        middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
+        mixins: [mixin],
+        render: function(){
+          makeInteractive(
+          doVerticalAlign(
+          doTextareaVerticalAlign(
+          setImageHref(
+          scaleEverything(
+          this)))));
+          return this.doRender();
+        }
       }))
     },
     text: {
       verticalAligner: React.createFactory(React.createClass({
         displayName: 'ReactODP.VerticalAligner',
-        mixins: [DrawMixin],
+        mixins: [mixin],
         getDefaultProps: function(){
           return {
             htmlTag: 'span'
           };
+        },
+        render: function(){
+          scaleEverything(
+          this);
+          return this.doRender();
         }
       })),
       p: React.createFactory(React.createClass({
         displayName: 'ReactODP.P',
-        mixins: [DrawMixin],
-        middlewares: [doTextareaVerticalAlign, doVerticalAlign, removeLineHeight]
+        mixins: [mixin],
+        render: function(){
+          removeLineHeight(
+          doVerticalAlign(
+          doTextareaVerticalAlign(
+          scaleEverything(
+          this))));
+          return this.doRender();
+        }
       })),
       span: React.createFactory(React.createClass({
         displayName: 'ReactODP.Span',
-        mixins: [DrawMixin],
-        middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
+        mixins: [mixin],
+        render: function(){
+          makeInteractive(
+          doVerticalAlign(
+          doTextareaVerticalAlign(
+          scaleEverything(
+          this))));
+          return this.doRender();
+        }
       })),
       lineBreak: React.createFactory(React.createClass({
         displayName: 'ReactODP.LineBreak',
-        mixins: [DrawMixin],
+        mixins: [mixin],
         getDefaultProps: function(){
           return {
             htmlTag: 'br'
           };
+        },
+        render: function(){
+          scaleEverything(
+          this);
+          return this.doRender();
         }
       }))
     }
   };
   lookup = function(node){
     var ref$;
-    return (ref$ = defaultComponents[node.namespace]) != null ? ref$[node.name] : void 8;
+    return (ref$ = components[node.namespace]) != null ? ref$[camelFromHyphenated(node.name)] : void 8;
   };
-  render = function(node, scale, getComponent){
-    var props, children, res$, i, ref$, c, comp;
+  render = function(node, scale, getComponent, namepath){
+    var props, x$, children, res$, i, ref$, c, comp;
     scale == null && (scale = 1.0);
     getComponent == null && (getComponent = lookup);
+    namepath == null && (namepath = []);
     switch (false) {
     case !!node:
       return null;
     default:
       props = cloneDeep(node.attrs);
-      props.scale = scale;
-      props.className = node.namespace + " " + node.name + " " + (props.className || '');
+      x$ = props;
+      x$.className = node.namespace + " " + node.name + " " + (props.className || '');
+      x$.scale = scale;
+      x$.namepath = namepath.concat([node.name]);
       res$ = [];
       for (i in ref$ = node.children) {
         c = ref$[i];
         c.attrs.ref = i;
-        res$.push(render(c, scale, getComponent));
+        res$.push(render(c, scale, getComponent, namepath));
       }
       children = res$;
       if (node.text) {
         children.push(node.text);
       }
       comp = getComponent(node);
-      return typeof comp === 'function' ? comp(props, children) : void 8;
+      return typeof comp == 'function' ? comp(props, children) : void 8;
     }
   };
+  register = function(namespace, name, comp){
+    var ref$;
+    return comp != null ? (ref$ = components[namespace]) != null ? ref$[name] = comp : void 8 : void 8;
+  };
   module.exports = {
-    DrawMixin: DrawMixin,
-    components: defaultComponents,
-    renderProps: renderProps,
     scaleLength: scaleLength,
-    render: render
+    mixin: mixin,
+    render: render,
+    register: register
   };
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;
     while (++i < l) if (x === xs[i]) return true;
     return false;
   }
+  function curry$(f, bound){
+    var context,
+    _curry = function(args) {
+      return f.length > 1 ? function(){
+        var params = args ? args.concat() : [];
+        context = bound ? context || this : this;
+        return params.push.apply(params, arguments) <
+            f.length && arguments.length ?
+          _curry.call(context, params) : f.apply(context, params);
+      } : f;
+    };
+    return _curry();
+  }
   function import$(obj, src){
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];
-    return obj;
-  }
-  function importAll$(obj, src){
-    for (var key in src) obj[key] = src[key];
     return obj;
   }
 }).call(this);

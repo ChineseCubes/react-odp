@@ -150,7 +150,7 @@
           x$.en = x$.en.map(tagless);
         }
         this$.data = moe || [];
-        return typeof done === 'function' ? done(this$) : void 8;
+        return typeof done == 'function' ? done(this$) : void 8;
       });
       return this$;
     } function ctor$(){} ctor$.prototype = prototype;
@@ -189,7 +189,7 @@
             this$.data[seg.zh] = tree;
           }
         }
-        return typeof done === 'function' ? done(this$) : void 8;
+        return typeof done == 'function' ? done(this$) : void 8;
         function fn$(it){
           return it['zh-TW'];
         }
@@ -391,7 +391,7 @@
       parents == null && (parents = []);
       return import$(splitNamespace(node.name), {
         text: node.text,
-        attrs: typeof onNode === 'function' ? onNode(node.attrs, node.name, parents) : void 8,
+        attrs: typeof onNode == 'function' ? onNode(node.attrs, node.name, parents) : void 8,
         children: !node.children
           ? []
           : (function(){
@@ -410,7 +410,7 @@
       if (!node) {
         return;
       }
-      if (typeof onEnter === 'function') {
+      if (typeof onEnter == 'function') {
         onEnter(node, parents);
       }
       if (!node.children) {
@@ -420,7 +420,7 @@
         child = ref$[i$];
         Data.parse(child, onEnter, onLeave, parents.concat([node.name]));
       }
-      return typeof onLeave === 'function' ? onLeave(node, parents) : void 8;
+      return typeof onLeave == 'function' ? onLeave(node, parents) : void 8;
     },
     segment: function(str, segs, longest){
       var re, words, lastIndex, r;

@@ -21,9 +21,9 @@
       };
     },
     componentWillReceiveProps: function(props){
-      var ref$;
-      if (((ref$ = this.props.data) != null ? ref$.short : void 8) !== ((ref$ = props.data) != null ? ref$.short : void 8)) {
-        return (ref$ = this.refs.stroker) != null ? ref$.setState({
+      var ref$, ref1$, ref2$;
+      if (((ref$ = this.props.data) != null ? ref$.short : void 8) !== ((ref1$ = props.data) != null ? ref1$.short : void 8)) {
+        return (ref2$ = this.refs.stroker) != null ? ref2$.setState({
           words: null
         }) : void 8;
       }
@@ -38,9 +38,9 @@
         ref: "stroker",
         mode: this.props.mode
       }), (function(){
-        var i$, results$ = [];
-        for (i$ in words) {
-          results$.push((fn$.call(this, i$, words[i$])));
+        var i$, ref$, results$ = [];
+        for (i$ in ref$ = words) {
+          results$.push((fn$.call(this, i$, ref$[i$])));
         }
         return results$;
         function fn$(i, word){

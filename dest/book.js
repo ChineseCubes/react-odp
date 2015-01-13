@@ -117,15 +117,15 @@
       }
     },
     ccaComps: function(paragraphs, segments, dicts){
-      var comps, i, segs, i$, ref$, len$, sentence, children, j$, len1$;
+      var comps, i, segs, i$, ref$, len$, sentence, children, j$, ref1$, len1$;
       comps = {};
       for (i in paragraphs) {
         segs = segments[i].map(fn$);
         for (i$ = 0, len$ = (ref$ = paragraphs[i]).length; i$ < len$; ++i$) {
           sentence = ref$[i$];
           children = [];
-          for (j$ = 0, len1$ = Data.segment(sentence, segs).length; j$ < len1$; ++j$) {
-            (fn1$.call(this, Data.segment(sentence, segs)[j$], i, sentence));
+          for (j$ = 0, len1$ = (ref1$ = Data.segment(sentence, segs)).length; j$ < len1$; ++j$) {
+            (fn1$.call(this, ref1$[j$]));
           }
           comps[sentence] = span({}, children);
         }
@@ -134,7 +134,7 @@
       function fn$(it){
         return it.zh;
       }
-      function fn1$(seg, i, sentence){
+      function fn1$(seg){
         var this$ = this;
         if (in$(seg, segs)) {
           children.push(span({

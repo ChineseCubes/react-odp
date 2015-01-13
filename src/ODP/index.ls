@@ -1,143 +1,192 @@
-React = require 'react'
-{ camelFromHyphenated }  = require '../CUBE/utils'
-{
-  isArray, isString, isNumber,
-  filter, map, mapValues, cloneDeep
-} = require 'lodash'
+require! {
+  react: React
+  lodash: { isArray, isString, isNumber, filter, map, mapValues, cloneDeep }
+  '../CUBE/utils': { camelFromHyphenated }
+}
 
-scale-length = (scale, value, key = '') -> # without changing the unit
+###
+# Helpers
+scale-length = (scale, value, key = '') --> # without changing the unit
   | key in <[opacity]>         => value
   | isNumber value             => value * scale
   | /^-?\d*\.?\d+%$/test value => value
   | r = /^(-?\d*\.?\d+)(in|cm|mm|px|pc|pt)?$/exec value
     "#{+r.1 * scale}#{r.2 or ''}"
   | otherwise                  => value
-renderProps = ->
-  default-components[camelFromHyphenated it.data.namespace]?[camelFromHyphenated it.data.name]? it
-doTextareaVerticalAlign = ->
-  return if not it?attrs?style?textarea-vertical-align
-  style= it.attrs.style
-  for let i, child of it.children
-    # pass the style one level down
-    (child.attrs.style ?= {}) <<< if it.name is \frame
-      #display: \table
-      textarea-vertical-align: style.textarea-vertical-align
-    # change children into inline-blocks
-    #else
-    #  display: \inline-block
-    #  vertical-align: style.textarea-vertical-align
-  it
+
+# TODO: might be useful someday
+#style = mapValues style, (v, k) ~>
+#  v?split(/\s+/)map(~> @scaleStyle it, k)join ' '
+
 from-vertical-align = ->
   switch it
   | \top    => \flex-start
   | \middle => \center
   | \bottom => \flex-end
   | _       => \flex-start
-doVerticalAlign = ->
-  return if it?name is \frame
-  attrs = it?attrs
-  return if not attrs?style?textarea-vertical-align
-  attrs.className = "aligned #{attrs.style.textarea-vertical-align}"
-  /**
-  it.children.unshift do
-    name: 'vertical-aligner'
-    namespace: 'helper'
-    attrs:
-      style:
-        display: \inline-block
-        height:  \100%
-        vertical-align: style.textarea-vertical-align
-    children: []
-  /**/
-  it
-removeLineHeight = ->
-  delete it?attrs?style?line-height
-  it
-makeInteractive = ->
-  if it?attrs?onClick
-    it.attrs.style?cursor = 'pointer'
+
+###
+# Layout Helpers
+do-textarea-vertical-align = ({ props, children }:it) ->
+  | not props?style?textarea-vertical-align => it
+  | it.name isnt \frame                     => it
+  | otherwise
+    style= props.style
+    for let i, child of children
+    # pass the style one level down
+      (child.props.style ?= {}) <<<
+        #display: \table
+        textarea-vertical-align: style.textarea-vertical-align
+      # change children into inline-blocks
+      #else
+      #  display: \inline-block
+      #  vertical-align: style.textarea-vertical-align
+    it
+
+do-vertical-align = ({ props }:it) ->
+  | not props?style?textarea-vertical-align => it
+  | it?name is \frame                       => it
+  | otherwise
+    props.className += " aligned #{attrs.style.textarea-vertical-align}"
+    it
+
+remove-line-height = ({ props }:it) ->
+  delete props?style?line-height
   it
 
-DrawMixin =
-  scaleStyle: (value, key) -> scale-length @props.scale, value, key
+make-interactive = ({ props }:it) ->
+  props.style?cursor = \pointer if props?onClick
+  it
+
+scale-everything = ({ props }:it) ->
+  props.style = mapValues ({} <<< props.style), (scale-length props.scale)
+  it
+
+set-image-href = ({ props }:it)->
+  if props.href
+    props.style.background-image = "url(#{props.href})"
+  it
+
+###
+# Mixin
+mixin =
   getDefaultProps: ->
-    scale:          1.0
-    parents:        []
-    renderProps: renderProps
-  applyMiddlewares: ->
-    if isArray @middlewares then for f in @middlewares => f it
-  #componentWillMount: -> @applyMiddlewares @props.data
-  #componentWillReceiveProps: ({data}) -> @applyMiddlewares data
-  render: ->
-    return React.DOM.div {} if @props.style?display is \none and attrs.href
-    @props.style = mapValues ({} <<<< @props.style), @scaleStyle
-    # TODO: might be useful someday
-    #style = mapValues style, (v, k) ~> v?split(/\s+/)map(~> @scaleStyle it, k)join ' '
-    @props.style <<< background-image: "url(#{@props.href})" if @props.href
+    scale:    1.0
+    namepath: []
+  doRender: ->
     React.DOM[@props.htmlTag or \div] @props
 
-# act like React.DOM at v0.12
-default-components =
+###
+# Default Components
+components =
+  undefined: {}
   office:
     presentation: React.createFactory React.createClass do
       displayName: \ReactODP.Presentation
-      mixins: [DrawMixin]
+      mixins: [mixin]
+      render: ->
+        this |> scale-everything
+        @doRender!
   draw:
     page: React.createFactory React.createClass do
       displayName: \ReactODP.Page
-      mixins: [DrawMixin]
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+      mixins: [mixin]
+      render: ->
+        this
+        |> scale-everything
+        |> do-textarea-vertical-align
+        |> do-vertical-align
+        @doRender!
     frame: React.createFactory React.createClass do
       displayName: \ReactODP.Frame
-      mixins: [DrawMixin]
-      middlewares: [doTextareaVerticalAlign, removeLineHeight]
+      mixins: [mixin]
+      render: ->
+        this
+        |> scale-everything
+        |> do-textarea-vertical-align
+        |> remove-line-height
+        @doRender!
     text-box: React.createFactory React.createClass do
       displayName: \ReactODP.TextBox
-      mixins: [DrawMixin]
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign]
+      mixins: [mixin]
+      render: ->
+        this
+        |> scale-everything
+        |> do-textarea-vertical-align
+        |> do-vertical-align
+        @doRender!
     image: React.createFactory React.createClass do
       displayName: \ReactODP.Image
-      mixins: [DrawMixin]
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
+      mixins: [mixin]
+      render: ->
+        this
+        |> scale-everything
+        |> set-image-href
+        |> do-textarea-vertical-align
+        |> do-vertical-align
+        |> make-interactive
+        @doRender!
   text:
     vertical-aligner: React.createFactory React.createClass do
       displayName: \ReactODP.VerticalAligner
-      mixins: [DrawMixin]
+      mixins: [mixin]
       getDefaultProps: ->
         htmlTag: \span
+      render: ->
+        this |> scale-everything
+        @doRender!
     p: React.createFactory React.createClass do
       displayName: \ReactODP.P
-      mixins: [DrawMixin]
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign, removeLineHeight]
+      mixins: [mixin]
+      render: ->
+        this
+        |> scale-everything
+        |> do-textarea-vertical-align
+        |> do-vertical-align
+        |> remove-line-height
+        @doRender!
     span: React.createFactory React.createClass do
       displayName: \ReactODP.Span
-      mixins: [DrawMixin]
-      middlewares: [doTextareaVerticalAlign, doVerticalAlign, makeInteractive]
+      mixins: [mixin]
+      render: ->
+        this
+        |> scale-everything
+        |> do-textarea-vertical-align
+        |> do-vertical-align
+        |> make-interactive
+        @doRender!
     line-break: React.createFactory React.createClass do
       displayName: \ReactODP.LineBreak
-      mixins: [DrawMixin]
+      mixins: [mixin]
       getDefaultProps: ->
         htmlTag: \br
+      render: ->
+        this |> scale-everything
+        @doRender!
 
-lookup = (node) -> default-components[node.namespace]?[node.name]
-render = (node, scale = 1.0, getComponent = lookup) ->
+lookup = (node) -> components[node.namespace]?[camelFromHyphenated node.name]
+render = (node, scale = 1.0, getComponent = lookup, namepath = []) ->
   | not node => null
   | otherwise
     # clone props w/o cloning the children
     props = cloneDeep node.attrs
-    props.scale = scale
-    props.className = "#{node.namespace} #{node.name} #{props.className or ''}"
+    props
+      ..className = "#{node.namespace} #{node.name} #{props.className or ''}"
+      ..scale = scale
+      ..namepath = namepath ++ [node.name]
     children = for i, c of node.children
       c.attrs.ref = i
-      render c, scale, getComponent
+      render c, scale, getComponent, namepath
     children.push node.text if node.text
     comp = getComponent node
     comp? props, children
+register = (namespace, name, comp) ->
+  components[namespace]?[name]? = comp
 
-module.exports =
-  DrawMixin:    DrawMixin
-  components:   default-components
-  renderProps:  renderProps
-  scale-length: scale-length
-  render:       render
+module.exports = {
+  scale-length
+  mixin
+  render
+  register
+}
 

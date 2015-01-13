@@ -67,7 +67,7 @@
     prototype.play = function(pageNum){
       var update, count, ts, onEnd, clean, x$, read, this$ = this;
       update = function(){
-        if (typeof this$.onUpdate === 'function') {
+        if (typeof this$.onUpdate == 'function') {
           this$.onUpdate(this$.time());
         }
         return this$.rid = requestAnimationFrame(update);
@@ -113,8 +113,8 @@
       return this.audio.pause();
     };
     prototype.time = function(){
-      var ref$;
-      return (((ref$ = this.sprites[this.currentText]) != null ? ref$[0] : void 8) || 0) / 1000 + (((ref$ = this.audio) != null ? ref$.pos() : void 8) || 0);
+      var ref$, ref1$;
+      return (((ref$ = this.sprites[this.currentText]) != null ? ref$[0] : void 8) || 0) / 1000 + (((ref1$ = this.audio) != null ? ref1$.pos() : void 8) || 0);
     };
     prototype.process = function(it){
       switch (it.action) {

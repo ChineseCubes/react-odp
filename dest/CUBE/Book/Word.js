@@ -118,9 +118,9 @@
         className: 'characters'
       }, !this.state.cut
         ? (function(){
-          var i$, results$ = [];
-          for (i$ in data.flatten()) {
-            results$.push((fn$.call(this, i$, data.flatten()[i$])));
+          var i$, ref$, results$ = [];
+          for (i$ in ref$ = data.flatten()) {
+            results$.push((fn$.call(this, i$, ref$[i$])));
           }
           return results$;
           function fn$(i, c){
@@ -133,9 +133,9 @@
           }
         }.call(this))
         : (function(){
-          var i$, results$ = [];
-          for (i$ in data.children) {
-            results$.push((fn$.call(this, i$, data.children[i$])));
+          var i$, ref$, results$ = [];
+          for (i$ in ref$ = data.children) {
+            results$.push((fn$.call(this, i$, ref$[i$])));
           }
           return results$;
           function fn$(i, c){
