@@ -12,8 +12,9 @@ npm start
 ## Generate EPUB (WIP)
 
 ```bash
-npm run pack
-npm run check
+brew install fontforge
+brew install mp3val
+./src/build/pack.ls <path to the odp>
 ```
 
 ## Notes
