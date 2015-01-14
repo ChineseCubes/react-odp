@@ -280,8 +280,8 @@
             namespace: 'office',
             attrs: {
               style: {
-                left: '0cm',
-                top: '0cm',
+                left: 0,
+                top: 0,
                 width: '28cm',
                 height: '21cm'
               }

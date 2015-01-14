@@ -51,6 +51,7 @@
     if (props.href) {
       props.style.backgroundImage = "url(" + props.href + ")";
     }
+    delete props.href;
     return it;
   };
   mixin = {

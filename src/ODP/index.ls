@@ -33,6 +33,7 @@ scale-everything = ({ props }:it) ->
 set-image-href = ({ props }:it)->
   if props.href
     props.style.background-image = "url(#{props.href})"
+  delete props.href
   it
 
 ###
