@@ -154,10 +154,14 @@
       }
     },
     render: function(){
-      var setup, attrs, offsetX, ref$, this$ = this;
+      var setup, attrs, offsetX, i$, ref$, len$, page, this$ = this;
       setup = this.props.masterPage.setup;
       attrs = this.props.data.attrs;
       offsetX = "-" + this.props.currentPage * +attrs.style.width.replace('cm', '') + "cm";
+      for (i$ = 0, len$ = (ref$ = this.props.data.children).length; i$ < len$; ++i$) {
+        page = ref$[i$];
+        page.attrs.style.left = offsetX;
+      }
       return div({
         className: 'main'
       }, div({

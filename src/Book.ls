@@ -114,6 +114,7 @@ Book = React.createClass do
     { setup } = @props.master-page
     attrs = @props.data.attrs
     offset-x = "-#{@props.current-page * +(attrs.style.width.replace 'cm' '')}cm"
+    for page in @props.data.children => page.attrs.style.left = offset-x
 
     div do
       className: 'main'

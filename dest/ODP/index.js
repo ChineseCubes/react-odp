@@ -1,5 +1,5 @@
 (function(){
-  var React, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, camelFromHyphenated, scaleLength, fromVerticalAlign, doTextareaVerticalAlign, doVerticalAlign, removeLineHeight, makeInteractive, scaleEverything, setImageHref, mixin, components, lookup, render, register;
+  var React, ref$, isArray, isString, isNumber, filter, map, mapValues, cloneDeep, camelFromHyphenated, scaleLength, removeLineHeight, makeInteractive, scaleEverything, setImageHref, mixin, components, lookup, render, register;
   React = require('react');
   ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, isNumber = ref$.isNumber, filter = ref$.filter, map = ref$.map, mapValues = ref$.mapValues, cloneDeep = ref$.cloneDeep;
   camelFromHyphenated = require('../CUBE/utils').camelFromHyphenated;
@@ -19,53 +19,6 @@
       return value;
     }
   });
-  fromVerticalAlign = function(it){
-    switch (it) {
-    case 'top':
-      return 'flex-start';
-    case 'middle':
-      return 'center';
-    case 'bottom':
-      return 'flex-end';
-    default:
-      return 'flex-start';
-    }
-  };
-  doTextareaVerticalAlign = function(it){
-    var props, children, ref$, style, i$;
-    props = it.props, children = it.children;
-    switch (false) {
-    case !!(props != null && ((ref$ = props.style) != null && ref$.textareaVerticalAlign)):
-      return it;
-    case it.name === 'frame':
-      return it;
-    default:
-      style = props.style;
-      for (i$ in children) {
-        (fn$.call(this, i$, children[i$]));
-      }
-      return it;
-    }
-    function fn$(i, child){
-      var ref$, ref1$;
-      ((ref1$ = (ref$ = child.props).style) != null
-        ? ref1$
-        : ref$.style = {}).textareaVerticalAlign = style.textareaVerticalAlign;
-    }
-  };
-  doVerticalAlign = function(it){
-    var props, ref$;
-    props = it.props;
-    switch (false) {
-    case !!(props != null && ((ref$ = props.style) != null && ref$.textareaVerticalAlign)):
-      return it;
-    case (it != null ? it.name : void 8) !== 'frame':
-      return it;
-    default:
-      props.className += " aligned " + attrs.style.textareaVerticalAlign;
-      return it;
-    }
-  };
   removeLineHeight = function(it){
     var props, ref$;
     props = it.props;
@@ -129,10 +82,8 @@
         displayName: 'ReactODP.Page',
         mixins: [mixin],
         render: function(){
-          doVerticalAlign(
-          doTextareaVerticalAlign(
           scaleEverything(
-          this)));
+          this);
           return this.doRender();
         }
       })),
@@ -141,9 +92,8 @@
         mixins: [mixin],
         render: function(){
           removeLineHeight(
-          doTextareaVerticalAlign(
           scaleEverything(
-          this)));
+          this));
           return this.doRender();
         }
       })),
@@ -151,10 +101,8 @@
         displayName: 'ReactODP.TextBox',
         mixins: [mixin],
         render: function(){
-          doVerticalAlign(
-          doTextareaVerticalAlign(
           scaleEverything(
-          this)));
+          this);
           return this.doRender();
         }
       })),
@@ -163,11 +111,9 @@
         mixins: [mixin],
         render: function(){
           makeInteractive(
-          doVerticalAlign(
-          doTextareaVerticalAlign(
           setImageHref(
           scaleEverything(
-          this)))));
+          this)));
           return this.doRender();
         }
       }))
@@ -192,10 +138,8 @@
         mixins: [mixin],
         render: function(){
           removeLineHeight(
-          doVerticalAlign(
-          doTextareaVerticalAlign(
           scaleEverything(
-          this))));
+          this));
           return this.doRender();
         }
       })),
@@ -204,10 +148,8 @@
         mixins: [mixin],
         render: function(){
           makeInteractive(
-          doVerticalAlign(
-          doTextareaVerticalAlign(
           scaleEverything(
-          this))));
+          this));
           return this.doRender();
         }
       })),

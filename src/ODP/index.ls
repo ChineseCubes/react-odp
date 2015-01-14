@@ -18,38 +18,6 @@ scale-length = (scale, value, key = '') --> # without changing the unit
 #style = mapValues style, (v, k) ~>
 #  v?split(/\s+/)map(~> @scaleStyle it, k)join ' '
 
-from-vertical-align = ->
-  switch it
-  | \top    => \flex-start
-  | \middle => \center
-  | \bottom => \flex-end
-  | _       => \flex-start
-
-###
-# Layout Helpers
-do-textarea-vertical-align = ({ props, children }:it) ->
-  | not props?style?textarea-vertical-align => it
-  | it.name isnt \frame                     => it
-  | otherwise
-    style= props.style
-    for let i, child of children
-    # pass the style one level down
-      (child.props.style ?= {}) <<<
-        #display: \table
-        textarea-vertical-align: style.textarea-vertical-align
-      # change children into inline-blocks
-      #else
-      #  display: \inline-block
-      #  vertical-align: style.textarea-vertical-align
-    it
-
-do-vertical-align = ({ props }:it) ->
-  | not props?style?textarea-vertical-align => it
-  | it?name is \frame                       => it
-  | otherwise
-    props.className += " aligned #{attrs.style.textarea-vertical-align}"
-    it
-
 remove-line-height = ({ props }:it) ->
   delete props?style?line-height
   it
@@ -94,8 +62,6 @@ components =
       render: ->
         this
         |> scale-everything
-        |> do-textarea-vertical-align
-        |> do-vertical-align
         @doRender!
     frame: React.createFactory React.createClass do
       displayName: \ReactODP.Frame
@@ -103,7 +69,6 @@ components =
       render: ->
         this
         |> scale-everything
-        |> do-textarea-vertical-align
         |> remove-line-height
         @doRender!
     text-box: React.createFactory React.createClass do
@@ -112,8 +77,6 @@ components =
       render: ->
         this
         |> scale-everything
-        |> do-textarea-vertical-align
-        |> do-vertical-align
         @doRender!
     image: React.createFactory React.createClass do
       displayName: \ReactODP.Image
@@ -122,8 +85,6 @@ components =
         this
         |> scale-everything
         |> set-image-href
-        |> do-textarea-vertical-align
-        |> do-vertical-align
         |> make-interactive
         @doRender!
   text:
@@ -141,8 +102,6 @@ components =
       render: ->
         this
         |> scale-everything
-        |> do-textarea-vertical-align
-        |> do-vertical-align
         |> remove-line-height
         @doRender!
     span: React.createFactory React.createClass do
@@ -151,8 +110,6 @@ components =
       render: ->
         this
         |> scale-everything
-        |> do-textarea-vertical-align
-        |> do-vertical-align
         |> make-interactive
         @doRender!
     line-break: React.createFactory React.createClass do
