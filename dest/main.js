@@ -1,5 +1,5 @@
 (function(){
-  var React, DotsDetector, Data, Audio, Book, Reader, ReactVTT, request, ref$, select, option, reader, initBook, $win, host, getMp3, getVtt, BookSelector;
+  var React, DotsDetector, Data, Audio, Book, Reader, ReactVTT, request, reader, initBook, $win, getMp3, getVtt;
   React = require('react');
   DotsDetector = React.createFactory(require('./react-dots-detector'));
   Data = require('./CUBE/data');
@@ -9,9 +9,7 @@
   ReactVTT = require('react-vtt');
   require('react-vtt/dest/Cue.css');
   request = require('request');
-  ref$ = React.DOM, select = ref$.select, option = ref$.option;
   $win = $(window);
-  host = 'http://cnl.linode.caasih.net';
   getMp3 = function(filename, done){
     return request(filename, function(err, res, body){
       if (err) {
@@ -29,66 +27,13 @@
       return done(null);
     });
   };
-  BookSelector = React.createClass({
-    displayName: 'BookSelector',
-    getInitialState: function(){
-      return {
-        books: []
-      };
-    },
-    componentWillMount: function(){
-      var this$ = this;
-      return request(host + "/books/", function(err, res, body){
-        var books, book;
-        books = JSON.parse(body);
-        book = Object.keys(books)[0];
-        initBook(reader, host + "/books/" + book, function(it){
-          reader = it;
-          return setTimeout(function(){
-            return reader.page(0);
-          }, 0);
-        });
-        return this$.setState({
-          books: books
-        });
-      });
-    },
-    render: function(){
-      var key, this$ = this;
-      return select({
-        className: 'book-selector',
-        name: 'book-selector',
-        onChange: function(it){
-          var book;
-          book = it.target.value;
-          return initBook(reader, host + "/books/" + book + "/", function(it){
-            reader = it;
-            return setTimeout(function(){
-              return reader.page(0);
-            }, 0);
-          });
-        }
-      }, (function(){
-        var results$ = [];
-        for (key in this.state.books) {
-          results$.push(option({
-            key: key,
-            value: key
-          }, key));
-        }
-        return results$;
-      }.call(this)));
-    }
-  });
-  BookSelector = React.createFactory(BookSelector);
   window.requestAnimationFrame(function(){
     return $(function(){
-      var dots, selector;
+      var dots;
       React.initializeTouchEvents(true);
       dots = React.render(DotsDetector({
         unit: 'cm'
       }), $('#detector').get()[0]);
-      selector = React.render(BookSelector(), $('#selector').get()[0]);
       initBook = function(reader, uri, done){
         return Data.getMasterPage(uri, function(mp){
           var setup;
@@ -186,6 +131,12 @@
           });
         });
       };
+      initBook(reader, './data/', function(it){
+        reader = it;
+        return setTimeout(function(){
+          return reader.page(0);
+        }, 0);
+      });
       return $win.resize(function(){
         return reader.setProps({
           width: $win.width(),

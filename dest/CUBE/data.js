@@ -235,7 +235,9 @@
           var def, en, char;
           if (it.length === 1) {
             def = moe.get(it);
-            en = slice.call(def.en);
+            en = def
+              ? slice.call(def.en)
+              : [];
             return Node([Char(def != null ? def.pinyin : void 8, (def != null ? def['zh-TW'] : void 8) || it, def != null ? def['zh-CN'] : void 8)], en.join(', '), shortest(en));
           } else {
             en = slice.call(enBySearch(it));
@@ -244,7 +246,9 @@
               for (i$ = 0, len$ = (ref$ = it).length; i$ < len$; ++i$) {
                 char = ref$[i$];
                 def = moe.get(char);
-                en = slice.call(def.en);
+                en = def
+                  ? slice.call(def.en)
+                  : [];
                 results$.push(Node([Char(def != null ? def.pinyin : void 8, (def != null ? def['zh-TW'] : void 8) || char, def != null ? def['zh-CN'] : void 8)], en.join(', '), shortest(en)));
               }
               return results$;

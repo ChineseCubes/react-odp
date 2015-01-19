@@ -35,70 +35,24 @@
     "zh-CN": "上",
     "zh-TW": "上"
   },
-  "主": {
+  "下": {
     "en": [
-      "owner",
-      "master",
-      "host",
-      "individual or party concerned",
-      "God",
-      "Lord",
-      "main",
-      "to indicate or signify",
-      "trump card (in card games)​"
+      "down",
+      "downwards",
+      "below",
+      "lower",
+      "later",
+      "next (week etc)​",
+      "second (of two parts)​",
+      "to decline",
+      "to go down",
+      "to arrive at (a decision",
+      " conclusion etc)​",
+      "measure word to show the frequency of an action"
     ],
-    "pinyin": "zhǔ",
-    "zh-CN": "主",
-    "zh-TW": "主"
-  },
-  "也": {
-    "en": [
-      "surname Ye",
-      "also",
-      "too",
-      "(in Classical Chinese)​ final particle implying affirmation"
-    ],
-    "pinyin": "yě",
-    "zh-CN": "也",
-    "zh-TW": "也"
-  },
-  "了": {
-    "en": [
-      "(modal particle intensifying preceding clause)​",
-      "(completed action marker)​",
-      "to finish",
-      "to achieve",
-      "to understand"
-    ],
-    "pinyin": "liǎo",
-    "zh-CN": "了",
-    "zh-TW": "了"
-  },
-  "事": {
-    "en": [
-      "matter",
-      "thing",
-      "item",
-      "work",
-      "affair",
-      "CL:<a href=\"#~件\">件</a>[jian4]",
-      "<a href=\"#~樁\">樁</a>|桩[zhuang1]"
-    ],
-    "pinyin": "shì",
-    "zh-CN": "事",
-    "zh-TW": "事"
-  },
-  "人": {
-    "en": [
-      "man",
-      "person",
-      "people",
-      "CL:<a href=\"#~個\">個</a>|个[ge4]",
-      "<a href=\"#~位\">位</a>[wei4]"
-    ],
-    "pinyin": "rén",
-    "zh-CN": "人",
-    "zh-TW": "人"
+    "pinyin": "xià",
+    "zh-CN": "下",
+    "zh-TW": "下"
   },
   "他": {
     "en": [
@@ -113,20 +67,18 @@
     "zh-CN": "他",
     "zh-TW": "他"
   },
-  "住": {
+  "位": {
     "en": [
-      "to live",
-      "to dwell",
-      "to stay",
-      "to reside",
-      "to stop",
-      "(suffix indicating firmness",
-      " steadiness",
-      " or coming to a halt)​"
+      "position",
+      "location",
+      "place",
+      "seat",
+      "classifier for people (honorific)​",
+      "classifier for binary bits (e.g. <a href=\"#~十\">十</a><a href=\"#~六\">六</a><a href=\"#~位\">位</a> 16-bit or 2 bytes)​"
     ],
-    "pinyin": "zhù",
-    "zh-CN": "住",
-    "zh-TW": "住"
+    "pinyin": "wèi",
+    "zh-CN": "位",
+    "zh-TW": "位"
   },
   "來": {
     "en": [
@@ -161,63 +113,13 @@
     "zh-CN": "们",
     "zh-TW": "們"
   },
-  "候": {
+  "兔": {
     "en": [
-      "to wait",
-      "to inquire after",
-      "to watch",
-      "season",
-      "climate",
-      "(old)​ period of five days"
+      "rabbit"
     ],
-    "pinyin": "hòu",
-    "zh-CN": "候",
-    "zh-TW": "候"
-  },
-  "兩": {
-    "en": [
-      "two",
-      "both",
-      "some",
-      "a few",
-      "tael",
-      " unit of weight equal to 50 grams (modern)​ or 1⁄16 of a catty <a href=\"#~斤\">斤</a>[jin1] (old)​"
-    ],
-    "pinyin": "liǎng",
-    "zh-CN": "两",
-    "zh-TW": "兩"
-  },
-  "別": {
-    "en": [
-      "surname Bie",
-      "to leave",
-      "to depart",
-      "to separate",
-      "to distinguish",
-      "to classify",
-      "other",
-      "another",
-      "do not",
-      "must not",
-      "to pin",
-      "to stick (sth)​ in"
-    ],
-    "pinyin": "bié",
-    "zh-CN": "别",
-    "zh-TW": "別"
-  },
-  "到": {
-    "en": [
-      "to (a place)​",
-      "until (a time)​",
-      "up to",
-      "to go",
-      "to arrive",
-      "(verb complement denoting completion or result of an action)​"
-    ],
-    "pinyin": "dào",
-    "zh-CN": "到",
-    "zh-TW": "到"
+    "pinyin": "tù",
+    "zh-CN": "兔",
+    "zh-TW": "兔"
   },
   "去": {
     "en": [
@@ -236,16 +138,24 @@
     "zh-CN": "去",
     "zh-TW": "去"
   },
-  "另": {
+  "友": {
     "en": [
-      "other",
-      "another",
-      "separate",
-      "separately"
+      "friend"
     ],
-    "pinyin": "lìng",
-    "zh-CN": "另",
-    "zh-TW": "另"
+    "pinyin": "yǒu",
+    "zh-CN": "友",
+    "zh-TW": "友"
+  },
+  "只": {
+    "en": [
+      "only",
+      "merely",
+      "just",
+      "but"
+    ],
+    "pinyin": "zhǐ",
+    "zh-CN": "只",
+    "zh-TW": "只"
   },
   "叫": {
     "en": [
@@ -259,106 +169,6 @@
     "pinyin": "jiào",
     "zh-CN": "叫",
     "zh-TW": "叫"
-  },
-  "可": {
-    "en": [
-      "can",
-      "may",
-      "able to",
-      "to approve",
-      "to permit",
-      "to suit",
-      "(particle used for emphasis)​ certainly",
-      "very",
-      "see <a href=\"#~可汗\">可汗</a>[ke4 han2]"
-    ],
-    "pinyin": "kě",
-    "zh-CN": "可",
-    "zh-TW": "可"
-  },
-  "吃": {
-    "en": [
-      "to eat",
-      "to consume",
-      "to eat at (a cafeteria etc)​",
-      "to eradicate",
-      "to destroy",
-      "to absorb",
-      "to suffer",
-      "stammer"
-    ],
-    "pinyin": "chī",
-    "zh-CN": "吃",
-    "zh-TW": "吃"
-  },
-  "呀": {
-    "en": [
-      "(particle equivalent to <a href=\"#~啊\">啊</a> after a vowel",
-      " expressing surprise or doubt)​"
-    ],
-    "pinyin": "yā",
-    "zh-CN": "呀",
-    "zh-TW": "呀"
-  },
-  "和": {
-    "en": [
-      "surname He",
-      "Japanese (food",
-      " clothes etc)​",
-      "and",
-      "together with",
-      "with",
-      "sum",
-      "union",
-      "peace",
-      "harmony",
-      "Taiwan pr. [han4] when it means \"and\"",
-      "to compose a poem in reply (to sb's poem)​ using the same rhyme sequence",
-      "to join in the singing",
-      "to chime in with others",
-      "to complete a set in mahjong or playing cards",
-      "soft",
-      "warm",
-      "to mix together",
-      "to blend"
-    ],
-    "pinyin": "hé",
-    "zh-CN": "和",
-    "zh-TW": "和"
-  },
-  "哪": {
-    "en": [
-      "how",
-      "which",
-      "(particle equivalent to <a href=\"#~啊\">啊</a> after noun ending in -n)​",
-      "which? (interrogative",
-      " followed by classifier or numeral-classifier)​"
-    ],
-    "pinyin": "nǎ",
-    "zh-CN": "哪",
-    "zh-TW": "哪"
-  },
-  "因": {
-    "en": [
-      "cause",
-      "reason",
-      "because"
-    ],
-    "pinyin": "yīn",
-    "zh-CN": "因",
-    "zh-TW": "因"
-  },
-  "在": {
-    "en": [
-      "(located)​ at",
-      "(to be)​ in",
-      "to exist",
-      "in the middle of doing sth",
-      "(indicating an action in progress)​"
-    ],
-    "pinyin": "zài",
-    "zh-CN": "在",
-    "zh-TW": "在"
   },
   "大": {
     "en": [
@@ -382,44 +192,24 @@
     "zh-CN": "大",
     "zh-TW": "大"
   },
-  "天": {
+  "夫": {
     "en": [
-      "day",
-      "sky",
-      "heaven"
+      "husband",
+      "man",
+      "manual worker",
+      "conscripted laborer (old)​",
+      "(classical)​ this",
+      " that",
+      "he",
+      " she",
+      " they",
+      "(exclamatory final particle)​",
+      "(initial particle",
+      " introduces an opinion)​"
     ],
-    "pinyin": "tiān",
-    "zh-CN": "天",
-    "zh-TW": "天"
-  },
-  "女": {
-    "en": [
-      "female",
-      "woman",
-      "daughter",
-      "archaic variant of <a href=\"#~汝\">汝</a>[ru3]"
-    ],
-    "pinyin": "nǚ",
-    "zh-CN": "女",
-    "zh-TW": "女"
-  },
-  "奶": {
-    "en": [
-      "breast",
-      "milk",
-      "to breastfeed"
-    ],
-    "pinyin": "nǎi",
-    "zh-CN": "奶",
-    "zh-TW": "奶"
-  },
-  "她": {
-    "en": [
-      "she"
-    ],
-    "pinyin": "tā",
-    "zh-CN": "她",
-    "zh-TW": "她"
+    "pinyin": "fū",
+    "zh-CN": "夫",
+    "zh-TW": "夫"
   },
   "好": {
     "en": [
@@ -441,85 +231,6 @@
     "zh-CN": "好",
     "zh-TW": "好"
   },
-  "妳": {
-    "en": [
-      "variant of <a href=\"#~嬭\">嬭</a>|<a href=\"#~奶\">奶</a>[nai3]",
-      "you (female)​",
-      "variant of <a href=\"#~你\">你</a>[ni3]"
-    ],
-    "pinyin": "nǐ",
-    "zh-CN": "<a href=\"#~你\">你</a>",
-    "zh-TW": "妳"
-  },
-  "媽": {
-    "en": [
-      "ma",
-      "mom",
-      "mother"
-    ],
-    "pinyin": "mā",
-    "zh-CN": "妈",
-    "zh-TW": "媽"
-  },
-  "子": {
-    "en": [
-      "son",
-      "child",
-      "seed",
-      "egg",
-      "small thing",
-      "1st earthly branch: 11 p.m.-1 a.m.",
-      " midnight",
-      " 11th solar month (7th December to 5th January)​",
-      " year of the Rat",
-      "Viscount",
-      " fourth of five orders of nobility <a href=\"#~五\">五</a><a href=\"#~等\">等</a><a href=\"#~爵位\">爵位</a>[wu3 deng3 jue2 wei4]",
-      "(noun suffix)​"
-    ],
-    "pinyin": "zǐ",
-    "zh-CN": "子",
-    "zh-TW": "子"
-  },
-  "孩": {
-    "en": [
-      "child"
-    ],
-    "pinyin": "hái",
-    "zh-CN": "孩",
-    "zh-TW": "孩"
-  },
-  "害": {
-    "en": [
-      "to do harm to",
-      "to cause trouble to",
-      "harm",
-      "evil",
-      "calamity"
-    ],
-    "pinyin": "hài",
-    "zh-CN": "害",
-    "zh-TW": "害"
-  },
-  "家": {
-    "en": [
-      "surname Jia",
-      "home",
-      "family",
-      "(polite)​ my (sister",
-      " uncle etc)​",
-      "classifier for families or businesses",
-      "refers to the philosophical schools of pre-Han China",
-      "noun suffix for a specialist in some activity",
-      " such as a musician or revolutionary",
-      " corresponding to English -ist",
-      " -er",
-      " -ary or -ian",
-      "CL:<a href=\"#~個\">個</a>|个[ge4]"
-    ],
-    "pinyin": "jiā",
-    "zh-CN": "家",
-    "zh-TW": "家"
-  },
   "小": {
     "en": [
       "small",
@@ -531,265 +242,85 @@
     "zh-CN": "小",
     "zh-TW": "小"
   },
-  "屋": {
+  "微": {
     "en": [
-      "house",
-      "room",
-      "CL:<a href=\"#~間\">間</a>|间[jian1]",
-      "<a href=\"#~個\">個</a>|个[ge4]"
+      "surname Wei",
+      "ancient Chinese state near present day Chongqing",
+      "Taiwan pr. [Wei2]",
+      "tiny",
+      "miniature",
+      "profound",
+      "abtruse",
+      "to decline",
+      "one millionth part of",
+      "micro-",
+      "Taiwan pr. [wei2]"
     ],
-    "pinyin": "wū",
-    "zh-CN": "屋",
-    "zh-TW": "屋"
+    "pinyin": "wéi",
+    "zh-CN": "微",
+    "zh-TW": "微"
   },
-  "已": {
+  "把": {
     "en": [
-      "already",
-      "to stop",
-      "then",
-      "afterwards"
+      "to hold",
+      "to contain",
+      "to grasp",
+      "to take hold of",
+      "handle",
+      "particle marking the following noun as a direct object",
+      "classifier for objects with handle",
+      "classifier for small objects: handful",
+      "handle"
     ],
-    "pinyin": "yǐ",
-    "zh-CN": "已",
-    "zh-TW": "已"
+    "pinyin": "bǎ",
+    "zh-CN": "把",
+    "zh-TW": "把"
   },
-  "帶": {
+  "排": {
     "en": [
-      "band",
-      "belt",
-      "girdle",
-      "ribbon",
-      "tire",
-      "area",
-      "zone",
-      "region",
-      "CL:<a href=\"#~條\">條</a>|条[tiao2]",
-      "to wear",
-      "to carry",
-      "to take along",
-      "to bear (i.e. to have)​",
-      "to lead",
-      "to bring",
-      "to look after",
-      "to raise"
+      "a row",
+      "a line",
+      "to set in order",
+      "to arrange",
+      "to line up",
+      "to eliminate",
+      "to drain",
+      "to push open",
+      "platoon",
+      "raft",
+      "classifier for lines",
+      " rows etc"
     ],
-    "pinyin": "dài",
-    "zh-CN": "带",
-    "zh-TW": "帶"
+    "pinyin": "pái",
+    "zh-CN": "排",
+    "zh-TW": "排"
   },
-  "帽": {
+  "撤": {
     "en": [
-      "hat",
-      "cap"
+      "to remove",
+      "to take away",
+      "to withdraw"
     ],
-    "pinyin": "mào",
-    "zh-CN": "帽",
-    "zh-TW": "帽"
+    "pinyin": "chè",
+    "zh-CN": "撤",
+    "zh-TW": "撤"
   },
-  "幫": {
+  "支": {
     "en": [
-      "to help",
-      "to assist",
+      "surname Zhi",
       "to support",
-      "for sb (i.e. as a help)​",
-      "hired (as worker)​",
-      "side (of pail",
-      " boat etc)​",
-      "outer layer",
-      "group",
-      "gang",
-      "clique",
-      "party",
-      "secret society"
+      "to sustain",
+      "to erect",
+      "to raise",
+      "branch",
+      "division",
+      "to draw money",
+      "classifier for rods such as pens and guns",
+      " for army divisions and for songs or compositions"
     ],
-    "pinyin": "bāng",
-    "zh-CN": "帮",
-    "zh-TW": "幫"
-  },
-  "床": {
-    "en": [
-      "bed",
-      "couch",
-      "classifier for beds",
-      "CL:<a href=\"#~張\">張</a>|张[zhang1]"
-    ],
-    "pinyin": "chuáng",
-    "zh-CN": "床",
-    "zh-TW": "床"
-  },
-  "後": {
-    "en": [
-      "back",
-      "behind",
-      "rear",
-      "afterwards",
-      "after",
-      "later"
-    ],
-    "pinyin": "hòu",
-    "zh-CN": "<a href=\"#~后\">后</a>",
-    "zh-TW": "後"
-  },
-  "從": {
-    "en": [
-      "surname Cong",
-      "lax",
-      "yielding",
-      "unhurried",
-      "from",
-      "via",
-      "passing through",
-      "through (a gap)​",
-      "past",
-      "ever (followed by negative",
-      " meaning never)​",
-      "(formerly pr. [zong4] and related to <a href=\"#~縱\">縱</a>|纵)​ to follow",
-      "to comply with",
-      "to obey",
-      "to join",
-      "to engage in",
-      "adopting some mode of action or attitude",
-      "follower",
-      "retainer",
-      "accessory",
-      "accomplice",
-      "related by common paternal grandfather or earlier ancestor",
-      "second cousin"
-    ],
-    "pinyin": "cóng",
-    "zh-CN": "从",
-    "zh-TW": "從"
-  },
-  "忙": {
-    "en": [
-      "busy",
-      "hurriedly",
-      "to hurry",
-      "to rush"
-    ],
-    "pinyin": "máng",
-    "zh-CN": "忙",
-    "zh-TW": "忙"
-  },
-  "快": {
-    "en": [
-      "rapid",
-      "quick",
-      "speed",
-      "rate",
-      "soon",
-      "almost",
-      "to make haste",
-      "clever",
-      "sharp (of knives or wits)​",
-      "forthright",
-      "plain-spoken",
-      "gratified",
-      "pleased",
-      "pleasant"
-    ],
-    "pinyin": "kuài",
-    "zh-CN": "快",
-    "zh-TW": "快"
-  },
-  "怕": {
-    "en": [
-      "surname Pa",
-      "to be afraid",
-      "to fear",
-      "to dread",
-      "to be unable to endure",
-      "perhaps"
-    ],
-    "pinyin": "pà",
-    "zh-CN": "怕",
-    "zh-TW": "怕"
-  },
-  "想": {
-    "en": [
-      "to think",
-      "to believe",
-      "to suppose",
-      "to wish",
-      "to want",
-      "to miss (feel wistful about the absence of sb or sth)​"
-    ],
-    "pinyin": "xiǎng",
-    "zh-CN": "想",
-    "zh-TW": "想"
-  },
-  "意": {
-    "en": [
-      "Italy",
-      "Italian",
-      "abbr. for <a href=\"#~意\">意</a><a href=\"#~大\">大</a><a href=\"#~利\">利</a>[Yi4 da4 li4]",
-      "idea",
-      "meaning",
-      "thought",
-      "to think",
-      "wish",
-      "desire",
-      "intention",
-      "to expect",
-      "to anticipate"
-    ],
-    "pinyin": "yì",
-    "zh-CN": "意",
-    "zh-TW": "意"
-  },
-  "我": {
-    "en": [
-      "I",
-      "me",
-      "my"
-    ],
-    "pinyin": "wǒ",
-    "zh-CN": "我",
-    "zh-TW": "我"
-  },
-  "房": {
-    "en": [
-      "surname Fang",
-      "house",
-      "room",
-      "CL:<a href=\"#~間\">間</a>|间[jian1]",
-      "branch of an extended family",
-      "classifier for family members (or concubines)​"
-    ],
-    "pinyin": "fáng",
-    "zh-CN": "房",
-    "zh-TW": "房"
-  },
-  "找": {
-    "en": [
-      "to try to find",
-      "to look for",
-      "to call on sb",
-      "to find",
-      "to seek",
-      "to return",
-      "to give change"
-    ],
-    "pinyin": "zhǎo",
-    "zh-CN": "找",
-    "zh-TW": "找"
-  },
-  "於": {
-    "en": [
-      "surname Yu",
-      "in",
-      "at",
-      "to",
-      "from",
-      "by",
-      "than",
-      "out of",
-      "(literary)​ Oh!",
-      "Ah!"
-    ],
-    "pinyin": "yú",
-    "zh-CN": "於",
-    "zh-TW": "於"
+    "pinyin": "zhī",
+    "zh-CN": "支",
+    "zh-TW": "支"
   },
   "是": {
     "en": [
@@ -803,51 +334,13 @@
     "zh-CN": "是",
     "zh-TW": "是"
   },
-  "時": {
+  "朋": {
     "en": [
-      "surname Shi",
-      "o'clock",
-      "time",
-      "when",
-      "hour",
-      "season",
-      "period"
+      "friend"
     ],
-    "pinyin": "shí",
-    "zh-CN": "时",
-    "zh-TW": "時"
-  },
-  "有": {
-    "en": [
-      "to have",
-      "there is",
-      "there are",
-      "to exist",
-      "to be"
-    ],
-    "pinyin": "yǒu",
-    "zh-CN": "有",
-    "zh-TW": "有"
-  },
-  "服": {
-    "en": [
-      "clothes",
-      "dress",
-      "garment",
-      "to serve (in the military",
-      " a prison sentence etc)​",
-      "to obey",
-      "to convince",
-      "to admire",
-      "to acclimatize",
-      "to take (medicine)​",
-      "mourning clothes",
-      "to wear mourning clothes",
-      "dose (measure word for medicine)​"
-    ],
-    "pinyin": "fú",
-    "zh-CN": "服",
-    "zh-TW": "服"
+    "pinyin": "péng",
+    "zh-CN": "朋",
+    "zh-TW": "朋"
   },
   "朵": {
     "en": [
@@ -861,343 +354,220 @@
     "zh-CN": "朵",
     "zh-TW": "朵"
   },
-  "林": {
+  "束": {
     "en": [
-      "surname Lin",
-      "woods",
-      "forest",
-      "CL:<a href=\"#~片\">片</a>[pian4]",
-      "circle(s)​ (i.e. specific group of people)​",
-      "a collection (of similar things)​"
+      "surname Shu",
+      "to bind",
+      "bunch",
+      "bundle",
+      "classifier for bunches",
+      " bundles",
+      " beams of light etc",
+      "to control"
     ],
-    "pinyin": "lín",
-    "zh-CN": "林",
-    "zh-TW": "林"
+    "pinyin": "shù",
+    "zh-CN": "束",
+    "zh-TW": "束"
   },
-  "森": {
+  "條": {
     "en": [
-      "forest"
+      "strip",
+      "item",
+      "article",
+      "clause (of law or treaty)​",
+      "classifier for long thin things (ribbon",
+      " river",
+      " road",
+      " trousers etc)​"
     ],
-    "pinyin": "sēn",
-    "zh-CN": "森",
-    "zh-TW": "森"
+    "pinyin": "tiáo",
+    "zh-CN": "条",
+    "zh-TW": "條"
   },
-  "楚": {
+  "正": {
     "en": [
-      "surname Chu",
-      "abbr. for Hubei <a href=\"#~湖\">湖</a><a href=\"#~北\">北</a><a href=\"#~省\">省</a>[Hu2 bei3 Sheng3] and Hunan <a href=\"#~湖\">湖</a><a href=\"#~南\">南</a><a href=\"#~省\">省</a>[Hu2 nan2 Sheng3] provinces together",
-      "Chinese kingdom during the Spring and Autumn and Warring States Periods (722-221 BC)​",
-      "distinct",
+      "first month of the lunar year",
+      "just (right)​",
+      "main",
+      "upright",
+      "straight",
+      "correct",
+      "positive",
+      "greater than zero",
+      "principle"
+    ],
+    "pinyin": "zhèng",
+    "zh-CN": "正",
+    "zh-TW": "正"
+  },
+  "水": {
+    "en": [
+      "surname Shui",
+      "water",
+      "river",
+      "liquid",
+      "beverage",
+      "additional charges or income",
+      "(of clothes)​ classifier for number of washes"
+    ],
+    "pinyin": "shuǐ",
+    "zh-CN": "水",
+    "zh-TW": "水"
+  },
+  "河": {
+    "en": [
+      "river",
+      "CL:<a href=\"#~條\">條</a>|条[tiao2]",
+      "<a href=\"#~道\">道</a>[dao4]"
+    ],
+    "pinyin": "hé",
+    "zh-CN": "河",
+    "zh-TW": "河"
+  },
+  "海": {
+    "en": [
+      "surname Hai",
+      "ocean",
+      "sea",
+      "CL:<a href=\"#~個\">個</a>|个[ge4]",
+      "<a href=\"#~片\">片</a>[pian4]",
+      "great number of people or things",
+      "(dialect)​ numerous"
+    ],
+    "pinyin": "hǎi",
+    "zh-CN": "海",
+    "zh-TW": "海"
+  },
+  "游": {
+    "en": [
+      "surname You",
+      "to swim",
+      "variant of <a href=\"#~遊\">遊</a>|<a href=\"#~游\">游</a>[you2]"
+    ],
+    "pinyin": "yóu",
+    "zh-CN": "游",
+    "zh-TW": "游"
+  },
+  "牛": {
+    "en": [
+      "surname Niu",
+      "ox",
+      "cow",
+      "bull",
+      "CL:<a href=\"#~條\">條</a>|条[tiao2]",
+      "<a href=\"#~頭\">頭</a>|头[tou2]",
+      "(slang)​ awesome"
+    ],
+    "pinyin": "niú",
+    "zh-CN": "牛",
+    "zh-TW": "牛"
+  },
+  "現": {
+    "en": [
+      "to appear",
+      "present",
+      "now",
+      "existing",
+      "current"
+    ],
+    "pinyin": "xiàn",
+    "zh-CN": "现",
+    "zh-TW": "現"
+  },
+  "白": {
+    "en": [
+      "surname Bai",
+      "white",
+      "snowy",
+      "pure",
+      "bright",
+      "empty",
+      "blank",
+      "plain",
       "clear",
-      "orderly",
-      "pain",
-      "suffering",
-      "deciduous bush used in Chinese medicine (genus Vitex)​",
-      "punishment cane (old)​"
+      "to make clear",
+      "in vain",
+      "gratuitous",
+      "free of charge",
+      "reactionary",
+      "anti-communist",
+      "funeral",
+      "to stare coldly",
+      "to write wrong character",
+      "to state",
+      "to explain",
+      "vernacular",
+      "spoken lines in opera"
     ],
-    "pinyin": "chǔ",
-    "zh-CN": "楚",
-    "zh-TW": "楚"
+    "pinyin": "bái",
+    "zh-CN": "白",
+    "zh-TW": "白"
   },
-  "樣": {
+  "盆": {
     "en": [
-      "manner",
-      "pattern",
-      "way",
-      "appearance",
-      "shape",
+      "basin",
+      "flower pot",
+      "unit of volume equal to 12 <a href=\"#~斗\">斗</a> and 8 <a href=\"#~升\">升</a>",
+      " approx 128 liters",
       "CL:<a href=\"#~個\">個</a>|个[ge4]"
     ],
-    "pinyin": "yàng",
-    "zh-CN": "样",
-    "zh-TW": "樣"
+    "pinyin": "pén",
+    "zh-CN": "盆",
+    "zh-TW": "盆"
   },
-  "沒": {
+  "种": {
     "en": [
-      "(negative prefix for verbs)​",
-      "have not",
-      "not",
-      "drowned",
-      "to end",
-      "to die",
-      "to inundate"
     ],
-    "pinyin": "mò",
-    "zh-CN": "没",
-    "zh-TW": "沒"
+    "pinyin": "zhǒng",
+    "zh-CN": "种",
+    "zh-TW": "种"
   },
-  "清": {
+  "種": {
     "en": [
-      "Qing or Ch'ing dynasty of Imperial China (1644-1911)​",
-      "surname Qing",
-      "clear",
-      "distinct",
-      "quiet",
-      "just and honest",
-      "pure",
-      "to settle or clear up",
-      "to clean up or purge"
-    ],
-    "pinyin": "qīng",
-    "zh-CN": "清",
-    "zh-TW": "清"
-  },
-  "為": {
-    "en": [
-      "as (in the capacity of)​",
-      "to take sth as",
-      "to act as",
-      "to serve as",
-      "to behave as",
-      "to become",
-      "to be",
-      "to do",
-      "by (in the passive voice)​",
-      "because of",
-      "for",
-      "to"
-    ],
-    "pinyin": "wéi",
-    "zh-CN": "为",
-    "zh-TW": "為"
-  },
-  "然": {
-    "en": [
-      "correct",
-      "right",
-      "so",
-      "thus",
-      "like this",
-      "-ly"
-    ],
-    "pinyin": "rán",
-    "zh-CN": "然",
-    "zh-TW": "然"
-  },
-  "牙": {
-    "en": [
-      "tooth",
-      "ivory",
-      "CL:<a href=\"#~顆\">顆</a>|颗[ke1]"
-    ],
-    "pinyin": "yá",
-    "zh-CN": "牙",
-    "zh-TW": "牙"
-  },
-  "物": {
-    "en": [
-      "thing",
-      "object",
-      "matter",
-      "abbr. for physics <a href=\"#~物理\">物理</a>"
-    ],
-    "pinyin": "wù",
-    "zh-CN": "物",
-    "zh-TW": "物"
-  },
-  "狼": {
-    "en": [
-      "wolf",
-      "CL:<a href=\"#~匹\">匹</a>[pi3]",
-      "<a href=\"#~隻\">隻</a>|<a href=\"#~只\">只</a>[zhi1]",
-      "<a href=\"#~條\">條</a>|条[tiao2]"
-    ],
-    "pinyin": "láng",
-    "zh-CN": "狼",
-    "zh-TW": "狼"
-  },
-  "獵": {
-    "en": [
-      "hunting"
-    ],
-    "pinyin": "liè",
-    "zh-CN": "猎",
-    "zh-TW": "獵"
-  },
-  "生": {
-    "en": [
-      "to be born",
-      "to give birth",
-      "life",
+      "seed",
+      "species",
+      "kind",
+      "type",
+      "classifier: type",
+      " kind",
+      " sort",
+      "to plant",
       "to grow",
-      "raw",
-      "uncooked",
-      "student"
+      "to cultivate"
     ],
-    "pinyin": "shēng",
-    "zh-CN": "生",
-    "zh-TW": "生"
+    "pinyin": "zhǒng",
+    "zh-CN": "<a href=\"#~种\">种</a>",
+    "zh-TW": "種"
   },
-  "病": {
+  "簇": {
     "en": [
-      "illness",
-      "CL:<a href=\"#~場\">場</a>|场[chang2]",
-      "disease",
-      "to fall ill",
-      "defect"
+      "crowded",
+      "framework for silkworms",
+      "gather foliage",
+      "bunch",
+      "classifier for bunched objects"
     ],
-    "pinyin": "bìng",
-    "zh-CN": "病",
-    "zh-TW": "病"
+    "pinyin": "cù",
+    "zh-CN": "簇",
+    "zh-TW": "簇"
   },
-  "的": {
+  "老": {
     "en": [
-      "of",
-      "~'s (possessive particle)​",
-      "(used after an attribute)​",
-      "(used to form a nominal expression)​",
-      "(used at the end of a declarative sentence for emphasis)​",
-      "see <a href=\"#~的士\">的士</a>[di1 shi4]",
-      "really and truly",
-      "aim",
-      "clear"
+      "prefix used before the surname of a person or a numeral indicating the order of birth of the children in a family or to indicate affection or familiarity",
+      "old (of people)​",
+      "venerable (person)​",
+      "experienced",
+      "of long standing",
+      "always",
+      "all the time",
+      "of the past",
+      "very",
+      "outdated",
+      "(of meat etc)​ tough"
     ],
-    "pinyin": "dì",
-    "zh-CN": "的",
-    "zh-TW": "的"
-  },
-  "看": {
-    "en": [
-      "to look after",
-      "to take care of",
-      "to watch",
-      "to guard",
-      "to see",
-      "to look at",
-      "to read",
-      "to watch",
-      "to visit",
-      "to call on",
-      "to consider",
-      "to regard as",
-      "to look after",
-      "to treat (an illness)​",
-      "to depend on",
-      "to feel (that)​",
-      "(after verb)​ to give it a try",
-      "Watch out! (for a danger)​"
-    ],
-    "pinyin": "kàn",
-    "zh-CN": "看",
-    "zh-TW": "看"
-  },
-  "眼": {
-    "en": [
-      "eye",
-      "small hole",
-      "crux (of a matter)​",
-      "CL:<a href=\"#~隻\">隻</a>|<a href=\"#~只\">只</a>[zhi1]",
-      "<a href=\"#~雙\">雙</a>|双[shuang1]",
-      "classifier for big hollow things (wells",
-      " stoves",
-      " pots etc)​"
-    ],
-    "pinyin": "yǎn",
-    "zh-CN": "眼",
-    "zh-TW": "眼"
-  },
-  "睛": {
-    "en": [
-      "eye",
-      "eyeball"
-    ],
-    "pinyin": "jīng",
-    "zh-CN": "睛",
-    "zh-TW": "睛"
-  },
-  "穿": {
-    "en": [
-      "to bore through",
-      "to pierce",
-      "to perforate",
-      "to penetrate",
-      "to pass through",
-      "to dress",
-      "to wear",
-      "to put on",
-      "to thread"
-    ],
-    "pinyin": "chuān",
-    "zh-CN": "穿",
-    "zh-TW": "穿"
-  },
-  "等": {
-    "en": [
-      "class",
-      "rank",
-      "grade",
-      "equal to",
-      "same as",
-      "to wait for",
-      "to await",
-      "et cetera",
-      "and so on",
-      "et al. (and other authors)​",
-      "after",
-      "as soon as",
-      "once"
-    ],
-    "pinyin": "děng",
-    "zh-CN": "等",
-    "zh-TW": "等"
-  },
-  "紅": {
-    "en": [
-      "surname Hong",
-      "red",
-      "popular",
-      "revolutionary",
-      "bonus"
-    ],
-    "pinyin": "hóng",
-    "zh-CN": "红",
-    "zh-TW": "紅"
-  },
-  "給": {
-    "en": [
-      "to",
-      "for",
-      "for the benefit of",
-      "to give",
-      "to allow",
-      "to do sth (for sb)​",
-      "(passive particle)​",
-      "to supply",
-      "to provide"
-    ],
-    "pinyin": "gěi",
-    "zh-CN": "给",
-    "zh-TW": "給"
-  },
-  "經": {
-    "en": [
-      "surname Jing",
-      "classics",
-      "sacred book",
-      "scripture",
-      "to pass through",
-      "to undergo",
-      "to bear",
-      "to endure",
-      "warp (textile)​",
-      "longitude",
-      "menstruation",
-      "channel (TCM)​",
-      "abbr. for economics <a href=\"#~經濟\">經濟</a>|经济[jing1 ji4]"
-    ],
-    "pinyin": "jīng",
-    "zh-CN": "经",
-    "zh-TW": "經"
-  },
-  "耳": {
-    "en": [
-      "ear",
-      "handle (archaeology)​",
-      "and that is all (classical Chinese)​"
-    ],
-    "pinyin": "ěr",
-    "zh-CN": "耳",
-    "zh-TW": "耳"
+    "pinyin": "lǎo",
+    "zh-CN": "老",
+    "zh-TW": "老"
   },
   "聲": {
     "en": [
@@ -1211,33 +581,42 @@
     "zh-CN": "声",
     "zh-TW": "聲"
   },
-  "聽": {
+  "花": {
     "en": [
-      "to listen",
-      "to hear",
-      "to obey",
-      "a can (loanword from English \"tin\")​",
-      "classifier for canned beverages",
-      "(literary pronunciation",
-      " still advocated in Taiwan)​ to rule",
-      "to sentence",
-      "to allow"
+      "surname Hua",
+      "flower",
+      "blossom",
+      "CL:<a href=\"#~朵\">朵</a>[duo3]",
+      "<a href=\"#~支\">支</a>[zhi1]",
+      "<a href=\"#~束\">束</a>[shu4]",
+      "<a href=\"#~把\">把</a>[ba3]",
+      "<a href=\"#~盆\">盆</a>[pen2]",
+      "<a href=\"#~簇\">簇</a>[cu4]",
+      "fancy pattern",
+      "florid",
+      "to spend (money",
+      " time)​"
     ],
-    "pinyin": "tīng",
-    "zh-CN": "<a href=\"#~听\">听</a>",
-    "zh-TW": "聽"
+    "pinyin": "huā",
+    "zh-CN": "花",
+    "zh-TW": "花"
   },
-  "衣": {
+  "蛙": {
     "en": [
-      "clothes",
-      "CL:<a href=\"#~件\">件</a>[jian4]",
-      "to dress",
-      "to wear",
-      "to put on (clothes)​"
+      "frog",
+      "CL:<a href=\"#~隻\">隻</a>|<a href=\"#~只\">只</a>[zhi1]"
     ],
-    "pinyin": "yī",
-    "zh-CN": "衣",
-    "zh-TW": "衣"
+    "pinyin": "wā",
+    "zh-CN": "蛙",
+    "zh-TW": "蛙"
+  },
+  "裏": {
+    "en": [
+      "variant of <a href=\"#~裡\">裡</a>|<a href=\"#~里\">里</a>[li3]"
+    ],
+    "pinyin": "lǐ",
+    "zh-CN": "<a href=\"#~里\">里</a>",
+    "zh-TW": "裏"
   },
   "裡": {
     "en": [
@@ -1251,27 +630,6 @@
     "zh-CN": "<a href=\"#~里\">里</a>",
     "zh-TW": "裡"
   },
-  "要": {
-    "en": [
-      "to demand",
-      "to request",
-      "to coerce",
-      "important",
-      "vital",
-      "to want",
-      "to ask for",
-      "will",
-      "going to (as future auxiliary)​",
-      "may",
-      "must",
-      "(used in a comparison)​ must be",
-      "probably",
-      "if"
-    ],
-    "pinyin": "yào",
-    "zh-CN": "要",
-    "zh-TW": "要"
-  },
   "見": {
     "en": [
       "to see",
@@ -1284,6 +642,52 @@
     "pinyin": "jiàn",
     "zh-CN": "见",
     "zh-TW": "見"
+  },
+  "設": {
+    "en": [
+      "to set up",
+      "to arrange",
+      "to establish",
+      "to found",
+      "to display"
+    ],
+    "pinyin": "shè",
+    "zh-CN": "设",
+    "zh-TW": "設"
+  },
+  "請": {
+    "en": [
+      "to ask",
+      "to invite",
+      "please (do sth)​",
+      "to treat (to a meal etc)​",
+      "to request"
+    ],
+    "pinyin": "qǐng",
+    "zh-CN": "请",
+    "zh-TW": "請"
+  },
+  "走": {
+    "en": [
+      "to walk",
+      "to go",
+      "to run",
+      "to move (of vehicle)​",
+      "to visit",
+      "to leave",
+      "to go away",
+      "to die (euph.)​",
+      "from",
+      "through",
+      "away (in compound verbs",
+      " such as <a href=\"#~撤\">撤</a><a href=\"#~走\">走</a>[che4 zou3])​",
+      "to change (shape",
+      " form",
+      " meaning)​"
+    ],
+    "pinyin": "zǒu",
+    "zh-CN": "走",
+    "zh-TW": "走"
   },
   "起": {
     "en": [
@@ -1310,22 +714,6 @@
     "zh-CN": "起",
     "zh-TW": "起"
   },
-  "趕": {
-    "en": [
-      "to overtake",
-      "to catch up with",
-      "to hurry",
-      "to rush",
-      "to try to catch (the bus etc)​",
-      "to drive (cattle etc)​ forward",
-      "to drive (sb)​ away",
-      "to avail oneself of (an opportunity)​",
-      "until"
-    ],
-    "pinyin": "gǎn",
-    "zh-CN": "赶",
-    "zh-TW": "趕"
-  },
   "路": {
     "en": [
       "surname Lu",
@@ -1341,35 +729,26 @@
     "zh-CN": "路",
     "zh-TW": "路"
   },
-  "躺": {
+  "跳": {
     "en": [
-      "to recline",
-      "to lie down"
+      "to jump",
+      "to hop",
+      "to skip over",
+      "to bounce",
+      "to palpitate"
     ],
-    "pinyin": "tǎng",
-    "zh-CN": "躺",
-    "zh-TW": "躺"
+    "pinyin": "tiào",
+    "zh-CN": "跳",
+    "zh-TW": "跳"
   },
-  "逃": {
+  "軟": {
     "en": [
-      "to escape",
-      "to run away",
-      "to flee"
+      "soft",
+      "flexible"
     ],
-    "pinyin": "táo",
-    "zh-CN": "逃",
-    "zh-TW": "逃"
-  },
-  "這": {
-    "en": [
-      "this",
-      "these",
-      "(commonly pr. [zhei4] before a classifier",
-      " esp. in Beijing)​"
-    ],
-    "pinyin": "zhè",
-    "zh-CN": "这",
-    "zh-TW": "這"
+    "pinyin": "ruǎn",
+    "zh-CN": "软",
+    "zh-TW": "軟"
   },
   "遇": {
     "en": [
@@ -1385,56 +764,90 @@
     "zh-CN": "遇",
     "zh-TW": "遇"
   },
-  "過": {
+  "遊": {
     "en": [
-      "surname Guo",
-      "(experienced action marker)​",
-      "to cross",
-      "to go over",
-      "to pass (time)​",
-      "to celebrate (a holiday)​",
-      "to live",
-      "to get along",
-      "excessively",
-      "too-"
+      "to walk",
+      "to tour",
+      "to roam",
+      "to travel"
     ],
-    "pinyin": "guò",
-    "zh-CN": "过",
-    "zh-TW": "過"
+    "pinyin": "yóu",
+    "zh-CN": "<a href=\"#~游\">游</a>",
+    "zh-TW": "遊"
   },
-  "邊": {
+  "道": {
     "en": [
-      "side",
-      "edge",
-      "margin",
-      "border",
-      "boundary",
-      "CL:<a href=\"#~個\">個</a>|个[ge4]",
-      "simultaneously",
-      "suffix of a noun of locality"
+      "direction",
+      "way",
+      "road",
+      "path",
+      "CL:<a href=\"#~條\">條</a>|条[tiao2]",
+      "<a href=\"#~股\">股</a>[gu3]",
+      "principle",
+      "truth",
+      "morality",
+      "reason",
+      "skill",
+      "method",
+      "Dao (of Daoism)​",
+      "to say",
+      "to speak",
+      "to talk",
+      "classifier for long thin things (rivers",
+      " cracks etc)​",
+      " barriers (walls",
+      " doors etc)​",
+      " questions (in an exam etc)​",
+      " commands",
+      " courses in a meal",
+      " steps in a process",
+      "province (of Korea or Japan)​"
     ],
-    "pinyin": "biān",
-    "zh-CN": "边",
-    "zh-TW": "邊"
+    "pinyin": "dào",
+    "zh-CN": "道",
+    "zh-TW": "道"
   },
-  "那": {
+  "都": {
     "en": [
-      "surname Na",
-      "surname Nuo",
-      "variant of <a href=\"#~哪\">哪</a>[na3]",
-      "that",
-      "those",
-      "then (in that case)​",
-      "commonly pr. [nei4] before a classifier",
-      " esp. in Beijing",
-      "(archaic)​ many",
-      "beautiful",
-      "how",
-      "old variant of <a href=\"#~挪\">挪</a>[nuo2]"
+      "surname Du",
+      "all",
+      "both",
+      "entirely",
+      "(used for emphasis)​ even",
+      "already",
+      "(not)​ at all",
+      "capital city",
+      "metropolis"
     ],
-    "pinyin": "nà",
-    "zh-CN": "那",
-    "zh-TW": "那"
+    "pinyin": "dū",
+    "zh-CN": "都",
+    "zh-TW": "都"
+  },
+  "里": {
+    "en": [
+      "Li (surname)​",
+      "li (Chinese mile)​",
+      "500 meters (modern)​",
+      "home",
+      "hometown",
+      "village",
+      "neighborhood",
+      "administrative unit"
+    ],
+    "pinyin": "lǐ",
+    "zh-CN": "里",
+    "zh-TW": "里"
+  },
+  "隊": {
+    "en": [
+      "squadron",
+      "team",
+      "group",
+      "CL:<a href=\"#~個\">個</a>|个[ge4]"
+    ],
+    "pinyin": "duì",
+    "zh-CN": "队",
+    "zh-TW": "隊"
   },
   "隻": {
     "en": [
@@ -1447,56 +860,87 @@
     "zh-CN": "<a href=\"#~只\">只</a>",
     "zh-TW": "隻"
   },
-  "離": {
+  "青": {
     "en": [
-      "surname Li",
-      "to leave",
-      "to part from",
-      "to be away from",
-      "(in giving distances)​ from",
-      "without (sth)​",
-      "independent of",
-      "one of the Eight Trigrams <a href=\"#~八卦\">八卦</a>[ba1 gua4]",
-      " symbolizing fire",
-      "☲"
+      "abbr. for <a href=\"#~青\">青</a><a href=\"#~海\">海</a>[Qing1 hai3]",
+      " Qinghai Province",
+      "nature's color",
+      "green or blue",
+      "greenish black",
+      "youth",
+      "young (of people)​"
     ],
-    "pinyin": "lí",
-    "zh-CN": "<a href=\"#~离\">离</a>",
-    "zh-TW": "離"
+    "pinyin": "qīng",
+    "zh-CN": "青",
+    "zh-TW": "青"
   },
-  "音": {
+  "預": {
     "en": [
-      "sound",
-      "noise",
-      "note (of musical scale)​",
-      "tone",
-      "news",
-      "syllable",
-      "reading (phonetic value of a character)​"
+      "to advance",
+      "in advance",
+      "beforehand",
+      "to prepare"
     ],
-    "pinyin": "yīn",
-    "zh-CN": "音",
-    "zh-TW": "音"
+    "pinyin": "yù",
+    "zh-CN": "预",
+    "zh-TW": "預"
   },
-  "食": {
+  "頭": {
     "en": [
-      "to eat",
-      "food",
-      "animal feed",
-      "eclipse",
-      "to feed"
+      "head",
+      "hair style",
+      "the top",
+      "end",
+      "beginning or end",
+      "a stub",
+      "remnant",
+      "chief",
+      "boss",
+      "side",
+      "aspect",
+      "first",
+      "leading",
+      "classifier for pigs or livestock",
+      "CL:<a href=\"#~個\">個</a>|个[ge4]",
+      "suff. for nouns"
     ],
-    "pinyin": "shí",
-    "zh-CN": "食",
-    "zh-TW": "食"
+    "pinyin": "tóu",
+    "zh-CN": "头",
+    "zh-TW": "頭"
   },
-  "齒": {
+  "體": {
     "en": [
-      "tooth",
-      "CL:<a href=\"#~顆\">顆</a>|颗[ke1]"
+      "body",
+      "form",
+      "style",
+      "system"
     ],
-    "pinyin": "chǐ",
-    "zh-CN": "齿",
-    "zh-TW": "齒"
+    "pinyin": "tǐ",
+    "zh-CN": "<a href=\"#~体\">体</a>",
+    "zh-TW": "體"
+  },
+  "鵝": {
+    "en": [
+      "goose",
+      "CL:<a href=\"#~隻\">隻</a>|<a href=\"#~只\">只</a>[zhi1]"
+    ],
+    "pinyin": "é",
+    "zh-CN": "鹅",
+    "zh-TW": "鵝"
+  },
+  "黑": {
+    "en": [
+      "abbr. for Heilongjiang province <a href=\"#~黑龍江\">黑龍江</a>|<a href=\"#~黑\">黑</a>龙<a href=\"#~江\">江</a>[Hei1 long2 jiang1]",
+      "black",
+      "dark",
+      "sinister",
+      "secret",
+      "shady",
+      "illegal",
+      "(loanword)​ to hack (computing)​"
+    ],
+    "pinyin": "hēi",
+    "zh-CN": "黑",
+    "zh-TW": "黑"
   }
 }

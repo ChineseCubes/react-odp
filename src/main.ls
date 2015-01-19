@@ -8,14 +8,11 @@ ReactVTT     = require 'react-vtt'
 require 'react-vtt/dest/Cue.css'
 request      = require 'request'
 
-{ select, option } = React.DOM
-
 ###
 # Here are some helpers.
 ###
 var reader, init-book
 $win = $ window
-host = 'http://cnl.linode.caasih.net'
 
 get-mp3 = (filename, done) ->
   err, res, body <- request filename
@@ -30,39 +27,6 @@ get-vtt = (filename, done) ->
     .parse filename, done
     .error -> done null
 
-BookSelector = React.createClass do
-  displayName: 'BookSelector'
-  getInitialState: ->
-    books: []
-  componentWillMount: ->
-    err, res, body <~ request "#host/books/"
-    books = JSON.parse body
-    book = Object.keys books .0
-    init-book do
-      reader
-      "#host/books/#book"
-      ->
-        reader := it
-        setTimeout (-> reader.page 0), 0
-    @setState books: books
-  render: ->
-    select do
-      className: 'book-selector'
-      name: 'book-selector'
-      onChange: ~>
-        book = it.target.value
-        init-book do
-          reader
-          "#host/books/#book/"
-          ->
-            reader := it
-            setTimeout (-> reader.page 0), 0
-      for key of @state.books
-        option do
-          key: key
-          value: key
-          key
-BookSelector = React.createFactory BookSelector
 ###
 # End of those helpers.
 ###
@@ -75,10 +39,6 @@ React.initializeTouchEvents true
 dots = React.render do
   DotsDetector unit: \cm
   $ \#detector .get!0
-
-selector = React.render do
-  BookSelector!
-  $ \#selector .get!0
 
 init-book := (reader, uri, done) ->
   { setup }:mp <- Data.getMasterPage uri
@@ -150,6 +110,12 @@ init-book := (reader, uri, done) ->
 
   done reader
 
+init-book do
+  reader
+  './data/'
+  ->
+    reader := it
+    setTimeout (-> reader.page 0), 0
 ##
 # events
 $win.resize ->
