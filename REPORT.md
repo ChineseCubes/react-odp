@@ -3,7 +3,11 @@
 * 時間： 2015-01-19 17:53
 * 作者： caasi Huang
 
-本文件簡述 react-odp 版本 d6ca4ba56d62033fa484a186d0a2a4524cf0099c 的功能與操作方式。
+本文件簡述 react-odp 版本 [8126f69](https://github.com/ChineseCubes/react-odp/tree/8126f695c4a2e772ed542cc7e2e135326fa0547d) 的功能與操作方式。
+
+## 取得方式
+
+請至 [GitHub](https://github.com/ChineseCubes/react-odp/releases/tag/v0.0.1) ，點選 'Source code (zip)' 下載。
 
 ## 系統概要
 
