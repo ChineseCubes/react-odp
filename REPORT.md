@@ -1,6 +1,7 @@
 # react-odp 工作報告
 
 * 時間： 2015-01-19 17:53
+* 更新： 2015-01-20
 * 作者： caasi Huang
 
 本文件簡述 react-odp 版本 [8126f69](https://github.com/ChineseCubes/react-odp/tree/8126f695c4a2e772ed542cc7e2e135326fa0547d) 的功能與操作方式。
@@ -23,7 +24,17 @@
 
 先執行 `npm install -g LiveScript` 安裝 [LiveScript](http://livescript.net/) ，再執行 `./src/build/pack.ls ./books/Good_Friends/Good_Friends.odp` ，就會開始生成 epub 檔。
 
+* 這邊需要有個 sequence diagram 。
+
 ## 使用到的技術
+
+### JavaScript
+
+### Node.js
+
+### React.js
+
+### LiveScript
 
 ## 注意事項
 
