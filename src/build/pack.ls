@@ -13,12 +13,14 @@ require! {
   cpr: _cpr
   jade
   htmltidy: { tidy }
-  'es6-promise': { Promise }
+  'rsvp': { Promise }:RSVP
   datauri: { promises: datauri }
   '../CUBE/data': Data
   './epub/utils': utils
   './epub': { pack }
 }
+
+RSVP.on \error console.log
 
 rel = -> path.relative process.cwd!, it
 
@@ -216,7 +218,7 @@ function convert src, dst
       uri: 'https://web-beta.chinesecubes.com/sandbox/odpConvert.php'
       #uri: 'http://192.168.11.15/sandbox/odpConvert.php'
       #encoding: \binary
-      #timeout: 20000ms
+      timeout: 60000ms
     }
       ..form!append \file fs.createReadStream src
       ..on \error (err) -> reject err
