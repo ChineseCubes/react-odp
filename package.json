@@ -53,6 +53,7 @@
     "mime": "^1.2.11",
     "moment": "^2.8.3",
     "nib": "^1.0.2",
+    "prelude-ls": "^1.1.1",
     "request": "^2.44.0",
     "shellwords": "^0.1.0",
     "style-loader": "^0.8.0",

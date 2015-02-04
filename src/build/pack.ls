@@ -16,7 +16,7 @@ require! {
   'vinyl-fs': vinyl
   'map-stream': map
   'json-stable-stringify': stringify
-  'prelude-ls': { apply, filter, is-type }
+  'prelude-ls': { apply, filter, map, concat, is-type }
   '../CUBE/data': Data
   './epub/utils': utils
   './epub': { pack }
@@ -33,21 +33,100 @@ lift = (f) -> (...args) -> all args .then apply f
 log  = lift console.log
 exit = lift -> process.exit!
 
-books-of = lift (host) -> new Promise (resolve, reject) ->
+get-json = lift (uri) -> new Promise (resolve, reject) ->
   request do
     method: \GET
-    uri: "#host/books/"
+    uri: uri
     (err, res, body) ->
       | err                     => reject err
       | res.statusCode isnt 200 => reject new Error "not OK: #{res.statusCode}"
       | otherwise               => resolve JSON.parse body
 
-book-of = lift (id, books) -> new Promise (resolve, reject) ->
+get-bin = lift (uri) -> new Promise (resolve, reject) ->
+  request do
+    method: \GET
+    uri: uri
+    encoding: \binary
+    (err, res, body) ->
+      | err                     => reject err
+      | res.statusCode isnt 200 => reject new Error "not OK: #{res.statusCode}"
+      | otherwise               => resolve new Buffer body, \binary
+
+get-books = lift (host) -> get-json "#host/books/"
+get-master = lift (host, book) -> get-json "#host/books/#{book.alias}/"
+get-dict   = lift (host, book) -> get-json "#host/books/#{book.alias}/dict.json"
+get-page   = lift (host, book, idx) -> get-json "#host/books/#{book.alias}/page#idx.json"
+get-mp3    = lift (host, book) -> get-json "#host/books/#{book.alias}/audio.mp3.json"
+get-vtt    = lift (host, book) -> get-json "#host/books/#{book.alias}/audio.vtt.json"
+
+get-book = lift (books, id) -> new Promise (resolve, reject) ->
   bs = books |> filter (.id is id)
   switch
   | bs.length is   0 => reject new Error "book not found: #id"
   | bs.length isnt 1 => reject new Error "ID isnt unique: #bs"
   | otherwise        => resolve bs.0
+
+get-hrefs = lift (node) -> new Promise (resolve, reject) ->
+  hrefs = node.children |> map get-hrefs
+  all hrefs .then (hrefs) ->
+    hrefs = concat hrefs
+    if not node?attrs?href
+      then resolve hrefs
+      else resolve [node.attrs.href] ++ hrefs
+
+mkdir = lift (dirname) -> new Promise (resolve, reject) ->
+  exists <- fs.exists dirname
+  if not exists
+    err <- fs.mkdir dirname
+    if err
+      then reject err
+      else resolve dirname
+  else resolve dirname
+
+write-file = lift (filename, data, options) -> new Promise (resolve, reject) ->
+  err <- fs.writeFile filename, data, options
+  if err
+    then reject err
+    else resolve filename
+
+stringify = lift (data) -> JSON.stringify data, null, 2
+
+save-book = lift (host, book, master) ->
+  Promise.resolve path.resolve ".#{book.alias}.build"
+    .then mkdir
+    .then (dirname) -> path.resolve dirname, 'data'
+    .then mkdir
+    .then (dirname) -> path.resolve dirname, 'Pictures'
+    .then mkdir
+    .then (dirname) ->
+      dirname = path.resolve dirname, '..'
+      total = master.attrs['TOTAL-PAGES']
+      pages = for i from 1 to total => get-page host, book, i
+      ps = for let i from 1 to total
+        write-file do
+          path.resolve dirname, "page#i.json"
+          stringify pages[i-1]
+      ps.push write-file do
+        path.resolve dirname, 'masterpage.json'
+        stringify master
+      ps.push write-file do
+        path.resolve dirname, 'dict.json'
+        stringify get-dict host, book
+      ps.push write-file do
+        path.resolve dirname, 'audio.mp3.json'
+        stringify get-mp3 host, book
+      ps.push write-file do
+        path.resolve dirname, 'audio.vtt.json'
+        stringify get-vtt host, book
+      ps ++= for page in pages
+        hrefs = get-hrefs page
+        href = hrefs |> lift (hrefs) -> hrefs.0
+        base = href |> lift path.basename
+        filename = base |> lift (base) -> path.resolve dirname, 'Pictures', base
+        write-file do
+          filename
+          get-bin href
+      all ps
 
 ##
 # arguments
@@ -66,44 +145,21 @@ console.log '''
 # http://patorjk.com/software/taag/#p=display&f=Rectangles&t=CUBEBooks
 
 :main let
-  return unless arg = argv.shift!       # break
+  return unless arg = argv.shift!          # break
   return main! unless is-type \Number +arg # continue
-  id = +arg
+  id   = +arg
+  host = 'http://localhost:8081'
 
-  ##
-  # shared globals
-  #build =
-  #  id: +arg
-  #  #base: basename
-  #  #src:  path.resolve arg
-  #  #path: path.resolve ".#basename.build"
-  #  #data: path.resolve ".#basename.build/data"
-  #  needs: <[js css fonts img]>
-  #  num-pages: 0
-
-  log book-of(id, books-of 'http://localhost:8081')
+  books  = get-books host
+  book   = get-book books, id
+  master = get-master host, book
+  files  = save-book host, book, master
+  log files
   main!
+
+  #build =
+  #  needs: <[js css fonts img]>
   #Promise.resolve!
-    #.then ->
-    #  # convert and unzip
-    #  convert build.src, build.data
-    #.then ->
-    #  read-dir path.resolve build.data
-    #.then (paths) ->
-    #  paths .= filter (is /page(\d+).json$/)
-    #  ps = for filepath in paths => read-file filepath, encoding: \utf8
-    #  all ps .then -> codepoints it.join ''
-    #.then (cpts) ->
-    #  cpts = for c in cpts => parseInt c, 16
-    #  build.codepoints = cpts.filter -> 0x4e00 <= it <= 0xfaff
-    #.then ->
-    #  # get data from moedict.tw
-    #  # XXX: should create dict.json before packing
-    #  chars = (for build.codepoints => String.fromCharCode ..)join ''
-    #  dst = path.resolve build.data, 'dict.json'
-    #  moedict chars .then -> write escape(dst), stringify it, space: 2
-    #.then ->
-    #  get-master-page build.data
     #.then ({ attrs }) ->
     #  # generate page*.xhtml
     #  build.num-pages = attrs['TOTAL-PAGES']
@@ -131,37 +187,6 @@ console.log '''
     #      dst = path.resolve build.path, dep
     #      console.warn "need #{rel src}" unless fs.existsSync src
     #      cp-r src, dst
-    #.then ->
-    #  # speech
-    #  data =
-    #    "#{build.base}.mp3": 'audio.mp3'
-    #    "#{build.base}.vtt": 'audio.vtt'
-    #  var src, dst
-    #  ps =
-    #    for k, v of data
-    #      src = path.resolve path.dirname(build.src), k
-    #      dst = path.resolve build.path, 'data', v
-    #      cp src, dst
-    #  p = new Promise (resolve, reject) ->
-    #    err, vtt <- fs.readFile src
-    #    return reject err if err
-    #    vtt .= toString!
-    #    vtt .= replace /\ufeff/g, ''
-    #    vtt .= replace /\r\n?|\n/g, '\\n'
-    #    write(
-    #      path.resolve(build.path, 'data', 'audio.vtt.json')
-    #      "{\"webvtt\":\"#vtt\"}"
-    #    )then resolve
-    #  ps.push p
-    #  all ps #.catch -> console.warn 'speech not found'yellow
-    #.then ->
-    #  src = path.resolve build.path, 'data', 'audio.mp3'
-    #  mp3val src
-    #.then ->
-    #  dst = path.resolve build.path, 'data', 'audio.mp3'
-    #  datauri dst .then do
-    #    -> write "#dst.json", "{\"mp3\":\"#{it.replace \mpeg -> \mp3}\"}"
-    #    -> console.log it
     #.then ->
     #  console.log "#{'cp'magenta} strokes"
     #  try fs.mkdirSync path.resolve build.path, 'strokes'
