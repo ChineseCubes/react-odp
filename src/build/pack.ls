@@ -34,6 +34,7 @@ log  = lift console.log
 exit = lift -> process.exit!
 
 get-json = lift (uri) -> new Promise (resolve, reject) ->
+  console.log "#{'GET'magenta} #uri"
   request do
     method: \GET
     uri: uri
@@ -43,6 +44,7 @@ get-json = lift (uri) -> new Promise (resolve, reject) ->
       | otherwise               => resolve JSON.parse body
 
 get-bin = lift (uri) -> new Promise (resolve, reject) ->
+  console.log "#{'GET'magenta} #uri"
   request do
     method: \GET
     uri: uri
@@ -60,6 +62,7 @@ get-mp3    = lift (host, book) -> get-json "#host/books/#{book.alias}/audio.mp3.
 get-vtt    = lift (host, book) -> get-json "#host/books/#{book.alias}/audio.vtt.json"
 
 get-book = lift (books, id) -> new Promise (resolve, reject) ->
+  console.log "#{'find book'magenta} by id #id"
   bs = books |> filter (.id is id)
   switch
   | bs.length is   0 => reject new Error "book not found: #id"
@@ -75,6 +78,7 @@ get-hrefs = lift (node) -> new Promise (resolve, reject) ->
       else resolve [node.attrs.href] ++ hrefs
 
 mkdir = lift (dirname) -> new Promise (resolve, reject) ->
+  console.log "#{'mkdir'magenta} #dirname"
   exists <- fs.exists dirname
   if not exists
     err <- fs.mkdir dirname
@@ -83,7 +87,27 @@ mkdir = lift (dirname) -> new Promise (resolve, reject) ->
       else resolve dirname
   else resolve dirname
 
+cp = lift (src, dst, verbose = true) -> new Promise (resolve, reject) ->
+  unless fs.existsSync src # fail silently
+    console.warn "#{'not found:'yellow} #{rel src}" if verbose
+    return resolve!
+  console.log "#{'cp'magenta} #{rel src} #{rel dst}" if verbose
+  _cp src, dst, (err) ->
+    if not err or err.code is \ENOENT
+      then resolve!
+      else reject err
+
+cp-r = (src, dst) -> new Promise (resolve, reject) ->
+  console.log "#{'cp'magenta} -R #{rel src} #{rel dst}"
+  _cpr src, dst, {
+    delete-first: on
+    overwrite: on
+    confirm: on
+  }, (err, files) ->
+    unless err then resolve files else reject err
+
 write-file = lift (filename, data, options) -> new Promise (resolve, reject) ->
+  console.log "#{'write'magenta} #filename"
   err <- fs.writeFile filename, data, options
   if err
     then reject err
@@ -154,7 +178,7 @@ console.log '''
   book   = get-book books, id
   master = get-master host, book
   files  = save-book host, book, master
-  log files
+  #log files
   main!
 
   #build =
@@ -284,27 +308,6 @@ function convert src, dst
       ..form!append \file fs.createReadStream src
       ..on \error (err) -> reject err
       ..pipe extractor
-
-function cp src, dst, verbose = true
-  new Promise (resolve, reject) ->
-    unless fs.existsSync src # fail silently
-      console.warn "#{'not found:'yellow} #{rel src}" if verbose
-      return resolve!
-    console.log "#{'cp'magenta} #{rel src} #{rel dst}" if verbose
-    _cp src, dst, (err) ->
-      if not err or err.code is \ENOENT
-        then resolve!
-        else reject err
-
-function cp-r src, dst
-  new Promise (resolve, reject) ->
-    console.log "#{'cp'magenta} -R #{rel src} #{rel dst}"
-    _cpr src, dst, {
-      delete-first: on
-      overwrite: on
-      confirm: on
-    }, (err, files) ->
-      unless err then resolve files else reject err
 
 gen = path.resolve __dirname, './gen.ls'
 function gen-page src, dst, idx
