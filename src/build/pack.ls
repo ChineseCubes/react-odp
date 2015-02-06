@@ -54,15 +54,14 @@ get-bin = lift (uri) -> new Promise (resolve, reject) ->
       | otherwise               => resolve new Buffer body, \binary
 
 get-books  = lift (host) -> get-json "#host/books/"
-get-master = lift (host, book) -> get-json "#host/books/#{book.alias}/"
-get-meta   = lift (host, book) -> get-json "#host/books/#{book.alias}/metadata.json"
-get-dict   = lift (host, book) -> get-json "#host/books/#{book.alias}/dict.json"
-get-page   = lift (host, book, idx) -> get-json "#host/books/#{book.alias}/page#idx.json"
-get-mp3    = lift (host, book) -> get-json "#host/books/#{book.alias}/audio.mp3.json"
-get-vtt    = lift (host, book) -> get-json "#host/books/#{book.alias}/audio.vtt.json"
-get-pages  = lift (host, book, master) ->
-  total = master.attrs['TOTAL-PAGES']
-  all (for i from 1 to total => get-page host, book, i)
+get-master = lift (host, alias) -> get-json "#host/books/#alias/"
+get-meta   = lift (host, alias) -> get-json "#host/books/#alias/metadata.json"
+get-dict   = lift (host, alias) -> get-json "#host/books/#alias/dict.json"
+get-mp3    = lift (host, alias) -> get-json "#host/books/#alias/audio.mp3.json"
+get-vtt    = lift (host, alias) -> get-json "#host/books/#alias/audio.vtt.json"
+get-page   = lift (host, alias, idx) -> get-json "#host/books/#alias/page#idx.json"
+get-pages  = lift (host, alias, total) ->
+  all (for i from 1 to total => get-page host, alias, i)
 
 get-book = lift (books, id) -> new Promise (resolve, reject) ->
   console.log "#{'find book'magenta} by id #id"
@@ -85,7 +84,7 @@ get-codepoints = lift (pages) ->
   codepoints JSON.stringify pages
 
 mkdir = lift (dirname) -> new Promise (resolve, reject) ->
-  console.log "#{'mkdir'magenta} #dirname"
+  console.log "#{'mkdir'magenta} #{rel dirname}"
   exists <- fs.exists dirname
   if not exists
     err <- fs.mkdir dirname
@@ -104,7 +103,7 @@ cp = lift (src, dst, verbose = true) -> new Promise (resolve, reject) ->
       then resolve dst
       else reject err
 
-cp-r = (src, dst) -> new Promise (resolve, reject) ->
+cp-r = lift (src, dst) -> new Promise (resolve, reject) ->
   console.log "#{'cp'magenta} -R #{rel src} #{rel dst}"
   _cpr src, dst, {
     delete-first: on
@@ -114,7 +113,7 @@ cp-r = (src, dst) -> new Promise (resolve, reject) ->
     unless err then resolve files else reject err
 
 write = lift (filename, data, options) -> new Promise (resolve, reject) ->
-  console.log "#{'write'magenta} #filename"
+  console.log "#{'write'magenta} #{rel filename}"
   err <- fs.writeFile filename, data, options
   if err
     then reject err
@@ -122,8 +121,8 @@ write = lift (filename, data, options) -> new Promise (resolve, reject) ->
 
 stringify = lift (data) -> JSON.stringify data, null, 2
 
-save-book = lift (host, book, master, pages) ->
-  Promise.resolve path.resolve ".#{book.alias}.build"
+save-book = lift (host, alias, master, pages) ->
+  Promise.resolve path.resolve ".#alias.build"
     .then mkdir
     .then (dirname) -> path.resolve dirname, 'data'
     .then mkdir
@@ -141,16 +140,16 @@ save-book = lift (host, book, master, pages) ->
         stringify master
       ps.push write do
         path.resolve dirname, 'metadata.json'
-        stringify get-meta host, book
+        stringify get-meta host, alias
       ps.push write do
         path.resolve dirname, 'dict.json'
-        stringify get-dict host, book
+        stringify get-dict host, alias
       ps.push write do
         path.resolve dirname, 'audio.mp3.json'
-        stringify get-mp3 host, book
+        stringify get-mp3 host, alias
       ps.push write do
         path.resolve dirname, 'audio.vtt.json'
-        stringify get-vtt host, book
+        stringify get-vtt host, alias
       ps ++= for page in pages
         hrefs = get-hrefs page
         href = hrefs |> lift (hrefs) -> hrefs.0
@@ -162,8 +161,7 @@ save-book = lift (host, book, master, pages) ->
       all ps
 
 const gen = path.resolve __dirname, './gen.ls'
-gen-page = lift (book, idx) -> new Promise (resolve, reject) ->
-  dst = path.resolve ".#{book.alias}.build"
+gen-page = lift (dst, idx) -> new Promise (resolve, reject) ->
   src = path.resolve dst, 'data'
   console.log "#{(rel gen)magenta} #{rel src} #idx"
   :try-again let
@@ -177,30 +175,29 @@ gen-page = lift (book, idx) -> new Promise (resolve, reject) ->
         else # XXX: should find out the reason
           try-again!
 
-gen-pages = lift (book, master) ->
-  total = master.attrs['TOTAL-PAGES']
-  for i from 1 to total => gen-page book, i
+gen-pages = lift (dirname, total) ->
+  for i from 1 to total => gen-page dirname, i
 
-cp-meta-inf = lift (book) ->
+cp-meta-inf = lift (dirname) ->
   src = path.resolve __dirname, 'epub/META-INF'
-  dst = path.resolve ".#{book.alias}.build", 'META-INF'
+  dst = path.resolve dirname, 'META-INF'
   cp-r src, dst
 
-cp-mimetype = lift (book) ->
+cp-mimetype = lift (dirname) ->
   src = path.resolve __dirname, 'epub', 'mimetype'
-  dst = path.resolve ".#{book.alias}.build", 'mimetype'
+  dst = path.resolve dirname, 'mimetype'
   cp src, dst
 
-cp-others = lift (book) ->
+cp-others = lift (dirname) ->
   for dep in <[js css fonts img]>
     src = path.resolve __dirname, '../../', dep
-    dst = path.resolve ".#{book.alias}.build", dep
+    dst = path.resolve dirname, dep
     console.warn "need #{rel src}" unless fs.existsSync src
     cp-r src, dst
   |> all
 
-cp-strokes = lift (book, cpts) ->
-  mkdir path.resolve ".#{book.alias}.build", 'strokes'
+cp-strokes = lift (dirname, cpts) ->
+  mkdir path.resolve dirname, 'strokes'
     .then (dirname) ->
       all do
         for let stroke in cpts
@@ -209,9 +206,9 @@ cp-strokes = lift (book, cpts) ->
           dst = path.resolve dirname, stroke
           cp src, dst
 
-cp-arphic-strokes = lift (book, cpts) ->
+cp-arphic-strokes = lift (dirname, cpts) ->
     langs = <[zh-TW zh-CN]>
-    mkdir path.resolve ".#{book.alias}.build", 'arphic-strokes'
+    mkdir path.resolve dirname, 'arphic-strokes'
       .then (dirname) ->
         all do
           for let lang in langs
@@ -224,36 +221,32 @@ cp-arphic-strokes = lift (book, cpts) ->
                     dst = path.resolve dirname, stroke
                     cp src, dst
 
-gen-font-subsets = lift (book, cpts) ->
-  dirname = path.resolve ".#{book.alias}.build"
+gen-font-subsets = lift (dirname, cpts) ->
   weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
   ps =
     for weight in weights
       src = path.resolve __dirname, 'epub', "SourceHanSansTW-#weight.ttf"
       dst = path.resolve dirname, 'fonts', "Noto-T-#{weight}-Subset.ttf"
       font-subset src, dst, cpts
-        .catch -> console.log it.stack
+        .catch -> console.error it.stack
   ps .= concat do
     for weight in weights
       src = path.resolve __dirname, 'epub', "SourceHanSansCN-#weight.ttf"
       dst = path.resolve dirname, 'fonts', "Noto-S-#{weight}-Subset.ttf"
       font-subset src, dst, cpts
-        .catch -> console.log it.stack
+        .catch -> console.error it.stack
   all ps
 
-gen-TOC = lift (book, master) ->
-  total = master.attrs['TOTAL-PAGES']
+gen-TOC = lift (dirname, total) ->
   src = path.resolve __dirname, 'epub/TOC.jade'
-  dst = path.resolve ".#{book.alias}.build", 'TOC.xhtml'
+  dst = path.resolve dirname, 'TOC.xhtml'
   files = for i from 1 to total
     path: "page#i.xhtml"
     title: if i is 1 then 'Cover' else "Page #i"
   result = jade.renderFile src, { files }
   write dst, result
 
-gen-OCF = lift (book, master) -> new Promise (resolve, reject) ->
-  total = master.attrs['TOTAL-PAGES']
-  dirname = path.resolve ".#{book.alias}.build"
+gen-OCF = lift (dirname, total) -> new Promise (resolve, reject) ->
   files = []
   vinyl
     .src [
@@ -275,10 +268,9 @@ gen-OCF = lift (book, master) -> new Promise (resolve, reject) ->
       dst = path.resolve dirname, \package.opf
       resolve write dst, ocf
 
-zip = lift (book) -> new Promise (resolve, reject) ->
-  dirname = ".#{book.alias}.build"
-  src = path.resolve dirname
-  dst = path.resolve dirname, "../#{book.alias}.epub"
+zip = lift (alias) -> new Promise (resolve, reject) ->
+  src = path.resolve ".#alias.build"
+  dst = path.resolve src, "../#alias.epub"
   console.log "#{'zip'magenta} #{rel dst}"
   exec do
     "zip -9 -rX #{escape dst} ./* --exclude \\*.DS_Store* \\*.pe \\js/index.js"
@@ -310,22 +302,25 @@ console.log '''
 
   books    = get-books host
   book     = get-book books, id
-  master   = get-master host, book
-  pages    = get-pages host, book, master
+  alias    = book.then (.alias)
+  dirname  = alias.then -> path.resolve ".#it.build"
+  master   = get-master host, alias
+  total    = master.then -> it.attrs['TOTAL-PAGES']
+  pages    = get-pages host, alias, total
   cpts     = get-codepoints pages
   # should concat all paths later
   all [
-    save-book host, book, master, pages
-    gen-pages book, master
-    cp-meta-inf book
-    cp-mimetype book
-    gen-TOC book, master
-    cp-others book .then -> gen-font-subsets book, cpts
-    cp-strokes book, cpts
-    cp-arphic-strokes book, cpts
+    save-book host, alias, master, pages
+    gen-pages dirname, total
+    cp-meta-inf dirname
+    cp-mimetype dirname
+    gen-TOC dirname, total
+    cp-others dirname .then -> gen-font-subsets dirname, cpts
+    cp-strokes dirname, cpts
+    cp-arphic-strokes dirname, cpts
   ]
-    .then -> gen-OCF book, master
-    .then -> zip book
+    .then -> gen-OCF dirname, total
+    .then -> zip alias
     .then main
 
 ##
@@ -335,7 +330,7 @@ function font-subset src, dst, codepoints
   new Promise (resolve, reject) ->
     base = path.resolve path.dirname(dst), '../'
     script-path = path.resolve base, "#{count++}.pe"
-    console.log "#{'generate'magenta} #script-path"
+    console.log "#{'generate'magenta} #{rel script-path}"
     script = """
       Open(\"#src\")
       Select(0u3000)\n
