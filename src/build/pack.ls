@@ -195,6 +195,32 @@ cp-others = lift (book) ->
     console.warn "need #{rel src}" unless fs.existsSync src
     cp-r src, dst
   |> all
+
+cp-strokes = lift (book, cpts) ->
+  mkdir path.resolve ".#{book.alias}.build", 'strokes'
+    .then (dirname) ->
+      all do
+        for let stroke in cpts
+          stroke = "#{stroke.toString 16}.json"
+          src = path.resolve __dirname, '../../strokes', stroke
+          dst = path.resolve dirname, stroke
+          cp src, dst
+
+cp-arphic-strokes = lift (book, cpts) ->
+    langs = <[zh-TW zh-CN]>
+    mkdir path.resolve ".#{book.alias}.build", 'arphic-strokes'
+      .then (dirname) ->
+        all do
+          for let lang in langs
+            mkdir path.resolve dirname, lang
+              .then (dirname) ->
+                all do
+                  for stroke in cpts
+                    stroke = "#{stroke.toString 16}.txt"
+                    src = path.resolve __dirname, '../../arphic-strokes', lang, stroke
+                    dst = path.resolve dirname, stroke
+                    cp src, dst
+
 ##
 # arguments
 { filename, argv } = utils.argv!
@@ -228,32 +254,14 @@ console.log '''
   meta-inf = cp-meta-inf book
   mimetype = cp-mimetype book
   others   = cp-others book
+  strokes  =
+    * cp-strokes book, cpts
+    * cp-arphic-strokes book, cpts
   main!
 
   #Promise.resolve!
     #.then ->
-    #  console.log "#{'cp'magenta} strokes"
-    #  try fs.mkdirSync path.resolve build.path, 'strokes'
-    #  all do
-    #    for let stroke in build.codepoints
-    #      stroke = "#{stroke.toString 16}.json"
-    #      src = path.resolve __dirname, '../../strokes', stroke
-    #      dst = path.resolve build.path, 'strokes', stroke
-    #      cp src, dst, off
     #.then ->
-    #  console.log "#{'cp'magenta} arphic-strokes"
-    #  langs = <[zh-TW zh-CN]>
-    #  try fs.mkdirSync path.resolve build.path, 'arphic-strokes'
-    #  all do
-    #    for lang in langs
-    #      base = path.resolve build.path, 'arphic-strokes', lang
-    #      try fs.mkdirSync base
-    #      all do
-    #        for stroke in build.codepoints
-    #          stroke = "#{stroke.toString 16}.txt"
-    #          src = path.resolve __dirname, '../../arphic-strokes', lang, stroke
-    #          dst = path.resolve base, stroke
-    #          cp src, dst, off
     #.then ->
     #  # generate font subset
     #  weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
