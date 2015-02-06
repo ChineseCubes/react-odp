@@ -54,12 +54,15 @@ get-bin = lift (uri) -> new Promise (resolve, reject) ->
       | res.statusCode isnt 200 => reject new Error "not OK: #{res.statusCode}"
       | otherwise               => resolve new Buffer body, \binary
 
-get-books = lift (host) -> get-json "#host/books/"
+get-books  = lift (host) -> get-json "#host/books/"
 get-master = lift (host, book) -> get-json "#host/books/#{book.alias}/"
 get-dict   = lift (host, book) -> get-json "#host/books/#{book.alias}/dict.json"
 get-page   = lift (host, book, idx) -> get-json "#host/books/#{book.alias}/page#idx.json"
 get-mp3    = lift (host, book) -> get-json "#host/books/#{book.alias}/audio.mp3.json"
 get-vtt    = lift (host, book) -> get-json "#host/books/#{book.alias}/audio.vtt.json"
+get-pages  = lift (host, book, master) ->
+  total = master.attrs['TOTAL-PAGES']
+  all (for i from 1 to total => get-page host, book, i)
 
 get-book = lift (books, id) -> new Promise (resolve, reject) ->
   console.log "#{'find book'magenta} by id #id"
@@ -76,6 +79,10 @@ get-hrefs = lift (node) -> new Promise (resolve, reject) ->
     if not node?attrs?href
       then resolve hrefs
       else resolve [node.attrs.href] ++ hrefs
+
+get-codepoints = lift (pages) ->
+  console.log "#{'get codepoints'magenta} from #{pages.length} pages"
+  codepoints JSON.stringify pages
 
 mkdir = lift (dirname) -> new Promise (resolve, reject) ->
   console.log "#{'mkdir'magenta} #dirname"
@@ -115,7 +122,7 @@ write = lift (filename, data, options) -> new Promise (resolve, reject) ->
 
 stringify = lift (data) -> JSON.stringify data, null, 2
 
-save-book = lift (host, book, master) ->
+save-book = lift (host, book, master, pages) ->
   Promise.resolve path.resolve ".#{book.alias}.build"
     .then mkdir
     .then (dirname) -> path.resolve dirname, 'data'
@@ -125,7 +132,6 @@ save-book = lift (host, book, master) ->
     .then (dirname) ->
       dirname = path.resolve dirname, '..'
       total = master.attrs['TOTAL-PAGES']
-      pages = for i from 1 to total => get-page host, book, i
       ps = for let i from 1 to total
         write do
           path.resolve dirname, "page#i.json"
@@ -214,12 +220,14 @@ console.log '''
   books    = get-books host
   book     = get-book books, id
   master   = get-master host, book
-  files    = save-book host, book, master
-  pages    = gen-pages book, master
+  pages    = get-pages host, book, master
+  cpts     = get-codepoints pages
+  # should concat all paths later
+  files    = save-book host, book, master, pages
+  xhtmls   = gen-pages book, master
   meta-inf = cp-meta-inf book
   mimetype = cp-mimetype book
   others   = cp-others book
-  log others
   main!
 
   #Promise.resolve!

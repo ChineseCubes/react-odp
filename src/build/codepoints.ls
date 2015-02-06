@@ -1,19 +1,15 @@
 #!/usr/bin/env lsc
 require! {
   through
+  punycode: { ucs2 }
   rsvp: { Promise, all }
+  'prelude-ls': { filter, unique }
 }
 
 running-as-script = not module.parent
 
-re = /\\u([a-f0-9]+)/ig
-
 codepoints = (str, done) -> new Promise (resolve, reject) ->
-  cpts = {}
-  while re.exec str => cpts["#{RegExp.$1}"] := true
-  cpt-array = Object.keys(cpts)sort!
-  done? cpt-array
-  resolve cpt-array
+  ucs2.decode(str) |> filter (-> it >= 0x3400) |> unique |> resolve
 
 if running-as-script
   todo = ''
