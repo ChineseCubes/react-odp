@@ -10,11 +10,10 @@ require! {
   cpr: _cpr
   child_process: { exec }
   shellwords: { escape }
-  htmltidy: { tidy }
   rsvp: { Promise, all, hash }:RSVP
   datauri: { promises: datauri }
   'vinyl-fs': vinyl
-  'map-stream': map
+  'map-stream': map-stream
   'json-stable-stringify': stringify
   'prelude-ls': { apply, filter, map, concat, is-type }
   '../CUBE/data': Data
@@ -56,6 +55,7 @@ get-bin = lift (uri) -> new Promise (resolve, reject) ->
 
 get-books  = lift (host) -> get-json "#host/books/"
 get-master = lift (host, book) -> get-json "#host/books/#{book.alias}/"
+get-meta   = lift (host, book) -> get-json "#host/books/#{book.alias}/metadata.json"
 get-dict   = lift (host, book) -> get-json "#host/books/#{book.alias}/dict.json"
 get-page   = lift (host, book, idx) -> get-json "#host/books/#{book.alias}/page#idx.json"
 get-mp3    = lift (host, book) -> get-json "#host/books/#{book.alias}/audio.mp3.json"
@@ -140,6 +140,9 @@ save-book = lift (host, book, master, pages) ->
         path.resolve dirname, 'masterpage.json'
         stringify master
       ps.push write do
+        path.resolve dirname, 'metadata.json'
+        stringify get-meta host, book
+      ps.push write do
         path.resolve dirname, 'dict.json'
         stringify get-dict host, book
       ps.push write do
@@ -222,7 +225,7 @@ cp-arphic-strokes = lift (book, cpts) ->
                     cp src, dst
 
 gen-font-subsets = lift (book, cpts) ->
-  dirname = ".#{book.alias}.build"
+  dirname = path.resolve ".#{book.alias}.build"
   weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
   ps =
     for weight in weights
@@ -237,6 +240,52 @@ gen-font-subsets = lift (book, cpts) ->
       font-subset src, dst, cpts
         .catch -> console.log it.stack
   all ps
+
+gen-TOC = lift (book, master) ->
+  total = master.attrs['TOTAL-PAGES']
+  src = path.resolve __dirname, 'epub/TOC.jade'
+  dst = path.resolve ".#{book.alias}.build", 'TOC.xhtml'
+  files = for i from 1 to total
+    path: "page#i.xhtml"
+    title: if i is 1 then 'Cover' else "Page #i"
+  result = jade.renderFile src, { files }
+  write dst, result
+
+gen-OCF = lift (book, master) -> new Promise (resolve, reject) ->
+  total = master.attrs['TOTAL-PAGES']
+  dirname = path.resolve ".#{book.alias}.build"
+  files = []
+  vinyl
+    .src [
+      "#dirname/**"
+      "!#dirname/**/.*"
+      "!#dirname/META-INF/*"
+      "!#dirname/mimetype"
+      "!#dirname/package.opf"
+      "!#dirname/*.pe"
+    ]
+    .pipe map-stream (file, cb) ->
+      files.push path.relative(dirname, file.path)
+      cb null, file
+    .on \end ->
+      ocf = pack do
+        files
+        spine: for idx from 1 to total => "page#idx.xhtml"
+        metadata: require path.resolve dirname, 'data', 'metadata.json'
+      dst = path.resolve dirname, \package.opf
+      resolve write dst, ocf
+
+zip = lift (book) -> new Promise (resolve, reject) ->
+  dirname = ".#{book.alias}.build"
+  src = path.resolve dirname
+  dst = path.resolve dirname, "../#{book.alias}.epub"
+  console.log "#{'zip'magenta} #{rel dst}"
+  exec do
+    "zip -9 -rX #{escape dst} ./* --exclude \\*.DS_Store* \\*.pe \\js/index.js"
+    cwd: src
+    (err, stdout, stderr) ->
+      unless err then resolve stdout, stderr else reject err
+
 ##
 # arguments
 { filename, argv } = utils.argv!
@@ -265,68 +314,22 @@ console.log '''
   pages    = get-pages host, book, master
   cpts     = get-codepoints pages
   # should concat all paths later
-  files    = save-book host, book, master, pages
-  xhtmls   = gen-pages book, master
-  meta-inf = cp-meta-inf book
-  mimetype = cp-mimetype book
-  cp-others book .then -> gen-font-subsets book, cpts
-  strokes  =
-    * cp-strokes book, cpts
-    * cp-arphic-strokes book, cpts
-  main!
-
-  #Promise.resolve!
-    #.then -> new Promise (resolve, reject) ->
-    #  # generate TOC.xhtml
-    #  src = path.resolve __dirname, 'epub/TOC.jade'
-    #  dst = path.resolve build.path, 'TOC.xhtml'
-    #  files = for idx from 1 to build.num-pages
-    #    path: "page#idx.xhtml"
-    #    title: if idx is 1 then 'Cover' else "Page #idx"
-    #  result = jade.renderFile src, { files }
-    #  err, html <- tidy result, indent: on
-    #  return reject err if err
-    #  write dst, html .then resolve
-    #.then ->
-    #  # generate metadata for EPUB
-    #  files = []
-    #  vinyl
-    #    .src [
-    #      "#{build.path}/**"
-    #      "!#{build.path}/**/.*"
-    #      "!#{build.path}/META-INF/*"
-    #      "!#{build.path}/mimetype"
-    #      "!#{build.path}/package.opf"
-    #      "!#{build.path}/*.pe"
-    #    ]
-    #    .pipe map (file, cb) ->
-    #      files.push path.relative(build.path, file.path)
-    #      cb null, file
-    #    .on \end ->
-    #      ocf = pack do
-    #        files
-    #        spine: for idx from 1 to build.num-pages => "page#idx.xhtml"
-    #        metadata: require path.resolve build.data, 'metadata.json'
-    #      dst = path.resolve build.path, \package.opf
-    #      write dst, ocf
-    #        .then ->
-    #          src = path.resolve build.path
-    #          dst = path.resolve build.path, "../#{build.base}.epub"
-    #          zip src, dst
-    #        .then main
-    #.catch (err) ->
-    #  console.log err
+  all [
+    save-book host, book, master, pages
+    gen-pages book, master
+    cp-meta-inf book
+    cp-mimetype book
+    gen-TOC book, master
+    cp-others book .then -> gen-font-subsets book, cpts
+    cp-strokes book, cpts
+    cp-arphic-strokes book, cpts
+  ]
+    .then -> gen-OCF book, master
+    .then -> zip book
+    .then main
 
 ##
 # helpers
-function mp3val src
-  new Promise (resolve, reject) ->
-    console.log "#{'mp3val'magenta} -f #{rel src}"
-    exec do
-      "mp3val -f #src"
-      (err, stdout, stderr) ->
-        unless err then resolve stdout, stderr else reject err
-
 count = 0
 function font-subset src, dst, codepoints
   new Promise (resolve, reject) ->
@@ -349,15 +352,6 @@ function font-subset src, dst, codepoints
     exec do
       "fontforge -script #{escape script-path}"
       cwd: base
-      (err, stdout, stderr) ->
-        unless err then resolve stdout, stderr else reject err
-
-function zip src, dst
-  new Promise (resolve, reject) ->
-    console.log "#{'zip'magenta} #{rel dst}"
-    exec do
-      "zip -9 -rX #{escape dst} ./* --exclude \\*.DS_Store* \\*.pe \\js/index.js"
-      cwd: src
       (err, stdout, stderr) ->
         unless err then resolve stdout, stderr else reject err
 
