@@ -26,7 +26,7 @@ require! {
   './moedict': moedict
 }
 
-RSVP.on \error console.log
+RSVP.on \error console.error
 
 rel  = -> path.relative process.cwd!, it
 lift = (f) -> (...args) -> all args .then apply f
@@ -221,6 +221,22 @@ cp-arphic-strokes = lift (book, cpts) ->
                     dst = path.resolve dirname, stroke
                     cp src, dst
 
+gen-font-subsets = lift (book, cpts) ->
+  dirname = ".#{book.alias}.build"
+  weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
+  ps =
+    for weight in weights
+      src = path.resolve __dirname, 'epub', "SourceHanSansTW-#weight.ttf"
+      dst = path.resolve dirname, 'fonts', "Noto-T-#{weight}-Subset.ttf"
+      font-subset src, dst, cpts
+        .catch -> console.log it.stack
+  ps .= concat do
+    for weight in weights
+      src = path.resolve __dirname, 'epub', "SourceHanSansCN-#weight.ttf"
+      dst = path.resolve dirname, 'fonts', "Noto-S-#{weight}-Subset.ttf"
+      font-subset src, dst, cpts
+        .catch -> console.log it.stack
+  all ps
 ##
 # arguments
 { filename, argv } = utils.argv!
@@ -253,31 +269,13 @@ console.log '''
   xhtmls   = gen-pages book, master
   meta-inf = cp-meta-inf book
   mimetype = cp-mimetype book
-  others   = cp-others book
+  cp-others book .then -> gen-font-subsets book, cpts
   strokes  =
     * cp-strokes book, cpts
     * cp-arphic-strokes book, cpts
   main!
 
   #Promise.resolve!
-    #.then ->
-    #.then ->
-    #.then ->
-    #  # generate font subset
-    #  weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
-    #  ps =
-    #    for weight in weights
-    #      src = path.resolve __dirname, 'epub', "SourceHanSansTW-#weight.ttf"
-    #      dst = path.resolve build.path, 'fonts', "Noto-T-#{weight}-Subset.ttf"
-    #      font-subset src, dst, build.codepoints
-    #        .catch -> console.log it.stack
-    #  ps .= concat do
-    #    for weight in weights
-    #      src = path.resolve __dirname, 'epub', "SourceHanSansCN-#weight.ttf"
-    #      dst = path.resolve build.path, 'fonts', "Noto-S-#{weight}-Subset.ttf"
-    #      font-subset src, dst, build.codepoints
-    #        .catch -> console.log it.stack
-    #  all ps
     #.then -> new Promise (resolve, reject) ->
     #  # generate TOC.xhtml
     #  src = path.resolve __dirname, 'epub/TOC.jade'
@@ -321,53 +319,6 @@ console.log '''
 
 ##
 # helpers
-function convert src, dst
-  new Promise (resolve, reject) ->
-    console.log "#{'convert'magenta} and #{'unzip'magenta} #{rel src}"
-    extractor = unzip.Extract path: dst
-    extractor.on \close -> resolve!
-    request {
-      method: \POST
-      uri: 'https://web-beta.chinesecubes.com/sandbox/odpConvert.php'
-      #uri: 'http://192.168.11.15/sandbox/odpConvert.php'
-      #encoding: \binary
-      #timeout: 20000ms
-    }
-      ..form!append \file fs.createReadStream src
-      ..on \error (err) -> reject err
-      ..pipe extractor
-
-/*
-function write dst, file
-  new Promise (resolve, reject) ->
-    console.log "#{'write'magenta} #{rel dst}"
-    fs.writeFile dst, file, (err) -> unless err then resolve! else reject err
-
-function get-codepoints src
-  new Promise (resolve, reject) ->
-    console.log "#{'get'magenta} codepoints from #{rel src}"
-    target = (escape src)replace '\\*' -> '*'
-    exec do
-      "cat #target | #{path.resolve __dirname, 'codepoints.ls'}"
-      (err, stdout, stderr) ->
-        unless err then resolve stdout, stderr else reject err
-
-function fetch-moedict chars, dst
-  new Promise (resolve, reject) ->
-    console.log "#chars | #{'fetch-moedict.ls'magenta} > #{rel dst}"
-    exec do
-      "echo #chars | #{path.resolve __dirname, 'fetch-moedict.ls'} > #{escape dst}"
-      (err, stdout, stderr) ->
-        unless err then resolve stdout, stderr else reject err
-*/
-
-function get-master-page src
-  new Promise (resolve, reject) ->
-    try
-      Data.getMasterPage src, resolve
-    catch err
-      reject err
-
 function mp3val src
   new Promise (resolve, reject) ->
     console.log "#{'mp3val'magenta} -f #{rel src}"
