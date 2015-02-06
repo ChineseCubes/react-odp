@@ -170,7 +170,7 @@ gen-page = lift (book, idx) -> new Promise (resolve, reject) ->
 
 gen-pages = lift (book, master) ->
   total = master.attrs['TOTAL-PAGES']
-  for let i from 1 to total => gen-page book, i
+  for i from 1 to total => gen-page book, i
 
 cp-meta-inf = lift (book) ->
   src = path.resolve __dirname, 'epub/META-INF'
@@ -182,6 +182,13 @@ cp-mimetype = lift (book) ->
   dst = path.resolve ".#{book.alias}.build", 'mimetype'
   cp src, dst
 
+cp-others = lift (book) ->
+  for dep in <[js css fonts img]>
+    src = path.resolve __dirname, '../../', dep
+    dst = path.resolve ".#{book.alias}.build", dep
+    console.warn "need #{rel src}" unless fs.existsSync src
+    cp-r src, dst
+  |> all
 ##
 # arguments
 { filename, argv } = utils.argv!
@@ -211,27 +218,11 @@ console.log '''
   pages    = gen-pages book, master
   meta-inf = cp-meta-inf book
   mimetype = cp-mimetype book
-  #log files
+  others   = cp-others book
+  log others
   main!
 
-  #build =
-  #  needs: <[js css fonts img]>
   #Promise.resolve!
-    #.then ->
-    #  # mimetype and more
-    #  all do
-    #    for file in <[mimetype]>
-    #      src = path.resolve __dirname, 'epub', file
-    #      dst = path.resolve build.path, file
-    #      cp src, dst
-    #.then ->
-    #  # css, js, fonts ...
-    #  all do
-    #    for dep in build.needs
-    #      src = path.resolve __dirname, '../../', dep
-    #      dst = path.resolve build.path, dep
-    #      console.warn "need #{rel src}" unless fs.existsSync src
-    #      cp-r src, dst
     #.then ->
     #  console.log "#{'cp'magenta} strokes"
     #  try fs.mkdirSync path.resolve build.path, 'strokes'
