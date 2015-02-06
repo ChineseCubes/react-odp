@@ -94,7 +94,7 @@ cp = lift (src, dst, verbose = true) -> new Promise (resolve, reject) ->
   console.log "#{'cp'magenta} #{rel src} #{rel dst}" if verbose
   _cp src, dst, (err) ->
     if not err or err.code is \ENOENT
-      then resolve!
+      then resolve dst
       else reject err
 
 cp-r = (src, dst) -> new Promise (resolve, reject) ->
@@ -172,6 +172,16 @@ gen-pages = lift (book, master) ->
   total = master.attrs['TOTAL-PAGES']
   for let i from 1 to total => gen-page book, i
 
+cp-meta-inf = lift (book) ->
+  src = path.resolve __dirname, 'epub/META-INF'
+  dst = path.resolve ".#{book.alias}.build", 'META-INF'
+  cp-r src, dst
+
+cp-mimetype = lift (book) ->
+  src = path.resolve __dirname, 'epub', 'mimetype'
+  dst = path.resolve ".#{book.alias}.build", 'mimetype'
+  cp src, dst
+
 ##
 # arguments
 { filename, argv } = utils.argv!
@@ -194,29 +204,19 @@ console.log '''
   id   = +arg
   host = 'http://localhost:8081'
 
-  books  = get-books host
-  book   = get-book books, id
-  master = get-master host, book
-  files  = save-book host, book, master
-  pages  = gen-pages book, master
+  books    = get-books host
+  book     = get-book books, id
+  master   = get-master host, book
+  files    = save-book host, book, master
+  pages    = gen-pages book, master
+  meta-inf = cp-meta-inf book
+  mimetype = cp-mimetype book
   #log files
   main!
 
   #build =
   #  needs: <[js css fonts img]>
   #Promise.resolve!
-    #.then ({ attrs }) ->
-    #  # generate page*.xhtml
-    #  build.num-pages = attrs['TOTAL-PAGES']
-    #  dst = build.data
-    #  all do
-    #    for idx in [1 to build.num-pages]
-    #      gen-page dst, build.path, idx
-    #.then ->
-    #  # META-INF/
-    #  src = path.resolve __dirname, 'epub/META-INF'
-    #  dst = path.resolve build.path, 'META-INF'
-    #  cp-r src, dst
     #.then ->
     #  # mimetype and more
     #  all do
