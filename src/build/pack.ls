@@ -106,7 +106,7 @@ cp-r = (src, dst) -> new Promise (resolve, reject) ->
   }, (err, files) ->
     unless err then resolve files else reject err
 
-write-file = lift (filename, data, options) -> new Promise (resolve, reject) ->
+write = lift (filename, data, options) -> new Promise (resolve, reject) ->
   console.log "#{'write'magenta} #filename"
   err <- fs.writeFile filename, data, options
   if err
@@ -127,19 +127,19 @@ save-book = lift (host, book, master) ->
       total = master.attrs['TOTAL-PAGES']
       pages = for i from 1 to total => get-page host, book, i
       ps = for let i from 1 to total
-        write-file do
+        write do
           path.resolve dirname, "page#i.json"
           stringify pages[i-1]
-      ps.push write-file do
+      ps.push write do
         path.resolve dirname, 'masterpage.json'
         stringify master
-      ps.push write-file do
+      ps.push write do
         path.resolve dirname, 'dict.json'
         stringify get-dict host, book
-      ps.push write-file do
+      ps.push write do
         path.resolve dirname, 'audio.mp3.json'
         stringify get-mp3 host, book
-      ps.push write-file do
+      ps.push write do
         path.resolve dirname, 'audio.vtt.json'
         stringify get-vtt host, book
       ps ++= for page in pages
@@ -147,10 +147,30 @@ save-book = lift (host, book, master) ->
         href = hrefs |> lift (hrefs) -> hrefs.0
         base = href |> lift path.basename
         filename = base |> lift (base) -> path.resolve dirname, 'Pictures', base
-        write-file do
+        write do
           filename
           get-bin href
       all ps
+
+const gen = path.resolve __dirname, './gen.ls'
+gen-page = lift (book, idx) -> new Promise (resolve, reject) ->
+  dst = path.resolve ".#{book.alias}.build"
+  src = path.resolve dst, 'data'
+  console.log "#{(rel gen)magenta} #{rel src} #idx"
+  :try-again let
+    exec do
+      "#gen #{escape path.relative dst, src} #idx"
+      cwd: dst
+      (err, stdout, stderr) ->
+        return reject err if err
+        if stdout.length isnt 1
+          resolve write "#dst/page#idx.xhtml", stdout
+        else # XXX: should find out the reason
+          try-again!
+
+gen-pages = lift (book, master) ->
+  total = master.attrs['TOTAL-PAGES']
+  for let i from 1 to total => gen-page book, i
 
 ##
 # arguments
@@ -178,6 +198,7 @@ console.log '''
   book   = get-book books, id
   master = get-master host, book
   files  = save-book host, book, master
+  pages  = gen-pages book, master
   #log files
   main!
 
@@ -309,28 +330,12 @@ function convert src, dst
       ..on \error (err) -> reject err
       ..pipe extractor
 
-gen = path.resolve __dirname, './gen.ls'
-function gen-page src, dst, idx
-  new Promise (resolve, reject) ->
-    console.log "#{(rel gen)magenta} #{rel src} #idx"
-    :try-again let
-      exec do
-        "#gen #{escape path.relative dst, src} #idx"
-        cwd: dst
-        (err, stdout, stderr) ->
-          return reject err if err
-          if stdout.length isnt 1
-            write "#dst/page#idx.xhtml", stdout
-              .then resolve, reject
-          else # XXX: should find out the reason
-            try-again!
-
+/*
 function write dst, file
   new Promise (resolve, reject) ->
     console.log "#{'write'magenta} #{rel dst}"
     fs.writeFile dst, file, (err) -> unless err then resolve! else reject err
 
-/*
 function get-codepoints src
   new Promise (resolve, reject) ->
     console.log "#{'get'magenta} codepoints from #{rel src}"
