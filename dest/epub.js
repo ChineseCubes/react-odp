@@ -34,15 +34,33 @@
       unit: 'cm'
     }), document.getElementById('detector'));
     return Data.getMasterPage('./data/', function(mp){
-      var setup;
+      var setup, pages, res$, i$, to$, ridx$, page;
       setup = mp.setup;
-      return Data.getPresentation(mp, function(data){
+      res$ = [];
+      for (i$ = 1, to$ = setup.totalPages; i$ <= to$; ++i$) {
+        ridx$ = i$;
+        res$.push(ridx$);
+      }
+      pages = res$;
+      if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
+        page = +RegExp.$1;
+        pages = [page];
+        Storage.save('page', page);
+        Storage.load('autoplay').then(function(autoplay){
+          if (autoplay) {
+            return setTimeout(function(){
+              return audio.play(page - 1);
+            }, 750);
+          }
+        });
+      }
+      return Data.getPresentation(setup.path, pages, function(data){
         return Data.Segmentations(data, setup.path, function(segs){
           return getMp3(setup.path + "/audio.mp3.json", function(arg$){
             var mp3;
             mp3 = arg$.mp3;
             return getVtt(setup.path + "/audio.vtt.json", function(vtt){
-              var audio, props, page, book;
+              var audio, props, book;
               audio = Audio(data, vtt, mp3, function(){
                 return book.setProps({
                   loading: false
@@ -84,6 +102,7 @@
                 loading: true,
                 playing: false,
                 currentTime: 0,
+                pages: pages,
                 dpcm: dots.state.x,
                 onNotify: function(it){
                   switch (it.action) {
@@ -113,18 +132,6 @@
                   }
                 }
               };
-              if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
-                props.pages = [RegExp.$1];
-                page = +RegExp.$1;
-                Storage.save('page', page);
-                Storage.load('autoplay').then(function(autoplay){
-                  if (autoplay) {
-                    return setTimeout(function(){
-                      return audio.play(page - 1);
-                    }, 750);
-                  }
-                });
-              }
               return book = React.render(Book(props), document.getElementById('app'));
             });
           });

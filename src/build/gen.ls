@@ -4,6 +4,7 @@ require! {
   path
   react: React
   'react-vtt': ReactVTT
+  'prelude-ls': { map }
   xmldom: { DOMParser, XMLSerializer }
   htmltidy: { tidy }
   '../CUBE/data': Data
@@ -16,7 +17,7 @@ Book = React.createFactory require '../Book'
 { filename, argv } = utils.argv!
 
 book = argv.0
-pages = Array::slice.call argv, 1
+pages = Array::slice.call(argv, 1) |> map (-> +it)
 if not book or not pages.length
   console.log "Usage: #filename [book path] [page id] [another id] [more id] ..."
   process.exit 0
@@ -29,7 +30,7 @@ get-vtt = (filename, done) ->
   ReactVTT.parse filename, done
 
 { setup }:mp <- Data.getMasterPage book
-data <- Data.getPresentation mp
+data <- Data.getPresentation setup.path, pages
 segs <- Data.Segmentations data, setup.path
 vtt  <- get-vtt "#{setup.path}/audio.vtt.json"
 

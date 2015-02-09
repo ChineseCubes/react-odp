@@ -5,17 +5,19 @@ require! {
   mime
 }
 
-metadata-elements = <[contributor coverage creator date description format identifier language publisher relation rights source subject title type]>
+metadata-elements = <[cover-image creator date description format identifier language publisher rights title type]>
 metadata = ->
   ele = @ele 'metadata', { 'xmlns:dc': 'http://purl.org/dc/elements/1.1/' }
   mapValues it, (v, k) !~>
     | k is 'contributors'
       for i, contrib of v
         ele.nod 'dc:contributor', { id: "contrib#i" }, contrib
+    | k is 'cover-image'
+      ele.nod 'meta', { name: k, content: 'cover-id' }
     | k.match /^rendition:/
       ele.nod 'meta', { property: k }, v
     | otherwise
-      console.warn "#k is not a valid element." unless k in metadata-elements
+      console.warn "#k may not be a necessary element." unless k in metadata-elements
       ele.nod "dc:#k", { id: k }, v
   ele
     ..nod 'meta', { property: 'dcterms:modified' }, moment!toISOString!

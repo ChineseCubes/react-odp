@@ -42,6 +42,18 @@ get-json = lift (uri) -> new Promise (resolve, reject) ->
       | res.statusCode isnt 200 => reject new Error "not OK: #{res.statusCode}"
       | otherwise               => resolve JSON.parse body
 
+/*
+get-raw = lift (uri) -> new Promise (resolve, reject) ->
+  console.log "#{'GET'magenta} #uri"
+  request do
+    method: \GET
+    uri: uri
+    (err, res, body) ->
+      | err                     => reject err
+      | res.statusCode isnt 200 => reject new Error "not OK: #{res.statusCode}"
+      | otherwise               => resolve body
+*/
+
 get-bin = lift (uri) -> new Promise (resolve, reject) ->
   console.log "#{'GET'magenta} #uri"
   request do
@@ -60,6 +72,9 @@ get-dict   = lift (host, alias) -> get-json "#host/books/#alias/dict.json"
 get-mp3    = lift (host, alias) -> get-json "#host/books/#alias/audio.mp3.json"
 get-vtt    = lift (host, alias) -> get-json "#host/books/#alias/audio.vtt.json"
 get-page   = lift (host, alias, idx) -> get-json "#host/books/#alias/page#idx.json"
+patch-page = lift (host, alias, page) ->
+  data = JSON.stringify page
+  JSON.parse data.replace "#host/books/#alias/", './data/'
 get-pages  = lift (host, alias, total) ->
   all (for i from 1 to total => get-page host, alias, i)
 
@@ -131,10 +146,7 @@ save-book = lift (host, alias, master, pages) ->
     .then (dirname) ->
       dirname = path.resolve dirname, '..'
       total = master.attrs['TOTAL-PAGES']
-      ps = for let i from 1 to total
-        write do
-          path.resolve dirname, "page#i.json"
-          stringify pages[i-1]
+      ps = []
       ps.push write do
         path.resolve dirname, 'masterpage.json'
         stringify master
@@ -158,6 +170,10 @@ save-book = lift (host, alias, master, pages) ->
         write do
           filename
           get-bin href
+      ps ++= for let i from 1 to total
+        write do
+          path.resolve dirname, "page#i.json"
+          stringify patch-page host, alias, pages[i - 1]
       all ps
 
 const gen = path.resolve __dirname, './gen.ls'
@@ -252,6 +268,7 @@ gen-OCF = lift (dirname, total) -> new Promise (resolve, reject) ->
     .src [
       "#dirname/**"
       "!#dirname/**/.*"
+      "!#dirname/js/build.js"
       "!#dirname/META-INF/*"
       "!#dirname/mimetype"
       "!#dirname/package.opf"

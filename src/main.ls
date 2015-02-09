@@ -95,7 +95,7 @@ selector = React.render do
 
 init-book := (reader, uri, done) ->
   { setup }:mp <- Data.getMasterPage uri
-  data    <- Data.getPresentation mp
+  data    <- Data.getPresentation setup.path, [1 to setup.total-pages]
   segs    <- Data.Segmentations data, setup.path
   { mp3 } <- get-mp3 "#{setup.path}/audio.mp3.json"
   vtt     <- get-vtt "#{setup.path}/audio.vtt.json"

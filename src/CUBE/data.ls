@@ -3,7 +3,7 @@ fs ?= readFile: (path, done) ->
   data <- $.get path, null, _, \text
   done null, data
 
-{ isArray, isString, flatten, max, min, map, zipObject } = require \lodash
+{ isArray, isString, flatten, max, min, map, zipObject, filter } = require \lodash
 {
   unslash
   strip:tagless
@@ -143,14 +143,13 @@ Data =
       height: height
       total-pages: attrs['TOTAL-PAGES']
     mp
-  getPresentation: ({setup}:master-page, done) ->
-    path = unslash setup.path
-    pages = []
+  getPresentation: (path, pages, done) ->
+    children = []
     counter = 0
     got-one = (data, i) ->
-      pages[i] = data
+      children[i] = data
       counter += 1
-      if counter is setup.total-pages
+      if counter is pages.length
         done do
           name:      \presentation
           namespace: \office
@@ -160,8 +159,8 @@ Data =
               top:    0
               width:  \28cm
               height: \21cm
-          children:  pages
-    for let i from 1 to setup.total-pages
+          children: filter children #to drop undefineds
+    for let i in pages
       err, data <- fs.readFile "#path/page#i.json"
       got-one JSON.parse(data), i - 1
   paragraphs-of: (presentation) ->

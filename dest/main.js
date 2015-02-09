@@ -109,7 +109,13 @@
         return Data.getMasterPage(uri, function(mp){
           var setup;
           setup = mp.setup;
-          return Data.getPresentation(mp, function(data){
+          return Data.getPresentation(setup.path, (function(){
+            var i$, to$, results$ = [];
+            for (i$ = 1, to$ = setup.totalPages; i$ <= to$; ++i$) {
+              results$.push(i$);
+            }
+            return results$;
+          }()), function(data){
             return Data.Segmentations(data, setup.path, function(segs){
               return getMp3(setup.path + "/audio.mp3.json", function(arg$){
                 var mp3;

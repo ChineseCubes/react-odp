@@ -29,8 +29,19 @@ dots = React.render do
   DotsDetector unit: \cm
   document.getElementById \detector
 # read book data
-{setup}:mp <- Data.getMasterPage './data/'
-data    <- Data.getPresentation mp
+{ setup }:mp <- Data.getMasterPage './data/'
+# parse location
+pages = [1 to setup.total-pages];
+if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
+  page = +RegExp.$1
+  pages = [page]
+  Storage.save \page, page
+  Storage.load \autoplay .then (autoplay) ->
+    if autoplay
+      setTimeout do
+        -> audio.play page - 1
+        750
+data    <- Data.getPresentation setup.path, pages
 segs    <- Data.Segmentations data, setup.path
 { mp3 } <- get-mp3 "#{setup.path}/audio.mp3.json"
 vtt     <- get-vtt "#{setup.path}/audio.vtt.json"
@@ -63,6 +74,7 @@ props =
   loading: true
   playing: false
   current-time: 0
+  pages: pages
   dpcm: dots.state.x
   onNotify: ->
     switch it.action
@@ -83,15 +95,6 @@ props =
       | otherwise
         audio.process it
 
-if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
-  props.pages = [RegExp.$1]
-  page = +RegExp.$1
-  Storage.save \page, page
-  Storage.load \autoplay .then (autoplay) ->
-    if autoplay
-      setTimeout do
-        -> audio.play page - 1
-        750
 
 book = React.render do
   Book props

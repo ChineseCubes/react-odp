@@ -1,5 +1,5 @@
 (function(){
-  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, c, Char, o, Node, punctuations, Dict, shortest, Segmentations, Data;
+  var fs, ref$, isArray, isString, flatten, max, min, map, zipObject, filter, unslash, tagless, splitNamespace, camelFromHyphenated, notoName, slice, c, Char, o, Node, punctuations, Dict, shortest, Segmentations, Data;
   try {
     fs = require('fs');
   } catch (e$) {}
@@ -10,7 +10,7 @@
       }, 'text');
     }
   });
-  ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, flatten = ref$.flatten, max = ref$.max, min = ref$.min, map = ref$.map, zipObject = ref$.zipObject;
+  ref$ = require('lodash'), isArray = ref$.isArray, isString = ref$.isString, flatten = ref$.flatten, max = ref$.max, min = ref$.min, map = ref$.map, zipObject = ref$.zipObject, filter = ref$.filter;
   ref$ = require('./utils'), unslash = ref$.unslash, tagless = ref$.strip, splitNamespace = ref$.splitNamespace, camelFromHyphenated = ref$.camelFromHyphenated, notoName = ref$.notoName;
   slice = Array.prototype.slice;
   c = Char = (function(){
@@ -265,16 +265,14 @@
       };
       return mp;
     },
-    getPresentation: function(masterPage, done){
-      var setup, path, pages, counter, gotOne, i$, to$, results$ = [];
-      setup = masterPage.setup;
-      path = unslash(setup.path);
-      pages = [];
+    getPresentation: function(path, pages, done){
+      var children, counter, gotOne, i$, len$, results$ = [];
+      children = [];
       counter = 0;
       gotOne = function(data, i){
-        pages[i] = data;
+        children[i] = data;
         counter += 1;
-        if (counter === setup.totalPages) {
+        if (counter === pages.length) {
           return done({
             name: 'presentation',
             namespace: 'office',
@@ -286,12 +284,12 @@
                 height: '21cm'
               }
             },
-            children: pages
+            children: filter(children)
           });
         }
       };
-      for (i$ = 1, to$ = setup.totalPages; i$ <= to$; ++i$) {
-        results$.push((fn$.call(this, i$)));
+      for (i$ = 0, len$ = pages.length; i$ < len$; ++i$) {
+        results$.push((fn$.call(this, pages[i$])));
       }
       return results$;
       function fn$(i){
