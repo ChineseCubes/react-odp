@@ -77,15 +77,6 @@ gulp.task \webpack <[js:app]> ->
     .pipe react-patch!
     .pipe gulp.dest "#{path.build}/js"
     .pipe connect.reload!
-  gulp.src "#{path.dest}/epub.js"
-    .pipe webpack do
-      {
-        context: "#{path.dest}/"
-        output:
-          filename: 'epub.js'
-      } <<< webpack-options
-    .pipe react-patch!
-    .pipe gulp.dest "#{path.build}/js"
 
 gulp.task \css:vendor <[bower]> ->
   gulp.src main-bower-files!

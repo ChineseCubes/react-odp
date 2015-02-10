@@ -16,9 +16,9 @@
   "dependencies": {
     "browser-request": "^0.3.2",
     "buffer": "^2.7.0",
+    "clone": "^0.2.0",
     "howler": "^1.1.25",
     "jquery": "^2.1.1",
-    "lodash": "^2.4.1",
     "react": "^0.12.2",
     "react-vtt": "^0.2.1",
     "rsvp": "^3.0.16",
@@ -54,6 +54,7 @@
     "moment": "^2.8.3",
     "nib": "^1.0.2",
     "prelude-ls": "^1.1.1",
+    "react-notify-mixin": "^0.1.0",
     "request": "^2.44.0",
     "shellwords": "^0.1.0",
     "style-loader": "^0.8.0",

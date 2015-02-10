@@ -16,7 +16,8 @@ require! {
   'map-stream': map-stream
   'json-stable-stringify': stringify
   'prelude-ls': { apply, filter, map, concat, is-type }
-  '../CUBE/data': Data
+  '../lift': lift
+  '../Data': Data
   './epub/utils': utils
   './epub': { pack }
   './read-dir': read-dir
@@ -28,7 +29,6 @@ require! {
 RSVP.on \error console.error
 
 rel  = -> path.relative process.cwd!, it
-lift = (f) -> (...args) -> all args .then apply f
 log  = lift console.log
 exit = lift -> process.exit!
 
