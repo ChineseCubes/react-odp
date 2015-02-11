@@ -16,6 +16,7 @@ require! {
   'map-stream': map-stream
   'json-stable-stringify': stringify
   'prelude-ls': { apply, filter, map, concat, is-type }
+  'pretty-data': { pd }
   '../async': { lift, get-json, get-bin }
   '../Data': Data
   './epub/utils': utils
@@ -111,7 +112,7 @@ save-book = lift (host, alias, master, pages) ->
     .then mkdir
     .then (dirname) ->
       dirname = path.resolve dirname, '..'
-      total = master.attrs['TOTAL-PAGES']
+      total = master.setup.total-pages
       ps = []
       ps.push write do
         path.resolve dirname, 'masterpage.json'
@@ -129,17 +130,16 @@ save-book = lift (host, alias, master, pages) ->
       #  path.resolve dirname, 'audio.vtt.json'
       #  stringify get-vtt host, alias
       ps ++= for page in pages
-        hrefs = get-hrefs page
-        href = hrefs |> lift (hrefs) -> hrefs.0
-        base = href |> lift path.basename
-        filename = base |> lift (base) -> path.resolve dirname, 'Pictures', base
+        filename = get-hrefs page .then -> it.0
+        base = filename |> lift path.basename
+        href = base |> lift (base) -> "#host/books/#alias/Pictures/#base"
         write do
-          filename
+          filename.then -> path.resolve dirname, '..', it
           get-bin href
       ps ++= for let i from 1 to total
         write do
           path.resolve dirname, "page#i.json"
-          stringify patch-page host, alias, pages[i - 1]
+          stringify pages[i - 1]
       all ps
 
 gen-page = lift (dst, page, idx) ->
@@ -216,7 +216,7 @@ gen-TOC = lift (dirname, total) ->
   files = for i from 1 to total
     path: "page#i.xhtml"
     title: if i is 1 then 'Cover' else "Page #i"
-  result = jade.renderFile src, { files }
+  result = pd.xml jade.renderFile src, { files }
   write dst, result
 
 gen-OCF = lift (dirname, total) -> new Promise (resolve, reject) ->
@@ -225,7 +225,6 @@ gen-OCF = lift (dirname, total) -> new Promise (resolve, reject) ->
     .src [
       "#dirname/**"
       "!#dirname/**/.*"
-      "!#dirname/js/build.js"
       "!#dirname/META-INF/*"
       "!#dirname/mimetype"
       "!#dirname/package.opf"
@@ -246,11 +245,17 @@ zip = lift (alias) -> new Promise (resolve, reject) ->
   src = path.resolve ".#alias.build"
   dst = path.resolve src, "../#alias.epub"
   console.log "#{'zip'magenta} #{rel dst}"
+  # mimetype should be the first entry and should not be zipped
   exec do
-    "zip -9 -rX #{escape dst} ./* --exclude \\*.DS_Store* \\*.pe \\js/index.js"
+    "zip -0 -X #{escape dst} mimetype"
     cwd: src
     (err, stdout, stderr) ->
-      unless err then resolve stdout, stderr else reject err
+      if err then return reject err
+      exec do
+        "zip -9 -rX #{escape dst} ./* --exclude \\mimetype \\*.DS_Store* \\*.pe \\js/index.js"
+        cwd: src
+        (err, stdout, stderr) ->
+          unless err then resolve stdout, stderr else reject err
 
 ##
 # arguments
@@ -281,6 +286,7 @@ console.log '''
   master   = get-master host, alias
   total    = master.then -> it.setup.total-pages
   pages    = get-pages host, alias, total
+  pages    = pages.then -> for page in it => patch-page host, alias, page
   cpts     = get-codepoints pages
   # should concat all paths later
   all [

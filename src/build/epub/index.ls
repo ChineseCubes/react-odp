@@ -11,9 +11,12 @@ metadata = ->
   it
   |> obj-to-pairs
   |> each ([k, v]) !~>
+    | not v?length
+      console.warn "#k are empty."
     | k is 'contributors'
       for i, contrib of v
-        ele.nod 'dc:contributor', { id: "contrib#i" }, contrib
+        if contrib?length
+          ele.nod 'dc:contributor', { id: "contrib#i" }, contrib
     | k is 'cover-image'
       ele.nod 'meta', { name: k, content: 'cover-id' }
     | k.match /^rendition:/
@@ -22,7 +25,7 @@ metadata = ->
       console.warn "#k may not be a necessary element." unless k in metadata-elements
       ele.nod "dc:#k", { id: k }, v
   ele
-    ..nod 'meta', { property: 'dcterms:modified' }, moment!toISOString!
+    ..nod 'meta', { property: 'dcterms:modified' }, moment!format(\YYYY-MM-DDThh:mm:ss) + \Z
     # XXX: orientation should be configurable
     ..nod 'meta', { property: 'rendition:orientation' }, 'landscape'
   this
@@ -43,7 +46,7 @@ manifest = ->
       id: file.id
       'media-type': mime.lookup file.ext
     if /TOC\.xhtml$/exec file.path
-      props <<< properties: 'nav scripted'
+      props <<< properties: 'nav'
     else if /\.xhtml$/exec file.path
       props <<< properties: 'scripted'
     ele.nod 'item', props

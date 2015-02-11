@@ -6,6 +6,7 @@ require! {
   rsvp: { Promise, all }:RSVP
   xmldom: { DOMParser, XMLSerializer }
   'prelude-ls': { map }
+  'pretty-data': { pd }
   '../async': { lift, get-json }
   '../Data': { wrap-presentation, patch-page }
   './epub/utils': utils
@@ -20,7 +21,7 @@ gen = lift (pages) -> new Promise (resolve, reject) ->
   content = (new XMLSerializer).serializeToString content
   #content .= replace //<(br.*?)>//g, '<$1/>'
   tpl-path = path.resolve __dirname, 'epub/page.jade'
-  resolve jade.renderFile tpl-path, { content }
+  resolve pd.xml jade.renderFile tpl-path, { content }
 
 if running-as-script
   RSVP.on \error -> console.error it.stack
