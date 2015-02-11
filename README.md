@@ -12,7 +12,7 @@ npm start
 ## Generate EPUB (WIP)
 
 ```bash
-./src/build/pack.ls <book id>
+npm run pack <book id>
 ```
 
 ## Notes

@@ -257,7 +257,7 @@ zip = lift (alias) -> new Promise (resolve, reject) ->
 { filename, argv } = utils.argv!
 
 if argv.length is 0
-  console.log "Usage: #filename [path]"
+  console.log "Usage: #filename [book id]"
   process.exit 0
 
 console.log '''
