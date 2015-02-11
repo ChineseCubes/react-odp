@@ -1,5 +1,4 @@
 require! <[gulp gulp-concat gulp-filter gulp-flatten gulp-replace nib]>
-require! <[bower main-bower-files]>
 connect    = require \gulp-connect
 webpack    = require \gulp-webpack
 gutil      = require \gulp-util
@@ -11,32 +10,6 @@ path =
   src:   "#__dirname/src"
   dest:  "#__dirname/dest"
   build: __dirname
-
-gulp.task \bower ->
-  bower.commands.install!on \end (results) ->
-    for pkg, data of results
-      gutil.log do
-        gutil.colors.magenta data.pkgMeta.name
-        gutil.colors.cyan data.pkgMeta.version
-        "installed"
-
-gulp.task \fonts:vendor <[bower]> ->
-  gulp.src main-bower-files!
-    .pipe gulp-filter <[**/*.eof **/*.ttf **/*.svg **/*.woff]>
-    .pipe gulp-flatten!
-    .pipe gulp.dest "#{path.build}/fonts"
-
-gulp.task \images:vendor <[bower]> ->
-  gulp.src main-bower-files!
-    .pipe gulp-filter <[**/*.jpg **/*.jpeg **/*.png **/*.gif]>
-    .pipe gulp-flatten!
-    .pipe gulp.dest "#{path.build}/images"
-
-gulp.task \js:vendor <[bower]> ->
-  gulp.src main-bower-files!
-    .pipe gulp-filter <[**/*.js !**/*.min.js]>
-    .pipe gulp-concat 'vendor.js'
-    .pipe gulp.dest "#{path.build}/js"
 
 gulp.task \js:app ->
   gulp.src ["#{path.src}/**/*.ls", "!#{path.src}/build/**/*"]
@@ -78,12 +51,6 @@ gulp.task \webpack <[js:app]> ->
     .pipe gulp.dest "#{path.build}/js"
     .pipe connect.reload!
 
-gulp.task \css:vendor <[bower]> ->
-  gulp.src main-bower-files!
-    .pipe gulp-filter <[**/*.css !**/*.min.css]>
-    .pipe gulp-concat 'vendor.css'
-    .pipe gulp.dest "#{path.build}/css"
-
 gulp.task \css:app ->
   # for this app
   gulp.src [
@@ -100,19 +67,16 @@ gulp.task \css:app ->
     .pipe stylus use: [nib!]
     .pipe gulp.dest "#{path.dest}/"
 
-gulp.task \vendor <[fonts:vendor images:vendor js:vendor css:vendor]>
-
 gulp.task \html ->
   gulp.src "#{path.src}/*.jade"
     .pipe jade!
     .pipe gulp.dest path.build
     .pipe connect.reload!
 
-gulp.task \build <[vendor webpack css:app html]>
+gulp.task \build <[webpack css:app html]>
 
 gulp.task \watch <[build]> ->
   gulp
-    ..watch 'bower.json'            <[vendor]>
     ..watch "#{path.src}/**/*.ls"   <[webpack]>
     ..watch "#{path.src}/**/*.styl" <[css:app]>
     ..watch "#{path.src}/*.jade"    <[html]>
