@@ -24,7 +24,7 @@
     scaleToFit = function(width, height){
       var pxWidth, pxHeight;
       if (!(width && height)) {
-        return 1.0;
+        return undefined;
       }
       pxWidth = setup.width * dpcm;
       pxHeight = setup.height * dpcm;
@@ -49,7 +49,10 @@
   getPages = lift(function(uri, setup){
     var idx;
     if (/([1-9]\d*)/.exec(location.search) || /page([1-9]\d*)/.exec(location.href)) {
-      idx = +RegExp.$1 + 1;
+      idx = +RegExp.$1;
+      if (idx === 0) {
+        idx = 1;
+      }
       if (idx > setup.totalPages) {
         idx = setup.totalPages;
       }

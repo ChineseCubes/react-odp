@@ -20,10 +20,11 @@ require! {
   '../Data': Data
   './epub/utils': utils
   './epub': { pack }
+  './gen': gen
   './read-dir': read-dir
   './read-file': read-file
   './codepoints': codepoints
-  './moedict': moedict
+  #'./moedict': moedict
 }
 
 RSVP.on \error -> console.error it.stack
@@ -33,15 +34,13 @@ log  = lift console.log
 exit = lift -> process.exit!
 
 get-books  = lift (host) -> get-json "#host/books/"
-get-master = lift (host, alias) -> get-json "#host/books/#alias/"
+get-master = lift (host, alias) -> Data.get-master "#host/books/#alias/"
 get-meta   = lift (host, alias) -> get-json "#host/books/#alias/metadata.json"
-get-dict   = lift (host, alias) -> get-json "#host/books/#alias/dict.json"
-get-mp3    = lift (host, alias) -> get-json "#host/books/#alias/audio.mp3.json"
-get-vtt    = lift (host, alias) -> get-json "#host/books/#alias/audio.vtt.json"
+#get-dict   = lift (host, alias) -> get-json "#host/books/#alias/dict.json"
+#get-mp3    = lift (host, alias) -> get-json "#host/books/#alias/audio.mp3.json"
+#get-vtt    = lift (host, alias) -> get-json "#host/books/#alias/audio.vtt.json"
 get-page   = lift (host, alias, idx) -> get-json "#host/books/#alias/page#idx.json"
-patch-page = lift (host, alias, page) ->
-  data = JSON.stringify page
-  JSON.parse data.replace "#host/books/#alias/", './data/'
+patch-page = lift (host, alias, page) -> Data.patch-page page, "#host/books/#alias/", './data/'
 get-pages  = lift (host, alias, total) ->
   all (for i from 1 to total => get-page host, alias, i)
 
@@ -120,15 +119,15 @@ save-book = lift (host, alias, master, pages) ->
       ps.push write do
         path.resolve dirname, 'metadata.json'
         stringify get-meta host, alias
-      ps.push write do
-        path.resolve dirname, 'dict.json'
-        stringify get-dict host, alias
-      ps.push write do
-        path.resolve dirname, 'audio.mp3.json'
-        stringify get-mp3 host, alias
-      ps.push write do
-        path.resolve dirname, 'audio.vtt.json'
-        stringify get-vtt host, alias
+      #ps.push write do
+      #  path.resolve dirname, 'dict.json'
+      #  stringify get-dict host, alias
+      #ps.push write do
+      #  path.resolve dirname, 'audio.mp3.json'
+      #  stringify get-mp3 host, alias
+      #ps.push write do
+      #  path.resolve dirname, 'audio.vtt.json'
+      #  stringify get-vtt host, alias
       ps ++= for page in pages
         hrefs = get-hrefs page
         href = hrefs |> lift (hrefs) -> hrefs.0
@@ -143,23 +142,12 @@ save-book = lift (host, alias, master, pages) ->
           stringify patch-page host, alias, pages[i - 1]
       all ps
 
-const gen = path.resolve __dirname, './gen.ls'
-gen-page = lift (dst, idx) -> new Promise (resolve, reject) ->
-  src = path.resolve dst, 'data'
-  console.log "#{(rel gen)magenta} #{rel src} #idx"
-  :try-again let
-    exec do
-      "#gen #{escape path.relative dst, src} #idx"
-      cwd: dst
-      (err, stdout, stderr) ->
-        return reject err if err
-        if stdout.length isnt 1
-          resolve write "#dst/page#idx.xhtml", stdout
-        else # XXX: should find out the reason
-          try-again!
+gen-page = lift (dst, page, idx) ->
+  console.log "#{'render'magenta} #{rel dst}/page#idx.xhtml"
+  gen [page] .then -> write "#dst/page#idx.xhtml", it
 
-gen-pages = lift (dirname, total) ->
-  for i from 1 to total => gen-page dirname, i
+gen-pages = lift (dirname, pages) ->
+  for i, page of pages => gen-page dirname, page, +i + 1
 
 cp-meta-inf = lift (dirname) ->
   src = path.resolve __dirname, 'epub/META-INF'
@@ -172,13 +160,14 @@ cp-mimetype = lift (dirname) ->
   cp src, dst
 
 cp-others = lift (dirname) ->
-  for dep in <[js css fonts img]>
+  for dep in <[js css fonts]>
     src = path.resolve __dirname, '../../', dep
     dst = path.resolve dirname, dep
     console.warn "need #{rel src}" unless fs.existsSync src
     cp-r src, dst
   |> all
 
+/*
 cp-strokes = lift (dirname, cpts) ->
   mkdir path.resolve dirname, 'strokes'
     .then (dirname) ->
@@ -203,6 +192,7 @@ cp-arphic-strokes = lift (dirname, cpts) ->
                     src = path.resolve __dirname, '../../arphic-strokes', lang, stroke
                     dst = path.resolve dirname, stroke
                     cp src, dst
+*/
 
 gen-font-subsets = lift (dirname, cpts) ->
   weights = <[ExtraLight Light Normal Regular Medium Bold Heavy]>
@@ -289,19 +279,19 @@ console.log '''
   alias    = book.then (.alias)
   dirname  = alias.then -> path.resolve ".#it.build"
   master   = get-master host, alias
-  total    = master.then -> it.attrs['TOTAL-PAGES']
+  total    = master.then -> it.setup.total-pages
   pages    = get-pages host, alias, total
   cpts     = get-codepoints pages
   # should concat all paths later
   all [
     save-book host, alias, master, pages
-    gen-pages dirname, total
+    gen-pages dirname, pages
     cp-meta-inf dirname
     cp-mimetype dirname
     gen-TOC dirname, total
     cp-others dirname .then -> gen-font-subsets dirname, cpts
-    cp-strokes dirname, cpts
-    cp-arphic-strokes dirname, cpts
+    #cp-strokes dirname, cpts
+    #cp-arphic-strokes dirname, cpts
   ]
     .then -> gen-OCF dirname, total
     .then -> zip alias

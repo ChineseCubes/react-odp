@@ -8,7 +8,7 @@
     getDefaultProps: function(){
       return {
         data: null,
-        scale: 1.0
+        scale: 0.9676190207042399
       };
     },
     render: function(){

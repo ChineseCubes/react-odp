@@ -23,7 +23,7 @@ draw-book = lift (setup, data) ->
     document.getElementById \detector
   dpcm = dots.state.x
   scale-to-fit = (width, height) ->
-    return 1.0 unless width and height
+    return undefined unless width and height
     px-width  = setup.width  * dpcm
     px-height = setup.height * dpcm
     if width / setup.ratio < height
@@ -46,7 +46,8 @@ draw-book = lift (setup, data) ->
 # get page data by location
 get-pages = lift (uri, setup) ->
   if location.search is /([1-9]\d*)/ or location.href is /page([1-9]\d*)/
-    idx = +RegExp.$1 + 1
+    idx = +RegExp.$1
+    idx = 1 if idx is 0
     idx = setup.total-pages if idx > setup.total-pages
   else
     idx = 1

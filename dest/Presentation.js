@@ -195,7 +195,7 @@
       res$ = [];
       for (i in ref$ = node.children) {
         c = ref$[i];
-        c.attrs.ref = i;
+        c.attrs.key = i;
         res$.push(render(c, scale, getComponent, namepath));
       }
       children = res$;

@@ -137,7 +137,7 @@ render = (node, scale = 1.0, getComponent = lookup, namepath = []) ->
       ..scale = scale
       ..namepath = namepath ++ [node.name]
     children = for i, c of node.children
-      c.attrs.ref = i
+      c.attrs.key = i
       render c, scale, getComponent, namepath
     children.push node.text if node.text
     comp = getComponent node

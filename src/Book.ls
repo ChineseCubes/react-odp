@@ -7,7 +7,7 @@ Book = React.createClass do
   displayName: \Book
   getDefaultProps: ->
     data: null
-    scale: 1.0
+    scale: 0.9676190207042399 # magic
   render: ->
     div do
       className: 'book'
