@@ -3,56 +3,46 @@ require! {
   jade
   path
   react: React
-  'react-vtt': ReactVTT
-  'prelude-ls': { map }
+  rsvp: { Promise }:RSVP
   xmldom: { DOMParser, XMLSerializer }
   htmltidy: { tidy }
-  '../CUBE/data': Data
+  'prelude-ls': { map }
+  '../data': Data
   './epub/utils': utils
 }
 Book = React.createFactory require '../Book'
+running-as-script = not module.parent
 
+gen = (book-uri, pages) -> new Promise (resolve, reject) ->
+  { setup }:mp <- Data.getMasterPage book-uri
+  data <- Data.getPresentation setup.path, pages
 
+  content = React.renderToString Book data: data
+  content = (new DOMParser).parseFromString content, 'text/html'
+  content = (new XMLSerializer).serializeToString content
+  #content .= replace //<(br.*?)>//g, '<$1/>'
 
-{ filename, argv } = utils.argv!
+  tpl-path = path.resolve __dirname, 'epub/page.jade'
+  result = jade.renderFile tpl-path, { content }
 
-book = argv.0
-pages = Array::slice.call(argv, 1) |> map (-> +it)
-if not book or not pages.length
-  console.log "Usage: #filename [book path] [page id] [another id] [more id] ..."
-  process.exit 0
-# must use relative path
-book = path.normalize book
+  if yes # beautify!
+    err, html <- tidy result, { indent: on }
+    if err
+      then reject err
+      else resolve html
+  else
+    resolve result
 
-
-
-get-vtt = (filename, done) ->
-  ReactVTT.parse filename, done
-
-{ setup }:mp <- Data.getMasterPage book
-data <- Data.getPresentation setup.path, pages
-segs <- Data.Segmentations data, setup.path
-vtt  <- get-vtt "#{setup.path}/audio.vtt.json"
-
-content =
-  React.renderToString do
-    Book do
-      master-page: mp
-      data: data
-      segs: segs
-      vtt:  vtt
-      pages: pages
-content = (new DOMParser).parseFromString content, 'text/html'
-content = (new XMLSerializer).serializeToString content
-#content .= replace //<(br.*?)>//g, '<$1/>'
-
-tpl-path = path.resolve __dirname, 'epub/page.jade'
-result = jade.renderFile tpl-path, { content }
-
-if yes # beautify!
-  err, html <- tidy result, { indent: on }
-  throw err if err
-  console.log html
+if running-as-script
+  RSVP.on \error -> console.error it.stack
+  { filename, argv } = utils.argv!
+  book-uri = argv.0
+  pages = Array::slice.call(argv, 1) |> map (-> +it)
+  if not book-uri or not pages.length
+    console.log "Usage: #filename [book path] [page id] [another id] [more id] ..."
+    process.exit 0
+  # must use relative path
+  gen book-uri, pages .then console.log
 else
-  console.log result
+  module.exports = gen
 

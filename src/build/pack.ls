@@ -16,7 +16,7 @@ require! {
   'map-stream': map-stream
   'json-stable-stringify': stringify
   'prelude-ls': { apply, filter, map, concat, is-type }
-  '../lift': lift
+  '../async': { lift, get-json, get-bin }
   '../Data': Data
   './epub/utils': utils
   './epub': { pack }
@@ -26,44 +26,11 @@ require! {
   './moedict': moedict
 }
 
-RSVP.on \error console.error
+RSVP.on \error -> console.error it.stack
 
 rel  = -> path.relative process.cwd!, it
 log  = lift console.log
 exit = lift -> process.exit!
-
-get-json = lift (uri) -> new Promise (resolve, reject) ->
-  console.log "#{'GET'magenta} #uri"
-  request do
-    method: \GET
-    uri: uri
-    (err, res, body) ->
-      | err                     => reject err
-      | res.statusCode isnt 200 => reject new Error "not OK: #{res.statusCode}"
-      | otherwise               => resolve JSON.parse body
-
-/*
-get-raw = lift (uri) -> new Promise (resolve, reject) ->
-  console.log "#{'GET'magenta} #uri"
-  request do
-    method: \GET
-    uri: uri
-    (err, res, body) ->
-      | err                     => reject err
-      | res.statusCode isnt 200 => reject new Error "not OK: #{res.statusCode}"
-      | otherwise               => resolve body
-*/
-
-get-bin = lift (uri) -> new Promise (resolve, reject) ->
-  console.log "#{'GET'magenta} #uri"
-  request do
-    method: \GET
-    uri: uri
-    encoding: \binary
-    (err, res, body) ->
-      | err                     => reject err
-      | res.statusCode isnt 200 => reject new Error "not OK: #{res.statusCode}"
-      | otherwise               => resolve new Buffer body, \binary
 
 get-books  = lift (host) -> get-json "#host/books/"
 get-master = lift (host, alias) -> get-json "#host/books/#alias/"

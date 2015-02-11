@@ -3,7 +3,7 @@
 require! {
   request
   through
-  rsvp: { Promise, all }
+  rsvp: { Promise, all }:RSVP
   'json-stable-stringify': stringify
 }
 
@@ -27,6 +27,7 @@ moedict = (todo, done) -> new Promise (resolve, reject) ->
       resolve fetched
 
 if running-as-script
+  RSVP.on \error -> console.error it.stack
   todo = []
   process.stdin
     .pipe through do

@@ -1,14 +1,16 @@
 require! {
-  xmlbuilder: { create }
-  lodash: { mapValues }
-  moment
   mime
+  moment
+  xmlbuilder: { create }
+  'prelude-ls': { obj-to-pairs, each }
 }
 
 metadata-elements = <[cover-image creator date description format identifier language publisher rights title type]>
 metadata = ->
   ele = @ele 'metadata', { 'xmlns:dc': 'http://purl.org/dc/elements/1.1/' }
-  mapValues it, (v, k) !~>
+  it
+  |> obj-to-pairs
+  |> each ([k, v]) !~>
     | k is 'contributors'
       for i, contrib of v
         ele.nod 'dc:contributor', { id: "contrib#i" }, contrib
