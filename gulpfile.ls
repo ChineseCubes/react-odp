@@ -5,6 +5,8 @@ gutil      = require \gulp-util
 livescript = require \gulp-livescript
 stylus     = require \gulp-stylus
 jade       = require \gulp-jade
+config     = require './configs/webpack.config'
+dev-config = require './configs/dev.webpack.config'
 
 path =
   src:   "#__dirname/src"
@@ -16,17 +18,6 @@ gulp.task \js:app ->
     .pipe livescript!
     .pipe gulp.dest "#{path.dest}/"
 
-webpack-options =
-  module:
-    loaders:
-      * test: /\.css$/ loader: \style!css
-      ...
-  externals:
-    'vtt.js': \WebVTT
-    zhStrokeData: \zhStrokeData
-  resolve:
-    alias:
-      request: 'browser-request'
 react-patch = -> gulp-replace 'node.innerHTML = html;', """
   if (document.contentType === "application/xhtml+xml") {
     var dom = new DOMParser().parseFromString(html, 'text/html');
@@ -42,11 +33,7 @@ react-patch = -> gulp-replace 'node.innerHTML = html;', """
 gulp.task \webpack <[js:app]> ->
   gulp.src "#{path.dest}/main.js"
     .pipe webpack do
-      {
-        context: "#{path.dest}/"
-        output:
-          filename: 'build.js'
-      } <<< webpack-options
+      config <<< context: "#{path.dest}/"
     .pipe react-patch!
     .pipe gulp.dest "#{path.build}/js"
     .pipe connect.reload!
