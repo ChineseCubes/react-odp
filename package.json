@@ -6,7 +6,6 @@
   "scripts": {
     "start": "gulp",
     "prepublish": "gulp build",
-    "pack": "./src/build/pack.ls",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,7 +17,7 @@
     "clone": "^0.2.0",
     "jquery": "^2.1.1",
     "react": "^0.12.2",
-    "rsvp": "^3.0.16",
+    "rsvp": "^3.0.17",
     "xmlbuilder": "^2.4.4"
   },
   "devDependencies": {

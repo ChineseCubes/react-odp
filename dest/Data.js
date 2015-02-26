@@ -1,10 +1,18 @@
 (function(){
-  var ref$, id, filter, lift, get, getJson, slice, getMaster, patchMaster, wrapPresentation, patchPage;
+  var path, ref$, id, filter, lift, get, getJson, slice, normalize, getMaster, patchMaster, wrapPresentation, patchPage;
+  path = require('path');
   ref$ = require('prelude-ls'), id = ref$.id, filter = ref$.filter;
   ref$ = require('./async'), lift = ref$.lift, get = ref$.get, getJson = ref$.getJson;
   slice = Array.prototype.slice;
+  normalize = function(it){
+    if (/^http/.exec(it)) {
+      return it;
+    } else {
+      return path.normalize(it);
+    }
+  };
   getMaster = lift(function(uri){
-    return patchMaster(getJson(uri + "/masterpage.json"));
+    return patchMaster(getJson(normalize(uri + "/masterpage.json")));
   });
   patchMaster = lift(function(master){
     var attrs, width, height, orientation, ratio;

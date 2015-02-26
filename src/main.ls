@@ -8,7 +8,7 @@ require! {
 DotsDetector = React.createFactory require './DotsDetector'
 Book         = React.createFactory require './Book'
 
-RSVP.on \error -> console.error it.stack
+RSVP.on \error -> console.error it#.stack
 
 ###
 # draw-book
@@ -23,6 +23,8 @@ draw-book = lift (setup, data) ->
     document.getElementById \detector
   dpcm = dots.state.x
   scale-to-fit = (width, height) ->
+    # XXX: iBook will give you 997x768 if you open the console and reload the
+    # page without go to another page first
     return undefined unless width and height
     px-width  = setup.width  * dpcm
     px-height = setup.height * dpcm
@@ -57,8 +59,10 @@ get-pages = lift (uri, setup) ->
 # main
 <- $
 <- window.requestAnimationFrame
-#uri = 'http://cnl.linode.caasih.net/books/two-tigers/'
-uri = 'http://localhost:8081/books/two-tigers/'
+uri = if navigator.epubReadingSystem
+  then './data/'
+  else 'http://localhost:8081/books/two-tigers/'
+  #else 'http://cnl.linode.caasih.net/books/two-tigers/'
 
 setup = get-master uri .then ({ setup }) -> setup
 data  = wrap-presentation get-pages uri, setup

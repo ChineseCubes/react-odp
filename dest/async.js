@@ -21,9 +21,6 @@
         case !err:
           reject(err);
           break;
-        case res.statusCode === 200:
-          reject(new Error("not OK: " + res.statusCode));
-          break;
         default:
           resolve(body);
         }
@@ -45,9 +42,6 @@
         switch (false) {
         case !err:
           reject(err);
-          break;
-        case res.statusCode === 200:
-          reject(new Error("not OK: " + res.statusCode));
           break;
         default:
           resolve(new Buffer(body, 'binary'));

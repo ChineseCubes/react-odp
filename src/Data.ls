@@ -1,11 +1,13 @@
 require! {
+  path
   'prelude-ls': { id, filter }
   './async': { lift, get, get-json }
 }
 
 slice = Array::slice
+normalize = -> if it is /^http/ then it else path.normalize it
 
-get-master = lift (uri) -> patch-master get-json "#uri/masterpage.json"
+get-master = lift (uri) -> patch-master get-json normalize "#uri/masterpage.json"
 
 patch-master = lift ({ attrs }:master) ->
   width  = parseInt attrs['FO:PAGE-WIDTH'], 10

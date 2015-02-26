@@ -8,7 +8,7 @@
   DotsDetector = React.createFactory(require('./DotsDetector'));
   Book = React.createFactory(require('./Book'));
   RSVP.on('error', function(it){
-    return console.error(it.stack);
+    return console.error(it);
   });
   drawBook = lift(function(setup, data){
     var $win, dots, dpcm, scaleToFit, book;
@@ -66,7 +66,7 @@
   $(function(){
     return window.requestAnimationFrame(function(){
       var uri, setup, data;
-      uri = 'http://localhost:8081/books/two-tigers/';
+      uri = navigator.epubReadingSystem ? './data/' : 'http://localhost:8081/books/two-tigers/';
       setup = getMaster(uri).then(function(arg$){
         var setup;
         setup = arg$.setup;

@@ -1,0 +1,14 @@
+doctype xml
+html(lang="zh-Hant" xml:lang="zh-Hant" xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops")
+  head
+    meta(name="viewport" content="width=1024, height=768")
+    meta(charset="utf-8")
+    style.
+      @-viewport { width: 1024px; height: 768px; }
+    meta(name="apple-mobile-web-app-capable" content="yes")
+  body
+    nav(epub:type="toc" id="toc")
+      ol
+        each file in files
+          li
+            a(href="#{file.path}")= file.title
