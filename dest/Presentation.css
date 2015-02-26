@@ -1,15 +1,3 @@
-html,
-body,
-#wrap {
-  width: 100%;
-  height: 100%;
-}
-body {
-  background: #16161d;
-}
-#wrap {
-  position: relative;
-}
 .presentation {
   position: absolute;
   top: 0;
@@ -92,18 +80,4 @@ body {
   -ms-flex-pack: end;
   -webkit-justify-content: flex-end;
   justify-content: flex-end;
-}
-.frame > .image span {
-  height: 0 !important;
-}
-.frame > .image .p {
-  position: absolute !important;
-  width: 6em !important;
-  height: 1em !important;
-  margin: auto;
-  margin-left: -3em;
-  top: 0 !important;
-  bottom: 0 !important;
-  left: 50% !important;
-  text-align: center;
 }

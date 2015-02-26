@@ -1,20 +1,24 @@
 @import 'nib'
 global-reset()
 
-@font-face
-  font-family 'cwTeX Q KaiZH'
-  src url("../fonts/cwTeX-Q-KaiZH-subset.ttf")
-
+@import 'cw-tex'
 @import 'noto'
+
+html
+body
+#wrap
+  width  100%
+  height 100%
 
 html
   font-family "Noto Sans", "Noto Sans S Chinese", "Noto Sans T Chinese", "LiHei Pro", "Heiti TC", "Heiti SC", "微軟正黑體", "cwTex Q KaiZH", sans-serif
   font-size 18px
 
-small
-  font-size 1.1ex
-  font-weight 900
+body
+  background #16161D
 
-@require 'react-odp'
+#wrap
+  position relative
+
 @require 'Book'
 
