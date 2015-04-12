@@ -259,6 +259,7 @@ console.log '''
   host = 'http://localhost:8081'
 
   books    = get-books host
+  log books
   book     = get-book books, id
   alias    = book.then (.alias)
   dirname  = alias.then -> path.resolve ".#it.build"

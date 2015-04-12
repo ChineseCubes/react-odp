@@ -6,6 +6,7 @@ require! {
 lift = (f) -> (...args) -> all args .then (-> f.apply this, it)
 
 get = lift (uri) -> new Promise (resolve, reject) ->
+  uri := encodeURI uri
   err, res, body <-! request method: \GET, uri: uri
   switch
   | err                     => reject err
@@ -16,6 +17,7 @@ get = lift (uri) -> new Promise (resolve, reject) ->
 get-json = lift (uri) -> get uri .then -> JSON.parse it
 
 get-bin = lift (uri) -> new Promise (resolve, reject) ->
+  uri := encodeURI uri
   err, res, body <-! request method: \GET, uri: uri, encoding: \binary
   switch
   | err                     => reject err
