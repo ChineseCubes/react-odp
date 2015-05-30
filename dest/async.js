@@ -13,6 +13,7 @@
   };
   get = lift(function(uri){
     return new Promise(function(resolve, reject){
+      uri = encodeURI(uri);
       return request({
         method: 'GET',
         uri: uri
@@ -34,6 +35,7 @@
   });
   getBin = lift(function(uri){
     return new Promise(function(resolve, reject){
+      uri = encodeURI(uri);
       return request({
         method: 'GET',
         uri: uri,
