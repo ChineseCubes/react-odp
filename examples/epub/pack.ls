@@ -259,7 +259,6 @@ console.log '''
   host = 'http://localhost:8081'
 
   books    = get-books host
-  log books
   book     = get-book books, id
   alias    = book.then (.alias)
   dirname  = alias.then -> path.resolve ".#it.build"
@@ -269,16 +268,17 @@ console.log '''
   pages    = pages.then -> for page in it => patch-page host, alias, page
   cpts     = get-codepoints pages
   # should concat all paths later
-  all [
-    save-book host, alias, master, pages
-    gen-pages dirname, pages
-    cp-meta-inf dirname
-    cp-mimetype dirname
-    gen-TOC dirname, total
-    cp-others dirname .then -> gen-font-subsets dirname, cpts
-    #cp-strokes dirname, cpts
-    #cp-arphic-strokes dirname, cpts
-  ]
+  save-book host, alias, master, pages
+    .then ->
+      all [
+        gen-pages dirname, pages
+        cp-meta-inf dirname
+        cp-mimetype dirname
+        gen-TOC dirname, total
+        cp-others dirname .then -> gen-font-subsets dirname, cpts
+        #cp-strokes dirname, cpts
+        #cp-arphic-strokes dirname, cpts
+      ]
     .then -> gen-OCF dirname, total
     .then -> zip alias
     .then main
