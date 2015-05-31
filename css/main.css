@@ -196,7 +196,7 @@ body,
   height: 100%;
 }
 html {
-  font-family: "Noto Sans", "Noto Sans S Chinese", "Noto Sans T Chinese", "LiHei Pro", "Heiti TC", "Heiti SC", "微軟正黑體", "cwTex Q KaiZH", sans-serif;
+  font-family: "Noto Sans", "Noto Sans CJK SC", "Noto Sans CJK TC", "Noto Sans S Chinese", "Noto Sans T Chinese", "LiHei Pro", "Heiti TC", "Heiti SC", "微軟正黑體", "cwTex Q KaiZH", sans-serif;
   font-size: 18px;
 }
 body {
